@@ -63,6 +63,30 @@ namespace GUI
         // DECLARE a ScaleDelegate, name it '_scale':
         private ScaleDelegate _scale;
 
+        // DECLARE a BrightnessDelegate, name it '_brightness':
+        private BrightnessDelegate _brightness;
+
+        // DECLARE a ContrastDelegate, name it '_contrast':
+        private ContrastDelegate _contrast;
+
+        // DECLARE a SaturationDelegate, name it '_saturation':
+        private SaturationDelegate _saturation;
+
+        // DECLARE a FilterOneDelegate, name it '_filterOne':
+        private FilterOneDelegate _filterOne;
+
+        // DECLARE a FilterTwoDelegate, name it '_filterTwo':
+        private FilterTwoDelegate _filterTwo;
+
+        // DECLARE a FilterThreeDelegate, name it '_filterThree':
+        private FilterThreeDelegate _filterThree;
+
+        // DECLARE a FilterFourDelegate, name it '_filterFour':
+        private FilterFourDelegate _filterFour;
+
+        // DECLARE a FilterRemoveDelegate, name it '_filterRemove':
+        private FilterRemoveDelegate _filterRemove;
+
         #endregion
 
 
@@ -699,6 +723,16 @@ namespace GUI
         }
 
         /// <summary>
+        /// Filter remove radio button - for removing filters applied
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value </param>
+        private void radialFilterRemove_CheckedChanged(object sender, EventArgs e)
+        {
+            // ON Checked
+        }
+
+        /// <summary>
         /// Brightness control button - for controlling brightness
         /// </summary>
         /// <param name="sender"> Form Object </param>
@@ -727,5 +761,7 @@ namespace GUI
         {
             // ON INPUT
         }
+
+      
     }
 }

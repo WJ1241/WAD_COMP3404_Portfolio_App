@@ -79,5 +79,53 @@ namespace Server.Delegates
     /// <param name="pObject">Reference to object to be scaled</param>
     public delegate void ScaleDelegate(String pObject);
 
+    /// <summary>
+    /// Delegate used for changing brightness on an image with a String parameter
+    /// </summary>
+    /// <param name="pObject">Reference to object to have brightness changed</param>
+    public delegate void BrightnessDelegate(String pObject);
+
+    /// <summary>
+    /// Delegate used for changing contrast on an image with a String parameter
+    /// </summary>
+    /// <param name="pObject">Reference to object to have contrast changed</param>
+    public delegate void ContrastDelegate(String pObject);
+
+    /// <summary>
+    /// Delegate used for changing saturation on an image with a String parameter
+    /// </summary>
+    /// <param name="pObject">Reference to object to have saturation changed</param>
+    public delegate void SaturationDelegate(String pObject);
+
+    /// <summary>
+    /// Delegate used for first filter on an image with a String parameter
+    /// </summary>
+    /// <param name="pObject">Reference to object to apply first filter</param>
+    public delegate void FilterOneDelegate(String pObject);
+
+    /// <summary>
+    /// Delegate used for second filter on an image with a String parameter
+    /// </summary>
+    /// <param name="pObject">Reference to object to apply second filter</param>
+    public delegate void FilterTwoDelegate(String pObject);
+
+    /// <summary>
+    /// Delegate used for third filter on an image with a String parameter
+    /// </summary>
+    /// <param name="pObject">Reference to object to apply third filter</param>
+    public delegate void FilterThreeDelegate(String pObject);
+
+    /// <summary>
+    /// Delegate used for fourth filter on an iamge with a String parameter
+    /// </summary>
+    /// <param name="pObject">Reference to object to apply fourth filter</param>
+    public delegate void FilterFourDelegate(String pObject);
+
+    /// <summary>
+    /// Delegate used for removing filters applied on an image with a String parameter
+    /// </summary>
+    /// <param name="pObject">Reference to object to apply no filter</param>
+    public delegate void FilterRemoveDelegate(String pObject);
+
     #endregion
 }

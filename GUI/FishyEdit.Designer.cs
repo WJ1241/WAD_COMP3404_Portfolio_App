@@ -56,6 +56,7 @@ namespace GUI
             this.lblBrightness = new System.Windows.Forms.Label();
             this.BrightnessControl = new System.Windows.Forms.NumericUpDown();
             this.groupBoxColouring = new System.Windows.Forms.GroupBox();
+            this.radialFilterRemove = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.ImgDisplay)).BeginInit();
             this.groupBoxFilters.SuspendLayout();
             this.groupBoxOrientation.SuspendLayout();
@@ -217,6 +218,7 @@ namespace GUI
             // 
             // groupBoxFilters
             // 
+            this.groupBoxFilters.Controls.Add(this.radialFilterRemove);
             this.groupBoxFilters.Controls.Add(this.radioFilter4);
             this.groupBoxFilters.Controls.Add(this.radioFilter3);
             this.groupBoxFilters.Controls.Add(this.radioFilter2);
@@ -232,7 +234,7 @@ namespace GUI
             // radioFilter4
             // 
             this.radioFilter4.AutoSize = true;
-            this.radioFilter4.Location = new System.Drawing.Point(18, 175);
+            this.radioFilter4.Location = new System.Drawing.Point(18, 139);
             this.radioFilter4.Name = "radioFilter4";
             this.radioFilter4.Size = new System.Drawing.Size(96, 30);
             this.radioFilter4.TabIndex = 3;
@@ -244,7 +246,7 @@ namespace GUI
             // radioFilter3
             // 
             this.radioFilter3.AutoSize = true;
-            this.radioFilter3.Location = new System.Drawing.Point(18, 127);
+            this.radioFilter3.Location = new System.Drawing.Point(18, 103);
             this.radioFilter3.Name = "radioFilter3";
             this.radioFilter3.Size = new System.Drawing.Size(96, 30);
             this.radioFilter3.TabIndex = 2;
@@ -256,7 +258,7 @@ namespace GUI
             // radioFilter2
             // 
             this.radioFilter2.AutoSize = true;
-            this.radioFilter2.Location = new System.Drawing.Point(18, 79);
+            this.radioFilter2.Location = new System.Drawing.Point(18, 67);
             this.radioFilter2.Name = "radioFilter2";
             this.radioFilter2.Size = new System.Drawing.Size(96, 30);
             this.radioFilter2.TabIndex = 1;
@@ -377,6 +379,18 @@ namespace GUI
             this.groupBoxColouring.TabStop = false;
             this.groupBoxColouring.Text = "Colouring";
             // 
+            // radialFilterRemove
+            // 
+            this.radialFilterRemove.AutoSize = true;
+            this.radialFilterRemove.Location = new System.Drawing.Point(18, 175);
+            this.radialFilterRemove.Name = "radialFilterRemove";
+            this.radialFilterRemove.Size = new System.Drawing.Size(112, 30);
+            this.radialFilterRemove.TabIndex = 4;
+            this.radialFilterRemove.TabStop = true;
+            this.radialFilterRemove.Text = "No Filter";
+            this.radialFilterRemove.UseVisualStyleBackColor = true;
+            this.radialFilterRemove.CheckedChanged += new System.EventHandler(this.radialFilterRemove_CheckedChanged);
+            // 
             // FishyEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -443,5 +457,6 @@ namespace GUI
         private System.Windows.Forms.Label lblBrightness;
         private System.Windows.Forms.NumericUpDown BrightnessControl;
         private System.Windows.Forms.GroupBox groupBoxColouring;
+        private System.Windows.Forms.RadioButton radialFilterRemove;
     }
 }
