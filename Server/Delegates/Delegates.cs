@@ -8,8 +8,8 @@ namespace Server.Delegates
 
     /// <summary>
     /// C# File to store Delegate Methods
-    /// Author: William Smith
-    /// Date: 01/12/21
+    /// Author: William Eardley, William Smith
+    /// Date: 21/01/22
     /// </summary>
 
     //----------------------------------------//
@@ -66,6 +66,18 @@ namespace Server.Delegates
     /// </summary>
     /// <param name="pObject"> Reference to Object to be V Flipped </param>
     public delegate void VFlipImageDelegate(String pObject);
+
+    /// <summary>
+    /// Delegate used for cropping an image with a string parameter
+    /// </summary>
+    /// <param name="pObject"> Reference to object to be cropped</param>
+    public delegate void CropDelegate(String pObject);
+
+    /// <summary>
+    /// Delegate used for scaling an image with a string parameter
+    /// </summary>
+    /// <param name="pObject">Reference to object to be scaled</param>
+    public delegate void ScaleDelegate(String pObject);
 
     #endregion
 }

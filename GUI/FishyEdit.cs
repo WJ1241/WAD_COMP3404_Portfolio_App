@@ -12,8 +12,8 @@ namespace GUI
 {
     /// <summary>
     /// Partial Class which creates a 'FishyEdit' for the user to edit Images with.
-    /// Author: William Smith & Marc Price
-    /// Date: 06/12/21
+    /// Author: William Eardley, William Smith & Marc Price, Declan Kerby-Collins
+    /// Date: 21/01/22
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>
     /// <REFERENCE> jay_t55 (2014) Make a borderless form movable? Available at: https://stackoverflow.com/questions/1592876/make-a-borderless-form-movable/24561946#24561946. (Accessed 5 November 2021). </REFERENCE>
@@ -56,6 +56,12 @@ namespace GUI
 
         // DECLARE a VFlipImageDelegate, name it '_vFlip':
         private VFlipImageDelegate _vFlip;
+
+        // DECLARE a CropDelegate, name it '_crop':
+        private CropDelegate _crop;
+
+        // DECLARE a ScaleDelegate, name it '_scale':
+        private ScaleDelegate _scale;
 
         #endregion
 
@@ -651,5 +657,75 @@ namespace GUI
         }
 
         #endregion
+
+        /// <summary>
+        /// Filter 1 radio button - for first filter 
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e">Value</param>
+        private void radioFilter1_CheckedChanged(object sender, EventArgs e)
+        {
+            // ON Checked
+        }
+
+        /// <summary>
+        /// Filter 2 radio button - for second filter
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value </param>
+        private void radioFilter2_CheckedChanged(object sender, EventArgs e)
+        {
+            // ON Checked
+        }
+
+        /// <summary>
+        /// Filter 3 radio button - for third button
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value </param>
+        private void radioFilter3_CheckedChanged(object sender, EventArgs e)
+        {
+            // ON Checked
+        }
+
+        /// <summary>
+        /// Filter 4 radio button - for fourth filter
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value </param>
+        private void radioFilter4_CheckedChanged(object sender, EventArgs e)
+        {
+            // ON Checked
+        }
+
+        /// <summary>
+        /// Brightness control button - for controlling brightness
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value </param>
+        private void BrightnessControl_ValueChanged(object sender, EventArgs e)
+        {
+            // ON INPUT
+        }
+
+        /// <summary>
+        /// Contrast control button - for controlling contrast
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value </param>
+        private void ContrastControl_ValueChanged(object sender, EventArgs e)
+        {
+            // ON INPUT
+        }
+
+        /// <summary>
+        /// Saturation control button - for controlling saturation
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value </param>
+        private void SaturationControl_ValueChanged(object sender, EventArgs e)
+        {
+            // ON INPUT
+        }
     }
 }
