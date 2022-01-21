@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8B0F59BD-53C8-4805-A0D6-31BB9D38FD6F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Server</RootNamespace>
+    <AssemblyName>Server</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GeneralInterfaces\IACRotate.cs" />
+    <Compile Include="ImageMgr.cs" />
+    <Compile Include="Delegates\Delegates.cs" />
+    <Compile Include="Exceptions\ClassDoesNotExistException.cs" />
+    <Compile Include="Exceptions\FileAlreadyStoredException.cs" />
+    <Compile Include="Exceptions\FileNotSavedException.cs" />
+    <Compile Include="Exceptions\InvalidStringException.cs" />
+    <Compile Include="Exceptions\NullInstanceException.cs" />
+    <Compile Include="Exceptions\NullValueException.cs" />
+    <Compile Include="GeneralInterfaces\IMarker.cs" />
+    <Compile Include="ImageEditor.cs" />
+    <Compile Include="InitialisingInterfaces\IInitialiseIEditImg.cs" />
+    <Compile Include="InitialisingInterfaces\IInitialiseIManageImg.cs" />
+    <Compile Include="GeneralInterfaces\IEditImg.cs" />
+    <Compile Include="GeneralInterfaces\IManageImg.cs" />
+    <Compile Include="GeneralInterfaces\IServer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ImageServer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Displayables\FishAssets\AnglerFish_Lit.png" />
+    <Content Include="Displayables\FishAssets\AnglerFish_Unlit.png" />
+    <Content Include="Displayables\FishAssets\AquariumBackground.png" />
+    <Content Include="Displayables\FishAssets\JavaFish.png" />
+    <Content Include="Displayables\FishAssets\OrangeFish.png" />
+    <Content Include="Displayables\FishAssets\PiranhaGreen.png" />
+    <Content Include="Displayables\FishAssets\PiranhaRed.png" />
+    <Content Include="Displayables\FishAssets\Seahorse.png" />
+    <Content Include="Displayables\FishAssets\Urchin.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
