@@ -55,9 +55,6 @@
     <Compile Include="Home.Designer.cs">
       <DependentUpon>Home.cs</DependentUpon>
     </Compile>
-    <Compile Include="InitialisingInterfaces\IInitialiseIOpenImage.cs" />
-    <Compile Include="InitialisingInterfaces\IInitialiseLoadDel.cs" />
-    <Compile Include="InitialisingInterfaces\IInitialiseGetImageDel.cs" />
     <Compile Include="Logic\IOpenImage.cs" />
     <Compile Include="Logic\ILogic.cs" />
     <Compile Include="Logic\SaveLogic.cs" />

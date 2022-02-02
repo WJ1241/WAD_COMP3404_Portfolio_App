@@ -1,31 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using GUI.InitialisingInterfaces;
 using GUI.Logic;
 using Server.Delegates;
 using Server.Exceptions;
+using Server.InitialisingInterfaces;
 
 namespace GUI
 {
     /// <summary>
     /// Partial Class which creates a 'FishyEdit' for the user to edit Images with.
-    /// Author: DecLan Kerby-Collins & William Smith & Will Eardley & Marc Price
-    /// Date: 21/02/2022
+    /// Author: Declan Kerby-Collins, William Eardley, William Smith & Marc Price
+    /// Date: 02/02/2022
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>
     /// <REFERENCE> jay_t55 (2014) Make a borderless form movable? Available at: https://stackoverflow.com/questions/1592876/make-a-borderless-form-movable/24561946#24561946. (Accessed 5 November 2021). </REFERENCE>
-    public partial class Home : Form, IInitialiseIOpenImage, IInitialiseGetImageDel, IInitialiseLoadDel
+    public partial class Home : Form, IInitialiseParam<IOpenImage>, IInitialiseParam<GetImageDelegate>, IInitialiseParam<LoadDelegate>
     {
+        #region FIELD VARIABLES
 
-        #region Field Variables
         // DECLARE an int, name it '_dictIndex':
         private int _dictIndex;
 
@@ -68,7 +63,7 @@ namespace GUI
         }
 
 
-        #region IMPLEMENTATION OF IINITIALISEIOPENIMAGE
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IOPENIMAGE>
 
         /// <summary>
         /// Initialises an object with an 'IOpenImage' instance
@@ -101,7 +96,7 @@ namespace GUI
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEGETIMAGEDEL
+        #region IMPLEMENTATION OF IINITIALISEPARAM<GETIMAGEDELEGATE>
 
         /// <summary>
         /// Initialises an object with a 'GetImage' Delegate
@@ -115,7 +110,8 @@ namespace GUI
 
         #endregion
 
-        #region IMPLEMENTATION OF IINITIALISELOADDEL
+
+        #region IMPLEMENTATION OF IINITIALISEPARAM<LOADDELEGATE>
 
         /// <summary>
         /// Initialises an object with a 'Load' Delegate

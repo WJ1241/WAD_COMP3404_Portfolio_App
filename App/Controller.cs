@@ -5,13 +5,12 @@ using App.Services;
 using App.Services.Factories;
 using App.GeneralInterfaces;
 using GUI;
-using GUI.InitialisingInterfaces;
 using GUI.Logic;
 using Server;
 using Server.Exceptions;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
-
+using Server.Delegates;
 
 namespace App
 {
@@ -173,10 +172,10 @@ namespace App
             #region FISHYHOME DELEGATES
 
             // INITIALISE _fishyHome with _server.GetImage as a delegate:
-            (_fishyHome as IInitialiseGetImageDel).Initialise(_server.GetImage);
+            (_fishyHome as IInitialiseParam<GetImageDelegate>).Initialise(_server.GetImage);
 
             // INITIALISE _fishyHome with _server.Load as a delegate:
-            (_fishyHome as IInitialiseLoadDel).Initialise(_server.Load);
+            (_fishyHome as IInitialiseParam<LoadDelegate>).Initialise(_server.Load);
 
             #endregion
 
@@ -222,7 +221,7 @@ namespace App
             #region FISHYEDIT DELEGATES
 
             // INITIALISE _fishyHome with _server.GetImage as a delegate:
-            (_fishyHome as IInitialiseGetImageDel).Initialise(_server.GetImage);
+            (_fishyHome as IInitialiseParam<GetImageDelegate>).Initialise(_server.GetImage);
 
             #endregion
 
