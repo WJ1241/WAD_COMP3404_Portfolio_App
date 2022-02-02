@@ -54,6 +54,7 @@ namespace GUI
             // 
             // ImgDisplay
             // 
+            this.ImgDisplay.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.ImgDisplay.Location = new System.Drawing.Point(91, 36);
             this.ImgDisplay.Margin = new System.Windows.Forms.Padding(2);
             this.ImgDisplay.Name = "ImgDisplay";
@@ -116,6 +117,7 @@ namespace GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(332, 227);
             this.Controls.Add(this.lbl_homeLable);
             this.Controls.Add(this.EditBttn);
