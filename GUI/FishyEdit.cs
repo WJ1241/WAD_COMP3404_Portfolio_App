@@ -682,6 +682,8 @@ namespace GUI
 
         #endregion
 
+
+        #region radio filters
         /// <summary>
         /// Filter 1 radio button - for first filter 
         /// </summary>
@@ -690,6 +692,31 @@ namespace GUI
         private void radioFilter1_CheckedChanged(object sender, EventArgs e)
         {
             // ON Checked
+            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // TRY checking if _filterOne() OR ChngImg() throw a NullInstanceException:
+                try
+                {
+                    // CALL _filterOne passing current index in _imgFPDict as a parameter:
+                    _filterOne(_imgFPDict[_dictIndex]);
+
+                    // CALL ChngImg():
+                    ChngImg();
+                }
+                // CATCH NullInstanceException from ChngImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to debug console:
+                    Debug.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
+            else
+            {
+                // WRITE to debug console, with error message:
+                Debug.WriteLine("ERROR: No Image at current index, cannot activate filter!");
+            }
         }
 
         /// <summary>
@@ -700,6 +727,31 @@ namespace GUI
         private void radioFilter2_CheckedChanged(object sender, EventArgs e)
         {
             // ON Checked
+            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // TRY checking if _filterTwo() OR ChngImg() throw a NullInstanceException:
+                try
+                {
+                    // CALL _filterTwo passing current index in _imgFPDict as a parameter:
+                    _filterTwo(_imgFPDict[_dictIndex]);
+
+                    // CALL ChngImg():
+                    ChngImg();
+                }
+                // CATCH NullInstanceException from ChngImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to debug console:
+                    Debug.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
+            else
+            {
+                // WRITE to debug console, with error message:
+                Debug.WriteLine("ERROR: No Image at current index, cannot activate filter!");
+            }
         }
 
         /// <summary>
@@ -710,6 +762,31 @@ namespace GUI
         private void radioFilter3_CheckedChanged(object sender, EventArgs e)
         {
             // ON Checked
+            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // TRY checking if _filterThree() OR ChngImg() throw a NullInstanceException:
+                try
+                {
+                    // CALL _filterThree passing current index in _imgFPDict as a parameter:
+                    _filterThree(_imgFPDict[_dictIndex]);
+
+                    // CALL ChngImg():
+                    ChngImg();
+                }
+                // CATCH NullInstanceException from ChngImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to debug console:
+                    Debug.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
+            else
+            {
+                // WRITE to debug console, with error message:
+                Debug.WriteLine("ERROR: No Image at current index, cannot activate filter!");
+            }
         }
 
         /// <summary>
@@ -720,6 +797,31 @@ namespace GUI
         private void radioFilter4_CheckedChanged(object sender, EventArgs e)
         {
             // ON Checked
+            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // TRY checking if _filterFour() OR ChngImg() throw a NullInstanceException:
+                try
+                {
+                    // CALL _filterFour passing current index in _imgFPDict as a parameter:
+                    _filterFour(_imgFPDict[_dictIndex]);
+
+                    // CALL ChngImg():
+                    ChngImg();
+                }
+                // CATCH NullInstanceException from ChngImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to debug console:
+                    Debug.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
+            else
+            {
+                // WRITE to debug console, with error message:
+                Debug.WriteLine("ERROR: No Image at current index, cannot activate filter!");
+            }
         }
 
         /// <summary>
@@ -730,7 +832,35 @@ namespace GUI
         private void radialFilterRemove_CheckedChanged(object sender, EventArgs e)
         {
             // ON Checked
+            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // TRY checking if _filterRemove() OR ChngImg() throw a NullInstanceException:
+                try
+                {
+                    // CALL _filterRemove passing current index in _imgFPDict as a parameter:
+                    _filterRemove(_imgFPDict[_dictIndex]);
+
+                    // CALL ChngImg():
+                    ChngImg();
+                }
+                // CATCH NullInstanceException from ChngImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to debug console:
+                    Debug.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
+            else
+            {
+                // WRITE to debug console, with error message:
+                Debug.WriteLine("ERROR: No Image at current index, cannot activate filter!");
+            }
         }
+        #endregion
+
+        #region Colouring
 
         /// <summary>
         /// Brightness control button - for controlling brightness
@@ -739,7 +869,32 @@ namespace GUI
         /// <param name="e"> Value </param>
         private void BrightnessControl_ValueChanged(object sender, EventArgs e)
         {
-            // ON INPUT
+            // ON INPUT _brightness
+            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // TRY checking if _brightness() OR ChngImg() throw a NullInstanceException:
+                try
+                {
+                    // CALL _brightness passing current index in _imgFPDict as a parameter:
+                    _brightness(_imgFPDict[_dictIndex]);
+
+                    // CALL ChngImg():
+                    ChngImg();
+                }
+                // CATCH NullInstanceException from ChngImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to debug console:
+                    Debug.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
+            else
+            {
+                // WRITE to debug console, with error message:
+                Debug.WriteLine("ERROR: No Image at current index, cannot alter brightness!");
+            }
         }
 
         /// <summary>
@@ -750,6 +905,31 @@ namespace GUI
         private void ContrastControl_ValueChanged(object sender, EventArgs e)
         {
             // ON INPUT
+            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // TRY checking if _contrast() OR ChngImg() throw a NullInstanceException:
+                try
+                {
+                    // CALL _contrast passing current index in _imgFPDict as a parameter:
+                    _contrast(_imgFPDict[_dictIndex]);
+
+                    // CALL ChngImg():
+                    ChngImg();
+                }
+                // CATCH NullInstanceException from ChngImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to debug console:
+                    Debug.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
+            else
+            {
+                // WRITE to debug console, with error message:
+                Debug.WriteLine("ERROR: No Image at current index, cannot alter contrast!");
+            }
         }
 
         /// <summary>
@@ -760,7 +940,101 @@ namespace GUI
         private void SaturationControl_ValueChanged(object sender, EventArgs e)
         {
             // ON INPUT
+            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // TRY checking if _saturation() OR ChngImg() throw a NullInstanceException:
+                try
+                {
+                    // CALL _saturation passing current index in _imgFPDict as a parameter:
+                    _saturation(_imgFPDict[_dictIndex]);
+
+                    // CALL ChngImg():
+                    ChngImg();
+                }
+                // CATCH NullInstanceException from ChngImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to debug console:
+                    Debug.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
+            else
+            {
+                // WRITE to debug console, with error message:
+                Debug.WriteLine("ERROR: No Image at current index, cannot alter saturation!");
+            }
         }
 
+        #endregion
+
+        /// <summary>
+        /// Scale control button - for scaling the image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ScaleBttn_Click(object sender, EventArgs e)
+        {
+            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // TRY checking if _scale() OR ChngImg() throw a NullInstanceException:
+                try
+                {
+                    // CALL _scale passing current index in _imgFPDict as a parameter:
+                    _scale(_imgFPDict[_dictIndex]);
+
+                    // CALL ChngImg():
+                    ChngImg();
+                }
+                // CATCH NullInstanceException from ChngImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to debug console:
+                    Debug.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
+            else
+            {
+                // WRITE to debug console, with error message:
+                Debug.WriteLine("ERROR: No Image at current index, cannot scale!");
+            }
+        }
+
+        /// <summary>
+        /// Crop control Button - for cropping the image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CropBttn_Click(object sender, EventArgs e)
+        {
+            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // TRY checking if _crop() OR ChngImg() throw a NullInstanceException:
+                try
+                {
+                    // CALL _crop passing current index in _imgFPDict as a parameter:
+                    _crop(_imgFPDict[_dictIndex]);
+
+                    // CALL ChngImg():
+                    ChngImg();
+                }
+                // CATCH NullInstanceException from ChngImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to debug console:
+                    Debug.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
+            else
+            {
+                // WRITE to debug console, with error message:
+                Debug.WriteLine("ERROR: No Image at current index, cannot Crop!");
+            }
+        }
     }
 }

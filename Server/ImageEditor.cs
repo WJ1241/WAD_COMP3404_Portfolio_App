@@ -26,6 +26,7 @@ namespace Server
 
         #region IMPLEMENTATION OF IEDITIMG
 
+        #region Orientation
         /// <summary>
         /// Rotates Image 90 degrees clockwise
         /// </summary>
@@ -65,7 +66,7 @@ namespace Server
                 throw new NullInstanceException("ERROR: No Image to be rotated!");
             }
         }
-
+        
         /// <summary>
         /// Flips Image on the X axis
         /// </summary>
@@ -105,6 +106,32 @@ namespace Server
                 throw new NullInstanceException("ERROR: No Image to be flipped on the Y axis!");
             }
         }
+
+
+        public void CropImg(Image pImage)
+        {
+            // IF pImage DOES HAVE a valid Image instance:
+            if (pImage != null)
+            {
+                Bitmap _bitmap = new Bitmap(pImage.Width, pImage.Height);
+
+                Rectangle _retc = new Rectangle();
+
+                using (Graphics _graphics = Graphics.FromImage(_bitmap))
+                {
+                    _graphics.DrawImage(pImage, -_retc.X, -_retc.Y);
+                    return _bitmap;
+                }
+
+                
+            }
+        }
+
+
+        #endregion
+
+
+
 
         #endregion
     }
