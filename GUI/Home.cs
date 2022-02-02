@@ -25,7 +25,7 @@ namespace GUI
     public partial class Home : Form, IInitialiseIOpenImage, IInitialiseGetImageDel, IInitialiseLoadDel
     {
 
-        #region
+        #region Field Variables
         // DECLARE an int, name it '_dictIndex':
         private int _dictIndex;
 
@@ -242,7 +242,8 @@ namespace GUI
 
             //open the FishyEdit
 
-            //fishyEdit.show
+
+            //fishyEdit.show;
         }
 
 
