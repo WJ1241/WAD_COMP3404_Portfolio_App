@@ -43,6 +43,7 @@ namespace GUI
             this.ScaleBttn = new System.Windows.Forms.Button();
             this.CropBttn = new System.Windows.Forms.Button();
             this.groupBoxFilters = new System.Windows.Forms.GroupBox();
+            this.radialFilterRemove = new System.Windows.Forms.RadioButton();
             this.radioFilter4 = new System.Windows.Forms.RadioButton();
             this.radioFilter3 = new System.Windows.Forms.RadioButton();
             this.radioFilter2 = new System.Windows.Forms.RadioButton();
@@ -56,7 +57,6 @@ namespace GUI
             this.lblBrightness = new System.Windows.Forms.Label();
             this.BrightnessControl = new System.Windows.Forms.NumericUpDown();
             this.groupBoxColouring = new System.Windows.Forms.GroupBox();
-            this.radialFilterRemove = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.ImgDisplay)).BeginInit();
             this.groupBoxFilters.SuspendLayout();
             this.groupBoxOrientation.SuspendLayout();
@@ -231,6 +231,18 @@ namespace GUI
             this.groupBoxFilters.TabStop = false;
             this.groupBoxFilters.Text = "Filters";
             // 
+            // radialFilterRemove
+            // 
+            this.radialFilterRemove.AutoSize = true;
+            this.radialFilterRemove.Location = new System.Drawing.Point(18, 175);
+            this.radialFilterRemove.Name = "radialFilterRemove";
+            this.radialFilterRemove.Size = new System.Drawing.Size(112, 30);
+            this.radialFilterRemove.TabIndex = 4;
+            this.radialFilterRemove.TabStop = true;
+            this.radialFilterRemove.Text = "No Filter";
+            this.radialFilterRemove.UseVisualStyleBackColor = true;
+            this.radialFilterRemove.CheckedChanged += new System.EventHandler(this.radialFilterRemove_CheckedChanged);
+            // 
             // radioFilter4
             // 
             this.radioFilter4.AutoSize = true;
@@ -378,18 +390,7 @@ namespace GUI
             this.groupBoxColouring.TabIndex = 25;
             this.groupBoxColouring.TabStop = false;
             this.groupBoxColouring.Text = "Colouring";
-            // 
-            // radialFilterRemove
-            // 
-            this.radialFilterRemove.AutoSize = true;
-            this.radialFilterRemove.Location = new System.Drawing.Point(18, 175);
-            this.radialFilterRemove.Name = "radialFilterRemove";
-            this.radialFilterRemove.Size = new System.Drawing.Size(112, 30);
-            this.radialFilterRemove.TabIndex = 4;
-            this.radialFilterRemove.TabStop = true;
-            this.radialFilterRemove.Text = "No Filter";
-            this.radialFilterRemove.UseVisualStyleBackColor = true;
-            this.radialFilterRemove.CheckedChanged += new System.EventHandler(this.radialFilterRemove_CheckedChanged);
+            this.groupBoxColouring.Enter += new System.EventHandler(this.groupBoxColouring_Enter);
             // 
             // FishyEdit
             // 
