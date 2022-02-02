@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Server.GeneralInterfaces;
+﻿using System.Collections.Generic;
 
 namespace GUI.Logic
 {
     /// <summary>
     /// Interface which allows implementations to Open Files on a client's device
-    /// Author: William Smith
-    /// Date: 26/11/21
+    /// Author: William Smith, Declan Kerby-Collins & William Eardley
+    /// Date: 02/02/22
     /// </summary>
-    public interface IOpenImage : IMarker
+    public interface IOpenImage : ILogic
     {
         #region METHODS
 
@@ -17,7 +15,7 @@ namespace GUI.Logic
         /// Open Image(s), User is directed to App's Displayable folder
         /// </summary>
         /// <returns> List of File Names </returns>
-        IList<String> OpenImage();
+        IList<string> OpenImage();
 
         #endregion
     }

@@ -9,7 +9,7 @@ namespace Server.GeneralInterfaces
     /// Author: Marc Price
     /// Date: 26/11/21
     /// </summary>
-    public interface IServer : IMarker
+    public interface IServer : IService
     {
         /// <summary>
         /// 

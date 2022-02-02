@@ -103,7 +103,7 @@ namespace GUI
             this.lbl_homeLable.Name = "lbl_homeLable";
             this.lbl_homeLable.Size = new System.Drawing.Size(128, 13);
             this.lbl_homeLable.TabIndex = 6;
-            this.lbl_homeLable.Text = "FishyHomeEditThing v1.2";
+            this.lbl_homeLable.Text = "FishyHomeEditThing v1.3";
             // 
             // _notifHome
             // 
@@ -127,6 +127,7 @@ namespace GUI
             this.Controls.Add(this.LoadBttn);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Home";
+            this.Text = "FishyHome";
             this.Load += new System.EventHandler(this.Home_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ImgDisplay)).EndInit();
             this.ResumeLayout(false);

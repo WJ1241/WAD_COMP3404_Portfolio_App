@@ -5,10 +5,10 @@ namespace GUI.Logic
 {
     /// <summary>
     /// Interface which allows implementations to Save Image to client's device
-    /// Author: William Smith
-    /// Date: 26/11/21
+    /// Authors: William Smith, Declan Kerby-Collins & William Eardley
+    /// Date: 02/02/22
     /// </summary>
-    public interface ISaveImage : IMarker
+    public interface ISaveImage : ILogic
     {
         #region METHODS
 

@@ -44,7 +44,7 @@ namespace Server
         #region IMPLEMENTATION OF IMANAGEIMG
 
         /// <summary>
-        /// 
+        /// Filters a passed in list, to prevent duplication of strings
         /// </summary>
         /// <param name="pList"> Unfiltered IList<String> object </param>
         /// <returns> Filtered IList<String> object </returns>

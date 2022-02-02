@@ -13,7 +13,7 @@ namespace Server
     /// Date: 03/12/21
     /// </summary>
     /// <REFERENCE> Price, M (2021) 'IServer.cs'. COMP3404: Applied Software Engineering. Available at: https://worcesterbb.blackboard.com/. (Accessed: 20 November 2021). </REFERENCE>
-    public class ImageServer : IServer, IACRotate, IInitialiseIEditImg, IInitialiseIManageImg
+    public class ImageServer : IServer, IACRotate, IInitialiseParam<IEditImg>, IInitialiseParam<IManageImg>
     {
         #region FIELD VARIABLES
 
@@ -39,7 +39,7 @@ namespace Server
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEIEDITIMG
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IEDITIMG>
 
         /// <summary>
         /// Initialises an implementer with an IEditImg object
@@ -64,7 +64,7 @@ namespace Server
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEIMANAGEIMG
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IMANAGEIMG>
 
         /// <summary>
         /// Initialises an implementer with an IManageImg object
