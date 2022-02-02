@@ -228,18 +228,7 @@ namespace GUI
         /// <param name="e"> Value for classes without event data </param>
         private void SaveBttn_Click(object sender, EventArgs e)
         {
-            // TRY checking if SaveImage() throws an exception
-            try
-            {
-                // CALL SaveImage() on _imgOpenSave, passing ImgDisplay.Image as a parameter:
-                _imgSave.SaveImage(ImgDisplay.Image);
-            }
-            // CATCH FileNotSavedException from SaveImage method:
-            catch (FileNotSavedException pException)
-            {
-                // WRITE exception message to debug console:
-                Debug.WriteLine(pException.Message);
-            }
+
         }
 
         /// <summary>
@@ -407,5 +396,11 @@ namespace GUI
 
         #endregion
 
+        private void Home_Load(object sender, EventArgs e)
+        {
+
+        }
+
+     
     }
 }
