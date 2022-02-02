@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="GeneralInterfaces\IACRotate.cs" />
     <Compile Include="ImageMgr.cs" />
-    <Compile Include="Delegates\Delegates.cs" />
+    <Compile Include="Commands\Delegates.cs" />
     <Compile Include="Exceptions\ClassDoesNotExistException.cs" />
     <Compile Include="Exceptions\FileAlreadyStoredException.cs" />
     <Compile Include="Exceptions\FileNotSavedException.cs" />
@@ -58,6 +58,7 @@
     <Compile Include="GeneralInterfaces\IEditImg.cs" />
     <Compile Include="GeneralInterfaces\IManageImg.cs" />
     <Compile Include="GeneralInterfaces\IServer.cs" />
+    <Compile Include="InitialisingInterfaces\IInitialiseParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImageServer.cs" />
   </ItemGroup>

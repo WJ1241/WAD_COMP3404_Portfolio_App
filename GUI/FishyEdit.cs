@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using GUI.InitialisingInterfaces;
 using GUI.Logic;
 using Server.Delegates;
 using Server.Exceptions;
+using Server.InitialisingInterfaces;
 
 namespace GUI
 {
     /// <summary>
     /// Partial Class which creates a 'FishyEdit' for the user to edit Images with.
-    /// Author: William Eardley, William Smith & Marc Price, Declan Kerby-Collins
-    /// Date: 21/01/22
+    /// Author: William Smith, William Eardley, Declan Kerby-Collins, Marc Price
+    /// Date: 02/02/22
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>
     /// <REFERENCE> jay_t55 (2014) Make a borderless form movable? Available at: https://stackoverflow.com/questions/1592876/make-a-borderless-form-movable/24561946#24561946. (Accessed 5 November 2021). </REFERENCE>
-    public partial class FishyEdit : Form, IInitialiseIOpenImage, IInitialiseGetImageDel, IInitialiseLoadDel, IInitialiseDeleteDel, IInitialiseRotationDel, IInitialiseACRotationDel, IInitialiseHFlipImgDel, IInitialiseVFlipImgDel
+    public partial class FishyEdit : Form, IInitialiseParam<IOpenImage>, IInitialiseParam<GetImageDelegate>, IInitialiseParam<LoadDelegate>, IInitialiseParam<DeleteDelegate>, IInitialiseParam<RotationDelegate>, IInitialiseParam<ACRotationDelegate>, IInitialiseParam<HFlipImageDelegate>, IInitialiseParam<VFlipImageDelegate>
     {
         #region FIELD VARIABLES
 
@@ -113,7 +113,7 @@ namespace GUI
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEIOPENIMAGE
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IOPENIMAGE>
 
         /// <summary>
         /// Initialises an object with an 'IOpenImage' instance
@@ -146,7 +146,7 @@ namespace GUI
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEGETIMAGEDEL
+        #region IMPLEMENTATION OF IINITIALISEPARAM<GETIMAGEDELEGATE>
 
         /// <summary>
         /// Initialises an object with a 'GetImage' Delegate
@@ -161,7 +161,7 @@ namespace GUI
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISELOADDEL
+        #region IMPLEMENTATION OF IINITIALISEPARAM<LOADDELEGATE>
 
         /// <summary>
         /// Initialises an object with a 'Load' Delegate
@@ -176,7 +176,7 @@ namespace GUI
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEDELETEDEL
+        #region IMPLEMENTATION OF IINITIALISEPARAM<DELETEDELEGATE>
 
         /// <summary>
         /// Initialises an object with a 'Delete' Delegate
@@ -191,7 +191,7 @@ namespace GUI
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEROTATIONEDEL
+        #region IMPLEMENTATION OF IINITIALISEPARAM<ROTATIONEDELEGATE>
 
         /// <summary>
         /// Initialises an object with a 'Rotation' Delegate
@@ -206,7 +206,7 @@ namespace GUI
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEACROTATIONEDEL
+        #region IMPLEMENTATION OF IINITIALISEPARAM<ACROTATIONEDELEGATE>
 
         /// <summary>
         /// Initialises an object with a 'ACRotation' Delegate
@@ -221,7 +221,7 @@ namespace GUI
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEHFLIPIMGDEL
+        #region IMPLEMENTATION OF IINITIALISEPARAM<HFLIPIMAGEDELEGATE>
 
         /// <summary>
         /// Method which initialises an object with a 'HFlipImage' Delegate
@@ -236,7 +236,7 @@ namespace GUI
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEVFLIPIMGDEL
+        #region IMPLEMENTATION OF IINITIALISEPARAM<VFLIPIMAGEDELEGATE>
 
         /// <summary>
         /// Method which initialises an object with a 'VFlipImage' Delegate
