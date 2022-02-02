@@ -762,5 +762,9 @@ namespace GUI
             // ON INPUT
         }
 
+        private void FishyEdit_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
