@@ -6,10 +6,10 @@ namespace Server.GeneralInterfaces
 {
     /// <summary>
     /// Interface which allows implementations to edit Images
-    /// Author: William Smith
-    /// Date: 01/12/21
+    /// Authors: William Smith, Declan Kerby-Collins & William Eardley
+    /// Date: 02/02/22
     /// </summary>
-    public interface IManageImg : IMarker
+    public interface IManageImg : IService
     {
         #region METHODS
 

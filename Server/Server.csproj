@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GeneralInterfaces\IACRotate.cs" />
+    <Compile Include="GeneralInterfaces\IService.cs" />
     <Compile Include="ImageMgr.cs" />
     <Compile Include="Commands\Delegates.cs" />
     <Compile Include="Exceptions\ClassDoesNotExistException.cs" />
@@ -51,10 +52,7 @@
     <Compile Include="Exceptions\InvalidStringException.cs" />
     <Compile Include="Exceptions\NullInstanceException.cs" />
     <Compile Include="Exceptions\NullValueException.cs" />
-    <Compile Include="GeneralInterfaces\IMarker.cs" />
     <Compile Include="ImageEditor.cs" />
-    <Compile Include="InitialisingInterfaces\IInitialiseIEditImg.cs" />
-    <Compile Include="InitialisingInterfaces\IInitialiseIManageImg.cs" />
     <Compile Include="GeneralInterfaces\IEditImg.cs" />
     <Compile Include="GeneralInterfaces\IManageImg.cs" />
     <Compile Include="GeneralInterfaces\IServer.cs" />

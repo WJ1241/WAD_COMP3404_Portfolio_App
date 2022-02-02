@@ -57,14 +57,11 @@
     </Compile>
     <Compile Include="InitialisingInterfaces\IInitialiseIOpenImage.cs" />
     <Compile Include="InitialisingInterfaces\IInitialiseLoadDel.cs" />
-    <Compile Include="InitialisingInterfaces\IInitialiseDeleteDel.cs" />
-    <Compile Include="InitialisingInterfaces\IInitialiseACRotationDel.cs" />
-    <Compile Include="InitialisingInterfaces\IInitialiseVFlipImgDel.cs" />
-    <Compile Include="InitialisingInterfaces\IInitialiseHFlipImgDel.cs" />
     <Compile Include="InitialisingInterfaces\IInitialiseGetImageDel.cs" />
-    <Compile Include="InitialisingInterfaces\IInitialiseRotationDel.cs" />
     <Compile Include="Logic\IOpenImage.cs" />
-    <Compile Include="Logic\OpenSaveLogic.cs" />
+    <Compile Include="Logic\ILogic.cs" />
+    <Compile Include="Logic\SaveLogic.cs" />
+    <Compile Include="Logic\OpenLogic.cs" />
     <Compile Include="Logic\ISaveImage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
