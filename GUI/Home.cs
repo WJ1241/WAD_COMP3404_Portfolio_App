@@ -401,9 +401,13 @@ namespace GUI
 
         }
 
+        /// <summary>
+        /// Method for notification icon in system tray - Not called but required
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
         }
     }
 }
