@@ -222,16 +222,6 @@ namespace GUI
         }
 
         /// <summary>
-        /// Method which saves currently displayed image in FishyEdit
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Value for classes without event data </param>
-        private void SaveBttn_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
         /// Method which opens the FishyEdit window
         /// </summary>
         /// <param name="sender"></param>
