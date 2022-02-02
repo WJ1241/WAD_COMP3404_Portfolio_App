@@ -762,6 +762,9 @@ namespace GUI
             // ON INPUT
         }
 
-      
+        private void groupBoxColouring_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

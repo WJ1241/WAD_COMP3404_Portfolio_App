@@ -34,6 +34,9 @@ namespace App
         // IS CONCRETE FORM, HOWEVER IT NEEDS TO BE 'FORM' FOR APPLICATION.RUN() METHOD
         private Form _fishyEdit;
 
+        // DECLARE a form called '_home':
+        private Form _home;
+
         #endregion
 
         
@@ -111,10 +114,10 @@ namespace App
             try
             {
                 // INSTANTIATE _fishyEdit as a new FishyEdit():
-                _fishyEdit = _disposableFactory.Create<FishyEdit>() as Form;
+                _home = _disposableFactory.Create<Home>() as Form;
 
                 // INITIALISE _fishyEdit with an IOpenImage object:
-                (_fishyEdit as IInitialiseIOpenImage).Initialise(_markerFactory.Create<OpenSaveLogic>() as IOpenImage);
+                (_home as IInitialiseIOpenImage).Initialise(_markerFactory.Create<OpenSaveLogic>() as IOpenImage);
             }
             // CATCH ClassDoesNotExistException, write message to console:
             catch (ClassDoesNotExistException pException)
@@ -129,35 +132,41 @@ namespace App
                 System.Diagnostics.Debug.WriteLine(pException.Message);
             }
 
-            #region FISHYEDIT DELEGATES
+            #region HOME DELEGATES
 
             // INITIALISE _fishyEdit with _server.GetImage as a delegate:
-            (_fishyEdit as IInitialiseGetImageDel).Initialise(_server.GetImage);
+            (_home as IInitialiseGetImageDel).Initialise(_server.GetImage);
 
             // INITIALISE _fishyEdit with _server.Load as a delegate:
-            (_fishyEdit as IInitialiseLoadDel).Initialise(_server.Load);
+            (_home as IInitialiseLoadDel).Initialise(_server.Load);
 
-            // INITIALISE _fishyEdit with ObjectDispose as a delegate:
-            (_fishyEdit as IInitialiseDeleteDel).Initialise(ObjectDispose);
+            ///
+            // NOTE: THESE ARE FROM CREATING FISHY EDIT - AS HOME NOW CREATED THESE ARENT NEEDED (KEPT INCASE THINGS GO SOUTH)
+            ///
 
-            // INITIALISE _fishyEdit with _server.RotateImage as a delegate:
-            (_fishyEdit as IInitialiseRotationDel).Initialise(_server.RotateImage);
+            //// INITIALISE _fishyEdit with ObjectDispose as a delegate:
+            //(_home as IInitialiseDeleteDel).Initialise(ObjectDispose);
 
-            // INITIALISE _fishyEdit with _server.ACRotateImage as a delegate:
-            (_fishyEdit as IInitialiseACRotationDel).Initialise((_server as IACRotate).ACRotateImage);
+            //// INITIALISE _fishyEdit with _server.RotateImage as a delegate:
+            //(_home as IInitialiseRotationDel).Initialise(_server.RotateImage);
 
-            // INITIALISE _fishyEdit with _server.HorizontalFlipImage as a delegate:
-            (_fishyEdit as IInitialiseHFlipImgDel).Initialise(_server.HorizontalFlipImage);
+            //// INITIALISE _fishyEdit with _server.ACRotateImage as a delegate:
+            //(_home as IInitialiseACRotationDel).Initialise((_server as IACRotate).ACRotateImage);
 
-            // INITIALISE _fishyEdit with _server.VerticalFlipImage as a delegate:
-            (_fishyEdit as IInitialiseVFlipImgDel).Initialise(_server.VerticalFlipImage);
+            //// INITIALISE _fishyEdit with _server.HorizontalFlipImage as a delegate:
+            //(_home as IInitialiseHFlipImgDel).Initialise(_server.HorizontalFlipImage);
+
+            //// INITIALISE _fishyEdit with _server.VerticalFlipImage as a delegate:
+            //(_home as IInitialiseVFlipImgDel).Initialise(_server.VerticalFlipImage);
+
+            /////////////////////////////////////////////////////////////////////////////////////////////
 
             #endregion
 
             #endregion
 
             // CALL Application static method 'Run()', passing _fishyEdit as a parameter:
-            Application.Run(_fishyEdit);
+            Application.Run(_home);
         }
 
 
