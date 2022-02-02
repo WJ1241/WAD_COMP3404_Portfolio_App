@@ -228,7 +228,7 @@ namespace GUI
         /// <param name="e"></param>
         private void EditBttn_Click(object sender, EventArgs e)
         {
-            //if fishyedit is null open fishy edit
+            //IF fishyedit is NULL then open fishy edit
 
             //open the FishyEdit
 
