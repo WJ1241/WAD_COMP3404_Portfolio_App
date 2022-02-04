@@ -35,6 +35,17 @@ namespace Server.GeneralInterfaces
         /// <param name="pImage"> Image to be flipped on the Y axis </param>=
         void ImgFlipYAxis(Image pImage);
 
+        /// <summary>
+        /// Crop the image
+        /// </summary>
+        /// <param name="pImage"></param> image to be cropped
+        /// <returns> returns the cropped image </returns>
+        Image CropImg(Image pImage);
+
+
+
+
+
         #endregion
     }
 }

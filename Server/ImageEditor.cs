@@ -107,23 +107,35 @@ namespace Server
             }
         }
 
-
-        public void CropImg(Image pImage)
+        /// <summary>
+        /// Crops image 
+        /// </summary>
+        /// <param name="pImage"></param>
+        /// <returns></returns>
+        public Image CropImg(Image pImage)
         {
-            // IF pImage DOES HAVE a valid Image instance:
+            // IF pImage DOESNT HAVE a valid Image instance:
             if (pImage != null)
             {
+                //new temp bitmap name it _bitmap
                 Bitmap _bitmap = new Bitmap(pImage.Width, pImage.Height);
 
+                //new temp rectangle name it _rect
                 Rectangle _retc = new Rectangle();
 
+                //using Graphics from image take set the value of _bitmap to the size of the rectangle set by the user
                 using (Graphics _graphics = Graphics.FromImage(_bitmap))
                 {
                     _graphics.DrawImage(pImage, -_retc.X, -_retc.Y);
+
+                    //return the edited _bitmap 
                     return _bitmap;
                 }
-
-                
+            }
+            else
+            {
+                // THROW new NullInstanceException, with corresponding message:
+                throw new NullInstanceException("ERROR: No Image to be cropped!");
             }
         }
 

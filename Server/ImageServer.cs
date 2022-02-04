@@ -279,5 +279,42 @@ namespace Server
         }
 
         #endregion
+
+        #region Crop
+        /// <summary>
+        /// Flip the image specified by 'pUid' vertically.
+        /// </summary>
+        /// <param name="pUid">the unique identifier for the image to be flipped</param>
+        public void CropImage(String pUid)
+        {
+            // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgFlipYAxis:
+            try
+            {
+                // CALL CropImg, passing ReturnImg() as a parameter:
+                _imgEditor.CropImg(_imgManager.ReturnImg(pUid));
+            }
+
+            // CATCH InvalidStringException from ReturnImg:
+            catch (InvalidStringException pException)
+            {
+                // WRITE error message to debug console:
+                System.Diagnostics.Debug.WriteLine(pException.Message);
+
+                // THROW new InvalidStringException, with corresponding message:
+                throw new InvalidStringException(pException.Message);
+            }
+            // CATCH NullInstanceException from _imgEditor.ImgFlipYAxis:
+            catch (NullInstanceException pException)
+            {
+                // WRITE error message to debug console:
+                System.Diagnostics.Debug.WriteLine(pException.Message);
+
+                // THROW new NullInstanceException, with corresponding message:
+                throw new NullInstanceException(pException.Message);
+            }
+        }
+
+        #endregion
+
     }
 }
