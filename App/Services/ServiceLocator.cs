@@ -46,9 +46,8 @@ namespace App.Services
             // IF pServiceFactory DOES HAVE an active instance:
             if (pServiceFactory != null)
             {
-                // DECLARE & INITIALISE a string, name it '_serviceName', give value of incoming class' type:
-                string _serviceName = pServiceFactory.GetType().Name;
-
+                // DECLARE & INITIALISE a string, name it '_serviceName', give value of incoming class' type which is trimmed:
+                string _serviceName = GenericTypeNameTrimmer.TrimOneGeneric(pServiceFactory.GetType());
 
                 Console.WriteLine(_serviceName);
 
@@ -75,8 +74,21 @@ namespace App.Services
         /// <returns> Instance of IService </returns>
         public IService GetService<C>() where C : IService, new()
         {
-            // DECLARE & INITIALISE a string, name it '_serviceName', give value of incoming class/interface:
-            string _serviceName = "" + typeof(C);
+            // DECLARE a string, name it '_serviceName':
+            string _serviceName = "";
+
+            // IF typeof(C) DOES HAVE one or more generic arguments:
+            if (typeof(C).GetGenericArguments().Length >= 1)
+            {
+                // INITIALISE _serviceName, give value of incoming class' type which is trimmed:
+                _serviceName = GenericTypeNameTrimmer.TrimOneGeneric(typeof(C));
+            }
+            // IF typeof(C) DOES HAVE one or more generic arguments:
+            else if (typeof(C).GetGenericArguments().Length == 0)
+            {
+                // INITIALISE _serviceName, give value of incoming class/interface:
+                _serviceName = typeof(C).ToString();
+            }
 
             // IF _serviceDict DOES NOT contain a key of name of class/interface to be created:
             if (!_serviceDict.ContainsKey(_serviceName))
@@ -84,14 +96,8 @@ namespace App.Services
                 // TRY checking if Create() throws a ClassDoesNotExistException:
                 try
                 {
-
-
-                    // TODO: FIX THIS
-
-
-
-                    // ADD new service to _serviceDict, with type 'C' name as key, and instance of a type 'C' factory as value:
-                    _serviceDict.Add(_serviceName, (_serviceDict["Factory`1"] as IFactory<IService>).Create<C>());
+                    // ADD new service to _serviceDict, with type 'C' name as key, and instance of type 'C' as value:
+                    _serviceDict.Add(_serviceName, (_serviceDict["Factory<IService>"] as IFactory<IService>).Create<C>());
                 }
                 // CATCH KeyNotFoundException from _serviceDict["Factory<IService>"]:
                 catch (KeyNotFoundException e)
