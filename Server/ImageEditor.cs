@@ -5,9 +5,9 @@ using Server.GeneralInterfaces;
 namespace Server
 {
     /// <summary>
-    /// Class which edits Images, e.g. Rotation, H/V Flip
-    /// Author: William Smith
-    /// Date: 01/12/21
+    /// Class which edits Images, e.g. Rotation, H/V Flip, Scaling, Cropping, Filtering
+    /// Author: William Eardley, William Smith
+    /// Date: 11/02/22
     /// </summary>
     public class ImageEditor : IEditImg
     {
@@ -66,7 +66,7 @@ namespace Server
                 throw new NullInstanceException("ERROR: No Image to be rotated!");
             }
         }
-        
+
         /// <summary>
         /// Flips Image on the X axis
         /// </summary>
@@ -108,6 +108,25 @@ namespace Server
         }
 
         /// <summary>
+        /// METHOD 'ScaleImg' - for scaling image
+        /// </summary>
+        /// <param name="pImage"></param>
+        public void ScaleImg(Image pImage)
+        {
+            // IF pImage is NOT NULL then call method
+            if (pImage != null)
+            {
+                // CALL Scale method for image
+                // pImage.Scale()
+            }
+            else
+            {
+                // THROW NEW NullInstanceException with apprpriate message
+                throw new NullInstanceException("ERROR: No Image to be scaled!");
+            }
+        }
+
+        /// <summary>
         /// Crops image 
         /// </summary>
         /// <param name="pImage"></param>
@@ -139,12 +158,135 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// METHOD 'BrightnessImg' - for controlling brightness
+        /// </summary>
+        /// <param name="pImage"></param>
+        public void BrightnessImg(Image pImage)
+        {
+            // IF pImage is NOT NULL then call method
+            if (pImage != null)
+            {
+                // CALL Brightness method for image
+            }
+            else
+            {
+                // THROW NEW NullInstanceException with appropriate message
+                throw new NullInstanceException("ERROR: No Image to increase brightness of!");
+            }
+        }
+
+        /// <summary>
+        /// METHOD 'ContrastImg' - for controlling contrast
+        /// </summary>
+        /// <param name="pImage"></param>
+        public void ContrastImg(Image pImage)
+        {
+            // IF pImage is NOT NULL then call method
+            if (pImage != null)
+            {
+                // CALL Contrast method for image
+
+            }
+            else
+            {
+                // THROW NEW NullInstanceException with appropriate message
+                throw new NullInstanceException("ERROR: No Image to increase contrast of!");
+            }
+        }
+
+        /// <summary>
+        /// METHOD 'SaturationImg' - for controlling saturation
+        /// </summary>
+        /// <param name="pImage"></param>
+        public void SaturationImg(Image pImage)
+        {
+            // IF pImage is NOT NULL then call method
+            if (pImage != null)
+            {
+                // CALL Saturation method for image
+            }
+            else
+            {
+                // THROW NEW NullInstanceException with appropriate message
+                throw new NullInstanceException("ERROR: No Image to increase saturation of!");
+            }
+         }
+
+        /// <summary>
+        /// METHOD 'FilterOneImg' - for applying first filter
+        /// </summary>
+        /// <param name="pImage"></param>
+        public void FilterOneImg(Image pImage)
+        {
+            // IF pImage is NOT NULL then call method
+            if (pImage != null)
+            {
+                // CALL Filter One method for image
+            }
+            else
+            {
+                // THROW NEW NullInstanceException with appropriate message
+                throw new NullInstanceException("ERROR: No Image to apply filter to!");
+            }
+        }
+
+        /// <summary>
+        /// METHOD 'FilterTwoImg' - for applying second filter
+        /// </summary>
+        /// <param name="pImage"></param>
+        public void FilterTwoImg(Image pImage)
+        {
+            // IF pImage is NOT NULL then call method
+            if (pImage != null)
+            {
+                // CALL Filter Two method for image
+            }
+            else
+            {
+                // THROW NEW NullInstanceException with appropriate message
+                throw new NullInstanceException("ERROR: No Image to apply filter to!");
+            }
+        }
+
+        /// <summary>
+        /// METHOD 'FilterThreeImg' - for applying third filter
+        /// </summary>
+        /// <param name="pImage"></param>
+        public void FilterThreeImg(Image pImage)
+        {
+            // IF pImage is NOT NULL then call method
+            if (pImage != null)
+            {
+                // CALL Filter Three method for image
+            }
+            else
+            {
+                // THROW NEW NullInstanceException with appropriate message
+                throw new NullInstanceException("ERROR: No Image to apply filter to!");
+            }
+         }
+
+        /// <summary>
+        /// METHOD 'FilterFourImg' - for applying fourth filter
+        /// </summary>
+        /// <param name="pImage"></param>
+        public void FilterFourImg(Image pImage)
+        {
+            // IF pImage is NOT NULL then call method
+            if (pImage != null)
+            {
+                // CALL Filter Four method for image
+            }
+            else
+            {
+                // THROW NEW NullInstanceException with appropriate message
+                throw new NullInstanceException("ERROR: No Image to apply filter to!");
+            }
+        }
+
 
         #endregion
-
-
-
-
         #endregion
     }
 }
