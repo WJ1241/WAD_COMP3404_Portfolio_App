@@ -191,9 +191,6 @@ namespace App
         /// </summary>
         private void CreateFishyEdit(string pImageFP)
         {
-
-
-
             #region FISHYEDIT CREATION
 
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:

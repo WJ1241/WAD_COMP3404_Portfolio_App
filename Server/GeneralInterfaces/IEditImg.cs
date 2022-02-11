@@ -42,6 +42,52 @@ namespace Server.GeneralInterfaces
         /// <returns> returns the cropped image </returns>
         Image CropImg(Image pImage);
 
+        /// <summary>
+        /// METHOD 'BrightnessImg' - for controlling brightness
+        /// </summary>
+        /// <param name="pImage"></param>
+        void BrightnessImg(Image pImage);
+
+        /// <summary>
+        /// METHOD 'ContrastImg' - for controlling contrast
+        /// </summary>
+        /// <param name="pImage"></param>
+        void ContrastImg(Image pImage);
+  
+
+        /// <summary>
+        /// METHOD 'SaturationImg' - for controlling saturation
+        /// </summary>
+        /// <param name="pImage"></param>
+        void SaturationImg(Image pImage);
+
+
+        /// <summary>
+        /// METHOD 'FilterOneImg' - for applying first filter
+        /// </summary>
+        /// <param name="pImage"></param>
+        void FilterOneImg(Image pImage);
+
+        /// <summary>
+        /// METHOD 'FilterTwoImg' - for applying second filter
+        /// </summary>
+        /// <param name="pImage"></param>
+        void FilterTwoImg(Image pImage);
+    
+
+        /// <summary>
+        /// METHOD 'FilterThreeImg' - for applying third filter
+        /// </summary>
+        /// <param name="pImage"></param>
+        void FilterThreeImg(Image pImage);
+
+
+        /// <summary>
+        /// METHOD 'FilterFourImg' - for applying fourth filter
+        /// </summary>
+        /// <param name="pImage"></param>
+        void FilterFourImg(Image pImage);
+  
 
 
 
