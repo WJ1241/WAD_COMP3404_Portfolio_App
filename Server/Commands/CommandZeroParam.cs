@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace COMP3451Project.EnginePackage.Services.Commands
+namespace Server.Commands
 {
     /// <summary>
     /// Class which contains an Action with Zero Parameters
@@ -17,6 +17,9 @@ namespace COMP3451Project.EnginePackage.Services.Commands
 
         // DECLARE an Action, name it '_action':
         private Action _action;
+
+        // DECLARE a string, name it '_name':
+        private string _name;
 
         #endregion
 
@@ -46,6 +49,28 @@ namespace COMP3451Project.EnginePackage.Services.Commands
             {
                 // SET value of _action to incoming value:
                 _action = value;
+            }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF INAME
+
+        /// <summary>
+        /// Property which allows read and write access to an implementation's name
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                // RETURN value of _name:
+                return _name;
+            }
+            set
+            {
+                // SET value of _name to incoming value:
+                _name = value;
             }
         }
 

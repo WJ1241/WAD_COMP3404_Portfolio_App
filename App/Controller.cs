@@ -11,6 +11,7 @@ using Server.Exceptions;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
 using Server.Delegates;
+using Server.Commands;
 
 namespace App
 {
@@ -145,7 +146,7 @@ namespace App
             try
             {
                 // INSTANTIATE _fishyHome as a new FishyHome():
-                _fishyHome = (_serviceLocator.GetService<Factory<Form>>() as IFactory<Form>).Create<Home>();
+                _fishyHome = (_serviceLocator.GetService<Factory<Form>>() as IFactory<Form>).Create<FishyHome>();
 
                 // INITIALISE _fishyHome with an IOpenImage object:
                 (_fishyHome as IInitialiseParam<IOpenImage>).Initialise((_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage);
@@ -193,7 +194,6 @@ namespace App
         {
 
 
-
             #region FISHYEDIT CREATION
 
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
@@ -220,8 +220,22 @@ namespace App
 
             #region FISHYEDIT DELEGATES
 
-            // INITIALISE _fishyHome with _server.GetImage as a delegate:
-            (_fishyHome as IInitialiseParam<GetImageDelegate>).Initialise(_server.GetImage);
+            // INITIALISE _fishyEdit with _server.GetImage as a delegate:
+            //(_fishyEdit as IInitialiseParam<GetImageDelegate>).Initialise(_server.GetImage);
+
+
+            ICommandOneParam<IDisposable> _remove = new CommandOneParam<IDisposable>();
+
+
+            _remove.MethodRef = DisposableRemoval;
+
+
+            (_remove as IName).Name = "Remove";
+
+
+            (_fishyEdit as IInitialiseParam<ICommand>).Initialise(_remove);
+
+
 
             #endregion
 
@@ -253,7 +267,7 @@ namespace App
         /// Disposes of objects implementing the IDisposable interface
         /// </summary>
         /// <param name="pDisposable"> Disposable object to be removed from memory </param>
-        private void ObjectDispose(IDisposable pDisposable)
+        private void DisposableRemoval(IDisposable pDisposable)
         {
             // IF pDisposable DOES HAVE an active instance:
             if (pDisposable != null)

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace COMP3451Project.EnginePackage.Services.Commands
+namespace Server.Commands
 {
     /// <summary>
     /// Class which contains an Action with ONE Parameter
@@ -12,15 +8,18 @@ namespace COMP3451Project.EnginePackage.Services.Commands
     /// Date: 02/02/22
     /// </summary>
     /// <typeparam name="T"> Any Type, 'T' for 'T'ype </typeparam>
-    public class CommandOneParam<T> : ICommandOneParam<T>
+    public class CommandOneParam<T> : ICommandOneParam<T>, IName
     {
         #region FIELD VARIABLES
+
+        // DECLARE an Action, name it '_action':
+        private Action<T> _action;
 
         // DECLARE a T, name it '_data':
         private T _data;
 
-        // DECLARE an Action, name it '_action':
-        private Action<T> _action;
+        // DECLARE a string, name it '_name':
+        private string _name;
 
         #endregion
 
@@ -62,6 +61,28 @@ namespace COMP3451Project.EnginePackage.Services.Commands
             {
                 // SET value of _action to incoming value:
                 _action = value;
+            }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF INAME
+
+        /// <summary>
+        /// Property which allows read and write access to an implementation's name
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                // RETURN value of _name:
+                return _name;
+            }
+            set
+            {
+                // SET value of _name to incoming value:
+                _name = value;
             }
         }
 

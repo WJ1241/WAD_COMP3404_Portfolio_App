@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Server.GeneralInterfaces;
 
-namespace COMP3451Project.EnginePackage.Services.Commands
+namespace Server.Commands
 {
     /// <summary>
     /// Class which invokes commands from a required process e.g. User input

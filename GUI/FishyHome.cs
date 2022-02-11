@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using GUI.Logic;
+using Server.Commands;
 using Server.Delegates;
 using Server.Exceptions;
 using Server.InitialisingInterfaces;
@@ -17,18 +18,12 @@ namespace GUI
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>
     /// <REFERENCE> jay_t55 (2014) Make a borderless form movable? Available at: https://stackoverflow.com/questions/1592876/make-a-borderless-form-movable/24561946#24561946. (Accessed 5 November 2021). </REFERENCE>
-    public partial class Home : Form, IInitialiseParam<IOpenImage>, IInitialiseParam<GetImageDelegate>, IInitialiseParam<LoadDelegate>
+    public partial class FishyHome : Form, IInitialiseParam<IOpenImage>, IInitialiseParam<GetImageDelegate>, IInitialiseParam<LoadDelegate>
     {
         #region FIELD VARIABLES
 
-        // DECLARE an int, name it '_dictIndex':
-        private int _dictIndex;
-
-        // DECLARE an int, name it '_dictCount':
-        private int _dictCount;
-
-        // DECLARE an IDictionary<int, String>, name it 'imgFPDict':
-        private IDictionary<int, String> _imgFPDict;
+        // DECLARE an IDictionary<int, string>, name it 'imgFPDict':
+        private IDictionary<int, string> _imgFPDict;
 
         // DECLARE an IOpenImage, name it '_imgOpen':
         private IOpenImage _imgOpen;
@@ -36,24 +31,39 @@ namespace GUI
         // DECLARE an ISaveImage, name it '_imgSave':
         private ISaveImage _imgSave;
 
+        // DECLARE an IDictionary<string, ICommand>, name it '_commandDict':
+        private IDictionary<string, ICommand> _commandDict;
+
+        // DECLARE an Action<ICommand>, name it '_invokeCommand':
+        private Action<ICommand> _invokeCommand;
+
         // DECLARE a GetImageDelegate, name it '_getImg':
         private GetImageDelegate _getImg;
 
         // DECLARE a LoadDelegate, name it '_load':
         private LoadDelegate _load;
 
+        // DECLARE an int, name it '_dictIndex':
+        private int _dictIndex;
+
+        // DECLARE an int, name it '_dictCount':
+        private int _dictCount;
+
         #endregion 
 
         /// <summary>
-        /// Constructor for objects of Home
+        /// Constructor for objects of FishyHome
         /// </summary>
-        public Home()
+        public FishyHome()
         {
             // CALL InitializeComponent():
             InitializeComponent();
 
-            // INSTANTIATE _imgFPDict as new Dictionary<int,String>():
-            _imgFPDict = new Dictionary<int, String>();
+            // INSTANTIATE _imgFPDict as new Dictionary<int, string>():
+            _imgFPDict = new Dictionary<int, string>();
+
+            // INSTANTIATE _commandDict as a new Dictionary<string, ICommand>():
+            _commandDict = new Dictionary<string, ICommand>();
 
             // INITIALISE _dictIndex with value of 0:
             _dictIndex = 0;
@@ -61,6 +71,51 @@ namespace GUI
             // INITIALISE _dictCount with value of 0:
             _dictCount = 0;
         }
+
+
+
+
+
+        #region IMPLEMENTATION OF ICOMMANDSENDER
+
+        /// <summary>
+        /// Property which allows write access to a command invoking Action
+        /// </summary>
+        public Action<ICommand> InvokeCommand
+        {
+            set
+            {
+                // SET value of _invokeCommand to incoming value:
+                _invokeCommand = value;
+            }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IINITIALISEPARAM<ICOMMAND>
+
+        /// <summary>
+        /// Initialises an object with an ICommand object
+        /// </summary>
+        /// <param name="pCommand"> ICommand object with an executable method and possible parameter(s) </param>
+        public void Initialise(ICommand pCommand)
+        {
+            // IF pCommand DOES HAVE an active instance:
+            if (pCommand != null)
+            {
+                // ADD pCommand.Name as a key, and pCommand as a value to _commandDict:
+                _commandDict.Add((pCommand as IName).Name, pCommand);
+            }
+            // IF pCommand DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW new NullInstanceException, with corresponding message:
+                throw new NullInstanceException("ERROR: pCommand does not have an active instance, requires instantiation!");
+            }
+        }
+
+        #endregion
 
 
         #region IMPLEMENTATION OF IINITIALISEPARAM<IOPENIMAGE>
@@ -224,6 +279,13 @@ namespace GUI
         /// <param name="e"></param>
         private void EditBttn_Click(object sender, EventArgs e)
         {
+
+
+
+
+
+
+
             //IF fishyedit is NULL then open fishy edit
             FishyEdit _fEdit = new FishyEdit();
 
@@ -233,7 +295,6 @@ namespace GUI
             {
                 _fEdit.Show();
             }
-
         }
 
 

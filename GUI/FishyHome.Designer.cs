@@ -1,7 +1,7 @@
 ﻿
 namespace GUI
 {
-    partial class Home
+    partial class FishyHome
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace GUI
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FishyHome));
             this.LoadBttn = new System.Windows.Forms.Button();
             this.ImgDisplay = new System.Windows.Forms.PictureBox();
             this.NextBttn = new System.Windows.Forms.Button();

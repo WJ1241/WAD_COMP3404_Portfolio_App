@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace COMP3451Project.EnginePackage.Services.Commands
+namespace Server.Commands
 {
     /// <summary>
     /// Interface which allows implementations send commands to another class
@@ -16,9 +16,9 @@ namespace COMP3451Project.EnginePackage.Services.Commands
         #region PROPERTIES
 
         /// <summary>
-        /// Property which allows read and write access to a command invoking method
+        /// Property which allows write access to a command invoking Action
         /// </summary>
-        Action<ICommand> InvokeCommand { get; set; }
+        Action<ICommand> InvokeCommand { set; }
 
         #endregion
     }
