@@ -106,7 +106,10 @@ namespace Server
                 throw new NullInstanceException("ERROR: No Image to be flipped on the Y axis!");
             }
         }
+        #endregion
 
+
+        #region Scale/Crop
         /// <summary>
         /// METHOD 'ScaleImg' - for scaling image
         /// </summary>
@@ -157,7 +160,10 @@ namespace Server
                 throw new NullInstanceException("ERROR: No Image to be cropped!");
             }
         }
+        #endregion
 
+
+        #region Brightness/Contrast/Saturation
         /// <summary>
         /// METHOD 'BrightnessImg' - for controlling brightness
         /// </summary>
@@ -212,7 +218,10 @@ namespace Server
                 throw new NullInstanceException("ERROR: No Image to increase saturation of!");
             }
          }
+        #endregion
 
+
+        #region Filters
         /// <summary>
         /// METHOD 'FilterOneImg' - for applying first filter
         /// </summary>
@@ -284,9 +293,9 @@ namespace Server
                 throw new NullInstanceException("ERROR: No Image to apply filter to!");
             }
         }
-
-
         #endregion
+
+       
         #endregion
     }
 }
