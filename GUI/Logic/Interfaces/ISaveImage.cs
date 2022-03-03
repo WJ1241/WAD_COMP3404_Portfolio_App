@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
-using Server.GeneralInterfaces;
 
-namespace GUI.Logic
+namespace GUI.Logic.Interfaces
 {
     /// <summary>
     /// Interface which allows implementations to Save Image to client's device

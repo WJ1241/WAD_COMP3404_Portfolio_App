@@ -424,46 +424,5 @@ namespace TestServer
         #endregion
 
         #endregion
-
-
-        #region TDD TEST
-
-        [TestMethod]
-        public void TestTest()
-        {
-            #region ARRANGE
-
-            // VARIABLES AND OTHER REQUIRED OBJECTS TO DECIDE IF THEY ARE NEEDED IN THE UNIT
-
-            int one;
-
-
-            int ten;
-
-
-            #endregion
-
-
-            #region ACT
-
-            // CALL METHODS WHICH DO NOT HAVE ANY FUNCTIONALITY YET, BUT JUST TEST WITH MOQ AS IF IT WERE THERE
-
-            //feed(one);
-
-            #endregion
-
-
-            #region ASSERT
-
-            // ASSERT IF METHOD THROWS EXCEPTIONS, OR IF VALUES MEET WHAT IS NEEDED
-
-
-
-
-            #endregion
-        }
-
-        #endregion
-
     }
 }

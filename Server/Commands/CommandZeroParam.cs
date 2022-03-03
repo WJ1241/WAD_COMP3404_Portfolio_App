@@ -9,7 +9,7 @@ namespace Server.Commands
     /// <summary>
     /// Class which contains an Action with Zero Parameters
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 02/02/22
+    /// Date: 03/03/22
     /// </summary>
     public class CommandZeroParam : ICommandZeroParam
     {
@@ -45,6 +45,11 @@ namespace Server.Commands
         /// </summary>
         public Action Action
         {
+            get
+            {
+                // RETURN value of _action:
+                return _action;
+            }
             set
             {
                 // SET value of _action to incoming value:

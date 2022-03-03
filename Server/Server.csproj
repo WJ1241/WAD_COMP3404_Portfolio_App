@@ -51,6 +51,7 @@
     <Compile Include="Commands\ICommandSender.cs" />
     <Compile Include="Commands\ICommandZeroParam.cs" />
     <Compile Include="Commands\IName.cs" />
+    <Compile Include="CustomEventArgs\ImageEventArgs.cs" />
     <Compile Include="GeneralInterfaces\IACRotate.cs" />
     <Compile Include="GeneralInterfaces\IService.cs" />
     <Compile Include="ImageMgr.cs" />

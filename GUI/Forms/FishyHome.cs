@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using GUI.Logic;
+using GUI.Logic.Interfaces;
 using Server.Commands;
 using Server.Delegates;
 using Server.Exceptions;
@@ -279,22 +279,7 @@ namespace GUI
         /// <param name="e"></param>
         private void EditBttn_Click(object sender, EventArgs e)
         {
-
-
-
-
-
-
-
-            //IF fishyedit is NULL then open fishy edit
-            FishyEdit _fEdit = new FishyEdit();
-
-
-            //open the FishyEdit
-            if (_fEdit != null)
-            {
-                _fEdit.Show();
-            }
+            // TODO: GET FISHYEDIT CREATION COMMAND IN HERE
         }
 
 

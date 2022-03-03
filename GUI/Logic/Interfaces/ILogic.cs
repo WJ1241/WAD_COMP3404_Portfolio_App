@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GUI.Logic
+namespace GUI.Logic.Interfaces
 {
     /// <summary>
     /// Interface which allows implementations to be defined as containing 'Logic' and allows easier collection of related logic objects

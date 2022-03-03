@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using GUI.Logic;
+using GUI.Logic.Interfaces;
 using Server.Commands;
 using Server.Exceptions;
 using Server.InitialisingInterfaces;

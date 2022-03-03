@@ -9,7 +9,7 @@ namespace Server.Commands
     /// <summary>
     /// Interface which allows implementations to contain a method with ZERO parameters
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 02/02/22
+    /// Date: 03/03/22
     /// </summary>
     public interface ICommandZeroParam : ICommand
     {
@@ -18,7 +18,7 @@ namespace Server.Commands
         /// <summary>
         /// Property which allows write access to a reference of a method with ZERO parameters
         /// </summary>
-        Action Action { set; }
+        Action Action { get; set; }
 
         #endregion
     }

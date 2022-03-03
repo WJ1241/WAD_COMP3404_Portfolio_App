@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GUI.Logic
+namespace GUI.Logic.Interfaces
 {
     /// <summary>
     /// Interface which allows implementations to Open Files on a client's device

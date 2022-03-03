@@ -6,6 +6,7 @@ using App.Services.Factories;
 using App.GeneralInterfaces;
 using GUI;
 using GUI.Logic;
+using GUI.Logic.Interfaces;
 using Server;
 using Server.Exceptions;
 using Server.GeneralInterfaces;
@@ -192,8 +193,6 @@ namespace App
         /// </summary>
         private void CreateFishyEdit(string pImageFP)
         {
-
-
             #region FISHYEDIT CREATION
 
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
@@ -284,6 +283,5 @@ namespace App
         }
 
         #endregion
-
     }
 }
