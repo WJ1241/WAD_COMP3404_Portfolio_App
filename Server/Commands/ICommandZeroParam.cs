@@ -18,7 +18,7 @@ namespace Server.Commands
         /// <summary>
         /// Property which allows write access to a reference of a method with ZERO parameters
         /// </summary>
-        Action Action { get; set; }
+        Action MethodRef { get; set; }
 
         #endregion
     }

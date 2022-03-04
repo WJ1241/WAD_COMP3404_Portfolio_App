@@ -22,14 +22,11 @@ namespace TestServer
         {
             #region ARRANGE
 
-            // DECLARE & INSTANTIATE a new Mock<ICommandInvoker>, name it '_cmdInvoker':
-            Mock<ICommandInvoker> _mockCmdInvoker = new Mock<ICommandInvoker>();
+            // DECLARE & INSTANTIATE an ICommandInvoker as a new CommandInvoker(), name it '_cmdInvoker':
+            ICommandInvoker _cmdInvoker = new CommandInvoker();
 
             // DECLARE & INSTANTIATE a new Mock<ICommand>, name it '_mockCmd':
             Mock<ICommand> _mockCmd = new Mock<ICommand>();
-
-            // SETUP _mockCmdInvoker to call ExecuteMethod() on _mockCmdInvoker:
-            _mockCmdInvoker.Setup(_mockCmdInvoker => _mockCmdInvoker.InvokeCommand(_mockCmd.Object)).Callback(_mockCmd.Object.ExecuteMethod);
 
             // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if no exception is thrown:
             bool _pass = true;
@@ -39,8 +36,8 @@ namespace TestServer
 
             #region ACT
 
-            // CALL InvokeCommand() on _mockCmdInvoker, passing _mockCmd as a parameter:
-            _mockCmdInvoker.Object.InvokeCommand(_mockCmd.Object);
+            // CALL InvokeCommand() on _cmdInvoker, passing _mockCmd as a parameter:
+            _cmdInvoker.InvokeCommand(_mockCmd.Object);
 
             #endregion
 

@@ -43,7 +43,7 @@ namespace Server.Commands
         /// <summary>
         /// Property which allows write access to a reference of a method with ZERO parameters
         /// </summary>
-        public Action Action
+        public Action MethodRef
         {
             get
             {

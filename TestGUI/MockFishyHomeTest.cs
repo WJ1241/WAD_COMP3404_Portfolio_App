@@ -35,6 +35,7 @@ namespace TestGUI
         {
             #region ARRANGE
 
+            // DECLARE & INSTANTIATE an IEventListener<ImageEventArgs> as a new MockFishyHome(), name it '_mockFishyHome':
 
 
             #endregion
@@ -42,6 +43,7 @@ namespace TestGUI
 
             #region ACT
 
+            // CALL OnEvent() on MockFishyHome giving it a reference to this class and _mockImageEventArgs as parameters:
 
 
             #endregion
@@ -49,6 +51,7 @@ namespace TestGUI
 
             #region ASSERT
 
+            // ASSERT that MockFishyHome contains an active Image:
 
 
             #endregion
@@ -70,21 +73,24 @@ namespace TestGUI
             // DECLARE & INSTANTIATE a IEventListener<ImageEventArgs>(), name it '_mockFishyHome':
             IEventListener<ImageEventArgs> _mockFishyHome = new MockFishyHome();
 
+            // DECLARE & INITIALISE an Mock<Action<ICommand>>, name it '_mockInvokeCommand':
+
+
             // DECLARE & INSTANTIATE a new Mock<ICommandZeroParam>, name it '_mockCmd':
             Mock<ICommandZeroParam> _mockCmd = new Mock<ICommandZeroParam>();
 
 
-            _mockCmd.Setup(_mockCmd => _mockCmd.Action);
+            //_mockCmd.Setup(_mockCmd => _mockCmd.MethodRef = CreateMockFishyEdit);
 
 
-            _mockCmd.Setup(_mockCmd => _mockCmd.ExecuteMethod()).Callback(_mockCmd.Object.Action);
+            _mockCmd.Setup(_mockCmd => _mockCmd.ExecuteMethod()).Callback(_mockCmd.Object.MethodRef);
 
             #endregion
 
 
             #region ACT
 
-            // INVOKE _createEditScrn ICommand:
+            // CALL EditButtonClick(), passing this class and a new EventArgs as a parameter:
 
 
             #endregion
@@ -115,7 +121,7 @@ namespace TestGUI
         private void CreateMockFishyEdit()
         {
             // INSTANTIATE _mockFishyEdit as a new MockFishyEdit():
-            _mockFishyEdit = new MockFishyEdit();
+            //_mockFishyEdit = new MockFishyEdit();
         }
 
         #endregion
