@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Server.Commands;
 
-namespace TestServer
+namespace TestServer.IndividualTests
 {
     /// <summary>
     /// Test Class which checks if CommandInvoker is behaving as expected

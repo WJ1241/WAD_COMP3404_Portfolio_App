@@ -4,7 +4,6 @@ using GUI.Forms.Interfaces;
 using Server.Commands;
 using Server.CustomEventArgs;
 using Server.InitialisingInterfaces;
-using TestGUI.Interfaces;
 
 namespace TestApp.MockClasses
 {
@@ -13,7 +12,7 @@ namespace TestApp.MockClasses
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
     /// Date: 02/03/22
     /// </summary>
-    public class MockFishyHome : IEventListener<ImageEventArgs>, IGetImageTest, IInitialiseParam<Action<ICommand>>, IInitialiseParam<ICommand>
+    public class MockFishyHome : IEventListener<ImageEventArgs>, IInitialiseParam<Action<ICommand>>, IInitialiseParam<ICommand>
     {
         #region FIELD VARIABLES
 

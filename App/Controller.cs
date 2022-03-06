@@ -223,7 +223,7 @@ namespace App
             //(_fishyEdit as IInitialiseParam<GetImageDelegate>).Initialise(_server.GetImage);
 
 
-            ICommandOneParam<IDisposable> _remove = new CommandOneParam<IDisposable>();
+            ICommandOneParam<int> _remove = new CommandOneParam<int>();
 
 
             _remove.MethodRef = DisposableRemoval;
@@ -232,7 +232,8 @@ namespace App
             (_remove as IName).Name = "Remove";
 
 
-            (_fishyEdit as IInitialiseParam<ICommand>).Initialise(_remove);
+
+            //(_fishyEdit as IInitialiseParam<ICommand>).Initialise(_remove);
 
 
 
@@ -263,22 +264,25 @@ namespace App
         }
 
         /// <summary>
-        /// Disposes of objects implementing the IDisposable interface
+        /// Disposes of objects from _fishyEditDict addressed via integer parameter
         /// </summary>
-        /// <param name="pUID"> Disposable object to be removed from memory </param>
+        /// <param name="pUID"> Integer value to address a specific Form to remove </param>
         private void DisposableRemoval(int pUID)
         {
-            // IF pDisposable DOES HAVE an active instance:
-            if (pDisposable != null)
+            // IF _fishyEditDict DOES contain pUID as a key:
+            if (_fishyEditDict.ContainsKey(pUID))
             {
+                // DISPOSE of object addressed at pUID in _fishyEditDict
+                _fishyEditDict[pUID].Dispose();
+
                 // DISPOSE of pDisposable instance:
-                pDisposable.Dispose();
+                //pDisposable.Dispose();
             }
-            // IF pDisposable DOES HAVE an active instance:
+            // IF _fishyEditDict DOES NOT contain pUID as a key:
             else
             {
-                // THROW new NullInstanceException, with corresponding message:
-                throw new NullInstanceException("ERROR: IDisposable object cannot be disposed due to having no current instance!");
+                // THROW a new NullValueException(), with corresponding message:
+                throw new NullValueException("ERROR: Form object cannot be disposed due to no current instance stored addressed at pUID in _fishyEditDict!");
             }
         }
 

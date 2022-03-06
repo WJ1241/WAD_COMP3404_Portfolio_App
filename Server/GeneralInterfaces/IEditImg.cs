@@ -54,13 +54,11 @@ namespace Server.GeneralInterfaces
         /// <param name="pImage"></param>
         void ContrastImg(Image pImage);
   
-
         /// <summary>
         /// METHOD 'SaturationImg' - for controlling saturation
         /// </summary>
         /// <param name="pImage"></param>
         void SaturationImg(Image pImage);
-
 
         /// <summary>
         /// METHOD 'FilterOneImg' - for applying first filter
@@ -74,23 +72,17 @@ namespace Server.GeneralInterfaces
         /// <param name="pImage"></param>
         void FilterTwoImg(Image pImage);
     
-
         /// <summary>
         /// METHOD 'FilterThreeImg' - for applying third filter
         /// </summary>
         /// <param name="pImage"></param>
         void FilterThreeImg(Image pImage);
 
-
         /// <summary>
         /// METHOD 'FilterFourImg' - for applying fourth filter
         /// </summary>
         /// <param name="pImage"></param>
         void FilterFourImg(Image pImage);
-  
-
-
-
 
         #endregion
     }

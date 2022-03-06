@@ -3,7 +3,7 @@
 namespace App.Services
 {
     /// <summary>
-    /// Static Class which trims Generics Arity information to allow tidier naming and easier addressing
+    /// Static Class which trims Generic Arity information to allow tidier naming and easier addressing
     /// Author: William Smith, 'LukeH', Declan Kerby-Collins & William Eardley
     /// Date: 07/02/22
     /// </summary>
@@ -20,8 +20,20 @@ namespace App.Services
         /// <CITATION> LukeH (2010) </CITATION>
         public static string TrimOneGeneric(Type pType)
         {
-            // RETURN a trimmed string to remove generic info for easier addressing:
-            return pType.Name.Remove(pType.Name.IndexOf("`")) + "<" + pType.GetGenericArguments()[0].Name + ">";
+            // IF pType.Name contains generic arity information and DOES NOT contain "Proxy":
+            // Proxy is used within Moq as it does not specify Generic info:
+            if (pType.Name.Contains("`") && !pType.Name.Contains("Proxy"))
+            {
+                // RETURN a trimmed string to remove generic info for easier addressing:
+                return pType.Name.Remove(pType.Name.IndexOf("`")) + "<" + pType.GetGenericArguments()[0].Name + ">";
+            }
+            // IF pType.Name contains generic arity information and "Proxy":
+            else
+            {
+                // RETURN pType.Name if condition was not met:
+                // (Moq Testing throws an exception for prior logic)
+                return pType.Name;
+            }
         }
 
         /// <summary>

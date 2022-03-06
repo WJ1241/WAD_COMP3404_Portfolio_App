@@ -49,8 +49,18 @@ namespace App.Services
                 // DECLARE & INITIALISE a string, name it '_serviceName', give value of incoming class' type which is trimmed:
                 string _serviceName = GenericTypeNameTrimmer.TrimOneGeneric(pServiceFactory.GetType());
 
-                // ADD new service to _serviceDict, with type of pServiceFactory as key, and pServiceFactory as value:
-                _serviceDict.Add(_serviceName, pServiceFactory as IService);
+                // IF _serviceName DOES HAVE same value as pServiceFactory.GetType().Name:
+                if (_serviceName == pServiceFactory.GetType().Name)
+                {
+                    // ADD new service to _serviceDict, with type of pServiceFactory as key, and pServiceFactory as value:
+                    _serviceDict.Add("Factory<IService>", pServiceFactory as IService);
+                }
+                // IF _serviceName DOES NOT HAVE same value as pServiceFactory.GetType().Name: 
+                else
+                {
+                    // ADD new service to _serviceDict, with type of pServiceFactory as key, and pServiceFactory as value:
+                    _serviceDict.Add(_serviceName, pServiceFactory as IService);
+                }
             }
             // IF pServiceFactory DOES NOT HAVE an active instance:
             else
@@ -81,12 +91,15 @@ namespace App.Services
                 // INITIALISE _serviceName, give value of incoming class' type which is trimmed:
                 _serviceName = GenericTypeNameTrimmer.TrimOneGeneric(typeof(C));
             }
-            // IF typeof(C) DOES HAVE one or more generic arguments:
+            // IF typeof(C) DOES NOT HAVE one or more generic arguments:
             else if (typeof(C).GetGenericArguments().Length == 0)
             {
                 // INITIALISE _serviceName, give value of incoming class/interface:
-                _serviceName = typeof(C).ToString();
+                _serviceName = typeof(C).Name;
             }
+
+            // PRINT _serviceName to console:
+            Console.WriteLine(_serviceName);
 
             // IF _serviceDict DOES NOT contain a key of name of class/interface to be created:
             if (!_serviceDict.ContainsKey(_serviceName))

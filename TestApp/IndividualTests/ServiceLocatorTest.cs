@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using App.Services;
+using App.Services.Factories;
 using Server.GeneralInterfaces;
+using Server.InitialisingInterfaces;
 
 namespace TestApp.IndividualTests
 {
@@ -24,13 +26,13 @@ namespace TestApp.IndividualTests
         #endregion
 
 
-        #region RETURN SPECIFIED SERVICE
+        #region INITIALISE FACTORY
 
         /// <summary>
-        /// Returns an active instance of a specified IService implementation
+        /// Checks if CommandInvoker calls 'Execute()' on an ICommand successfully
         /// </summary>
         [TestMethod]
-        private void ReturnSpecifiedService()
+        public void Call_Create_On_IService_Factory()
         {
             #region ARRANGE
 
@@ -48,7 +50,66 @@ namespace TestApp.IndividualTests
 
             #region ASSERT
 
-            // ASSERT that 
+            // TRY checking if _mockServiceFactory
+            //try
+            //{
+
+            //}
+
+            #endregion
+        }
+
+        #endregion
+
+
+        #region RETURN SPECIFIED SERVICE
+
+        /// <summary>
+        /// Checks if a returned service is an active instance as well as an IService implementation
+        /// </summary>
+        [TestMethod]
+        public void Return_Specified_Service()
+        {
+            #region ARRANGE
+
+            // DECLARE an IService, name it '_tempService':
+            IService _tempService;
+
+            #endregion
+
+
+            #region ACT
+
+            // CALL _serviceLocator.GetService() and store return value in _tempService:
+            _tempService = _serviceLocator.GetService<Factory<ServiceLocator>>();
+
+            #endregion
+
+
+            #region ASSERT
+
+            // IF _tempService DOES NOT HAVE an active instance AND DOES NOT implement IService:
+            if (_tempService == null || !(_tempService is IService))
+            {
+                // IF _tempService DOES NOT HAVE an active instance:
+                if (_tempService == null)
+                {
+                    // ASSERT a fail due to _tempService being a null instance:
+                    Assert.Fail("ERROR: ServiceLocator has not returned an active instance of the specified service!");
+                }
+                // IF _tempService DOES NOT implement IService:
+                else if (!(_tempService is IService))
+                {
+                    // ASSERT a fail due to _tempService being a null instance:
+                    Assert.Fail("ERROR: ServiceLocator has returned an object that does not implement IService!");
+                }
+            }
+            // IF _tempService DOES HAVE an active instance AND DOES implement IService:
+            else if (_tempService != null && _tempService is IService)
+            {
+                // WRITE to console that _serviceLocator has returned an active instance of IService:
+                System.Console.WriteLine("ServiceLocator has successfully returned an active instance that implements IService!");
+            }
 
             #endregion
         }
@@ -62,9 +123,25 @@ namespace TestApp.IndividualTests
         /// Creates and Initialises this class' dependencies
         /// </summary>
         [TestInitialize]
-        private void SetupApplication()
+        public void SetupApplication()
         {
+            // INSTANTIATE _mockServiceFactory as a new Mock<IFactory<IService>>():
+            _mockServiceFactory = new Mock<IFactory<IService>>();
 
+            // SETUP _mockServiceFactory.Create(), so that it can return a new ServiceLocator():
+            _mockServiceFactory.Setup(_mock => _mock.Create<ServiceLocator>()).Returns(new ServiceLocator());
+
+            // SETUP _mockServiceFactory.Create(), so that it can return a new Factory<IService>>():
+            // USED FOR TESTING WHETHER GETSERIVCE() RETURNS AN ACTIVE INSTANCE
+            _mockServiceFactory.Setup(_mock => _mock.Create<Factory<IService>>()).Returns(new Factory<IService>());
+
+            // INSTANTIATE _serviceLocator as a new ServiceLocator():
+            _serviceLocator = _mockServiceFactory.Object.Create<ServiceLocator>() as IServiceLocator;
+
+            // INITIALISE _serviceLocator with a reference to _mockServiceFactory.Object:
+            // WOULD HAVE PASSED IN _mockServiceFactory.Object, BUT IT GETS ERRORS AND ADDS 'PROXY' TO END OF CLASS NAME,
+            // THEREFORE USELESS IN PROGRAM, WORKS PERFECTLY FINE IN PRODUCTION CODE
+            (_serviceLocator as IInitialiseParam<IFactory<IService>>).Initialise(_mockServiceFactory.Object.Create<Factory<IService>>() as IFactory<IService>);
         }
 
         #endregion
