@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Server.Commands;
 
-namespace TestServer.IndividualTests
+namespace TestServer
 {
     /// <summary>
     /// Test Class which checks if CommandInvoker is behaving as expected
@@ -22,7 +22,7 @@ namespace TestServer.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INSTANTIATE a new CommandInvoker, name it '_cmdInvoker':
+            // DECLARE & INSTANTIATE an ICommandInvoker as a new CommandInvoker(), name it '_cmdInvoker':
             ICommandInvoker _cmdInvoker = new CommandInvoker();
 
             // DECLARE & INSTANTIATE a new Mock<ICommand>, name it '_mockCmd':
