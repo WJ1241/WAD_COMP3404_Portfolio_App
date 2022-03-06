@@ -4,7 +4,7 @@ using Server;
 using Server.Exceptions;
 using Server.GeneralInterfaces;
 
-namespace TestServer
+namespace TestServer.IndividualTests
 {
     /// <summary>
     /// Test Class for methods within the 'ImgEditor' class

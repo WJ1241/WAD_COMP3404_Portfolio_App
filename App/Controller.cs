@@ -25,6 +25,10 @@ namespace App
     {
         #region FIELD VARIABLES
 
+        // DECLARE a IDictionary<int,Form>, name it '_fishyEditDict':
+        // IS CONCRETE FORM, HOWEVER IT NEEDS TO BE 'FORM' FOR APPLICATION.RUN() METHOD
+        private IDictionary<int, Form> _fishyEditDict;
+
         // DECLARE an IServiceLocator, name it '_serviceLocator':
         private IServiceLocator _serviceLocator;
 
@@ -34,10 +38,6 @@ namespace App
         // DECLARE a Form, name it '_fishyHome':
         // IS CONCRETE FORM, HOWEVER IT NEEDS TO BE 'FORM' FOR APPLICATION.RUN() METHOD
         private Form _fishyHome;
-
-        // DECLARE a IDictionary<int,Form>, name it '_fishyEditDict':
-        // IS CONCRETE FORM, HOWEVER IT NEEDS TO BE 'FORM' FOR APPLICATION.RUN() METHOD
-        private IDictionary<int, Form> _fishyEdit;
 
         // DECLARE an int, name it '_fishyEditID':
         private int _fishyEditID;
@@ -52,8 +52,8 @@ namespace App
         /// </summary>
         public Controller()
         {
-            // INSTANTIATE _fishyEdit as a new Dictionary<int, Form>():
-            _fishyEdit = new Dictionary<int, Form>();
+            // INSTANTIATE _fishyEditDict as a new Dictionary<int, Form>():
+            _fishyEditDict = new Dictionary<int, Form>();
         }
 
         #endregion
@@ -265,8 +265,8 @@ namespace App
         /// <summary>
         /// Disposes of objects implementing the IDisposable interface
         /// </summary>
-        /// <param name="pDisposable"> Disposable object to be removed from memory </param>
-        private void DisposableRemoval(IDisposable pDisposable)
+        /// <param name="pUID"> Disposable object to be removed from memory </param>
+        private void DisposableRemoval(int pUID)
         {
             // IF pDisposable DOES HAVE an active instance:
             if (pDisposable != null)

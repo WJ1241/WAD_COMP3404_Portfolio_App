@@ -49,8 +49,6 @@ namespace App.Services
                 // DECLARE & INITIALISE a string, name it '_serviceName', give value of incoming class' type which is trimmed:
                 string _serviceName = GenericTypeNameTrimmer.TrimOneGeneric(pServiceFactory.GetType());
 
-                Console.WriteLine(_serviceName);
-
                 // ADD new service to _serviceDict, with type of pServiceFactory as key, and pServiceFactory as value:
                 _serviceDict.Add(_serviceName, pServiceFactory as IService);
             }
