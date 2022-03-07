@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Server.GeneralInterfaces;
 using Server;
-using Server.Exceptions;
-using System.Text;
 using Moq;
 using Server.InitialisingInterfaces;
 
@@ -13,18 +9,24 @@ namespace TestServer.IndividualTests
 {
     /// <summary>
     /// CLASS 'ImageServerTest'
+    /// Authors: William Eardley, William Smith & Declan Kerby-Collins
+    /// Date: 07/03/22
     /// </summary>
     [TestClass]
     public class ImageServerTest 
     {
-        // DECLARE...
+        // DECLARE an IServer, name it '_imageServer':
         private IServer _imageServer;
 
+        // DECLARE a Mock<IEditImg>, name it '_imageEditor':
         private Mock<IEditImg> _imageEditor;
 
+        // DECLARE a Mock<IManagerImg>, name it '_imageManager':
         private Mock<IManageImg> _imageManager;
 
+
         Mock<Image> _image = new Mock<Image>();
+
 
         #region IMAGESERVERTEST
         /// <summary>
@@ -75,7 +77,8 @@ namespace TestServer.IndividualTests
         }
         #endregion
 
-        #region SETUPMETHODS
+
+        #region SETUP METHODS
 
         /// <summary>
         /// 
@@ -96,6 +99,5 @@ namespace TestServer.IndividualTests
         }
 
         #endregion
-
     }
 }

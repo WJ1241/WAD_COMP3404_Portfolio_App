@@ -8,9 +8,9 @@ using Server.InitialisingInterfaces;
 namespace TestApp.IndividualTests
 {
     /// <summary>
-    /// Test Class which checks if CommandInvoker is behaving as expected
-    /// Authors: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 06/03/22
+    /// Test Class which checks if ServiceLocator is behaving as expected
+    /// Authors: William Smith, William Eardley & Declan Kerby-Collins
+    /// Date: 07/03/22
     /// </summary>
     [TestClass]
     public class ServiceLocatorTest
@@ -36,25 +36,42 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
+            // DECLARE an IService, name it '_tempService':
+            IService _tempService;
 
+            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
+            bool _pass = true;
 
             #endregion
 
 
             #region ACT
 
-
+            // CALL _serviceLocator.GetService() and store return value in _tempService:
+            _tempService = _serviceLocator.GetService<Factory<IServiceLocator>>();
 
             #endregion
 
 
             #region ASSERT
 
-            // TRY checking if _mockServiceFactory
-            //try
-            //{
-
-            //}
+            // TRY checking if _mockServiceFactory.Create<Factory<IServiceLocator>> was called:
+            try
+            {
+                // VERIFY that _mockServiceFactory.Create<Factory<IServiceLocator>>() has been called ONCE, makes sure that method is not called more than once:
+                _mockServiceFactory.Verify(_mockServiceFactory => _mockServiceFactory.Create<Factory<IServiceLocator>>(), Times.Once);
+            }
+            // CATCH MockException from Verify():
+            catch (MockException e)
+            {
+                // SET _pass to false, so that test fails:
+                _pass = false;
+            }
+            // FINALISE try and catch block with test pass/fail:
+            {
+                // ASSERT if test has passed, and give corresponding message if _pass is false:
+                Assert.IsTrue(_pass, "ERROR: _mockServiceFactory.Create<Factory<IServiceLocator>>() has not been called!");
+            }
 
             #endregion
         }
@@ -81,7 +98,7 @@ namespace TestApp.IndividualTests
             #region ACT
 
             // CALL _serviceLocator.GetService() and store return value in _tempService:
-            _tempService = _serviceLocator.GetService<Factory<ServiceLocator>>();
+            _tempService = _serviceLocator.GetService<Factory<IServiceLocator>>();
 
             #endregion
 
@@ -131,17 +148,15 @@ namespace TestApp.IndividualTests
             // SETUP _mockServiceFactory.Create(), so that it can return a new ServiceLocator():
             _mockServiceFactory.Setup(_mock => _mock.Create<ServiceLocator>()).Returns(new ServiceLocator());
 
-            // SETUP _mockServiceFactory.Create(), so that it can return a new Factory<IService>>():
+            // SETUP _mockServiceFactory.Create(), so that it can return a new Factory<IServiceLocator>>():
             // USED FOR TESTING WHETHER GETSERIVCE() RETURNS AN ACTIVE INSTANCE
-            _mockServiceFactory.Setup(_mock => _mock.Create<Factory<IService>>()).Returns(new Factory<IService>());
+            _mockServiceFactory.Setup(_mockServiceFactory => _mockServiceFactory.Create<Factory<IServiceLocator>>()).Returns(new Factory<IServiceLocator>());
 
             // INSTANTIATE _serviceLocator as a new ServiceLocator():
             _serviceLocator = _mockServiceFactory.Object.Create<ServiceLocator>() as IServiceLocator;
 
             // INITIALISE _serviceLocator with a reference to _mockServiceFactory.Object:
-            // WOULD HAVE PASSED IN _mockServiceFactory.Object, BUT IT GETS ERRORS AND ADDS 'PROXY' TO END OF CLASS NAME,
-            // THEREFORE USELESS IN PROGRAM, WORKS PERFECTLY FINE IN PRODUCTION CODE
-            (_serviceLocator as IInitialiseParam<IFactory<IService>>).Initialise(_mockServiceFactory.Object.Create<Factory<IService>>() as IFactory<IService>);
+            (_serviceLocator as IInitialiseParam<IFactory<IService>>).Initialise(_mockServiceFactory.Object);
         }
 
         #endregion

@@ -10,7 +10,7 @@ namespace TestServer.IndividualTests
 {
     /// <summary>
     /// Test Class for methods within the 'ImageMgr' class
-    /// Author: William Smith
+    /// Author: William Smith, William Eardley & Declan Kerby-Collins
     /// Date: 03/12/21
     /// </summary>
     [TestClass]

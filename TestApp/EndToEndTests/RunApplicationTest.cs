@@ -1,17 +1,20 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using App;
+using App.GeneralInterfaces;
 using App.Services;
 using GUI.Forms.Interfaces;
 using Server.Commands;
 using Server.CustomEventArgs;
 using Server.GeneralInterfaces;
+using Server.InitialisingInterfaces;
 
 namespace TestApp.EndToEndTests
 {
     /// <summary>
     /// Test Class which checks if all necessary classes work together to allow the app to start
     /// Takes the Role of 'Program' due to creating and initialising EVERY required class
-    /// Authors: William Smith, Declan Kerby-Collins & William Eardley
+    /// Authors: William Smith, William Eardley & Declan Kerby-Collins
     /// Date: 06/03/22
     /// 
     ///	        Program
@@ -44,6 +47,12 @@ namespace TestApp.EndToEndTests
     public class RunApplicationTest
     {
         #region FIELD VARIABLES
+
+        // DECLARE an IServiceLocator, name it '_serviceLocator':
+        private IServiceLocator _serviceLocator;
+
+        // DECLARE an IApplicationStart, name it '_controller':
+        private IApplicationStart _controller;
 
         // DECLARE an IEventListener<ImageEventArgs>, name it '_mockFishyHome':
         private IEventListener<ImageEventArgs> _mockFishyHome;
@@ -119,13 +128,25 @@ namespace TestApp.EndToEndTests
 
             #region CREATION
 
+            // DECLARE & INSTANTIATE an ICommandInvoker as a new CommandInvoker, name it '_commandInvoker'():
+            ICommandInvoker _commandInvoker = _mockServiceFactory.Object.Create<CommandInvoker>() as ICommandInvoker;
+
+            // INSTANTIATE _serviceLocator as a new ServiceLocator():
+            _serviceLocator = _mockServiceFactory.Object.Create<ServiceLocator>() as IServiceLocator;
+
+            // INSTANTIATE _controller as a new Controller():
+            _controller = new Controller();
 
             #endregion
 
 
             #region INITIALISATION
 
+            // INITIALISE _serviceLocator with reference to _mockServiceFactory.Object:
+            (_serviceLocator as IInitialiseParam<IFactory<IService>>).Initialise(_mockServiceFactory.Object);
 
+            // INITIALISE _controller with reference to _serviceLocator:
+            (_controller as IInitialiseParam<IServiceLocator>).Initialise(_serviceLocator);
 
             #endregion
         }

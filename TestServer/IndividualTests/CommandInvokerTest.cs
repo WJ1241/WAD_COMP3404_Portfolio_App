@@ -6,7 +6,7 @@ namespace TestServer.IndividualTests
 {
     /// <summary>
     /// Test Class which checks if CommandInvoker is behaving as expected
-    /// Authors: William Smith, Declan Kerby-Collins & William Eardley
+    /// Authors: William Smith, William Eardley & Declan Kerby-Collins
     /// Date: 02/03/22
     /// </summary>
     [TestClass]

@@ -18,6 +18,9 @@ namespace App.Services
         // DECLARE an IDictionary<string, IService>, name it '_serviceDict':
         private IDictionary<string, IService> _serviceDict;
 
+        // DECLARE an IFactory<IService>, name it '_serviceFactory':
+        private IFactory<IService> _serviceFactory;
+
         #endregion
 
 
@@ -46,21 +49,8 @@ namespace App.Services
             // IF pServiceFactory DOES HAVE an active instance:
             if (pServiceFactory != null)
             {
-                // DECLARE & INITIALISE a string, name it '_serviceName', give value of incoming class' type which is trimmed:
-                string _serviceName = GenericTypeNameTrimmer.TrimOneGeneric(pServiceFactory.GetType());
-
-                // IF _serviceName DOES HAVE same value as pServiceFactory.GetType().Name:
-                if (_serviceName == pServiceFactory.GetType().Name)
-                {
-                    // ADD new service to _serviceDict, with type of pServiceFactory as key, and pServiceFactory as value:
-                    _serviceDict.Add("Factory<IService>", pServiceFactory as IService);
-                }
-                // IF _serviceName DOES NOT HAVE same value as pServiceFactory.GetType().Name: 
-                else
-                {
-                    // ADD new service to _serviceDict, with type of pServiceFactory as key, and pServiceFactory as value:
-                    _serviceDict.Add(_serviceName, pServiceFactory as IService);
-                }
+                // INITIALISE _serviceFactory with reference to pServiceFactory:
+                _serviceFactory = pServiceFactory;
             }
             // IF pServiceFactory DOES NOT HAVE an active instance:
             else
@@ -108,13 +98,7 @@ namespace App.Services
                 try
                 {
                     // ADD new service to _serviceDict, with type 'C' name as key, and instance of type 'C' as value:
-                    _serviceDict.Add(_serviceName, (_serviceDict["Factory<IService>"] as IFactory<IService>).Create<C>());
-                }
-                // CATCH KeyNotFoundException from _serviceDict["Factory<IService>"]:
-                catch (KeyNotFoundException e)
-                {
-                    // WRITE exception message to console:
-                    Console.WriteLine(e.Message);
+                    _serviceDict.Add(_serviceName, _serviceFactory.Create<C>());
                 }
                 // CATCH ClassDoesNotExistException from Create():
                 catch (ClassDoesNotExistException e)
