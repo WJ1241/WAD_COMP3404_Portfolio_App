@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using App;
 using App.GeneralInterfaces;
@@ -47,6 +49,9 @@ namespace TestApp.EndToEndTests
     public class RunApplicationTest
     {
         #region FIELD VARIABLES
+
+        // DECLARE an IDictionary<int, IDisposable>, name it '_formDictionary':
+        private IDictionary<int, IDisposable> _formDictionary;
 
         // DECLARE an IServiceLocator, name it '_serviceLocator':
         private IServiceLocator _serviceLocator;

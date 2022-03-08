@@ -15,6 +15,17 @@ namespace TestServer.IndividualTests
     [TestClass]
     public class ImageServerTest 
     {
+        #region FIELD VARIABLES
+
+        /*
+          Changes to make to the OO Program TODAY
+
+        - Finish Testing ImageServer
+        - Get Controller initialised with Dictionary
+        - Get Controller initialised with MockFishyHome (Needed for RunApplicationTest to pass otherwise an actual Form will be used)
+        - (MAYBE, INSTEAD CALL GETSERVICE() FIRST AND STORE REFERENCE TO IT) Get Controller initialised with ImageServer
+        */
+
         // DECLARE an IServer, name it '_imageServer':
         private IServer _imageServer;
 
@@ -24,13 +35,15 @@ namespace TestServer.IndividualTests
         // DECLARE a Mock<IManagerImg>, name it '_imageManager':
         private Mock<IManageImg> _imageManager;
 
-
+        // DECLARE a Mock<Image>, name it '_image':
         Mock<Image> _image = new Mock<Image>();
+
+        #endregion 
 
 
         #region IMAGESERVERTEST
         /// <summary>
-        /// TEST METHOD: Creats a MOCK of the CreateImageServer class
+        /// TEST METHOD: Creates a MOCK of the CreateImageServer class
         /// </summary>
         [TestMethod]
         public void CreateImageServer()

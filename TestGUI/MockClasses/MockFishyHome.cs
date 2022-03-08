@@ -10,9 +10,9 @@ namespace TestApp.MockClasses
     /// <summary>
     /// Mock Class for 'FishyHome' due to errors with testing Windows Forms
     /// Authors: William Smith, William Eardley & Declan Kerby-Collins
-    /// Date: 02/03/22
+    /// Date: 08/03/22
     /// </summary>
-    public class MockFishyHome : IEventListener<ImageEventArgs>, IInitialiseParam<Action<ICommand>>, IInitialiseParam<ICommand>
+    public class MockFishyHome : IDisposable, IEventListener<ImageEventArgs>, IInitialiseParam<Action<ICommand>>, IInitialiseParam<ICommand>
     {
         #region FIELD VARIABLES
 

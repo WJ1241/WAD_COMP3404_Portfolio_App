@@ -13,7 +13,7 @@ namespace Server
     /// Date: 03/12/21
     /// </summary>
     /// <REFERENCE> Price, M (2021) 'IServer.cs'. COMP3404: Applied Software Engineering. Available at: https://worcesterbb.blackboard.com/. (Accessed: 20 November 2021). </REFERENCE>
-    public class ImageServer : IServer, IACRotate, IInitialiseParam<IEditImg>, IInitialiseParam<IManageImg>
+    public class ImageServer : IServer, IService, IACRotate, IInitialiseParam<IEditImg>, IInitialiseParam<IManageImg>
     {
         #region FIELD VARIABLES
 

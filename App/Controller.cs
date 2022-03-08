@@ -21,7 +21,7 @@ namespace App
     /// Author: William Smith, William Eardley & Declan Kerby-Collins
     /// Date: 02/02/22
     /// </summary>
-    public class Controller : IApplicationStart, IInitialiseParam<IServiceLocator>
+    public class Controller : IApplicationStart, IInitialiseParam<IDictionary<int, IDisposable>>, IInitialiseParam<IServiceLocator>
     {
         #region FIELD VARIABLES
 
