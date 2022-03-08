@@ -9,7 +9,7 @@ namespace Server
 {
     /// <summary>
     /// Class which stores Dictionary of Images with File Path acting as a UID accessor
-    /// Author: William Smith & 'Matt'
+    /// Authors: William Smith & 'Matt'
     /// Date: 02/12/21
     /// </summary>
     /// <REFERENCE> Matt (2013) How to resize an Image C#. Available at: https://stackoverflow.com/questions/1922040/how-to-resize-an-image-c-sharp. (Accessed: 30 November 2021).

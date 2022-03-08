@@ -115,7 +115,7 @@ namespace TestApp.EndToEndTests
         /// Creates and Initialises this class' dependencies
         /// </summary>
         [TestInitialize]
-        private void SetupApplication()
+        private void Setup()
         {
             #region FACTORY SETUP
 

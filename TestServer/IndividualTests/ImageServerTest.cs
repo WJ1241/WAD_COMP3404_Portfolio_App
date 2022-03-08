@@ -29,59 +29,56 @@ namespace TestServer.IndividualTests
         // DECLARE an IServer, name it '_imageServer':
         private IServer _imageServer;
 
-        // DECLARE a Mock<IEditImg>, name it '_imageEditor':
-        private Mock<IEditImg> _imageEditor;
+        // DECLARE a Mock<IEditImg>, name it '_mockImageEditor':
+        private Mock<IEditImg> _mockImageEditor;
 
-        // DECLARE a Mock<IManagerImg>, name it '_imageManager':
-        private Mock<IManageImg> _imageManager;
-
-        // DECLARE a Mock<Image>, name it '_image':
-        Mock<Image> _image = new Mock<Image>();
+        // DECLARE a Mock<IManagerImg>, name it '_mockImageMgr':
+        private Mock<IManageImg> _mockImageMgr;
 
         #endregion 
 
 
         #region IMAGESERVERTEST
         /// <summary>
-        /// TEST METHOD: Creates a MOCK of the CreateImageServer class
+        /// Checks if a returned service is an active instance as well as an IService implementation
         /// </summary>
         [TestMethod]
-        public void CreateImageServer()
+        public void Call_Rotate_Clockwise_Method()
         { 
             #region ARRANGE
-            
-            
 
             // DECLARE variable '_pass' as type bool - set to TRUE
             bool _pass = true;
-
-
 
             #endregion
 
 
             #region ACT
 
-            // TRY CATCH BLOCK
-            // TRY To Execute
-            try
-            {
-                _imageServer.RotateImage();
-            }
-           
+            // CALL _imageServer.RotateImage(), passing a blank string as a parameter:
+            _imageServer.RotateImage("..\\..\\..\\..\\Server\\FishAssets\\OrangeFish.png");
+
             #endregion
 
 
             #region ASSERT
 
-            // CATCH 'MockException' exception
+            // TRY checking if 
+            try
+            {
+                // VERIFY that _mockImageEditor has been called ONCE, makes sure that method is not called twice or more:
+                _mockImageEditor.Verify(_mock => _mock.ImgRotateClockwise(Image.FromFile("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\OrangeFish.png")), Times.Once);
+            }
+            // CATCH a MockException from Verify():
             catch (MockException e)
             {
+                // SET _pass to false to state that test has failed:
                 _pass = false;
             }
-            // CALL 'Finally' regardless of PASS or FAIL
+            // CALL 'Finally' regardless of PASS or FAIL:
             finally
             {
+
                 Assert.IsTrue(_pass, "ERROR: ");
             }
 
@@ -94,21 +91,25 @@ namespace TestServer.IndividualTests
         #region SETUP METHODS
 
         /// <summary>
-        /// 
+        /// Creates and Initialises this class' dependencies
         /// </summary>
         [TestInitialize]
         public void Setup()
         {
-            // INSTANTIATE a new ImageEditor called '_imageEditor'
+            // INSTANTIATE _imageServer as a new ImageServer():
             _imageServer = new ImageServer();
 
-            _imageEditor = new Mock<IEditImg>();
+            // INSTANTIATE _mockImageEditor as a new Mock<IEditImg>():
+            _mockImageEditor = new Mock<IEditImg>();
 
-            _imageManager = new Mock<IManageImg>();
+            // INSTANTIATE _mockImageMgr as a new Mock<IManageImg>():
+            _mockImageMgr = new Mock<IManageImg>();
 
-            (_imageServer as IInitialiseParam<IEditImg>).Initialise(_imageEditor.Object);
+            // INIITIALISE _imageServer with a reference to _mockImageEditor.Object:
+            (_imageServer as IInitialiseParam<IEditImg>).Initialise(_mockImageEditor.Object);
 
-            (_imageServer as IInitialiseParam<IManageImg>).Initialise(_imageManager.Object);
+            // INIITIALISE _imageServer with a reference to _mockImageMgr.Object:
+            (_imageServer as IInitialiseParam<IManageImg>).Initialise(_mockImageMgr.Object); 
         }
 
         #endregion

@@ -140,7 +140,7 @@ namespace TestApp.IndividualTests
         /// Creates and Initialises this class' dependencies
         /// </summary>
         [TestInitialize]
-        public void SetupApplication()
+        public void Setup()
         {
             // INSTANTIATE _mockServiceFactory as a new Mock<IFactory<IService>>():
             _mockServiceFactory = new Mock<IFactory<IService>>();
