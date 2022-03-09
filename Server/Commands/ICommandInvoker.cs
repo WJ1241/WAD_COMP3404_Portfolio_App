@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Server.GeneralInterfaces;
 
 namespace Server.Commands
 {
     /// <summary>
     /// Interface which allows implementations to schedule commands
     /// Author: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 02/02/22
+    /// Date: 09/03/22
     /// </summary>
-    public interface ICommandInvoker
+    public interface ICommandInvoker : IService
     {
         #region METHODS
 

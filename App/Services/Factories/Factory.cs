@@ -1,14 +1,13 @@
 ﻿using Server.Exceptions;
-using Server.GeneralInterfaces;
 
 namespace App.Services.Factories
 {
     /// <summary>
     /// Class which creates and returns an object of any type chosen by the user
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 02/02/22
+    /// Date: 09/03/22
     /// </summary>
-    public class Factory<A> : IFactory<A>, IService
+    public class Factory<A> : IFactory<A>
     {
         #region IMPLEMENTATION OF IFACTORY<A>
 

@@ -19,16 +19,6 @@ namespace TestServer.IndividualTests
     {
         #region FIELD VARIABLES
 
-        /*
-          Changes to make to the OO Program TODAY
-
-        - Get Controller initialised with MockFishyHome (Needed for RunApplicationTest to pass otherwise an actual Form will be used)
-        - (MAYBE, INSTEAD CALL GETSERVICE() FIRST AND STORE REFERENCE TO IT) Get Controller initialised with ImageServer
-        - Get RunApplicationTest End2End to Pass
-        - Get everything so far Command Invoked
-
-        */
-
         // DECLARE an IServer, name it '_imageServer':
         private IServer _imageServer;
 

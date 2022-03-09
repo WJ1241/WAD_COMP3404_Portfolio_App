@@ -11,7 +11,6 @@ using Server;
 using Server.Exceptions;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
-using Server.Delegates;
 using Server.Commands;
 
 namespace App
@@ -21,7 +20,7 @@ namespace App
     /// Author: William Smith, William Eardley & Declan Kerby-Collins
     /// Date: 09/03/22
     /// </summary>
-    public class Controller : IController, IInitialiseParam<IDisposable>, IInitialiseParam<IDictionary<int, IDisposable>>, IInitialiseParam<IServiceLocator>
+    public class Controller : IController, IInitialiseParam<IDictionary<int, IDisposable>>, IInitialiseParam<IServiceLocator>
     {
         #region FIELD VARIABLES
 
@@ -49,45 +48,6 @@ namespace App
         public Controller()
         {
             // EMPTY CONSTRUCTOR
-        }
-
-        #endregion
-
-
-        #region IMPLEMENTATION OF IINITIALISEPARAM<IDISPOSABLE>
-
-        /// <summary>
-        /// Initialises an object with an IDisposable object
-        /// NOTE: INITIALISE DICTIONARY BEFORE CALLING THIS METHOD
-        /// </summary>
-        /// <param name="pDisposable"> IDisposable object </param>
-        public void Initialise(IDisposable pDisposable)
-        {
-            // IF _formDict DOES HAVE an active instance:
-            if (_formDict != null)
-            {
-                // IF pDisposable DOES HAVE an active instance:
-                if (pDisposable != null)
-                {
-                    // INITIALISE _fishyHome with reference to pDisposable:
-                    _formDict.Add(_formCount, pDisposable);
-
-                    // INCREMENT _formCount by '1':
-                    _formCount++;
-                }
-                // IF pDisposable DOES NOT HAVE an active instance:
-                else
-                {
-                    // THROW a new NullInstanceException(), with corresponding message:
-                    throw new NullInstanceException("ERROR: pDisposable does not have an active instance!");
-                }
-            }
-            // IF _formDict DOES NOT HAVE an active instance:
-            else
-            {
-                // THROW a new NullInstanceException(), with corresponding message:
-                throw new NullInstanceException("ERROR: _formDict has not been initialised yet!");
-            }
         }
 
         #endregion
@@ -178,70 +138,67 @@ namespace App
                 // INITIALISE _server with an IEditImg object:
                 (_server as IInitialiseParam<IEditImg>).Initialise(_serviceLocator.GetService<ImageEditor>() as IEditImg);
             }
-            // CATCH ClassDoesNotExistException, write message to console:
-            catch (ClassDoesNotExistException pException)
+            // CATCH ClassDoesNotExistException from Create<C>():
+            catch (ClassDoesNotExistException e)
             {
                 // WRITE error message to debug console:
-                Console.WriteLine(pException.Message);
+                Console.WriteLine(e.Message);
             }
-            // CATCH NullInstanceException, write message to console:
-            catch (NullInstanceException pException)
+            // CATCH NullInstanceException from Initialise():
+            catch (NullInstanceException e)
             {
                 // WRITE error message to debug console:
-                Console.WriteLine(pException.Message);
-            }
-            // CATCH NullInstanceException, write message to console:
-            catch (NullReferenceException pException)
-            {
-                // WRITE error message to debug console:
-                Console.WriteLine(pException.Message);
+                Console.WriteLine(e.Message);
             }
 
             #endregion
 
 
-            #region FISHYHOME INITIALISATION
+            #region FISHYHOME CREATION & INITIALISATION
 
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
             {
-                // INITIALISE _formDict[1] (FishyHome) with an IOpenImage object:
-                (_formDict[1] as IInitialiseParam<IOpenImage>).Initialise((_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage);
+                // ADD _formCount as a key and a new FishyHome as a value to _formDict:
+                _formDict.Add(_formCount, (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>());
+
+                // INITIALISE _formDict[0] (FishyHome) with a new IOpenImage object:
+                (_formDict[0] as IInitialiseParam<IOpenImage>).Initialise((_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage);
             }
-            // CATCH NullInstanceException, write message to console:
-            catch (NullInstanceException pException)
+            // CATCH ClassDoesNotExistException from Create<C>():
+            catch (ClassDoesNotExistException e)
             {
                 // WRITE error message to debug console:
-                Console.WriteLine(pException.Message);
+                Console.WriteLine(e.Message);
             }
-            // CATCH NullInstanceException, write message to console:
-            catch (NullReferenceException pException)
+            // CATCH NullInstanceException from Initialise():
+            catch (NullInstanceException e)
             {
                 // WRITE error message to debug console:
-                Console.WriteLine(pException.Message);
+                Console.WriteLine(e.Message);
             }
 
             #region FISHYHOME DELEGATES
 
             // INITIALISE _fishyHome with _server.GetImage as a delegate:
-            (_fishyHome as IInitialiseParam<GetImageDelegate>).Initialise(_server.GetImage);
+            //(_fishyHome as IInitialiseParam<GetImageDelegate>).Initialise(_server.GetImage);
 
             // INITIALISE _fishyHome with _server.Load as a delegate:
-            (_fishyHome as IInitialiseParam<LoadDelegate>).Initialise(_server.Load);
+            //(_fishyHome as IInitialiseParam<LoadDelegate>).Initialise(_server.Load);
 
             #endregion
 
             #endregion
 
-            // CALL Application static method 'Run()', passing _formDict[1] (FishyHome) as a parameter:
-            Application.Run(_formDict[1] as Form);
+            // CALL Application static method 'Run()', passing _formDict[0] (FishyHome) as a parameter:
+            Application.Run(_formDict[0] as Form);
         }
 
         /// <summary>
         /// Disposes of IDisposable objects, used for IDisposable objects not stored in a collection
         /// </summary>
         /// <param name="pDisposable"> IDisposable object to be removed </param>
-        private void DisposableRemoval(IDisposable pDisposable)
+        public void DisposableRemoval(IDisposable pDisposable)
         {
             // IF pDisposable DOES HAVE an active instance:
             if (pDisposable != null)
@@ -261,7 +218,7 @@ namespace App
         /// Disposes of objects from a collection addressed via integer parameter
         /// </summary>
         /// <param name="pUID"> Integer value to address a specific Form to remove </param>
-        private void DisposableRemoval(int pUID)
+        public void DisposableRemoval(int pUID)
         {
             // IF _formDict DOES contain pUID as a key:
             if (_formDict.ContainsKey(pUID))
@@ -286,15 +243,19 @@ namespace App
         #region PRIVATE METHODS
 
         /// <summary>
-        /// Creates an instance of FishyEdit, and initialises with required commands and values
+        /// Creates an edit screen, and initialises with required commands and values
         /// </summary>
-        private void CreateFishyEdit(string pImageFP)
+        /// <param name="pImageFP"> File path of current image displayed so Edit screen shows the correct image </param>
+        public void CreateEditScrn(string pImageFP)
         {
             #region FISHYEDIT CREATION
 
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
             {
+                // INCREMENT _formCount by '1':
+                _formCount++;
+
                 // INSTANTIATE _fishyHome as a new FishyEdit():
                 //_fishyEdit = _disposableFactory.Create<FishyEdit>() as Form;
 

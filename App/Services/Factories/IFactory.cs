@@ -1,14 +1,14 @@
-﻿
+﻿using Server.GeneralInterfaces;
 
 namespace App.Services
 {
     /// <summary>
     /// Interface which allows implementations to create a Factory of any chosen type
     /// Author: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 02/02/22
+    /// Date: 09/03/22
     /// </summary>
     /// <typeparam name="A"> Any Type, A for 'Abstract' </typeparam>
-    public interface IFactory<A>
+    public interface IFactory<A> : IService
     {
         #region METHODS
 
