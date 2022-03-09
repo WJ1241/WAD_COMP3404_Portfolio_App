@@ -22,7 +22,7 @@ namespace App
         static void Main()
         {
             // DECLARE & INSTANTIATE an IApplicationStart as a new Controller(), name it '_controller':
-            IApplicationStart _controller = new Controller();
+            IController _controller = new Controller();
 
             // DECLARE & INSTANTIATE an IFactory<IService> as a new Factory<IService>():
             IFactory<IService> _serviceFactory = new Factory<IService>();

@@ -1,4 +1,7 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using Server.Exceptions;
 using Server.GeneralInterfaces;
 
@@ -6,7 +9,7 @@ namespace Server
 {
     /// <summary>
     /// Class which edits Images, e.g. Rotation, H/V Flip, Scaling, Cropping, Filtering
-    /// Author: William Eardley, William Smith
+    /// Author: William Eardley, William Smith, Declan Kerby-Collins
     /// Date: 11/02/22
     /// </summary>
     public class ImageEditor : IEditImg
@@ -192,6 +195,80 @@ namespace Server
             if (pImage != null)
             {
                 // CALL Contrast method for image
+                Bitmap _sorceBitmap = new Bitmap(pImage);
+
+                //// coppied code do NOT FOR GET TO AMEND 
+                BitmapData sourceData = _sorceBitmap.LockBits(new Rectangle(0, 0,
+                                _sorceBitmap.Width, _sorceBitmap.Height),
+                                ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+
+                byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
+
+
+                Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
+
+
+                _sorceBitmap.UnlockBits(sourceData);
+
+
+                double contrastLevel = Math.Pow((100.0 + threshold) / 100.0, 2);
+
+
+                double blue = 0;
+                double green = 0;
+                double red = 0;
+
+
+                for (int k = 0; k + 4 < pixelBuffer.Length; k += 4)
+                {
+                    blue = ((((pixelBuffer[k] / 255.0) - 0.5) *
+                                contrastLevel) + 0.5) * 255.0;
+
+
+                    green = ((((pixelBuffer[k + 1] / 255.0) - 0.5) *
+                                contrastLevel) + 0.5) * 255.0;
+
+
+                    red = ((((pixelBuffer[k + 2] / 255.0) - 0.5) *
+                                contrastLevel) + 0.5) * 255.0;
+
+
+                    if (blue > 255)
+                    { blue = 255; }
+                    else if (blue < 0)
+                    { blue = 0; }
+
+
+                    if (green > 255)
+                    { green = 255; }
+                    else if (green < 0)
+                    { green = 0; }
+
+
+                    if (red > 255)
+                    { red = 255; }
+                    else if (red < 0)
+                    { red = 0; }
+
+
+                    pixelBuffer[k] = (byte)blue;
+                    pixelBuffer[k + 1] = (byte)green;
+                    pixelBuffer[k + 2] = (byte)red;
+                }
+
+
+                Bitmap resultBitmap = new Bitmap(_sorceBitmap.Width, _sorceBitmap.Height);
+
+
+                BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0,
+                                            resultBitmap.Width, resultBitmap.Height),
+                                            ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+
+
+                Marshal.Copy(pixelBuffer, 0, resultData.Scan0, pixelBuffer.Length);
+                resultBitmap.UnlockBits(resultData);
+                ////END OF COPPIED CODE
 
             }
             else
@@ -222,6 +299,8 @@ namespace Server
 
 
         #region Filters
+        /// <REFERENCE> Ricky's Tutorials (2017) C# TUTORIAL : Create an image filter and apply it to an image in 6 minutes. Available at: https://www.youtube.com/watch?v=SCSI8xEi4f4. (Accessed: 09 March 2022). </REFERENCE> 
+
         /// <summary>
         /// METHOD 'FilterOneImg' - for applying first filter
         /// </summary>
@@ -232,6 +311,20 @@ namespace Server
             if (pImage != null)
             {
                 // CALL Filter One method for image
+
+                // DECLAR local Bitmap name it '_displayedImg'
+                Bitmap _displayedImg = new Bitmap(pImage.Width, pImage.Height);
+
+                // DECLAR local Bitmap name it '_imgGraphics'
+                Graphics _imgGraphics = Graphics.FromImage(_displayedImg);
+
+                // ASSIGNMENT sets the _imgGraphics drawImage to the pImage
+                _imgGraphics.DrawImage(pImage, 0, 0);
+
+                // ASSIGNMENT makes image light blue
+                _imgGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.DodgerBlue)), 0, 0, _displayedImg.Width, _displayedImg.Height);
+
+
             }
             else
             {
@@ -250,6 +343,18 @@ namespace Server
             if (pImage != null)
             {
                 // CALL Filter Two method for image
+
+                // DECLAR local Bitmap name it '_displayedImg'
+                Bitmap _displayedImg = new Bitmap(pImage.Width, pImage.Height);
+
+                // DECLAR local Bitmap name it '_imgGraphics'
+                Graphics _imgGraphics = Graphics.FromImage(_displayedImg);
+
+                // ASSIGNMENT sets the _imgGraphics drawImage to the pImage
+                _imgGraphics.DrawImage(pImage, 0, 0);
+
+                // ASSIGNMENT makes image Red
+                _imgGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.Red)), 0, 0, _displayedImg.Width, _displayedImg.Height);
             }
             else
             {
@@ -268,6 +373,18 @@ namespace Server
             if (pImage != null)
             {
                 // CALL Filter Three method for image
+
+                // DECLAR local Bitmap name it '_displayedImg'
+                Bitmap _displayedImg = new Bitmap(pImage.Width, pImage.Height);
+
+                // DECLAR local Bitmap name it '_imgGraphics'
+                Graphics _imgGraphics = Graphics.FromImage(_displayedImg);
+
+                // ASSIGNMENT sets the _imgGraphics drawImage to the pImage
+                _imgGraphics.DrawImage(pImage, 0, 0);
+
+                // ASSIGNMENT makes image light MediumPurple
+                _imgGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.MediumPurple)), 0, 0, _displayedImg.Width, _displayedImg.Height);
             }
             else
             {
@@ -286,6 +403,18 @@ namespace Server
             if (pImage != null)
             {
                 // CALL Filter Four method for image
+
+                // DECLAR local Bitmap name it '_displayedImg'
+                Bitmap _displayedImg = new Bitmap(pImage.Width, pImage.Height);
+
+                // DECLAR local Bitmap name it '_imgGraphics'
+                Graphics _imgGraphics = Graphics.FromImage(_displayedImg);
+
+                // ASSIGNMENT sets the _imgGraphics drawImage to the pImage
+                _imgGraphics.DrawImage(pImage, 0, 0);
+
+                // ASSIGNMENT makes image light LightGray
+                _imgGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.LightGray)), 0, 0, _displayedImg.Width, _displayedImg.Height);
             }
             else
             {
