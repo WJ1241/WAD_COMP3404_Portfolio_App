@@ -81,7 +81,7 @@ namespace Server
             // IF pManageImg IS null:
             else
             {
-                // THROW new NullInstanceException, with corresponding message:
+                // THROW a new NullInstanceException(), with corresponding message:
                 throw new NullInstanceException("ERROR: Server is being initialised with a null IManageImg object!");
             }
         }
@@ -111,7 +111,7 @@ namespace Server
                 // WRITE error message to debug console:
                 System.Diagnostics.Debug.WriteLine(pException.Message);
 
-                // THROW new FileAlreadyStoredException, with corresponding message:
+                // THROW a new FileAlreadyStoredException(), with corresponding message:
                 throw new FileAlreadyStoredException(pException.Message);
             }
         }
@@ -137,7 +137,7 @@ namespace Server
                 // WRITE error message to debug console:
                 System.Diagnostics.Debug.WriteLine(pException.Message);
 
-                // THROW new InvalidStringException, with corresponding message:
+                // THROW a new InvalidStringException(), with corresponding message:
                 throw new InvalidStringException(pException.Message);
             }
         }

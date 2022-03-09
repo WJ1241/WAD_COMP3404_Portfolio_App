@@ -19,15 +19,15 @@ namespace App
     /// <summary>
     /// Main Class of the application, stores reference to all objects required
     /// Author: William Smith, William Eardley & Declan Kerby-Collins
-    /// Date: 02/02/22
+    /// Date: 09/03/22
     /// </summary>
-    public class Controller : IApplicationStart, IInitialiseParam<IDictionary<int, IDisposable>>, IInitialiseParam<IServiceLocator>
+    public class Controller : IController, IInitialiseParam<IDisposable>, IInitialiseParam<IDictionary<int, IDisposable>>, IInitialiseParam<IServiceLocator>
     {
         #region FIELD VARIABLES
 
-        // DECLARE a IDictionary<int,Form>, name it '_fishyEditDict':
+        // DECLARE a IDictionary<int, IDisposable>, name it '_formDict':
         // IS CONCRETE FORM, HOWEVER IT NEEDS TO BE 'FORM' FOR APPLICATION.RUN() METHOD
-        private IDictionary<int, Form> _fishyEditDict;
+        private IDictionary<int, IDisposable> _formDict;
 
         // DECLARE an IServiceLocator, name it '_serviceLocator':
         private IServiceLocator _serviceLocator;
@@ -35,12 +35,8 @@ namespace App
         // DECLARE an IServer, name it _server:
         private IServer _server;
 
-        // DECLARE a Form, name it '_fishyHome':
-        // IS CONCRETE FORM, HOWEVER IT NEEDS TO BE 'FORM' FOR APPLICATION.RUN() METHOD
-        private Form _fishyHome;
-
-        // DECLARE an int, name it '_fishyEditID':
-        private int _fishyEditID;
+        // DECLARE an int, name it '_formCount':
+        private int _formCount;
 
         #endregion
 
@@ -52,8 +48,71 @@ namespace App
         /// </summary>
         public Controller()
         {
-            // INSTANTIATE _fishyEditDict as a new Dictionary<int, Form>():
-            _fishyEditDict = new Dictionary<int, Form>();
+            // EMPTY CONSTRUCTOR
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IDISPOSABLE>
+
+        /// <summary>
+        /// Initialises an object with an IDisposable object
+        /// NOTE: INITIALISE DICTIONARY BEFORE CALLING THIS METHOD
+        /// </summary>
+        /// <param name="pDisposable"> IDisposable object </param>
+        public void Initialise(IDisposable pDisposable)
+        {
+            // IF _formDict DOES HAVE an active instance:
+            if (_formDict != null)
+            {
+                // IF pDisposable DOES HAVE an active instance:
+                if (pDisposable != null)
+                {
+                    // INITIALISE _fishyHome with reference to pDisposable:
+                    _formDict.Add(_formCount, pDisposable);
+
+                    // INCREMENT _formCount by '1':
+                    _formCount++;
+                }
+                // IF pDisposable DOES NOT HAVE an active instance:
+                else
+                {
+                    // THROW a new NullInstanceException(), with corresponding message:
+                    throw new NullInstanceException("ERROR: pDisposable does not have an active instance!");
+                }
+            }
+            // IF _formDict DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: _formDict has not been initialised yet!");
+            }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IDICTIONARY<INT, IDISPOSABLE>>
+
+        /// <summary>
+        /// Initialises an object with an IDictionary<int, IDisposable> object
+        /// </summary>
+        /// <param name="pDisposableDict"> IDictionary<int, IDisposable> object </param>
+        public void Initialise(IDictionary<int, IDisposable> pDisposableDict)
+        {
+            // IF pDisposableDict DOES HAVE an active instance:
+            if (pDisposableDict != null)
+            {
+                // INITIALISE _formDict with reference to pDict:
+                _formDict = pDisposableDict;
+            }
+            // IF pDisposableDict DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: pDisposableDict does not have an active instance!");
+            }
         }
 
         #endregion
@@ -84,7 +143,7 @@ namespace App
         #endregion
 
 
-        #region IMPLEMENTATION OF IAPPLICATIONSTART
+        #region IMPLEMENTATION OF ICONTROLLER
 
         /// <summary>
         /// Calls Static Application class methods, to create Windows Forms Application
@@ -141,22 +200,13 @@ namespace App
             #endregion
 
 
-            #region FISHYHOME CREATION
+            #region FISHYHOME INITIALISATION
 
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
             {
-                // INSTANTIATE _fishyHome as a new FishyHome():
-                _fishyHome = (_serviceLocator.GetService<Factory<Form>>() as IFactory<Form>).Create<FishyHome>();
-
-                // INITIALISE _fishyHome with an IOpenImage object:
-                (_fishyHome as IInitialiseParam<IOpenImage>).Initialise((_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage);
-            }
-            // CATCH ClassDoesNotExistException, write message to console:
-            catch (ClassDoesNotExistException pException)
-            {
-                // WRITE error message to debug console:
-                Console.WriteLine(pException.Message);
+                // INITIALISE _formDict[1] (FishyHome) with an IOpenImage object:
+                (_formDict[1] as IInitialiseParam<IOpenImage>).Initialise((_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage);
             }
             // CATCH NullInstanceException, write message to console:
             catch (NullInstanceException pException)
@@ -183,10 +233,57 @@ namespace App
 
             #endregion
 
-            // CALL Application static method 'Run()', passing _fishyHome as a parameter:
-            Application.Run(_fishyHome);
+            // CALL Application static method 'Run()', passing _formDict[1] (FishyHome) as a parameter:
+            Application.Run(_formDict[1] as Form);
         }
 
+        /// <summary>
+        /// Disposes of IDisposable objects, used for IDisposable objects not stored in a collection
+        /// </summary>
+        /// <param name="pDisposable"> IDisposable object to be removed </param>
+        private void DisposableRemoval(IDisposable pDisposable)
+        {
+            // IF pDisposable DOES HAVE an active instance:
+            if (pDisposable != null)
+            {
+                // DISPOSE of pDisposable instance:
+                pDisposable.Dispose();
+            }
+            // IF pDisposable DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullValueException(), with corresponding message:
+                throw new NullValueException("ERROR: IDisposable object cannot be disposed due to not having an active instance!");
+            }
+        }
+
+        /// <summary>
+        /// Disposes of objects from a collection addressed via integer parameter
+        /// </summary>
+        /// <param name="pUID"> Integer value to address a specific Form to remove </param>
+        private void DisposableRemoval(int pUID)
+        {
+            // IF _formDict DOES contain pUID as a key:
+            if (_formDict.ContainsKey(pUID))
+            {
+                // DISPOSE of object addressed at pUID in _formDict:
+                _formDict[pUID].Dispose();
+
+                // REMOVE object stored at pUID in _formDict:
+                _formDict.Remove(pUID);
+            }
+            // IF _formDict DOES NOT contain pUID as a key:
+            else
+            {
+                // THROW a new NullValueException(), with corresponding message:
+                throw new NullValueException("ERROR: IDisposable object cannot be disposed due to no active instance stored addressed at pUID in _formDict!");
+            }
+        }
+
+        #endregion
+
+
+        #region PRIVATE METHODS
 
         /// <summary>
         /// Creates an instance of FishyEdit, and initialises with required commands and values
@@ -261,29 +358,6 @@ namespace App
             //(_home as IInitialiseVFlipImgDel).Initialise(_server.VerticalFlipImage);
 
             /////////////////////////////////////////////////////////////////////////////////////////////
-        }
-
-        /// <summary>
-        /// Disposes of objects from _fishyEditDict addressed via integer parameter
-        /// </summary>
-        /// <param name="pUID"> Integer value to address a specific Form to remove </param>
-        private void DisposableRemoval(int pUID)
-        {
-            // IF _fishyEditDict DOES contain pUID as a key:
-            if (_fishyEditDict.ContainsKey(pUID))
-            {
-                // DISPOSE of object addressed at pUID in _fishyEditDict
-                _fishyEditDict[pUID].Dispose();
-
-                // DISPOSE of pDisposable instance:
-                //pDisposable.Dispose();
-            }
-            // IF _fishyEditDict DOES NOT contain pUID as a key:
-            else
-            {
-                // THROW a new NullValueException(), with corresponding message:
-                throw new NullValueException("ERROR: Form object cannot be disposed due to no current instance stored addressed at pUID in _fishyEditDict!");
-            }
         }
 
         #endregion

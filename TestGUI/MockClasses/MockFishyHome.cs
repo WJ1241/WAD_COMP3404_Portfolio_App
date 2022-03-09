@@ -10,7 +10,7 @@ namespace TestApp.MockClasses
     /// <summary>
     /// Mock Class for 'FishyHome' due to errors with testing Windows Forms
     /// Authors: William Smith, William Eardley & Declan Kerby-Collins
-    /// Date: 08/03/22
+    /// Date: 09/03/22
     /// </summary>
     public class MockFishyHome : IDisposable, IEventListener<ImageEventArgs>, IInitialiseParam<Action<ICommand>>, IInitialiseParam<ICommand>
     {
@@ -36,6 +36,19 @@ namespace TestApp.MockClasses
         public MockFishyHome()
         {
             // EMPTY CONSTRUCTOR
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IDISPOSABLE
+
+        /// <summary>
+        /// Disposes of any no longer required assets to aid system resource allocation
+        /// </summary>
+        public void Dispose()
+        {
+            // ONLY CALLED TO REMOVE NO LONGER NEEDED ASSETS
         }
 
         #endregion
