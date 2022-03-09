@@ -4,16 +4,17 @@ using System.Drawing;
 using System.IO;
 using Server.Exceptions;
 using Server.GeneralInterfaces;
+using Server.InitialisingInterfaces;
 
 namespace Server
 {
     /// <summary>
     /// Class which stores Dictionary of Images with File Path acting as a UID accessor
-    /// Authors: William Smith & 'Matt'
-    /// Date: 02/12/21
+    /// Authors: William Smith, William Eardley, Declan Kerby-Collins & 'Matt'
+    /// Date: 09/03/21
     /// </summary>
     /// <REFERENCE> Matt (2013) How to resize an Image C#. Available at: https://stackoverflow.com/questions/1922040/how-to-resize-an-image-c-sharp. (Accessed: 30 November 2021).
-    public class ImageMgr : IManageImg
+    public class ImageMgr : IManageImg, IInitialiseParam<IDictionary<String, Image>>
     {
         #region FIELD VARIABLES
 
@@ -34,8 +35,7 @@ namespace Server
         /// </summary>
         public ImageMgr()
         {
-            // INSTANTIATE _imgDict as new Dictionary<String, Image>():
-            _imgDict = new Dictionary<String, Image>();
+            // EMPTY CONSTRUCTOR
         }
 
         #endregion
@@ -129,6 +129,31 @@ namespace Server
             {
                 // THROW new InvalidStringException, with corresponding message:
                 throw new InvalidStringException("ERROR: Requested Image from File Path is not stored in the Program!");
+            }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IDICTIONARY<STRING, IMAGE>>
+
+        /// <summary>
+        /// Initialises an object with an IDictionary<String, Image> object
+        /// </summary>
+        /// <param name="pImageDict"> (IDictionary<String, Image> object </param>
+        public void Initialise(IDictionary<String, Image> pImageDict)
+        {
+            // IF pImageDict DOES HAVE an active instance:
+            if (pImageDict != null)
+            {
+                // INITIALISE _imgDict with reference to pImageDict:
+                _imgDict = pImageDict;
+            }
+            // IF pImageDict DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: pImageDict does not have an active instance!");
             }
         }
 

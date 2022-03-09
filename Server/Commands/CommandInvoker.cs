@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Server.GeneralInterfaces;
+﻿
 
 namespace Server.Commands
 {
@@ -12,7 +7,7 @@ namespace Server.Commands
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
     /// Date: 02/02/22
     /// </summary>
-    public class CommandInvoker : IService, ICommandInvoker
+    public class CommandInvoker : ICommandInvoker
     {
         #region CONSTRUCTOR
 

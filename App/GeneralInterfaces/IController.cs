@@ -17,6 +17,12 @@ namespace App.GeneralInterfaces
         void RunApplication();
 
         /// <summary>
+        /// Creates an edit screen, and initialises with required commands and values
+        /// </summary>
+        /// <param name="pImageFP"> File path of current image displayed so Edit screen shows the correct image </param>
+        void CreateEditScrn(string pImageFP);
+
+        /// <summary>
         /// Disposes of IDisposable objects, used for IDisposable objects not stored in a collection
         /// </summary>
         /// <param name="pDisposable"> IDisposable object to be removed </param>
