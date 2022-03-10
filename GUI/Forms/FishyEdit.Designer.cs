@@ -395,6 +395,7 @@ namespace GUI
             this.groupBoxColouring.TabIndex = 25;
             this.groupBoxColouring.TabStop = false;
             this.groupBoxColouring.Text = "Colouring";
+            this.groupBoxColouring.Enter += new System.EventHandler(this.groupBoxColouring_Enter);
             // 
             // SaturationControl
             // 

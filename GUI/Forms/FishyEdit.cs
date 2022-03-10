@@ -800,7 +800,7 @@ namespace GUI
         /// <param name="e"> Required Argument Value(s)</param>
         private void ContrastControl_ValueChanged(object sender, EventArgs e)
         {
-            // ON INPUT
+            // ON INPUT            
             // IF _imgFPDict DOES contain a key of the current _dictIndex value:
             if (_imgFPDict.ContainsKey(_dictIndex))
             {
@@ -809,6 +809,9 @@ namespace GUI
                 {
                     // CALL _contrast passing current index in _imgFPDict as a parameter:
                     //_contrast(_imgFPDict[_dictIndex]);
+
+                    // ASK MARC HOW TO GET VALUE OF THE TRACKBAR SO CAN PASS TO LOGIC AND THEN ACTUALLY ADJUST CONMTRAST
+
 
                     // CALL ChngImg():
                     ChngImg();
@@ -932,5 +935,12 @@ namespace GUI
                 Debug.WriteLine("ERROR: No Image at current index, cannot Crop!");
             }
         }
+
+        private void groupBoxColouring_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

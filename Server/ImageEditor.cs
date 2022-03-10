@@ -191,15 +191,16 @@ namespace Server
         /// <param name="pImage"></param>
         public void ContrastImg(Image pImage)
         {
+            int _threshold = sliderPosition;
             // IF pImage is NOT NULL then call method
             if (pImage != null)
             {
                 // CALL Contrast method for image
-                Bitmap _sorceBitmap = new Bitmap(pImage);
+                Bitmap _tempMap = new Bitmap(pImage);
 
                 //// coppied code do NOT FOR GET TO AMEND 
-                BitmapData sourceData = _sorceBitmap.LockBits(new Rectangle(0, 0,
-                                _sorceBitmap.Width, _sorceBitmap.Height),
+                BitmapData sourceData = _tempMap.LockBits(new Rectangle(0, 0,
+                                _tempMap.Width, _tempMap.Height),
                                 ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
 
 
@@ -209,7 +210,7 @@ namespace Server
                 Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
 
 
-                _sorceBitmap.UnlockBits(sourceData);
+                _tempMap.UnlockBits(sourceData);
 
 
                 double contrastLevel = Math.Pow((100.0 + threshold) / 100.0, 2);
@@ -258,7 +259,7 @@ namespace Server
                 }
 
 
-                Bitmap resultBitmap = new Bitmap(_sorceBitmap.Width, _sorceBitmap.Height);
+                Bitmap resultBitmap = new Bitmap(_tempMap.Width, _tempMap.Height);
 
 
                 BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0,
