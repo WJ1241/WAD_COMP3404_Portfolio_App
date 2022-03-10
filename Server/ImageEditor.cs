@@ -191,11 +191,14 @@ namespace Server
         /// <param name="pImage"></param>
         public void ContrastImg(Image pImage)
         {
+
             // IF pImage is NOT NULL then call method
             if (pImage != null)
             {
+                /*
+
                 // CALL Contrast method for image
-                Bitmap _sorceBitmap = new Bitmap(pImage);
+                Bitmap _sourceBitmap = new Bitmap(pImage);
 
                 //// coppied code do NOT FOR GET TO AMEND 
                 BitmapData sourceData = _sorceBitmap.LockBits(new Rectangle(0, 0,
@@ -212,7 +215,7 @@ namespace Server
                 _sorceBitmap.UnlockBits(sourceData);
 
 
-                double contrastLevel = Math.Pow((100.0 + threshold) / 100.0, 2);
+                //double contrastLevel = Math.Pow((100.0 + threshold) / 100.0, 2);
 
 
                 double blue = 0;
@@ -269,6 +272,8 @@ namespace Server
                 Marshal.Copy(pixelBuffer, 0, resultData.Scan0, pixelBuffer.Length);
                 resultBitmap.UnlockBits(resultData);
                 ////END OF COPPIED CODE
+                ///
+                */
 
             }
             else

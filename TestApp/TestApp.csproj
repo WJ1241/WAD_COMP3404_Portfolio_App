@@ -18,6 +18,8 @@
     <ProjectReference Include="..\App\App.csproj" />
     <ProjectReference Include="..\GUI\GUI.csproj" />
     <ProjectReference Include="..\Server\Server.csproj" />
+    <ProjectReference Include="..\TestGUI\TestGUI.csproj" />
+    <ProjectReference Include="..\TestServer\TestServer.csproj" />
   </ItemGroup>
 
 </Project>
