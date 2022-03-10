@@ -42,14 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\CommandOneParam.cs" />
     <Compile Include="Commands\CommandInvoker.cs" />
-    <Compile Include="Commands\CommandZeroParam.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\ICommandOneParam.cs" />
     <Compile Include="Commands\ICommandInvoker.cs" />
     <Compile Include="Commands\ICommandSender.cs" />
-    <Compile Include="Commands\ICommandZeroParam.cs" />
     <Compile Include="Commands\IName.cs" />
     <Compile Include="CustomEventArgs\ImageEventArgs.cs" />
     <Compile Include="GeneralInterfaces\IACRotate.cs" />

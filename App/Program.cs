@@ -11,18 +11,18 @@ namespace App
     /// <summary>
     /// Main Program class for Application
     /// Author: William Smith, Declan Kerby-Collins, William Eardley
-    /// Date: 02/02/22
+    /// Date: 09/03/22
     /// </summary>
     static class Program
     {
         /// <summary>
-        ///  The main entry point for the application.
+        /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            // DECLARE & INSTANTIATE an IApplicationStart as a new Controller(), name it '_controller':
-            IController _controller = new Controller();
+            // DECLARE & INSTANTIATE an ISetupApplication as a new Controller(), name it '_controller':
+            ISetupApplication _controller = new Controller();
 
             // DECLARE & INSTANTIATE an IFactory<IService> as a new Factory<IService>():
             IFactory<IService> _serviceFactory = new Factory<IService>();
@@ -52,7 +52,7 @@ namespace App
                 Console.WriteLine(e.Message);
             }
 
-            // CALL 'RunApplication()' on Controller object:
+            // CALL  RunApplication() on _controller:
             _controller.RunApplication();
         }
     }

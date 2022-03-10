@@ -12,6 +12,8 @@ using Server.Exceptions;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
 using Server.Commands;
+using System.Drawing;
+using System.Collections;
 
 namespace App
 {
@@ -20,7 +22,7 @@ namespace App
     /// Author: William Smith, William Eardley & Declan Kerby-Collins
     /// Date: 09/03/22
     /// </summary>
-    public class Controller : IController, IInitialiseParam<IDictionary<int, IDisposable>>, IInitialiseParam<IServiceLocator>
+    public class Controller : IController, ISetupApplication, IInitialiseParam<IDictionary<int, IDisposable>>, IInitialiseParam<IServiceLocator>
     {
         #region FIELD VARIABLES
 
@@ -103,27 +105,13 @@ namespace App
         #endregion
 
 
-        #region IMPLEMENTATION OF ICONTROLLER
+        #region IMPLEMENTATION OF ISETUPAPPLICATION
 
         /// <summary>
-        /// Calls Static Application class methods, to create Windows Forms Application
+        /// Setups all necessary dependencies and requirements for an application to start
         /// </summary>
-        public void RunApplication()
+        public void SetupApplication()
         {
-            #region APPLICATION SETUP
-
-            // CALL Application static method 'SetHighDpiMode()', passing HighDpiMode.SystemAware as a parameter:
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
-
-            // CALL Application static method EnableVisualStyles():
-            Application.EnableVisualStyles();
-
-            // CALL Application static method SetCompatibleTextRenderingDefault(), passing a 'false' boolean value as a parameter:
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            #endregion
-
-
             #region SERVER CREATION
 
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
@@ -134,6 +122,10 @@ namespace App
 
                 // INITIALISE _server with an IManageImg object:
                 (_server as IInitialiseParam<IManageImg>).Initialise(_serviceLocator.GetService<ImageMgr>() as IManageImg);
+
+                //// INITIALISE returned ImageMgr with a new IDictionary<String, Image>():
+                //(_serviceLocator.GetService<ImageMgr>() as IInitialiseParam<IDictionary<String, Image>>).Initialise(
+                //    (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<String, Image>>() as IDictionary<String, Image>);
 
                 // INITIALISE _server with an IEditImg object:
                 (_server as IInitialiseParam<IEditImg>).Initialise(_serviceLocator.GetService<ImageEditor>() as IEditImg);
@@ -152,18 +144,23 @@ namespace App
             }
 
             #endregion
-
+            
 
             #region FISHYHOME CREATION & INITIALISATION
 
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
             {
-                // ADD _formCount as a key and a new FishyHome as a value to _formDict:
-                _formDict.Add(_formCount, (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>());
+                IDisposable fh = (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>();
 
-                // INITIALISE _formDict[0] (FishyHome) with a new IOpenImage object:
-                (_formDict[0] as IInitialiseParam<IOpenImage>).Initialise((_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage);
+                // ADD _formCount as a key and a new FishyHome as a value to _formDict:
+                //_formDict.Add(_formCount, (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>());
+
+                // INITIALISE _formDict[_formCount] (FishyHome) with a new IOpenImage object:
+                //(_formDict[_formCount] as IInitialiseParam<IOpenImage>).Initialise((_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage);
+
+                // INITIALISE fh (FishyHome) with a new IOpenImage object:
+                (fh as IInitialiseParam<IOpenImage>).Initialise((_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage);
             }
             // CATCH ClassDoesNotExistException from Create<C>():
             catch (ClassDoesNotExistException e)
@@ -177,21 +174,151 @@ namespace App
                 // WRITE error message to debug console:
                 Console.WriteLine(e.Message);
             }
+            /*
+            #region FISHYHOME COMMANDS
+            
+            // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown: 
+            try
+            {
+                #region LOAD IMAGE COMMAND
 
-            #region FISHYHOME DELEGATES
+                // DECLARE & INSTANTIATE an ICommandParam<String> as a new CommandOneParam<String>(), name it '_commandOneParam':
+                ICommandParam<String> _commandOneParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<String>>() as ICommandParam<String>;
 
-            // INITIALISE _fishyHome with _server.GetImage as a delegate:
-            //(_fishyHome as IInitialiseParam<GetImageDelegate>).Initialise(_server.GetImage);
+                // SET MethodRef Property of _commandLoad to reference to _server.Load():
+                _commandOneParam.MethodRef = _server.Load;
 
-            // INITIALISE _fishyHome with _server.Load as a delegate:
-            //(_fishyHome as IInitialiseParam<LoadDelegate>).Initialise(_server.Load);
+                #endregion
 
+
+                #region GET IMAGE COMMAND
+
+                // DECLARE & INSTANTIATE an ICommandParam<String, int, int> as a new CommandParam<String, int, int>(), name it '_commandThreeParam':
+                ICommandParam<String, int, int> _commandThreeParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create< CommandParam<String, int, int>>() as ICommandParam<String, int, int>;
+
+                // SET MethodRef Property of _commandThreeParam to reference to _server.GetImage():
+                _commandThreeParam.MethodRef = _server.GetImage;
+
+                #endregion
+            }
+            // CATCH ClassDoesNotExistException from Create<C>():
+            catch (ClassDoesNotExistException e)
+            {
+                // WRITE error message to debug console:
+                Console.WriteLine(e.Message);
+            }
+            // CATCH NullInstanceException from Initialise():
+            catch (NullInstanceException e)
+            {
+                // WRITE error message to debug console:
+                Console.WriteLine(e.Message);
+            }
+            
             #endregion
-
+            */
             #endregion
+        }
+
+        /// <summary>
+        /// Calls Static Application class methods, to create Windows Forms Application
+        /// </summary>
+        public void RunApplication()
+        {
+            // CALL Application static method 'SetHighDpiMode()', passing HighDpiMode.SystemAware as a parameter:
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+
+            // CALL Application static method EnableVisualStyles():
+            Application.EnableVisualStyles();
+
+            // CALL Application static method SetCompatibleTextRenderingDefault(), passing a 'false' boolean value as a parameter:
+            Application.SetCompatibleTextRenderingDefault(false);
 
             // CALL Application static method 'Run()', passing _formDict[0] (FishyHome) as a parameter:
             Application.Run(_formDict[0] as Form);
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF ICONTROLLER
+
+        /// <summary>
+        /// Creates an edit screen, and initialises with required commands and values
+        /// </summary>
+        /// <param name="pImageFP"> File path of current image displayed so Edit screen shows the correct image </param>
+        public void CreateEditScrn(string pImageFP)
+        {
+            #region FISHYEDIT CREATION
+
+            // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
+            try
+            {
+                // INCREMENT _formCount by '1':
+                _formCount++;
+
+                // INSTANTIATE _fishyHome as a new FishyEdit():
+                //_fishyEdit = _disposableFactory.Create<FishyEdit>() as Form;
+
+                // INITIALISE _fishyEdit with an IOpenImage object:
+                //(_fishyHome as IInitialiseIOpenImage).Initialise(_markerFactory.Create<OpenSaveLogic>() as IOpenImage);
+            }
+            // CATCH ClassDoesNotExistException, write message to console:
+            catch (ClassDoesNotExistException pException)
+            {
+                // WRITE error message to debug console:
+                Console.WriteLine(pException.Message);
+            }
+            // CATCH NullInstanceException, write message to console:
+            catch (NullInstanceException pException)
+            {
+                // WRITE error message to debug console:
+                Console.WriteLine(pException.Message);
+            }
+
+            #region FISHYEDIT DELEGATES
+
+            // INITIALISE _fishyEdit with _server.GetImage as a delegate:
+            //(_fishyEdit as IInitialiseParam<GetImageDelegate>).Initialise(_server.GetImage);
+
+
+            ICommandParam<int> _remove = new CommandParam<int>();
+
+
+            _remove.MethodRef = DisposableRemoval;
+
+
+            (_remove as IName).Name = "Remove";
+
+
+
+            //(_fishyEdit as IInitialiseParam<ICommand>).Initialise(_remove);
+
+
+
+            #endregion
+
+            #endregion
+
+            ///
+            // NOTE: THESE ARE FROM CREATING FISHY EDIT - AS HOME NOW CREATED THESE ARENT NEEDED (KEPT INCASE THINGS GO SOUTH)
+            ///
+
+            //// INITIALISE _fishyEdit with ObjectDispose as a delegate:
+            //(_home as IInitialiseDeleteDel).Initialise(ObjectDispose);
+
+            //// INITIALISE _fishyEdit with _server.RotateImage as a delegate:
+            //(_home as IInitialiseRotationDel).Initialise(_server.RotateImage);
+
+            //// INITIALISE _fishyEdit with _server.ACRotateImage as a delegate:
+            //(_home as IInitialiseACRotationDel).Initialise((_server as IACRotate).ACRotateImage);
+
+            //// INITIALISE _fishyEdit with _server.HorizontalFlipImage as a delegate:
+            //(_home as IInitialiseHFlipImgDel).Initialise(_server.HorizontalFlipImage);
+
+            //// INITIALISE _fishyEdit with _server.VerticalFlipImage as a delegate:
+            //(_home as IInitialiseVFlipImgDel).Initialise(_server.VerticalFlipImage);
+
+            /////////////////////////////////////////////////////////////////////////////////////////////
         }
 
         /// <summary>
@@ -235,90 +362,6 @@ namespace App
                 // THROW a new NullValueException(), with corresponding message:
                 throw new NullValueException("ERROR: IDisposable object cannot be disposed due to no active instance stored addressed at pUID in _formDict!");
             }
-        }
-
-        #endregion
-
-
-        #region PRIVATE METHODS
-
-        /// <summary>
-        /// Creates an edit screen, and initialises with required commands and values
-        /// </summary>
-        /// <param name="pImageFP"> File path of current image displayed so Edit screen shows the correct image </param>
-        public void CreateEditScrn(string pImageFP)
-        {
-            #region FISHYEDIT CREATION
-
-            // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
-            try
-            {
-                // INCREMENT _formCount by '1':
-                _formCount++;
-
-                // INSTANTIATE _fishyHome as a new FishyEdit():
-                //_fishyEdit = _disposableFactory.Create<FishyEdit>() as Form;
-
-                // INITIALISE _fishyEdit with an IOpenImage object:
-                //(_fishyHome as IInitialiseIOpenImage).Initialise(_markerFactory.Create<OpenSaveLogic>() as IOpenImage);
-            }
-            // CATCH ClassDoesNotExistException, write message to console:
-            catch (ClassDoesNotExistException pException)
-            {
-                // WRITE error message to debug console:
-                Console.WriteLine(pException.Message);
-            }
-            // CATCH NullInstanceException, write message to console:
-            catch (NullInstanceException pException)
-            {
-                // WRITE error message to debug console:
-                Console.WriteLine(pException.Message);
-            }
-
-            #region FISHYEDIT DELEGATES
-
-            // INITIALISE _fishyEdit with _server.GetImage as a delegate:
-            //(_fishyEdit as IInitialiseParam<GetImageDelegate>).Initialise(_server.GetImage);
-
-
-            ICommandOneParam<int> _remove = new CommandOneParam<int>();
-
-
-            _remove.MethodRef = DisposableRemoval;
-
-
-            (_remove as IName).Name = "Remove";
-
-
-
-            //(_fishyEdit as IInitialiseParam<ICommand>).Initialise(_remove);
-
-
-
-            #endregion
-
-            #endregion
-
-            ///
-            // NOTE: THESE ARE FROM CREATING FISHY EDIT - AS HOME NOW CREATED THESE ARENT NEEDED (KEPT INCASE THINGS GO SOUTH)
-            ///
-
-            //// INITIALISE _fishyEdit with ObjectDispose as a delegate:
-            //(_home as IInitialiseDeleteDel).Initialise(ObjectDispose);
-
-            //// INITIALISE _fishyEdit with _server.RotateImage as a delegate:
-            //(_home as IInitialiseRotationDel).Initialise(_server.RotateImage);
-
-            //// INITIALISE _fishyEdit with _server.ACRotateImage as a delegate:
-            //(_home as IInitialiseACRotationDel).Initialise((_server as IACRotate).ACRotateImage);
-
-            //// INITIALISE _fishyEdit with _server.HorizontalFlipImage as a delegate:
-            //(_home as IInitialiseHFlipImgDel).Initialise(_server.HorizontalFlipImage);
-
-            //// INITIALISE _fishyEdit with _server.VerticalFlipImage as a delegate:
-            //(_home as IInitialiseVFlipImgDel).Initialise(_server.VerticalFlipImage);
-
-            /////////////////////////////////////////////////////////////////////////////////////////////
         }
 
         #endregion

@@ -56,8 +56,8 @@ namespace TestApp.EndToEndTests
         // DECLARE an IServiceLocator, name it '_serviceLocator':
         private IServiceLocator _serviceLocator;
 
-        // DECLARE an IApplicationStart, name it '_controller':
-        private IApplicationStart _controller;
+        // DECLARE an IController, name it '_controller':
+        private IController _controller;
 
         // DECLARE an IEventListener<ImageEventArgs>, name it '_mockFishyHome':
         private IEventListener<ImageEventArgs> _mockFishyHome;

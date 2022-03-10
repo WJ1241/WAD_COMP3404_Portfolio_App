@@ -155,15 +155,11 @@ namespace GUI
                 if (ImgDisplay.Image != null)
                 {
                     // SET value of _commandDict["Remove"]'s Data Property to currently displayed image:
-                    (_commandDict["Remove"] as ICommandOneParam<IDisposable>).Data = ImgDisplay.Image;
+                    (_commandDict["RemoveDisposable"] as ICommandParam<IDisposable>).FirstParam = ImgDisplay.Image;
 
                     // INVOKE _commandDict["Remove"]:
-                    _invokeCommand(_commandDict["Remove"]);
+                    _invokeCommand(_commandDict["RemoveDisposable"]);
                 }
-
-                // SET value of _commandDict["Remove"]'s Data Property to this instance:
-                // CLOSES PROGRAM
-                (_commandDict["Remove"] as ICommandOneParam<IDisposable>).Data = this;
 
                 // INVOKE _commandDict["Remove"]:
                 _invokeCommand(_commandDict["Remove"]);

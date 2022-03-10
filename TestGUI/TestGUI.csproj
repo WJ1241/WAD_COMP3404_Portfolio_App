@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GUI\GUI.csproj" />
     <ProjectReference Include="..\Server\Server.csproj" />
+    <ProjectReference Include="..\TestServer\TestServer.csproj" />
   </ItemGroup>
 
 </Project>

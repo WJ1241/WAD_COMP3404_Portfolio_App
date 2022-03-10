@@ -5,16 +5,11 @@ namespace App.GeneralInterfaces
     /// <summary>
     /// Interface which allows implementations to behave as a 'Controller' in an MVC architecture
     /// Author: William Smith, William Eardley and Declan Kerby-Collins
-    /// Date: 09/03/21
+    /// Date: 10/03/21
     /// </summary>
     public interface IController
     {
         #region METHODS
-
-        /// <summary>
-        /// Calls Static Application class methods, to create Windows Forms Application
-        /// </summary>
-        void RunApplication();
 
         /// <summary>
         /// Creates an edit screen, and initialises with required commands and values
