@@ -191,6 +191,7 @@ namespace Server
         /// <param name="pImage"></param>
         public void ContrastImg(Image pImage)
         {
+            /*
             int _threshold = sliderPosition;
             // IF pImage is NOT NULL then call method
             if (pImage != null)
@@ -277,6 +278,8 @@ namespace Server
                 // THROW NEW NullInstanceException with appropriate message
                 throw new NullInstanceException("ERROR: No Image to increase contrast of!");
             }
+
+            */
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ namespace TestGUI.IndividualTests
     /// <summary>
     /// Test Class which checks if MockFishyHome is behaving as expected
     /// Authors: William Smith, William Eardley & Declan Kerby-Collins
-    /// Date: 03/03/22
+    /// Date: 10/03/22
     /// </summary>
     [TestClass]
     public class MockFishyHomeTest

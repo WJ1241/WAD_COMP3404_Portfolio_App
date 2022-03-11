@@ -123,9 +123,9 @@ namespace App
                 // INITIALISE _server with an IManageImg object:
                 (_server as IInitialiseParam<IManageImg>).Initialise(_serviceLocator.GetService<ImageMgr>() as IManageImg);
 
-                //// INITIALISE returned ImageMgr with a new IDictionary<String, Image>():
-                //(_serviceLocator.GetService<ImageMgr>() as IInitialiseParam<IDictionary<String, Image>>).Initialise(
-                //    (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<String, Image>>() as IDictionary<String, Image>);
+                // INITIALISE returned ImageMgr with a new IDictionary<String, Image>():
+                (_serviceLocator.GetService<ImageMgr>() as IInitialiseParam<IDictionary<String, Image>>).Initialise(
+                    (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<String, Image>>() as IDictionary<String, Image>);
 
                 // INITIALISE _server with an IEditImg object:
                 (_server as IInitialiseParam<IEditImg>).Initialise(_serviceLocator.GetService<ImageEditor>() as IEditImg);
@@ -151,16 +151,14 @@ namespace App
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
             {
-                IDisposable fh = (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>();
-
                 // ADD _formCount as a key and a new FishyHome as a value to _formDict:
-                //_formDict.Add(_formCount, (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>());
+                _formDict.Add(_formCount, (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>());
+
+                // DECLARE & INSTANTIATE an IOpenImage as a new OpenLogic(), name it '_openImage':
+                IOpenImage _openImage = (_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage;
 
                 // INITIALISE _formDict[_formCount] (FishyHome) with a new IOpenImage object:
-                //(_formDict[_formCount] as IInitialiseParam<IOpenImage>).Initialise((_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage);
-
-                // INITIALISE fh (FishyHome) with a new IOpenImage object:
-                (fh as IInitialiseParam<IOpenImage>).Initialise((_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage);
+                (_formDict[_formCount] as IInitialiseParam<IOpenImage>).Initialise(_openImage);
             }
             // CATCH ClassDoesNotExistException from Create<C>():
             catch (ClassDoesNotExistException e)
@@ -174,30 +172,41 @@ namespace App
                 // WRITE error message to debug console:
                 Console.WriteLine(e.Message);
             }
-            /*
+            
             #region FISHYHOME COMMANDS
             
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown: 
             try
             {
+                #region CREATE EDIT SCREEN COMMAND
+
+                // DECLARE & INSTANTIATE an ICommandParam<string> as a new CommandParam<String>(), name it '_commandStringParam':
+                ICommandParam<string> _commandStringParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<string>>() as ICommandParam<string>;
+
+                // SET MethodRef Property of _commandStringParam to reference to CreateEditScrn():
+                _commandStringParam.MethodRef = CreateEditScrn;
+
+                #endregion
+
+
                 #region LOAD IMAGE COMMAND
 
-                // DECLARE & INSTANTIATE an ICommandParam<String> as a new CommandOneParam<String>(), name it '_commandOneParam':
-                ICommandParam<String> _commandOneParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<String>>() as ICommandParam<String>;
+                // DECLARE & INSTANTIATE an ICommandParam<String> as a new CommandParam<IList<string>>(), name it '_commandStringListParam':
+                ICommandParam<IList<string>> _commandStringListParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<IList<string>>>() as ICommandParam<IList<string>>;
 
-                // SET MethodRef Property of _commandLoad to reference to _server.Load():
-                _commandOneParam.MethodRef = _server.Load;
+                // SET MethodRef Property of _commandStringListParam to reference to _server.Load():
+                _commandStringListParam.MethodRef = _server.Load;
 
                 #endregion
 
 
                 #region GET IMAGE COMMAND
 
-                // DECLARE & INSTANTIATE an ICommandParam<String, int, int> as a new CommandParam<String, int, int>(), name it '_commandThreeParam':
-                ICommandParam<String, int, int> _commandThreeParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create< CommandParam<String, int, int>>() as ICommandParam<String, int, int>;
+                // DECLARE & INSTANTIATE an ICommandParam<String, int, int> as a new CommandParam<String, int, int>(), name it '_commandStringIntIntParam':
+                ICommandParam<String, int, int> _commandStringIntIntParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<String, int, int>>() as ICommandParam<String, int, int>;
 
-                // SET MethodRef Property of _commandThreeParam to reference to _server.GetImage():
-                _commandThreeParam.MethodRef = _server.GetImage;
+                // SET MethodRef Property of _commandStringIntIntParam to reference to _server.GetImage():
+                _commandStringIntIntParam.MethodRef = _server.GetImage;
 
                 #endregion
             }
@@ -215,7 +224,7 @@ namespace App
             }
             
             #endregion
-            */
+            
             #endregion
         }
 

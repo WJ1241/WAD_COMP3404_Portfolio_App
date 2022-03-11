@@ -35,15 +35,16 @@ namespace TestApp.EndToEndTests
     /// - Initialise FishyHome with ICommand(s) (Server Methods)
     ///
     ///        FishyHome
-    /// - Load Image
-    /// - Use OpenFileDialog to allow User to choose image, and return image back to User
-    /// - User Clicks Edit
-    /// - Call Action<ICommand> passing ICommand to activate Controller.CreateFishyEdit()
-    ///
+    /// - User Clicks Load Image Button
+    /// - Use OpenFileDialog to allow User to choose image, and return list to form
+    /// - List is sent to server via command
+    /// 
     ///         Server
-    /// - Subscribe Editor Event Handler to pass image back through EventArgs
-    /// - Edits Image
-    /// - Invoke Image Change Event
+    /// - Filters List in Image Manager
+    /// - Invoke List Change
+    /// - Calls Get Image on Server via Command
+    /// - Manager returns Image and Invokes Change Command to update image
+    /// 
     /// </summary>
     [TestClass]
     public class RunApplicationTest

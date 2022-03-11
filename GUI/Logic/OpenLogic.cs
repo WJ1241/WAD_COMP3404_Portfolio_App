@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using GUI.Logic.Interfaces;
+using Server.Exceptions;
+using Server.InitialisingInterfaces;
 
 namespace GUI.Logic
 {
     /// <summary>
     /// Class which can Open files on a client's device
     /// Authors: William Smith, 'Hassan', Declan Kerby-Collins & William Eardley
-    /// Date: 02/02/22
+    /// Date: 11/03/22
     /// </summary>
     /// <REFERENCE> Hassan (2014) How to get file path from OpenFileDialog and FolderBrowserDialog? Available at: https://stackoverflow.com/questions/24449988/how-to-get-file-path-from-openfiledialog-and-folderbrowserdialog. (Accessed: 26 November 2021) </REFERENCE>
-    public class OpenLogic : IOpenImage
+    public class OpenLogic : IOpenImage, IInitialiseParam<IList<string>>
     {
+        #region FIELD VARIABLES
+
+        // DECLARE an IList<string>, name it '_fpList':
+        private IList<string> _fpList;
+
+        #endregion
+
         #region CONSTRUCTOR
 
         /// <summary>
@@ -34,10 +43,10 @@ namespace GUI.Logic
         /// </summary>
         /// <returns> List of File Names </returns>
         /// <CITATION> (Hassan, 2014) </CITATION>
-        public IList<String> OpenImage()
+        public IList<string> OpenImage()
         {
-            // DECLARE & INSTANTIATE a temporary IList<String>, name it '_tempList', holds file paths collected from OpenFileDialog:
-            IList<String> _tempList = new List<String>();
+            // CLEAR _fpList so that there are no old file paths no longer required:
+            _fpList.Clear();
 
             // DECLARE & INSTANTIATE a new OpenFileDialog, name it 'pOFD':
             using (OpenFileDialog pOFD = new OpenFileDialog())
@@ -60,14 +69,39 @@ namespace GUI.Logic
                     // FOREACH String in selected FileNames array:
                     foreach (String pString in pOFD.FileNames)
                     {
-                        // ADD pString to _tempList:
-                        _tempList.Add(Path.GetFullPath(pString));
+                        // ADD pString to _fpList:
+                        _fpList.Add(Path.GetFullPath(pString));
                     }
                 }
             }
 
-            // RETURN _tempList:
-            return _tempList;
+            // RETURN value of _fpList:
+            return _fpList;
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IINITIALISEPARAM<ILIST<STRING>>
+
+        /// <summary>
+        /// Initialises an object with an IList<string> object 
+        /// </summary>
+        /// <param name="pStringList"> IList<string> object </param>
+        public void Initialise(IList<string> pStringList)
+        {
+            // IF pStringList DOES HAVE an active instance:
+            if (pStringList != null)
+            {
+                // INITIALISE _fpList with reference to pStringList:
+                _fpList = pStringList;
+            }
+            // IF pStringList DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: pStringList does not have an active instance!");
+            }
         }
 
         #endregion

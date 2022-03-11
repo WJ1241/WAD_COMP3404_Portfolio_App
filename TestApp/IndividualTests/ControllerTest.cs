@@ -44,6 +44,9 @@ namespace TestApp.IndividualTests
         // DECLARE a Mock<IDictionary<int, IDisposable>>, name it '_mockDisposableDict':
         private Mock<IDictionary<int, IDisposable>> _mockDisposableDict;
 
+        // DECLARE a Mock<IDictionary<String, Image>>, name it '_mockImageDict':
+        private Mock<IDictionary<String, Image>> _mockImageDict;
+
         // DECLARE a Mock<IServiceLocator>, name it '_mockServiceLocator':
         private Mock<IServiceLocator> _mockServiceLocator;
 
@@ -122,7 +125,7 @@ namespace TestApp.IndividualTests
                 _mockServiceLocator.Verify(_mock => _mock.GetService<Factory<IDisposable>>(), Times.Once);
             }
             // CATCH MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false, so that test fails:
                 _pass = false;
@@ -174,7 +177,7 @@ namespace TestApp.IndividualTests
                 _mockImageServer.As<IInitialiseParam<IManageImg>>().Verify(_mock => _mock.Initialise(_mockImageMgr.Object), Times.Once);
             }
             // CATCH MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false, so that test fails:
                 _pass = false;
@@ -220,7 +223,7 @@ namespace TestApp.IndividualTests
                 _mockImageServer.As<IInitialiseParam<IEditImg>>().Verify(_mock => _mock.Initialise(_mockImageEditor.Object), Times.Once);
             }
             // CATCH MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false, so that test fails:
                 _pass = false;
@@ -277,7 +280,7 @@ namespace TestApp.IndividualTests
                 _mockFishyHome.As<IInitialiseParam<IOpenImage>>().Verify(_mock => _mock.Initialise(_mockOpenImage.Object), Times.Once);
             }
             // CATCH MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false, so that test fails:
                 _pass = false;
@@ -360,12 +363,6 @@ namespace TestApp.IndividualTests
             #endregion
 
 
-            #region MOCK COMMAND INVOKER
-
-
-
-            #endregion
-
             #region MOCK COMMAND FACTORY
 
             // DECLARE & INSTANTIATE a new Mock<ICommandZeroParam>(), name it '_mockCmd':
@@ -416,11 +413,14 @@ namespace TestApp.IndividualTests
             // INSTANTIATE _mockDisposableDict as a new Mock<IDictionary<int, IDisposable>>():
             _mockDisposableDict = new Mock<IDictionary<int, IDisposable>>();
 
+            // SETUP _mockDisposableDict so that it adds _mockFishyHome.Object at index 0:
+            _mockDisposableDict.Setup(_mock => _mock[0]).Returns(_mockFishyHome.Object);
+
             // DECLARE & INSTANTIATE a new Mock<IDictionary<int, string>>(), name it '_mockFPDict':
             Mock<IDictionary<int, string>> _mockFPDict = new Mock<IDictionary<int, string>>();
 
-            // DECLARE & INSTANTIATE a new Mock<IDictionary<String, Image>>(), name it '_mockImageDict':
-            Mock<IDictionary<String, Image>> _mockImageDict = new Mock<IDictionary<string, Image>>();
+            // INSTANTIATE _mockImageDict as a new Mock<IDictionary<string, Image>>(): 
+            _mockImageDict = new Mock<IDictionary<string, Image>>();
 
             // SETUP _mockEnumerableFactory so that it can return _mockDisposableDict.Object when Create<Dictionary<int, IDisposable>>() is called:
             _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<int, IDisposable>>()).Returns(_mockDisposableDict.Object);
@@ -429,7 +429,7 @@ namespace TestApp.IndividualTests
             _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<int, string>>()).Returns(_mockFPDict.Object);
 
             // SETUP _mockEnumerableFactory so that it can return _mockImageDict.Object when Create<Dictionary<String, Image>>() is called:
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<String, IDisposable>>()).Returns(_mockImageDict.Object);
+            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<String, Image>>()).Returns(_mockImageDict.Object);
 
             #endregion
 
@@ -462,7 +462,7 @@ namespace TestApp.IndividualTests
             #region MOCK IMAGE MANAGER
 
             // SETUP _mockImageMgr so that it can be initialised with an IDictionary<String, Image>():
-            _mockImageMgr.As<IInitialiseParam<IDictionary<String, Image>>>().Setup(_mock => _mock.Initialise(_mockEnumerableFactory.Object.Create<Dictionary<String, Image>>() as IDictionary<String, Image>));
+            _mockImageMgr.As<IInitialiseParam<IDictionary<String, Image>>>().Setup(_mock => _mock.Initialise(_mockImageDict.Object));
 
             #endregion
 
@@ -474,6 +474,9 @@ namespace TestApp.IndividualTests
 
             // SETUP _mockServiceLocator to return _mockDisposableFactory.Object when GetService<Factory<IDisposable>>() is called:
             _mockServiceLocator.Setup(_mock => _mock.GetService<Factory<IDisposable>>()).Returns(_mockDisposableFactory.Object);
+
+            // SETUP _mockServiceLocator to return _mockEnumerableFactory.Object when GetService<Factory<IEnumerable>>() is called:
+            _mockServiceLocator.Setup(_mock => _mock.GetService<Factory<IEnumerable>>()).Returns(_mockEnumerableFactory.Object);
 
             // SETUP _mockServiceLocator to return _mockLogicFactory.Object when GetService<Factory<ILogic>>() is called:
             _mockServiceLocator.Setup(_mock => _mock.GetService<Factory<ILogic>>()).Returns(_mockLogicFactory.Object);
