@@ -13,7 +13,7 @@ namespace Server
     /// Date: 11/03/22
     /// </summary>
     /// <REFERENCE> Price, M (2021) 'IServer.cs'. COMP3404: Applied Software Engineering. Available at: https://worcesterbb.blackboard.com/. (Accessed: 20 November 2021). </REFERENCE>
-    public class ImageServer : IServer, IACRotate, IInitialiseParam<IEditImg>, IInitialiseParam<IManageImg>, IInitialiseParam<IDictionary<string, EventArgs>> IInitialiseParam<string, EventArgs>
+    public class ImageServer : IServer, IACRotate, IInitialiseParam<IEditImg>, IInitialiseParam<IManageImg>, IInitialiseParam<IDictionary<string, EventArgs>>, IInitialiseParam<string, EventArgs>
     {
         #region FIELD VARIABLES
 
@@ -249,22 +249,22 @@ namespace Server
         #region IMPLEMENTATION OF IINITIALISEPARAM<IEDITIMG>
 
         /// <summary>
-        /// Initialises an implementer with an IEditImg object
+        /// Initialises an object with an IEditImg object
         /// </summary>
         /// <param name="pEditImg"> Reference to IEditImg object </param>
         public void Initialise(IEditImg pEditImg)
         {
-            // IF pEditImg IS NOT null:
+            // IF pEditImg DOES HAVE an active instance:
             if (pEditImg != null)
             {
                 // INITIALISE _imgEditor with reference to pEditImg:
                 _imgEditor = pEditImg;
             }
-            // IF pEditImg IS null:
+            // IF pEditImg DOES NOT HAVE an active instance:
             else
             {
-                // THROW new NullInstanceException, with corresponding message:
-                throw new NullInstanceException("ERROR: Server is being initialised with a null IEditImg object!");
+                // THROW new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: pEditImg does not have an active instance!");
             }
         }
 
@@ -274,43 +274,97 @@ namespace Server
         #region IMPLEMENTATION OF IINITIALISEPARAM<IMANAGEIMG>
 
         /// <summary>
-        /// Initialises an implementer with an IManageImg object
+        /// Initialises an object with an IManageImg object
         /// </summary>
         /// <param name="pManageImg"> Reference to IManageImg object </param>
         public void Initialise(IManageImg pManageImg)
         {
-            // IF pManageImg IS NOT null:
+            // IF pManageImg DOES HAVE an active instance:
             if (pManageImg != null)
             {
                 // INITIALISE _imgManager with reference to pManageImg:
                 _imgManager = pManageImg;
             }
-            // IF pManageImg IS null:
+            // IF pManageImg DOES NOY HAVE an active instance:
             else
             {
                 // THROW a new NullInstanceException(), with corresponding message:
-                throw new NullInstanceException("ERROR: Server is being initialised with a null IManageImg object!");
+                throw new NullInstanceException("ERROR: pManageImg does not have an active instance!");
             }
         }
 
         #endregion
 
 
-        
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IDICTIONARY<STRING, EVENTARGS>>
+
+        /// <summary>
+        /// Initialises an object with an IDictionary<string, EventArgs> object
+        /// </summary>
+        /// <param name="pEventDict"> Reference to IDictionary<string, EventArgs> object </param>
+        public void Initialise(IDictionary<string, EventArgs> pEventDict)
+        {
+            // IF pEventDict DOES HAVE an active instance:
+            if (pEventDict != null)
+            {
+                // INITIALISE _argDict with reference to pManageImg:
+                _argDict = pEventDict;
+            }
+            // IF pEventDict DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: pEventDict does not have an active instance!");
+            }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IINITIALISEPARAM<STRING, EVENTARGS>
+
+        /// <summary>
+        /// Initialises an object with a string and an EventArgs object
+        /// </summary>
+        /// <param name="pArgName"> Name of Argument Type </param>
+        /// <param name="pArgs"> Reference to EventArgs object </param>
+        public void Initialise(string pArgName, EventArgs pArgs)
+        {
+            // IF pArgName IS NOT blank AND pArgs DOES HAVE an active instance:
+            if (pArgName != "" && pArgs != null)
+            {
+                // ADD pArgName as a key, and pArgs as a value to _argDict:
+                _argDict.Add(pArgName, pArgs);
+            }
+            // IF pArgName IS blank:
+            else if (pArgName == "")
+            {
+                // THROW a new InvalidStringException(), with corresponding message:
+                throw new InvalidStringException("ERROR: pArgName is blank therefore requires details on what will be used for!");
+            }
+            // IF pArgs DOES NOT HAVE an active instance:
+            else if (pArgs != null)
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: pArgs does not have an active instance!");
+            }
+        }
+
+        #endregion
 
 
         #region Crop
-        /*
+
         /// <summary>
-        /// Flip the image specified by 'pUid' vertically.
+        /// Crop the image specified by 'pUid' vertically.
         /// </summary>
         /// <param name="pUid">the unique identifier for the image to be flipped</param>
-        public void CropImage(String pUid)
+        public void CropImage(string pUid)
         {
-            // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgFlipYAxis:
+            // TRY checking if InvalidStringException and NullInstanceException are thrown:
             try
             {
-                // CALL CropImg, passing ReturnImg() as a parameter:
+                // CALL CropImg(), passing ReturnImg() as a parameter:
                 _imgEditor.CropImg(_imgManager.ReturnImg(pUid));
             }
 
@@ -333,7 +387,7 @@ namespace Server
                 throw new NullInstanceException(pException.Message);
             }
         }
-        */
+        
         #endregion
     }
 }

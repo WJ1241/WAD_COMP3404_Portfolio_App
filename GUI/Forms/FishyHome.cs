@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using GUI.Forms.Interfaces;
 using GUI.Logic.Interfaces;
 using Server.Commands;
+using Server.CustomEventArgs;
 using Server.Delegates;
 using Server.Exceptions;
 using Server.InitialisingInterfaces;
@@ -13,41 +15,32 @@ namespace GUI
 {
     /// <summary>
     /// Partial Class which creates a 'FishyEdit' for the user to edit Images with.
-    /// Author: Declan Kerby-Collins, William Eardley, William Smith & Marc Price
-    /// Date: 02/02/2022
+    /// Author: William Smith, Declan Kerby-Collins, William Eardley, & Marc Price
+    /// Date: 11/03/22
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>
     /// <REFERENCE> jay_t55 (2014) Make a borderless form movable? Available at: https://stackoverflow.com/questions/1592876/make-a-borderless-form-movable/24561946#24561946. (Accessed 5 November 2021). </REFERENCE>
-    public partial class FishyHome : Form, IInitialiseParam<IOpenImage>, IInitialiseParam<GetImageDelegate>, IInitialiseParam<LoadDelegate>
+    public partial class FishyHome : Form, ICommandSender, IEventListener<ImageEventArgs>, IEventListener<StringListEventArgs>, IInitialiseParam<ICommand>, IInitialiseParam<IDictionary<int, string>>, IInitialiseParam<IDictionary<string, ICommand>>, IInitialiseParam<IOpenImage>
     {
         #region FIELD VARIABLES
 
         // DECLARE an IDictionary<int, string>, name it 'imgFPDict':
         private IDictionary<int, string> _imgFPDict;
 
-        // DECLARE an IOpenImage, name it '_imgOpen':
-        private IOpenImage _imgOpen;
-
-        // DECLARE an ISaveImage, name it '_imgSave':
-        private ISaveImage _imgSave;
-
         // DECLARE an IDictionary<string, ICommand>, name it '_commandDict':
         private IDictionary<string, ICommand> _commandDict;
+
+        // DECLARE an IOpenImage, name it '_imgOpen':
+        private IOpenImage _imgOpen;
 
         // DECLARE an Action<ICommand>, name it '_invokeCommand':
         private Action<ICommand> _invokeCommand;
 
-        // DECLARE a GetImageDelegate, name it '_getImg':
-        private GetImageDelegate _getImg;
-
-        // DECLARE a LoadDelegate, name it '_load':
-        private LoadDelegate _load;
+        // DECLARE an int, name it '_dictCount':
+        private int _dictCount;
 
         // DECLARE an int, name it '_dictIndex':
         private int _dictIndex;
-
-        // DECLARE an int, name it '_dictCount':
-        private int _dictCount;
 
         #endregion 
 
@@ -59,21 +52,12 @@ namespace GUI
             // CALL InitializeComponent():
             InitializeComponent();
 
-            // INSTANTIATE _imgFPDict as new Dictionary<int, string>():
-            _imgFPDict = new Dictionary<int, string>();
-
-            // INSTANTIATE _commandDict as a new Dictionary<string, ICommand>():
-            _commandDict = new Dictionary<string, ICommand>();
+            // INITIALISE _dictCount with value of 0:
+            _dictCount = 0;
 
             // INITIALISE _dictIndex with value of 0:
             _dictIndex = 0;
-
-            // INITIALISE _dictCount with value of 0:
-            _dictCount = 0;
         }
-
-
-
 
 
         #region IMPLEMENTATION OF ICOMMANDSENDER
@@ -88,6 +72,36 @@ namespace GUI
                 // SET value of _invokeCommand to incoming value:
                 _invokeCommand = value;
             }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IEVENTLISTENER<IMAGEEVENTARGS>
+
+        /// <summary>
+        /// Event Handler to update currently displayed image
+        /// </summary>
+        /// <param name="pSource"> Object calling this method </param>
+        /// <param name="pArgs"> Necessary arguments to complete behaviour </param>
+        public void OnEvent(object pSource, ImageEventArgs pArgs)
+        {
+
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IEVENTLISTENER<STRINGLISTEVENTARGS>
+
+        /// <summary>
+        /// Event Handler to update list of images loaded into program
+        /// </summary>
+        /// <param name="pSource"> Object calling this method </param>
+        /// <param name="pArgs"> Necessary arguments to complete behaviour </param>
+        public void OnEvent(object pSource, StringListEventArgs pArgs)
+        {
+
         }
 
         #endregion
@@ -118,6 +132,56 @@ namespace GUI
         #endregion
 
 
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IDICTIONARY<STRING, ICOMMAND>>
+
+        /// <summary>
+        /// Initialises an object with an IDictionary<string, ICommand> object
+        /// </summary>
+        /// <param name="pCommand"> IDictionary<string, ICommand> object </param>
+        public void Initialise(IDictionary<string, ICommand> pCommandDict)
+        {
+            // IF pCommandDict DOES HAVE an active instance:
+            if (pCommandDict != null)
+            {
+                // INITIALISE _commandDict with reference to pCommandDict:
+                _commandDict = pCommandDict;
+            }
+            // IF pCommandDict DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: pCommandDict does not have an active instance, requires instantiation!");
+            }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IDICTIONARY<STRING, ICOMMAND>>
+
+        /// <summary>
+        /// Initialises an object with an IDictionary<string, ICommand> object
+        /// </summary>
+        /// <param name="pCommand"> IDictionary<string, ICommand> object </param>
+        public void Initialise(IDictionary<int, string> pStringDict)
+        {
+            // IF pStringDict DOES HAVE an active instance:
+            if (pStringDict != null)
+            {
+                // INITIALISE _imgFPDict with reference to pStringDict:
+                _imgFPDict = pStringDict;
+            }
+            // IF pCommandDict DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: pStringDict does not have an active instance, requires instantiation!");
+            }
+        }
+
+        #endregion
+
+
         #region IMPLEMENTATION OF IINITIALISEPARAM<IOPENIMAGE>
 
         /// <summary>
@@ -129,16 +193,8 @@ namespace GUI
             // IF pOpenImage IS NOT null:
             if (pOpenImage != null)
             {
-                // ASSIGN instance of pOpenImage to _imgOpen:
+                // INITIALISE _imgOpen with reference to pOpenImage:
                 _imgOpen = pOpenImage;
-
-                // IF pOpenImage is also ISaveImage:
-                // FIXES ISSUE WHERE IOPENIMAGE OBJECT MAY NOT IMPLEMENT ISAVEIMAGE OBJECT
-                if (pOpenImage is ISaveImage)
-                {
-                    // ASSIGN instance of pOpenImage to _imgSave as an ISaveImage:
-                    _imgSave = pOpenImage as ISaveImage;
-                }
             }
             // IF pOpenImage IS null:
             else
@@ -146,36 +202,6 @@ namespace GUI
                 // THROW NullInstanceException, with corresponding message:
                 throw new NullInstanceException("ERROR: FishyEdit Initialised with a null instance of IOpenImage!");
             }
-        }
-
-        #endregion
-
-
-        #region IMPLEMENTATION OF IINITIALISEPARAM<GETIMAGEDELEGATE>
-
-        /// <summary>
-        /// Initialises an object with a 'GetImage' Delegate
-        /// </summary>
-        /// <param name="pGetImageDelegate"> Delegate used for getting object(s) </param>
-        public void Initialise(GetImageDelegate pGetImageDelegate)
-        {
-            // ASSIGN method of pGetImageDelegate to _getImg:
-            _getImg = pGetImageDelegate;
-        }
-
-        #endregion
-
-
-        #region IMPLEMENTATION OF IINITIALISEPARAM<LOADDELEGATE>
-
-        /// <summary>
-        /// Initialises an object with a 'Load' Delegate
-        /// </summary>
-        /// <param name="pLoadDelegate"> Delegate used for loading object(s) </param>
-        public void Initialise(LoadDelegate pLoadDelegate)
-        {
-            // ASSIGN method of pDeleteDelegate to _remove:
-            _load = pLoadDelegate;
         }
 
         #endregion
@@ -230,6 +256,8 @@ namespace GUI
         /// <param name="e"> Value for classes without event data </param>
         private void LoadBttn_Click(object sender, EventArgs e)
         {
+            /*
+
             // SET value of _dictIndex to _dictCount, prevents dictionary ID problems:
             _dictIndex = _dictCount;
 
@@ -270,6 +298,8 @@ namespace GUI
                 // WRITE exception message to debug console:
                 Debug.WriteLine(pException.Message);
             }
+
+            */
         }
 
         /// <summary>
@@ -290,6 +320,7 @@ namespace GUI
         /// </summary>
         private void ChngImg()
         {
+            /*
             // IF _imgFPDict contains a key of the current _dictIndex value:
             if (_imgFPDict.ContainsKey(_dictIndex))
             {
@@ -306,7 +337,7 @@ namespace GUI
                     throw new NullInstanceException("ERROR: No Image stored in local dictionary at current image index!");
                 }
             }
-
+            */
         }
 
         /// <summary>
@@ -432,19 +463,5 @@ namespace GUI
         }
 
         #endregion
-
-        private void Home_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Method for notification icon in system tray - Not called but required
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-        }
     }
 }

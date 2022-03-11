@@ -20,7 +20,7 @@ namespace App
     /// <summary>
     /// Main Class of the application, stores reference to all objects required
     /// Author: William Smith, William Eardley & Declan Kerby-Collins
-    /// Date: 09/03/22
+    /// Date: 11/03/22
     /// </summary>
     public class Controller : IController, ISetupApplication, IInitialiseParam<IDictionary<int, IDisposable>>, IInitialiseParam<IServiceLocator>
     {
@@ -112,7 +112,7 @@ namespace App
         /// </summary>
         public void SetupApplication()
         {
-            #region SERVER CREATION
+            #region SERVER CREATION & INITIALISATION
 
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
@@ -123,9 +123,9 @@ namespace App
                 // INITIALISE _server with an IManageImg object:
                 (_server as IInitialiseParam<IManageImg>).Initialise(_serviceLocator.GetService<ImageMgr>() as IManageImg);
 
-                // INITIALISE returned ImageMgr with a new IDictionary<String, Image>():
-                (_serviceLocator.GetService<ImageMgr>() as IInitialiseParam<IDictionary<String, Image>>).Initialise(
-                    (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<String, Image>>() as IDictionary<String, Image>);
+                // INITIALISE returned ImageMgr with a new Dictionary<string, Image>():
+                (_serviceLocator.GetService<ImageMgr>() as IInitialiseParam<IDictionary<string, Image>>).Initialise(
+                    (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<string, Image>>() as IDictionary<string, Image>);
 
                 // INITIALISE _server with an IEditImg object:
                 (_server as IInitialiseParam<IEditImg>).Initialise(_serviceLocator.GetService<ImageEditor>() as IEditImg);
@@ -157,6 +157,9 @@ namespace App
                 // DECLARE & INSTANTIATE an IOpenImage as a new OpenLogic(), name it '_openImage':
                 IOpenImage _openImage = (_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage;
 
+                // INITIALISE _openImage with a new List<string>():
+                (_openImage as IInitialiseParam<IList<string>>).Initialise((_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<List<string>>() as IList<string>);
+
                 // INITIALISE _formDict[_formCount] (FishyHome) with a new IOpenImage object:
                 (_formDict[_formCount] as IInitialiseParam<IOpenImage>).Initialise(_openImage);
             }
@@ -175,7 +178,7 @@ namespace App
             
             #region FISHYHOME COMMANDS
             
-            // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown: 
+            // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
             {
                 #region CREATE EDIT SCREEN COMMAND
@@ -185,6 +188,9 @@ namespace App
 
                 // SET MethodRef Property of _commandStringParam to reference to CreateEditScrn():
                 _commandStringParam.MethodRef = CreateEditScrn;
+
+                // INITIALISE _formDict[0] (FishyHome) with a reference to _commandStringParam:
+                (_formDict[0] as IInitialiseParam<ICommand>).Initialise(_commandStringParam);
 
                 #endregion
 
@@ -197,6 +203,9 @@ namespace App
                 // SET MethodRef Property of _commandStringListParam to reference to _server.Load():
                 _commandStringListParam.MethodRef = _server.Load;
 
+                // INITIALISE _formDict[0] (FishyHome) with a reference to _commandStringListParam:
+                (_formDict[0] as IInitialiseParam<ICommand>).Initialise(_commandStringListParam);
+
                 #endregion
 
 
@@ -207,6 +216,9 @@ namespace App
 
                 // SET MethodRef Property of _commandStringIntIntParam to reference to _server.GetImage():
                 _commandStringIntIntParam.MethodRef = _server.GetImage;
+
+                // INITIALISE _formDict[0] (FishyHome) with a reference to _commandStringIntIntParam:
+                (_formDict[0] as IInitialiseParam<ICommand>).Initialise(_commandStringIntIntParam);
 
                 #endregion
             }
