@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using GUI.Forms.Interfaces;
 using Server.Commands;
 using Server.CustomEventArgs;
-using Server.InitialisingInterfaces;
+using TestGUI.Interfaces;
 
 namespace TestApp.MockClasses
 {
@@ -12,18 +11,15 @@ namespace TestApp.MockClasses
     /// Authors: William Smith, William Eardley & Declan Kerby-Collins
     /// Date: 09/03/22
     /// </summary>
-    public class MockFishyHome : IDisposable, IEventListener<ImageEventArgs>, IInitialiseParam<Action<ICommand>>, IInitialiseParam<ICommand>
+    public class MockFishyHome : IMockFishyHome, IEventListener<ImageEventArgs>, IEventListener<StringListEventArgs>
     {
         #region FIELD VARIABLES
 
-        // DECLARE an Action<ICommand>, name it '_invokeCommand':
-        private Action<ICommand> _invokeCommand;
+        // DECLARE a bool, name it '_imgEventCalled':
+        private bool _imgEventCalled;
 
-        // DECLARE an ICommand, name it '_createEditScrn':
-        private ICommand _createEditScrn;
-
-        // DECLARE an Image, name it '_crrntImg':
-        private Image _crrntImg;
+        // DECLARE a bool, name it '_stringListEventCalled':
+        private bool _stringListEventCalled;
 
         #endregion
 
@@ -41,30 +37,29 @@ namespace TestApp.MockClasses
         #endregion
 
 
-        #region IMPLEMENTATION OF IDISPOSABLE
+        #region IMPLEMENTATION OF IMOCKFISHYHOME
 
         /// <summary>
-        /// Disposes of any no longer required assets to aid system resource allocation
+        /// Property which allows read access to a boolean to test if ImgChangeEvent was called
         /// </summary>
-        public void Dispose()
+        public bool ImgChangeEventCalled 
         {
-            // ONLY CALLED TO REMOVE NO LONGER NEEDED ASSETS
+            get 
+            {
+                // RETURN _imgEventCalled:
+                return _imgEventCalled;
+            }
         }
 
-        #endregion
-
-
-        #region IMPLEMENTATION OF IGETIMAGETEST
-
         /// <summary>
-        /// Property which allows only read access to an Image
+        /// Property which allows read access to a boolean to test if StringListEvent was called
         /// </summary>
-        public Image Img
+        public bool StringListEventCalled 
         {
             get
             {
-                // RETURN value of _crrntImg:
-                return _crrntImg;
+                // RETURN _stringListEventCalled:
+                return _stringListEventCalled;
             }
         }
 
@@ -80,56 +75,28 @@ namespace TestApp.MockClasses
         /// <param name="pArgs"> Necessary arguments in order to modify an Image </param>
         public void OnEvent(object pSource, ImageEventArgs pArgs)
         {
-            // SET value of _crrntImg to value of pArgs.Img:
-            _crrntImg = pArgs.Img;
+            // SET _imgEventCalled to true:
+            _imgEventCalled = true;
         }
 
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEPARAM<ACTION<ICOMMAND>>
+        #region IMPLEMENTATION OF IEVENTLISTENER<STRINGLISTEVENTARGS>
 
         /// <summary>
-        /// Initialises an object with an Action<ICommand> reference
-        /// </summary>
-        /// <param name="pAction"> Action<ICommand> reference </param>
-        public void Initialise(Action<ICommand> pAction)
-        {
-            // INITIALISE _invokeCommand with reference to pAction:
-            _invokeCommand = pAction;
-        }
-
-        #endregion
-
-
-        #region IMPLEMENTATION OF IEVENTLISTENERIINITIALISEPARAM<ICOMMAND>
-
-        /// <summary>
-        /// Initialises an object with an ICommand object
-        /// </summary>
-        /// <param name="pCommand"> ICommand object </param>
-        public void Initialise(ICommand pCommand)
-        {
-            // INITIALISE _createEditScrn with reference to pCommand:
-            _createEditScrn = pCommand;
-        }
-
-        #endregion
-
-
-        #region PUBLIC METHODS
-
-        /// <summary>
-        /// Mock Method which is used to simulate when user clicks 'Edit' Button
+        /// Method called when needing to update an stringList
         /// </summary>
         /// <param name="pSource"> Object calling this method </param>
-        /// <param name="pArgs"> Necessary arguments to complete behaviour </param>
-        public void EditButtonClick(object pSource, EventArgs pArgs)
+        /// <param name="pArgs"> Necessary arguments in order to modify an Image </param>
+        public void OnEvent(object pSource, StringListEventArgs pArgs)
         {
-            // INVOKE _createEditScrn:
-            _invokeCommand(_createEditScrn);
+            // SET _stringListEventCalled to true:
+            _stringListEventCalled = true;
         }
 
         #endregion
+
+
     }
 }
