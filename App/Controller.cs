@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using App.Services;
 using App.Services.Factories;
 using App.GeneralInterfaces;
 using GUI;
+using GUI.Forms.Interfaces;
 using GUI.Logic;
 using GUI.Logic.Interfaces;
 using Server;
@@ -12,15 +15,15 @@ using Server.Exceptions;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
 using Server.Commands;
-using System.Drawing;
-using System.Collections;
+using Server.CustomEventArgs;
+
 
 namespace App
 {
     /// <summary>
     /// Main Class of the application, stores reference to all objects required
-    /// Author: William Smith, William Eardley & Declan Kerby-Collins
-    /// Date: 11/03/22
+    /// Author: William Smith, Declan Kerby-Collins & William Eardley
+    /// Date: 12/03/22
     /// </summary>
     public class Controller : IController, ISetupApplication, IInitialiseParam<IDictionary<int, IDisposable>>, IInitialiseParam<IServiceLocator>
     {
@@ -49,7 +52,8 @@ namespace App
         /// </summary>
         public Controller()
         {
-            // EMPTY CONSTRUCTOR
+            // INITIALISE _formCount with value of '0':
+            _formCount = 0;
         }
 
         #endregion
@@ -112,23 +116,90 @@ namespace App
         /// </summary>
         public void SetupApplication()
         {
+            #region FISHYHOME CREATION & INITIALISATION
+
+            // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
+            try
+            {
+                // ADD _formCount as a key and a new FishyHome as a value to _formDict:
+                _formDict.Add(_formCount, (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>());
+
+                // SET InvokeCommand property value of  _formDict[_formCount] (FishyHome) to reference to CommandInvoker.InvokeCommand:
+                (_formDict[_formCount] as ICommandSender).InvokeCommand = (_serviceLocator.GetService<CommandInvoker>() as ICommandInvoker).InvokeCommand;
+
+                // DECLARE & INSTANTIATE an IOpenImage as a new OpenLogic(), name it '_openImage':
+                IOpenImage _openImage = (_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage;
+
+                // INITIALISE _openImage with a new List<string>():
+                (_openImage as IInitialiseParam<IList<string>>).Initialise((_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<List<string>>() as IList<string>);
+
+                // INITIALISE _formDict[_formCount] (FishyHome) with a new IOpenImage object:
+                (_formDict[_formCount] as IInitialiseParam<IOpenImage>).Initialise(_openImage);
+
+                // INITIALISE _formDict[_formCount] (FishyHome) with a new IDictionary<int, string> object:
+                (_formDict[_formCount] as IInitialiseParam<IDictionary<int, string>>).Initialise(
+                    (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<int, string>>() as IDictionary<int, string>);
+
+                // INITIALISE _formDict[_formCount] (FishyHome) with a new IDictionary<string, ICommand> object: 
+                (_formDict[_formCount] as IInitialiseParam<IDictionary<string, ICommand>>).Initialise(
+                    (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<string, ICommand>>() as IDictionary<string, ICommand>);
+            }
+            // CATCH ClassDoesNotExistException from Create<C>():
+            catch (ClassDoesNotExistException e)
+            {
+                // WRITE error message to debug console:
+                Console.WriteLine(e.Message);
+            }
+            // CATCH NullInstanceException from Initialise():
+            catch (NullInstanceException e)
+            {
+                // WRITE error message to debug console:
+                Console.WriteLine(e.Message);
+            }
+
+
             #region SERVER CREATION & INITIALISATION
 
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
             {
+                #region IMAGE SERVER
+
                 // INSTANTIATE _server as a new ImageServer():
                 _server = _serviceLocator.GetService<ImageServer>() as IServer;
 
                 // INITIALISE _server with an IManageImg object:
                 (_server as IInitialiseParam<IManageImg>).Initialise(_serviceLocator.GetService<ImageMgr>() as IManageImg);
 
+                // INITIALISE _server with an IEditImg object:
+                (_server as IInitialiseParam<IEditImg>).Initialise(_serviceLocator.GetService<ImageEditor>() as IEditImg);
+
+                // INITIALISE _server with a new IDictionary<string, EventArgs> object:
+                (_server as IInitialiseParam<IDictionary<string, EventArgs>>).Initialise(
+                    (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<string, EventArgs>>() as IDictionary<string, EventArgs>);
+
+                // INITIALISE _server with "Image" and a new EventArgs object:
+                (_server as IInitialiseParam<string, EventArgs>).Initialise("Image", (_serviceLocator.GetService<Factory<EventArgs>>() as IFactory<EventArgs>).Create<ImageEventArgs>());
+
+                // INITIALISE _server with "StringList" and a new EventArgs object:
+                (_server as IInitialiseParam<string, EventArgs>).Initialise("StringList", (_serviceLocator.GetService<Factory<EventArgs>>() as IFactory<EventArgs>).Create<StringListEventArgs>());
+
+                // SUBSCRIBE _server with _formDict[0].OnEvent (ImageEventArgs):
+                (_server as ISubscribe<ImageEventArgs>).Subscribe((_formDict[0] as IEventListener<ImageEventArgs>).OnEvent);
+
+                // SUBSCRIBE _server with _formDict[0].OnEvent (StringListEventArgs):
+                (_server as ISubscribe<StringListEventArgs>).Subscribe((_formDict[0] as IEventListener<StringListEventArgs>).OnEvent);
+
+                #endregion
+
+
+                #region IMAGE MANAGER
+
                 // INITIALISE returned ImageMgr with a new Dictionary<string, Image>():
                 (_serviceLocator.GetService<ImageMgr>() as IInitialiseParam<IDictionary<string, Image>>).Initialise(
                     (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<string, Image>>() as IDictionary<string, Image>);
 
-                // INITIALISE _server with an IEditImg object:
-                (_server as IInitialiseParam<IEditImg>).Initialise(_serviceLocator.GetService<ImageEditor>() as IEditImg);
+                #endregion
             }
             // CATCH ClassDoesNotExistException from Create<C>():
             catch (ClassDoesNotExistException e)
@@ -144,40 +215,10 @@ namespace App
             }
 
             #endregion
-            
 
-            #region FISHYHOME CREATION & INITIALISATION
 
-            // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
-            try
-            {
-                // ADD _formCount as a key and a new FishyHome as a value to _formDict:
-                _formDict.Add(_formCount, (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>());
-
-                // DECLARE & INSTANTIATE an IOpenImage as a new OpenLogic(), name it '_openImage':
-                IOpenImage _openImage = (_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage;
-
-                // INITIALISE _openImage with a new List<string>():
-                (_openImage as IInitialiseParam<IList<string>>).Initialise((_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<List<string>>() as IList<string>);
-
-                // INITIALISE _formDict[_formCount] (FishyHome) with a new IOpenImage object:
-                (_formDict[_formCount] as IInitialiseParam<IOpenImage>).Initialise(_openImage);
-            }
-            // CATCH ClassDoesNotExistException from Create<C>():
-            catch (ClassDoesNotExistException e)
-            {
-                // WRITE error message to debug console:
-                Console.WriteLine(e.Message);
-            }
-            // CATCH NullInstanceException from Initialise():
-            catch (NullInstanceException e)
-            {
-                // WRITE error message to debug console:
-                Console.WriteLine(e.Message);
-            }
-            
             #region FISHYHOME COMMANDS
-            
+
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
             {
@@ -189,8 +230,11 @@ namespace App
                 // SET MethodRef Property of _commandStringParam to reference to CreateEditScrn():
                 _commandStringParam.MethodRef = CreateEditScrn;
 
-                // INITIALISE _formDict[0] (FishyHome) with a reference to _commandStringParam:
-                (_formDict[0] as IInitialiseParam<ICommand>).Initialise(_commandStringParam);
+                // SET Name Property of _commandStringParam to "CreateEditScrn":
+                (_commandStringParam as IName).Name = "CreateEditScrn";
+
+                // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringParam:
+                (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringParam);
 
                 #endregion
 
@@ -203,8 +247,11 @@ namespace App
                 // SET MethodRef Property of _commandStringListParam to reference to _server.Load():
                 _commandStringListParam.MethodRef = _server.Load;
 
-                // INITIALISE _formDict[0] (FishyHome) with a reference to _commandStringListParam:
-                (_formDict[0] as IInitialiseParam<ICommand>).Initialise(_commandStringListParam);
+                // SET Name Property of _commandStringListParam to "Load":
+                (_commandStringListParam as IName).Name = "Load";
+
+                // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringListParam:
+                (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringListParam);
 
                 #endregion
 
@@ -212,15 +259,53 @@ namespace App
                 #region GET IMAGE COMMAND
 
                 // DECLARE & INSTANTIATE an ICommandParam<String, int, int> as a new CommandParam<String, int, int>(), name it '_commandStringIntIntParam':
-                ICommandParam<String, int, int> _commandStringIntIntParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<String, int, int>>() as ICommandParam<String, int, int>;
+                ICommandParam<string, int, int> _commandStringIntIntParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<string, int, int>>() as ICommandParam<string, int, int>;
 
                 // SET MethodRef Property of _commandStringIntIntParam to reference to _server.GetImage():
                 _commandStringIntIntParam.MethodRef = _server.GetImage;
 
-                // INITIALISE _formDict[0] (FishyHome) with a reference to _commandStringIntIntParam:
-                (_formDict[0] as IInitialiseParam<ICommand>).Initialise(_commandStringIntIntParam);
+                // SET Name Property of _commandStringIntIntParam to "GetImage":
+                (_commandStringIntIntParam as IName).Name = "GetImage";
+
+                // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringIntIntParam:
+                (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringIntIntParam);
 
                 #endregion
+
+
+                #region DISPOSABLE REMOVAL COMMAND (IDISPOSABLE)
+
+                // DECLARE & INSTANTIATE an ICommandParam<IDisposable> as a new CommandParam<IDisposable>(), name it '_commandIDisposableParam':
+                ICommandParam<IDisposable> _commandIDisposableParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<IDisposable>>() as ICommandParam<IDisposable>;
+
+                // SET MethodRef Property of _commandIDisposableParam to reference to DisposableRemoval(IDisposable):
+                _commandIDisposableParam.MethodRef = DisposableRemoval;
+
+                // SET Name Property of _commandIDisposableParam to "DisposableRemoval":
+                (_commandIDisposableParam as IName).Name = "DisposableRemoval";
+
+                // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandIDisposableParam:
+                (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandIDisposableParam);
+
+                #endregion
+
+
+                #region DISPOSABLE REMOVAL COMMAND (INT)
+
+                // DECLARE & INSTANTIATE an ICommandParam<IDisposable> as a new CommandParam<IDisposable>(), name it '_commandIntParam':
+                ICommandParam<int> _commandIntParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<int>>() as ICommandParam<int>;
+
+                // SET MethodRef Property of _commandIDisposableParam to reference to DisposableRemoval(int):
+                _commandIntParam.MethodRef = DisposableRemoval;
+
+                // SET Name Property of _commandIntParam to "RemoveMe":
+                (_commandIntParam as IName).Name = "RemoveMe";
+
+                // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandIntParam:
+                (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandIntParam);
+
+                #endregion
+
             }
             // CATCH ClassDoesNotExistException from Create<C>():
             catch (ClassDoesNotExistException e)

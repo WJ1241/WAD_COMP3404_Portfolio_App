@@ -52,6 +52,7 @@
     <Compile Include="CustomEventArgs\ImageEventArgs.cs" />
     <Compile Include="GeneralInterfaces\IACRotate.cs" />
     <Compile Include="GeneralInterfaces\IService.cs" />
+    <Compile Include="GeneralInterfaces\ISubscribe.cs" />
     <Compile Include="ImageMgr.cs" />
     <Compile Include="Commands\Delegates.cs" />
     <Compile Include="Exceptions\ClassDoesNotExistException.cs" />

@@ -11,7 +11,7 @@ namespace GUI.Forms.Interfaces
     /// <typeparam name="EA"> Event Arguments for an Event Handler </typeparam>
     public interface IEventListener<EA>
     {
-        #region METHODS
+        #region EVENTS
 
         /// <summary>
         /// Event Handler which gives an object the caller of the method as well as necessary arguments to complete required behaviour

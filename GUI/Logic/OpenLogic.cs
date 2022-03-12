@@ -10,8 +10,8 @@ namespace GUI.Logic
 {
     /// <summary>
     /// Class which can Open files on a client's device
-    /// Authors: William Smith, 'Hassan', Declan Kerby-Collins & William Eardley
-    /// Date: 11/03/22
+    /// Authors: William Smith, Declan Kerby-Collins, William Eardley & 'Hassan'
+    /// Date: 12/03/22
     /// </summary>
     /// <REFERENCE> Hassan (2014) How to get file path from OpenFileDialog and FolderBrowserDialog? Available at: https://stackoverflow.com/questions/24449988/how-to-get-file-path-from-openfiledialog-and-folderbrowserdialog. (Accessed: 26 November 2021) </REFERENCE>
     public class OpenLogic : IOpenImage, IInitialiseParam<IList<string>>
@@ -22,6 +22,7 @@ namespace GUI.Logic
         private IList<string> _fpList;
 
         #endregion
+
 
         #region CONSTRUCTOR
 

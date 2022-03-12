@@ -10,10 +10,11 @@ namespace Server
     /// <summary>
     /// Class which acts as the 'Server' for the Application
     /// Author: William Smith, William Eardley, Declan Kerby-Collins & Marc Price
-    /// Date: 11/03/22
+    /// Date: 12/03/22
     /// </summary>
     /// <REFERENCE> Price, M (2021) 'IServer.cs'. COMP3404: Applied Software Engineering. Available at: https://worcesterbb.blackboard.com/. (Accessed: 20 November 2021). </REFERENCE>
-    public class ImageServer : IServer, IACRotate, IInitialiseParam<IEditImg>, IInitialiseParam<IManageImg>, IInitialiseParam<IDictionary<string, EventArgs>>, IInitialiseParam<string, EventArgs>
+    public class ImageServer : IServer, IACRotate, IInitialiseParam<IEditImg>, IInitialiseParam<IManageImg>, IInitialiseParam<IDictionary<string, EventArgs>>,
+        IInitialiseParam<string, EventArgs>, ISubscribe<ImageEventArgs>, ISubscribe<StringListEventArgs>
     {
         #region FIELD VARIABLES
 
@@ -83,7 +84,7 @@ namespace Server
         /// </summary>
         /// <param name="pUid">the unique identifier for the image requested</param>
         /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
-        /// <param name="pFrameHeight">the height (in pixles) of the 'frame' it is to occupy</param>
+        /// <param name="pFrameHeight">the height (in pixels) of the 'frame' it is to occupy</param>
         /// <returns>the Image identified by pUid</returns>
         public void GetImage(string pUid, int pFrameWidth, int pFrameHeight)
         {
@@ -348,6 +349,36 @@ namespace Server
                 // THROW a new NullInstanceException(), with corresponding message:
                 throw new NullInstanceException("ERROR: pArgs does not have an active instance!");
             }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF ISUBSCRIBE<IMAGEEVENTARGS>
+
+        /// <summary>
+        /// Subscribes an object to an Event containing arguments for an Image change
+        /// </summary>
+        /// <param name="pEvent"> Event Method which contains the arguments for an Image change </param>
+        public void Subscribe(EventHandler<ImageEventArgs> pEvent)
+        {
+            // SUBSCRIBE _changeImgEvent to pEvent:
+            _changeImgEvent += pEvent;
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF ISUBSCRIBE<STRINGLISTEVENTARGS>
+
+        /// <summary>
+        /// Subscribes an object to an Event containing arguments for a string list change
+        /// </summary>
+        /// <param name="pEvent"> Event Method which contains the arguments for a string list change </param>
+        public void Subscribe(EventHandler<StringListEventArgs> pEvent)
+        {
+            // SUBSCRIBE _changeStringListEvent to pEvent:
+            _changeStringListEvent += pEvent;
         }
 
         #endregion

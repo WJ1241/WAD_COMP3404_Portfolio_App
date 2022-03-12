@@ -57,7 +57,7 @@ namespace TestServer.IndividualTests
             #region ACT
 
             // INITIALISE _fpList with return value of _imageServer.Load(), passing a blank string as a parameter:
-            _fpList = _imageServer.Load(_mockList.Object);
+            //_fpList = _imageServer.Load(_mockList.Object);
 
             #endregion
 
@@ -113,7 +113,7 @@ namespace TestServer.IndividualTests
             #region ACT
 
             // INITIALISE _image with return value of _imageServer.Load(), passing a blank string, and two integers as parameters:
-            _image = _imageServer.GetImage("", 1, 1);
+            //_image = _imageServer.GetImage("", 1, 1);
 
             #endregion
 
