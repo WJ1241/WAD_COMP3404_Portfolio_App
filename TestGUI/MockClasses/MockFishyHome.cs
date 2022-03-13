@@ -15,7 +15,7 @@ namespace TestApp.MockClasses
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
     /// Date: 13/03/22
     /// </summary>
-    public class MockFishyHome : IMockFishyHome, IChangeImg, ICommandSender, IEventListener<ImageEventArgs>, IEventListener<StringListEventArgs>, IInitialiseParam<ICommand>,
+    public class MockFishyHome : IMockFishyHome, IChangeImg, ICommandSender, IDisposable, IEventListener<ImageEventArgs>, IEventListener<StringListEventArgs>, IInitialiseParam<ICommand>,
         IInitialiseParam<IDictionary<int, string>>, IInitialiseParam<IDictionary<string, ICommand>>, IInitialiseParam<IOpenImage>
     {
         #region FIELD VARIABLES
@@ -138,6 +138,19 @@ namespace TestApp.MockClasses
         #endregion
 
 
+        #region IMPLEMENTATION OF IDISPOSABLE
+
+        /// <summary>
+        /// Disposes of this instance to release unnecessary resource allocation
+        /// </summary>
+        public void Dispose()
+        {
+            // ONLY USED AS 'FORM' ALREADY IMPLEMENTS IDISPOSABLE
+        }
+
+        #endregion
+
+
         #region IMPLEMENTATION OF IEVENTLISTENER<IMAGEEVENTARGS>
 
         /// <summary>
@@ -165,6 +178,9 @@ namespace TestApp.MockClasses
         {
             // SET _stringListEventCalled to true:
             _stringListEventCalled = true;
+
+            // CALL ChangeImg():
+            ChangeImg();
         }
 
         #endregion
