@@ -9,7 +9,7 @@ namespace Server.Commands
     /// <summary>
     /// Interface which allows implementations send commands to another class
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 02/02/22
+    /// Date: 02/03/22
     /// </summary>
     public interface ICommandSender
     {

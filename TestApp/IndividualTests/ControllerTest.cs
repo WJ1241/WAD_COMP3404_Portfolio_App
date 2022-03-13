@@ -24,6 +24,48 @@ namespace TestApp.IndividualTests
     /// Test Class which checks if Controller is behaving as expected
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
     /// Date: 12/03/22
+    /// 
+    /// Services Needed:
+    /// - IServiceLocator
+    /// - IFactory<ICommand>
+    /// - IFactory<EventArgs>
+    /// - IFactory<IDisposable>
+    /// - IFactory<IEnumerable>
+    /// - IFactory<ILogic>
+    /// - IServer
+    /// - IManageImg
+    /// - IEditImg
+    /// - ICommandInvoker
+    /// 
+    /// Creates:
+    /// - IDictionary<int, IDisposable>
+    /// - IDictionary<int, string>>
+    /// - IDictionary<string, EventArgs>
+    /// - IDictionary<string, Image>
+    /// - IDictionary<string, ICommand>
+    /// - IList<string>
+    /// - IOpenImage
+    /// - IDisposable
+    /// - ICommandParam<string>
+    /// - ICommandParam<string, int, int>
+    /// - ICommandParam<IList<string>>
+    /// - ICommandParam<IDisposable>
+    /// - ICommandParam<int>
+    /// - ImageEventArgs
+    /// - StringListEventArgs
+    /// 
+    /// Initialises:
+    /// - 
+    /// - 
+    /// - 
+    /// - 
+    /// - 
+    /// - 
+    /// - 
+    ///
+    ///
+    ///
+    /// 
     /// </summary>
     [TestClass]
     public class ControllerTest
@@ -1071,7 +1113,7 @@ namespace TestApp.IndividualTests
             #region MOCK IMAGE MANAGER
 
             // SETUP _mockImageMgr so that it can be initialised with an IDictionary<String, Image>():
-            _mockImageMgr.As<IInitialiseParam<IDictionary<String, Image>>>().Setup(_mock => _mock.Initialise(_mockImageDict.Object));
+            _mockImageMgr.As<IInitialiseParam<IDictionary<string, Image>>>().Setup(_mock => _mock.Initialise(_mockImageDict.Object));
 
             #endregion
 
