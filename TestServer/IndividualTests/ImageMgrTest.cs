@@ -5,17 +5,29 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Server;
 using Server.Exceptions;
 using Server.GeneralInterfaces;
+using Server.InitialisingInterfaces;
 
 namespace TestServer.IndividualTests
 {
     /// <summary>
     /// Test Class for methods within the 'ImageMgr' class
-    /// Author: William Smith, William Eardley & Declan Kerby-Collins
-    /// Date: 03/12/21
+    /// Author: William Smith, Declan Kerby-Collins & William Eardley
+    /// Date: 13/03/22
     /// </summary>
     [TestClass]
     public class ImageMgrTest
     {
+        #region FIELD VARIABLES
+
+        // DECLARE an IManageImg, name it '_imgMgr':
+        private IManageImg _imgMgr;
+
+        // DECLARE an IList<string>, name it '_tempList':
+        private IList<string> _tempList;
+
+        #endregion
+
+
         #region FILTERED LIST TESTS
 
         #region PASS
@@ -28,12 +40,6 @@ namespace TestServer.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INSTANTIATE an IManageImg as a new ImageMgr, name it _imgMgr:
-            IManageImg _imgMgr = new ImageMgr();
-
-            // DECLARE & INSTANTIATE an IList<String> as a new List<String>, name it '_tempList':
-            IList<String> _tempList = new List<String>();
-
             // ADD 1st string to _tempList:
             _tempList.Add("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png");
 
@@ -41,6 +47,7 @@ namespace TestServer.IndividualTests
             _tempList.Add("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\OrangeFish.png");
 
             #endregion
+
 
             #region ACT
 
@@ -52,6 +59,7 @@ namespace TestServer.IndividualTests
             }
 
             #endregion
+
 
             #region ASSERT
 
@@ -78,12 +86,6 @@ namespace TestServer.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INSTANTIATE an IManageImg as a new ImageMgr, name it _imgMgr:
-            IManageImg _imgMgr = new ImageMgr();
-
-            // DECLARE & INSTANTIATE an IList<String> as a new List<String>, name it '_tempList':
-            IList<String> _tempList = new List<String>();
-
             // DECLARE & INITIALISE a bool, name it '_fail', give value of 'false' to change to 'true' if failed:
             bool _fail = false;
 
@@ -95,6 +97,7 @@ namespace TestServer.IndividualTests
 
             #endregion
 
+
             #region ACT
 
             // TRY checking if ReturnFilteredList() throws an exception:
@@ -105,6 +108,7 @@ namespace TestServer.IndividualTests
             }
 
             #endregion
+
 
             #region ASSERT
 
@@ -134,18 +138,12 @@ namespace TestServer.IndividualTests
         #region PASS
 
         /// <summary>
-        /// Test Method for ReturnImg(String), with one file path added to dictionary and retrieved in a temporary image to PASS test
+        /// Test Method for ReturnImg(string), with one file path added to dictionary and retrieved in a temporary image to PASS test
         /// </summary>
         [TestMethod]
         public void ReturnImgOneParamPass()
         {
             #region ARRANGE
-
-            // DECLARE & INSTANTIATE an IManageImg as a new ImageMgr, name it _imgMgr:
-            IManageImg _imgMgr = new ImageMgr();
-
-            // DECLARE & INSTANTIATE an IList<String> as a new List<String>, name it '_tempList':
-            IList<String> _tempList = new List<String>();
 
             // DECLARE an Image, name it '_tempImage':
             Image _tempImage;
@@ -158,6 +156,7 @@ namespace TestServer.IndividualTests
 
             #endregion
 
+
             #region ACT
 
             // TRY checking if ReturnImg() throws an exception:
@@ -168,6 +167,7 @@ namespace TestServer.IndividualTests
             }
 
             #endregion
+
 
             #region ASSERT
 
@@ -187,18 +187,12 @@ namespace TestServer.IndividualTests
         #region FAIL
 
         /// <summary>
-        /// Test Method for ReturnImg(String), with one file path added to dictionary, with one NOT added and retrieved in a temporary image to FAIL test
+        /// Test Method for ReturnImg(string), with one file path added to dictionary, with one NOT added and retrieved in a temporary image to FAIL test
         /// </summary>
         [TestMethod]
         public void ReturnImgOneParamFail()
         {
             #region ARRANGE
-
-            // DECLARE & INSTANTIATE an IManageImg as a new ImageMgr, name it _imgMgr:
-            IManageImg _imgMgr = new ImageMgr();
-
-            // DECLARE & INSTANTIATE an IList<String> as a new List<String>, name it '_tempList':
-            IList<String> _tempList = new List<String>();
 
             // DECLARE & INITIALISE a bool, name it '_fail', give value of 'false' to change to 'true' if failed:
             bool _fail = false;
@@ -217,6 +211,7 @@ namespace TestServer.IndividualTests
 
             #endregion
 
+
             #region ACT
 
             // TRY checking if ReturnImg() throws an exception:
@@ -227,6 +222,7 @@ namespace TestServer.IndividualTests
             }
 
             #endregion
+
 
             #region ASSERT
 
@@ -256,18 +252,12 @@ namespace TestServer.IndividualTests
         #region PASS
 
         /// <summary>
-        /// Test Method for ReturnImg(String, int, int), with one file path added to dictionary and retrieved in a temporary image to PASS test
+        /// Test Method for ReturnImg(string, int, int), with one file path added to dictionary and retrieved in a temporary image to PASS test
         /// </summary>
         [TestMethod]
         public void ReturnImgThreeParamPass()
         {
             #region ARRANGE
-
-            // DECLARE & INSTANTIATE an IManageImg as a new ImageMgr, name it _imgMgr:
-            IManageImg _imgMgr = new ImageMgr();
-
-            // DECLARE & INSTANTIATE an IList<String> as a new List<String>, name it '_tempList':
-            IList<String> _tempList = new List<String>();
 
             // DECLARE an Image, name it '_tempImage':
             Image _tempImage;
@@ -280,6 +270,7 @@ namespace TestServer.IndividualTests
 
             #endregion
 
+
             #region ACT
 
             // TRY checking if ReturnImg() throws an exception:
@@ -290,6 +281,7 @@ namespace TestServer.IndividualTests
             }
 
             #endregion
+
 
             #region ASSERT
 
@@ -309,18 +301,12 @@ namespace TestServer.IndividualTests
         #region FAIL
 
         /// <summary>
-        /// Test Method for ReturnImg(String, int, int), with one file path added to dictionary, with one NOT added and retrieved in a temporary image to FAIL test
+        /// Test Method for ReturnImg(string, int, int), with one file path added to dictionary, with one NOT added and retrieved in a temporary image to FAIL test
         /// </summary>
         [TestMethod]
         public void ReturnImgThreeParamFail()
         {
             #region ARRANGE
-
-            // DECLARE & INSTANTIATE an IManageImg as a new ImageMgr, name it _imgMgr:
-            IManageImg _imgMgr = new ImageMgr();
-
-            // DECLARE & INSTANTIATE an IList<String> as a new List<String>, name it '_tempList':
-            IList<String> _tempList = new List<String>();
 
             // DECLARE & INITIALISE a bool, name it '_fail', give value of 'false' to change to 'true' if failed:
             bool _fail = false;
@@ -339,6 +325,7 @@ namespace TestServer.IndividualTests
 
             #endregion
 
+
             #region ACT
 
             // TRY checking if ReturnImg() throws an exception:
@@ -349,6 +336,7 @@ namespace TestServer.IndividualTests
             }
 
             #endregion
+
 
             #region ASSERT
 
@@ -369,6 +357,24 @@ namespace TestServer.IndividualTests
         }
 
         #endregion
+
+        #endregion
+
+
+        #region SETUP METHODS
+
+        [TestInitialize]
+        public void Setup()
+        {
+            // INSTANTIATE _imgMgr as a new ImageMgr():
+            _imgMgr = new ImageMgr();
+
+            // INITIALISE _imgMgr with a new Dictionary<string, Image>():
+            (_imgMgr as IInitialiseParam<IDictionary<string, Image>>).Initialise(new Dictionary<string, Image>());
+
+            // INSTANTIATE _tempList as a new List<string>():
+            _tempList = new List<string>();
+        }
 
         #endregion
     }

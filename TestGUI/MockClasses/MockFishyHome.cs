@@ -4,6 +4,7 @@ using GUI.Forms.Interfaces;
 using GUI.Logic.Interfaces;
 using Server.Commands;
 using Server.CustomEventArgs;
+using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
 using TestGUI.Interfaces;
 
@@ -11,10 +12,11 @@ namespace TestApp.MockClasses
 {
     /// <summary>
     /// Mock Class for 'FishyHome' due to errors with testing Windows Forms
-    /// Authors: William Smith, William Eardley & Declan Kerby-Collins
-    /// Date: 09/03/22
+    /// Authors: William Smith, Declan Kerby-Collins & William Eardley
+    /// Date: 13/03/22
     /// </summary>
-    public class MockFishyHome : IMockFishyHome, ICommandSender, IEventListener<ImageEventArgs>, IEventListener<StringListEventArgs>, IInitialiseParam<ICommand>, IInitialiseParam<IDictionary<int, string>>, IInitialiseParam<IDictionary<string, ICommand>>, IInitialiseParam<IOpenImage>
+    public class MockFishyHome : IMockFishyHome, IChangeImg, ICommandSender, IEventListener<ImageEventArgs>, IEventListener<StringListEventArgs>, IInitialiseParam<ICommand>,
+        IInitialiseParam<IDictionary<int, string>>, IInitialiseParam<IDictionary<string, ICommand>>, IInitialiseParam<IOpenImage>
     {
         #region FIELD VARIABLES
 
@@ -55,6 +57,21 @@ namespace TestApp.MockClasses
         #region IMPLEMENTATION OF IMOCKFISHYHOME
 
         /// <summary>
+        /// Event Method which is invoked when a user clicks on the 'Load' button
+        /// THIS IS FOR TESTING PURPOSES ONLY, IN PRODUCTION CODE, THIS WILL BE BUILT INTO WINDOWS FORMS
+        /// </summary>
+        /// <param name="pSource"> Object calling this method </param>
+        /// <param name="pArgs"> Necessary arguments in order complete behaviour </param>
+        public void LoadBttn_Click(object pSource, EventArgs pArgs)
+        {
+            // SET value of _commandDict["Load"]'s FirstParam property to return value of _imgOpen.OpenImage():
+            (_commandDict["Load"] as ICommandParam<IList<string>>).FirstParam = _imgOpen.OpenImage();
+
+            // INVOKE _commandDict["Load"]'s ExecuteMethod():
+            _invokeCommand(_commandDict["Load"]);
+        }
+
+        /// <summary>
         /// Property which allows read access to a boolean to test if ImgChangeEvent was called
         /// </summary>
         public bool ImgChangeEventCalled 
@@ -76,6 +93,29 @@ namespace TestApp.MockClasses
                 // RETURN _stringListEventCalled:
                 return _stringListEventCalled;
             }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF ICHANGEIMG
+
+        /// <summary>
+        /// Changes currently displayed image to a desired image
+        /// </summary>
+        public void ChangeImg()
+        {
+            // SET value of _commandDict["GetImage"]'s FirstParam property to "Example"):
+            (_commandDict["GetImage"] as ICommandParam<string, int, int>).FirstParam = "Example";
+
+            // SET value of _commandDict["GetImage"]'s SecondParam property to '1':
+            (_commandDict["GetImage"] as ICommandParam<string, int, int>).SecondParam = 1;
+
+            // SET value of _commandDict["GetImage"]'s ThirdParam property to '1':
+            (_commandDict["GetImage"] as ICommandParam<string, int, int>).ThirdParam = 1;
+
+            // INVOKE _commandDict["GetImage"]'s ExecuteMethod():
+            _invokeCommand(_commandDict["GetImage"]);
         }
 
         #endregion
