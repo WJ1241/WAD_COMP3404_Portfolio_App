@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Server.GeneralInterfaces;
-using Server;
 using Moq;
+using Server;
+using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
+using Server.CustomEventArgs;
 
 namespace TestServer.IndividualTests
 {
     /// <summary>
-    /// CLASS 'ImageServerTest'
-    /// Authors: William Eardley, William Smith & Declan Kerby-Collins
-    /// Date: 07/03/22
+    /// Test Class which checks if ImageServer is behaving as expected
+    /// Authors: William Smith, William Eardley & Declan Kerby-Collins
+    /// Date: 13/03/22
     /// </summary>
     [TestClass]
     public class ImageServerTest 
@@ -22,11 +22,23 @@ namespace TestServer.IndividualTests
         // DECLARE an IServer, name it '_imageServer':
         private IServer _imageServer;
 
+        // DECLARE an IDictionary<string, EventArgs>, name it '_mockEventArgsDict':
+        private Mock<IDictionary<string, EventArgs>> _mockEventArgsDict;
+
         // DECLARE a Mock<IEditImg>, name it '_mockImageEditor':
         private Mock<IEditImg> _mockImageEditor;
 
         // DECLARE a Mock<IManagerImg>, name it '_mockImageMgr':
         private Mock<IManageImg> _mockImageMgr;
+
+        // DECLARE a Mock<IEventListener<ImageEventArgs>>, name it '_mockEventListener':
+        private Mock<IEventListener<ImageEventArgs>> _mockEventListener;
+
+        // DECLARE a Mock<ImageEventArgs>, name it '_mockImgEventArgs':
+        private Mock<ImageEventArgs> _mockImgEventArgs;
+
+        // DECLARE a Mock<ImageEventArgs>, name it '_mockStringListEventArgs':
+        private Mock<StringListEventArgs> _mockStringListEventArgs;
 
         #endregion
 
@@ -41,12 +53,8 @@ namespace TestServer.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INSTANTIATE a new Mock<IList<String>>(), name it '_mockList':
-            Mock<IList<String>> _mockList = new Mock<IList<String>>();
-
-            // DECLARE an IList<String>, name it '_fpList':
-            // ONLY USED TO STORE RESULT OF METHOD
-            IList<String> _fpList;
+            // DECLARE & INSTANTIATE a new Mock<IList<string>>(), name it '_mockList':
+            Mock<IList<string>> _mockList = new Mock<IList<string>>();
 
             // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if no exception is thrown:
             bool _pass = true;
@@ -56,8 +64,8 @@ namespace TestServer.IndividualTests
 
             #region ACT
 
-            // INITIALISE _fpList with return value of _imageServer.Load(), passing a blank string as a parameter:
-            //_fpList = _imageServer.Load(_mockList.Object);
+            // CALL Load() on _imageServer, passing _mockList.Object as a parameter:
+            _imageServer.Load(_mockList.Object);
 
             #endregion
 
@@ -99,11 +107,6 @@ namespace TestServer.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE an Image, name it '_image':
-            // CANNOT BE MOCKED DUE TO NOT HAVING A PARAMETERLESS CONSTRUCTOR, THEREFORE CANNOT BE MOCKED
-            // ONLY USED TO STORE RESULT OF GETIMAGE() METHOD
-            Image _image;
-
             // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if no exception is thrown:
             bool _pass = true;
 
@@ -112,8 +115,8 @@ namespace TestServer.IndividualTests
 
             #region ACT
 
-            // INITIALISE _image with return value of _imageServer.Load(), passing a blank string, and two integers as parameters:
-            //_image = _imageServer.GetImage("", 1, 1);
+            // CALL GetImage() on _imageServer, passing a blank string, and two integers as parameters:
+            _imageServer.GetImage("", 1, 1);
 
             #endregion
 
@@ -163,7 +166,7 @@ namespace TestServer.IndividualTests
 
             #region ACT
 
-            // CALL _imageServer.HorizontalFlipImage(), passing a blank string as a parameter:
+            // CALL HorizontalFlipImage() on _imageServer, passing a blank string as a parameter:
             _imageServer.HorizontalFlipImage("");
 
             #endregion
@@ -209,7 +212,7 @@ namespace TestServer.IndividualTests
 
             #region ACT
 
-            // CALL _imageServer.VerticalFlipImage(), passing a blank string as a parameter:
+            // CALL VerticalFlipImage() on _imageServer, passing a blank string as a parameter:
             _imageServer.VerticalFlipImage("");
 
             #endregion
@@ -260,7 +263,7 @@ namespace TestServer.IndividualTests
 
             #region ACT
 
-            // CALL _imageServer.RotateImage(), passing a blank string as a parameter:
+            // CALL RotateImage() on _imageServer, passing a blank string as a parameter:
             _imageServer.RotateImage("");
 
             #endregion
@@ -306,7 +309,7 @@ namespace TestServer.IndividualTests
 
             #region ACT
 
-            // CALL _imageServer.ACRotateImage(), passing a blank string as a parameter:
+            // CALL ACRotateImage() on _imageServer, passing a blank string as a parameter:
             (_imageServer as IACRotate).ACRotateImage("");
 
             #endregion
@@ -347,8 +350,13 @@ namespace TestServer.IndividualTests
         [TestInitialize]
         public void Setup()
         {
+            #region INSTANTIATIONS
+
             // INSTANTIATE _imageServer as a new ImageServer():
             _imageServer = new ImageServer();
+
+            // INSTANTIATE _mockEventArgsDict as a new Mock<IDictionary<string, EventArgs>>():
+            _mockEventArgsDict = new Mock<IDictionary<string, EventArgs>>();
 
             // INSTANTIATE _mockImageEditor as a new Mock<IEditImg>():
             _mockImageEditor = new Mock<IEditImg>();
@@ -356,11 +364,45 @@ namespace TestServer.IndividualTests
             // INSTANTIATE _mockImageMgr as a new Mock<IManageImg>():
             _mockImageMgr = new Mock<IManageImg>();
 
+            // INSTANTIATE _mockEventListener as a new Mock<IEventListener<ImageEventArgs>>():
+            _mockEventListener = new Mock<IEventListener<ImageEventArgs>>();
+
+            // INSTANTIATE _mockImgEventArgs as a new Mock<ImageEventArgs>():
+            _mockImgEventArgs = new Mock<ImageEventArgs>();
+
+            // INSTANTIATE _mockStringListEventArgs as a new Mock<StringListEventArgs>():
+            _mockStringListEventArgs = new Mock<StringListEventArgs>();
+
+            #endregion
+
+
+            #region IMPLEMENTATIONS
+
             // INIITIALISE _imageServer with a reference to _mockImageEditor.Object:
             (_imageServer as IInitialiseParam<IEditImg>).Initialise(_mockImageEditor.Object);
 
             // INIITIALISE _imageServer with a reference to _mockImageMgr.Object:
-            (_imageServer as IInitialiseParam<IManageImg>).Initialise(_mockImageMgr.Object); 
+            (_imageServer as IInitialiseParam<IManageImg>).Initialise(_mockImageMgr.Object);
+
+            // INITIALISE _imageServer with a reference to _mockEventArgsDict.Object:
+            (_imageServer as IInitialiseParam<IDictionary<string, EventArgs>>).Initialise(_mockEventArgsDict.Object);
+
+            // SETUP _mockEventListener so that it implements IEventListener<StringListEventArgs>:
+            _mockEventListener.As<IEventListener<StringListEventArgs>>();
+
+            // SUBSCRIBE _imageServer with an event reference to _mockEventListener.Object.OnEvent() (ImageEventArgs):
+            (_imageServer as ISubscribe<ImageEventArgs>).Subscribe(_mockEventListener.Object.OnEvent);
+
+            // SUBSCRIBE _imageServer with an event reference to _mockEventListener.Object.OnEvent() (StringListEventArgs):
+            (_imageServer as ISubscribe<StringListEventArgs>).Subscribe(_mockEventListener.As<IEventListener<StringListEventArgs>>().Object.OnEvent);
+
+            // SETUP _mockEventArgsDict so that it returns _mockImgEventArgs.Object when "Image" is addressed:
+            _mockEventArgsDict.Setup(_mock => _mock["Image"]).Returns(_mockImgEventArgs.Object);
+
+            // SETUP _mockEventArgsDict so that it returns _mockStringListEventArgs.Object when "StringList" is addressed:
+            _mockEventArgsDict.Setup(_mock => _mock["StringList"]).Returns(_mockStringListEventArgs.Object);
+
+            #endregion
         }
 
         #endregion

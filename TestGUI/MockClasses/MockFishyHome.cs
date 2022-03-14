@@ -4,6 +4,7 @@ using GUI.Forms.Interfaces;
 using GUI.Logic.Interfaces;
 using Server.Commands;
 using Server.CustomEventArgs;
+using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
 using TestGUI.Interfaces;
 
@@ -11,10 +12,11 @@ namespace TestApp.MockClasses
 {
     /// <summary>
     /// Mock Class for 'FishyHome' due to errors with testing Windows Forms
-    /// Authors: William Smith, William Eardley & Declan Kerby-Collins
-    /// Date: 09/03/22
+    /// Authors: William Smith, Declan Kerby-Collins & William Eardley
+    /// Date: 14/03/22
     /// </summary>
-    public class MockFishyHome : IMockFishyHome, ICommandSender, IEventListener<ImageEventArgs>, IEventListener<StringListEventArgs>, IInitialiseParam<ICommand>, IInitialiseParam<IDictionary<int, string>>, IInitialiseParam<IDictionary<string, ICommand>>, IInitialiseParam<IOpenImage>
+    public class MockFishyHome : IMockFishyHome, IChangeImg, ICommandSender, IDisposable, IEventListener<ImageEventArgs>, IEventListener<StringListEventArgs>, IInitialiseParam<ICommand>,
+        IInitialiseParam<IDictionary<int, string>>, IInitialiseParam<IDictionary<string, ICommand>>, IInitialiseParam<IOpenImage>
     {
         #region FIELD VARIABLES
 
@@ -55,6 +57,21 @@ namespace TestApp.MockClasses
         #region IMPLEMENTATION OF IMOCKFISHYHOME
 
         /// <summary>
+        /// Event Method which is invoked when a user clicks on the 'Load' button
+        /// THIS IS FOR TESTING PURPOSES ONLY, IN PRODUCTION CODE, THIS WILL BE BUILT INTO WINDOWS FORMS
+        /// </summary>
+        /// <param name="pSource"> Object calling this method </param>
+        /// <param name="pArgs"> Necessary arguments in order complete behaviour </param>
+        public void LoadBttn_Click(object pSource, EventArgs pArgs)
+        {
+            // SET value of _commandDict["Load"]'s FirstParam property to value of return value of _imgOpen.OpenImage():
+            (_commandDict["Load"] as ICommandParam<IList<string>>).FirstParam = _imgOpen.OpenImage();
+
+            // INVOKE _commandDict["Load"]'s ExecuteMethod():
+            _invokeCommand(_commandDict["Load"]);
+        }
+
+        /// <summary>
         /// Property which allows read access to a boolean to test if ImgChangeEvent was called
         /// </summary>
         public bool ImgChangeEventCalled 
@@ -81,6 +98,29 @@ namespace TestApp.MockClasses
         #endregion
 
 
+        #region IMPLEMENTATION OF ICHANGEIMG
+
+        /// <summary>
+        /// Changes currently displayed image to a desired image
+        /// </summary>
+        public void ChangeImg()
+        {
+            // SET value of _commandDict["GetImage"]'s FirstParam property to "Example"):
+            (_commandDict["GetImage"] as ICommandParam<string, int, int>).FirstParam = "..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png";
+
+            // SET value of _commandDict["GetImage"]'s SecondParam property to '1':
+            (_commandDict["GetImage"] as ICommandParam<string, int, int>).SecondParam = 1;
+
+            // SET value of _commandDict["GetImage"]'s ThirdParam property to '1':
+            (_commandDict["GetImage"] as ICommandParam<string, int, int>).ThirdParam = 1;
+
+            // INVOKE _commandDict["GetImage"]'s ExecuteMethod():
+            _invokeCommand(_commandDict["GetImage"]);
+        }
+
+        #endregion
+
+
         #region IMPLEMENTATION OF ICOMMANDSENDER
 
         /// <summary>
@@ -93,6 +133,19 @@ namespace TestApp.MockClasses
                 // SET value of _invokeCommand to incoming value:
                 _invokeCommand = value;
             }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IDISPOSABLE
+
+        /// <summary>
+        /// Disposes of this instance to release unnecessary resource allocation
+        /// </summary>
+        public void Dispose()
+        {
+            // ONLY USED AS 'FORM' ALREADY IMPLEMENTS IDISPOSABLE
         }
 
         #endregion
@@ -125,6 +178,9 @@ namespace TestApp.MockClasses
         {
             // SET _stringListEventCalled to true:
             _stringListEventCalled = true;
+
+            // CALL ChangeImg():
+            ChangeImg();
         }
 
         #endregion

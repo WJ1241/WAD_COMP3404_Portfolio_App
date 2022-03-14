@@ -1,12 +1,12 @@
 ﻿using Server.CustomEventArgs;
 using System;
 
-namespace GUI.Forms.Interfaces
+namespace Server.GeneralInterfaces
 {
     /// <summary>
     /// Interface which allows implementations to listen to an event involving an image
-    /// Authors: William Smith, Declan Kerby-Collins, William Eardley
-    /// Date: 03/03/22
+    /// Authors: William Smith, Declan Kerby-Collins & William Eardley
+    /// Date: 13/03/22
     /// </summary>
     /// <typeparam name="EA"> Event Arguments for an Event Handler </typeparam>
     public interface IEventListener<EA>

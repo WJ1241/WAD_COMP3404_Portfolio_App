@@ -7,8 +7,8 @@ using GUI.Forms.Interfaces;
 using GUI.Logic.Interfaces;
 using Server.Commands;
 using Server.CustomEventArgs;
-using Server.Delegates;
 using Server.Exceptions;
+using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
 
 namespace GUI
@@ -16,11 +16,12 @@ namespace GUI
     /// <summary>
     /// Partial Class which creates a 'FishyEdit' for the user to edit Images with.
     /// Author: William Smith, Declan Kerby-Collins, William Eardley, & Marc Price
-    /// Date: 11/03/22
+    /// Date: 13/03/22
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>
     /// <REFERENCE> jay_t55 (2014) Make a borderless form movable? Available at: https://stackoverflow.com/questions/1592876/make-a-borderless-form-movable/24561946#24561946. (Accessed 5 November 2021). </REFERENCE>
-    public partial class FishyHome : Form, ICommandSender, IEventListener<ImageEventArgs>, IEventListener<StringListEventArgs>, IInitialiseParam<ICommand>, IInitialiseParam<IDictionary<int, string>>, IInitialiseParam<IDictionary<string, ICommand>>, IInitialiseParam<IOpenImage>
+    public partial class FishyHome : Form, IChangeImg, ICommandSender, IEventListener<ImageEventArgs>, IEventListener<StringListEventArgs>, IInitialiseParam<ICommand>,
+        IInitialiseParam<IDictionary<int, string>>, IInitialiseParam<IDictionary<string, ICommand>>, IInitialiseParam<IOpenImage>
     {
         #region FIELD VARIABLES
 
@@ -58,6 +59,36 @@ namespace GUI
             // INITIALISE _dictIndex with value of 0:
             _dictIndex = 0;
         }
+
+
+        #region IMPLEMENTATION OF ICHANGEIMG
+
+        /// <summary>
+        /// Changes currently displayed image to a desired image
+        /// </summary>
+        public void ChangeImg()
+        {
+            /*
+            // IF _imgFPDict contains a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // IF _getImg(_imgFPDict[_dictIndex] IS NOT null:
+                if (_getImg(_imgFPDict[_dictIndex], ImgDisplay.Width, ImgDisplay.Height) != null)
+                {
+                    // SET displayed image to image stored in _imgFPDict at current _dictIndex value:
+                    ImgDisplay.Image = _getImg(_imgFPDict[_dictIndex], ImgDisplay.Width, ImgDisplay.Height);
+                }
+                // IF _getImg(_imgFPDict[_dictIndex] IS null:
+                else
+                {
+                    // THROW NullInstanceException, with corresponding message:
+                    throw new NullInstanceException("ERROR: No Image stored in local dictionary at current image index!");
+                }
+            }
+            */
+        }
+
+        #endregion
 
 
         #region IMPLEMENTATION OF ICOMMANDSENDER
@@ -323,31 +354,6 @@ namespace GUI
         #region PRIVATE METHODS
 
         /// <summary>
-        /// Changes currently displayed image with a local dictionary using the current index as the key for an image
-        /// </summary>
-        private void ChngImg()
-        {
-            /*
-            // IF _imgFPDict contains a key of the current _dictIndex value:
-            if (_imgFPDict.ContainsKey(_dictIndex))
-            {
-                // IF _getImg(_imgFPDict[_dictIndex] IS NOT null:
-                if (_getImg(_imgFPDict[_dictIndex], ImgDisplay.Width, ImgDisplay.Height) != null)
-                {
-                    // SET displayed image to image stored in _imgFPDict at current _dictIndex value:
-                    ImgDisplay.Image = _getImg(_imgFPDict[_dictIndex], ImgDisplay.Width, ImgDisplay.Height);
-                }
-                // IF _getImg(_imgFPDict[_dictIndex] IS null:
-                else
-                {
-                    // THROW NullInstanceException, with corresponding message:
-                    throw new NullInstanceException("ERROR: No Image stored in local dictionary at current image index!");
-                }
-            }
-            */
-        }
-
-        /// <summary>
         /// Changes currently displayed image to previous image stored in local dictionary
         /// </summary>
         private void GoToPrevImg()
@@ -361,8 +367,8 @@ namespace GUI
                 // TRY checking if ChngImg throws a NullInstanceException:
                 try
                 {
-                    // CALL ChngImg():
-                    ChngImg();
+                    // CALL ChangeImg():
+                    ChangeImg();
                 }
                 // CATCH NullInstanceException from ChngImg():
                 catch (NullInstanceException pException)
@@ -393,8 +399,8 @@ namespace GUI
                 // TRY checking if ChngImg throws a NullInstanceException:
                 try
                 {
-                    // CALL ChngImg():
-                    ChngImg();
+                    // CALL ChangeImg():
+                    ChangeImg();
                 }
                 // CATCH NullInstanceException from ChngImg():
                 catch (NullInstanceException pException)

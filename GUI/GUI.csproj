@@ -55,7 +55,7 @@
     <Compile Include="Forms\FishyHome.Designer.cs">
       <DependentUpon>FishyHome.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Interfaces\IEventListener.cs" />
+    <Compile Include="Forms\Interfaces\IChangeImg.cs" />
     <Compile Include="Logic\Interfaces\IOpenImage.cs" />
     <Compile Include="Logic\Interfaces\ILogic.cs" />
     <Compile Include="Logic\SaveLogic.cs" />

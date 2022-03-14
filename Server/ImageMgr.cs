@@ -11,15 +11,15 @@ namespace Server
     /// <summary>
     /// Class which stores Dictionary of Images with File Path acting as a UID accessor
     /// Authors: William Smith, William Eardley, Declan Kerby-Collins & 'Matt'
-    /// Date: 09/03/21
+    /// Date: 13/03/21
     /// </summary>
     /// <REFERENCE> Matt (2013) How to resize an Image C#. Available at: https://stackoverflow.com/questions/1922040/how-to-resize-an-image-c-sharp. (Accessed: 30 November 2021).
-    public class ImageMgr : IManageImg, IInitialiseParam<IDictionary<String, Image>>
+    public class ImageMgr : IManageImg, IInitialiseParam<IDictionary<string, Image>>
     {
         #region FIELD VARIABLES
 
-        // DECLARE an IDictionary<String, Image>, name it '_imgDict':
-        private IDictionary<String, Image> _imgDict;
+        // DECLARE an IDictionary<string, Image>, name it '_imgDict':
+        private IDictionary<string, Image> _imgDict;
 
         // DECLARE an Image, name it '_tempImage':
         // FIXED ISSUE OF SAVING BITMAP TO DICTIONARY REPEATEDLY, LED TO COMPRESSION AND BLUR
@@ -46,18 +46,18 @@ namespace Server
         /// <summary>
         /// Filters a passed in list, to prevent duplication of strings
         /// </summary>
-        /// <param name="pList"> Unfiltered IList<String> object </param>
-        /// <returns> Filtered IList<String> object </returns>
-        public IList<String> ReturnFilteredList(IList<String> pList)
+        /// <param name="pList"> Unfiltered IList<string> object </param>
+        /// <returns> Filtered IList<string> object </returns>
+        public IList<string> ReturnFilteredList(IList<string> pList)
         {
-            // DECLARE & INSTANTIATE temporary IList<String>, name it '_tempList', holds new file paths that HAVE NOT been stored:
-            IList<String> _tempList = new List<String>();
+            // DECLARE & INSTANTIATE temporary IList<string>, name it '_tempList', holds new file paths that HAVE NOT been stored:
+            IList<string> _tempList = new List<string>();
 
             // TRY Checking AddToDictionary() to see if any FileAlreadyStoredExceptions are thrown:
             try
             {
-                // FOREACH String value in pList:
-                foreach (String pString in pList)
+                // FOREACH string value in pList:
+                foreach (string pString in pList)
                 {
                     // ADD result from AddToDictionary to temporary list:
                     _tempList.Add(AddToDictionary(pString));
@@ -82,7 +82,7 @@ namespace Server
         /// </summary>
         /// <param name="pFileName"> UID to access Specific Image </param>
         /// <returns> Image stored via pFileName in Dictionary </returns>
-        public Image ReturnImg(String pFileName)
+        public Image ReturnImg(string pFileName)
         {
             // IF _imgDict DOES contain pFileName's value as a key:
             if (_imgDict.ContainsKey(pFileName))
@@ -106,7 +106,7 @@ namespace Server
         /// <param name="pFrameHeight"> Height to change Image to </param>
         /// <returns> Image stored via pFileName in Dictionary </returns>
         /// <CITATION> (Matt, 2013) </CITATION>
-        public Image ReturnImg(String pFileName, int pFrameWidth, int pFrameHeight)
+        public Image ReturnImg(string pFileName, int pFrameWidth, int pFrameHeight)
         {
             // IF _imgDict DOES contain pFileName's value as a key:
             if (_imgDict.ContainsKey(pFileName))
@@ -138,10 +138,10 @@ namespace Server
         #region IMPLEMENTATION OF IINITIALISEPARAM<IDICTIONARY<STRING, IMAGE>>
 
         /// <summary>
-        /// Initialises an object with an IDictionary<String, Image> object
+        /// Initialises an object with an IDictionary<string, Image> object
         /// </summary>
-        /// <param name="pImageDict"> (IDictionary<String, Image> object </param>
-        public void Initialise(IDictionary<String, Image> pImageDict)
+        /// <param name="pImageDict"> (IDictionary<string, Image> object </param>
+        public void Initialise(IDictionary<string, Image> pImageDict)
         {
             // IF pImageDict DOES HAVE an active instance:
             if (pImageDict != null)
@@ -167,7 +167,7 @@ namespace Server
         /// </summary>
         /// <param name="pFileName"> File Name to be added to Dictionary </param>
         /// <returns> File Path that has not been stored </returns>
-        private String AddToDictionary(String pFileName)
+        private string AddToDictionary(string pFileName)
         {
             // IF _imgDict DOES NOT Contain pFileName's value as a key:
             if (!_imgDict.ContainsKey(pFileName))

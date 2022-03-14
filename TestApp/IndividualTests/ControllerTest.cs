@@ -16,14 +16,13 @@ using Server.Commands;
 using Server.CustomEventArgs;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
-using GUI.Forms.Interfaces;
 
 namespace TestApp.IndividualTests
 {
     /// <summary>
     /// Test Class which checks if Controller is behaving as expected
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 12/03/22
+    /// Date: 13/03/22
     /// 
     /// Services Needed:
     /// - IServiceLocator
@@ -55,17 +54,29 @@ namespace TestApp.IndividualTests
     /// - StringListEventArgs
     /// 
     /// Initialises:
-    /// - 
-    /// - 
-    /// - 
-    /// - 
-    /// - 
-    /// - 
-    /// - 
+    /// - MockFishyHome:
+    ///     - IDictionary<int, string>
+    ///     - IDictionary<string, iCommand>
+    ///     - IDictionary<int, string>
+    ///     - InvokeCommand Property
+    ///     - IOpenImage
+    ///     - ICommand
+    /// - IOpenImage:
+    ///     - IList<string>
+    /// - IServer:
+    ///     - IDictionary<string, EventArgs>
+    ///     - IEditImg
+    ///     - IManageImg
+    ///     - string & EventArgs
+    /// - IManageImg:
+    ///     - IDictionary<string, Image>
+    /// - Commands:
+    ///     - Methods needed
     ///
-    ///
-    ///
-    /// 
+    /// Subscribes:
+    /// - IServer:
+    ///     - ImageEventArgs Event
+    ///     - StringListEventArgs Event
     /// </summary>
     [TestClass]
     public class ControllerTest
