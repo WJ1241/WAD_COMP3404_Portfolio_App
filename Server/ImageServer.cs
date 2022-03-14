@@ -4,6 +4,7 @@ using Server.CustomEventArgs;
 using Server.Exceptions;
 using Server.InitialisingInterfaces;
 using Server.GeneralInterfaces;
+using System.Drawing;
 
 namespace Server
 {
@@ -245,6 +246,24 @@ namespace Server
         }
 
         #endregion
+
+
+        #region Colour
+        
+        /// <summary>
+        /// METHOD Contrast provides access to the ContrastImage method in ImgEditor
+        /// </summary>
+        /// <param name="pImage"></param>
+        /// <param name="pSat"></param>
+        public void Contrast(Image pImage, int pSat)
+        {
+            // CALL the ContrastImg and passes pImage and pSat:
+            _imgEditor.ContrastImg(pImage, pSat);
+        }
+        
+        
+        #endregion
+
 
 
         #region IMPLEMENTATION OF IINITIALISEPARAM<IEDITIMG>

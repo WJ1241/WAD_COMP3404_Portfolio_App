@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using GUI.Logic.Interfaces;
 using Server.Commands;
 using Server.Exceptions;
+using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
 
 namespace GUI
@@ -29,6 +30,15 @@ namespace GUI
 
         // DECLARE an ISaveImage, name it '_imgSave':
         private ISaveImage _imgSave;
+
+        // DECLARE an IEditImg, name it '_editImg':
+        private IEditImg _editImg;
+
+
+        //                                                                           dont know if this can be kept ask will
+        private IServer _imgServer;
+
+
 
         // DECLARE an Action<ICommand>, name it '_invokeCommand':
         private Action<ICommand> _invokeCommand;
@@ -136,11 +146,13 @@ namespace GUI
         #endregion
 
 
-        
+
 
 
         #region BUTTON METHODS
 
+
+        #region CloseBtn
         /// <summary>
         /// Method which closes currently displayed 'FishyEdit' window
         /// </summary>
@@ -172,75 +184,10 @@ namespace GUI
             }
         }
 
-        /// <summary>
-        /// Method which loads a list of images, and adds them to a local dictionary
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Value for classes without event data </param>
-        private void LoadBttn_Click(object sender, EventArgs e)
-        {
-            // SET value of _dictIndex to _dictCount, prevents dictionary ID problems:
-            _dictIndex = _dictCount;
-            /*
-            try
-            {
-                // FOREACH String in returned IList<String> from _load:
-                foreach (String pString in _load(_imgOpen.OpenImage()))
-                {
-                    // INCREMENT _dictIndex by 1:
-                    _dictIndex++;
+        #endregion
 
-                    // ADD _dictIndex as a key, and pString as a value to _imgFPDict:
-                    _imgFPDict.Add(_dictIndex, pString);
-                }
-            }
-            // CATCH FileAlreadyStoredException from _imgOpenSave.OpenImage():
-            catch (FileAlreadyStoredException pException)
-            {
-                // WRITE error message to debug console:
-                Debug.WriteLine(pException.Message);
 
-                // SHOW MessageBox detailing error to the user, store result in _mBox:
-                MessageBox.Show(pException.Message + "\n\n Do not select already loaded images in multiselect!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }*/
-
-            // TRY checking if ChngImg throws a NullInstanceException:
-            try
-            {
-                // SET value of _dictCount to _dictIndex:
-                _dictCount = _dictIndex;
-
-                // CALL ChngImg():
-                ChngImg();
-            }
-            // CATCH NullInstanceException from ChngImg():
-            catch (NullInstanceException pException)
-            {
-                // WRITE exception message to debug console:
-                Debug.WriteLine(pException.Message);
-            }
-        }
-
-        /// <summary>
-        /// Method which saves currently displayed image in FishyEdit
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Value for classes without event data </param>
-        private void SaveBttn_Click(object sender, EventArgs e)
-        {
-            // TRY checking if SaveImage() throws an exception
-            try
-            {
-                // CALL SaveImage() on _imgOpenSave, passing ImgDisplay.Image as a parameter:
-                _imgSave.SaveImage(ImgDisplay.Image);
-            }
-            // CATCH FileNotSavedException from SaveImage method:
-            catch (FileNotSavedException pException)
-            {
-                // WRITE exception message to debug console:
-                Debug.WriteLine(pException.Message);
-            }
-        }
+        #region Orientation
 
         /// <summary>
         /// Method which rotates currently displayed image clockwise
@@ -252,6 +199,11 @@ namespace GUI
             // IF _imgFPDict DOES contain a key of the current _dictIndex value:
             if (_imgFPDict.ContainsKey(_dictIndex))
             {
+
+                //grab image
+                //pass 90 degrees as a float for the rotation value
+
+
                 // TRY checking if _rotate() OR ChngImg() throw a NullInstanceException:
                 try
                 {
@@ -377,6 +329,155 @@ namespace GUI
                 Debug.WriteLine("ERROR: No Image at current index, cannot vertically flip!");
             }
         }
+        /// <summary>
+        /// Scale control button - for scaling the image
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Required Argument Value(s)</param>
+        private void ScaleBttn_Click(object sender, EventArgs e)
+        {
+            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // TRY checking if _scale() OR ChngImg() throw a NullInstanceException:
+                try
+                {
+                    // CALL _scale passing current index in _imgFPDict as a parameter:
+                    //_scale(_imgFPDict[_dictIndex]);
+
+                    // CALL ChngImg():
+                    ChngImg();
+                }
+                // CATCH NullInstanceException from ChngImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to debug console:
+                    Debug.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
+            else
+            {
+                // WRITE to debug console, with error message:
+                Debug.WriteLine("ERROR: No Image at current index, cannot scale!");
+            }
+        }
+
+        /// <summary>
+        /// Crop control Button - for cropping the image
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Required Argument Value(s)</param>
+        private void CropBttn_Click(object sender, EventArgs e)
+        {
+            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // TRY checking if _crop() OR ChngImg() throw a NullInstanceException:
+                try
+                {
+                    // CALL _crop passing current index in _imgFPDict as a parameter:
+                    //_crop(_imgFPDict[_dictIndex]);
+
+                    // CALL ChngImg():
+                    ChngImg();
+                }
+                // CATCH NullInstanceException from ChngImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to debug console:
+                    Debug.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
+            else
+            {
+                // WRITE to debug console, with error message:
+                Debug.WriteLine("ERROR: No Image at current index, cannot Crop!");
+            }
+        }
+        #endregion
+
+
+        #region ImgControl
+
+        /// <summary>
+        /// Method which loads a list of images, and adds them to a local dictionary
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value for classes without event data </param>
+        private void LoadBttn_Click(object sender, EventArgs e)
+        {
+            
+            // SET value of _dictIndex to _dictCount, prevents dictionary ID problems:
+            _dictIndex = _dictCount;
+
+            #region commented
+            /*
+            try
+            {
+                // FOREACH String in returned IList<String> from _load:
+                foreach (String pString in _load(_imgOpen.OpenImage()))
+                {
+                    // INCREMENT _dictIndex by 1:
+                    _dictIndex++;
+
+                    // ADD _dictIndex as a key, and pString as a value to _imgFPDict:
+                    _imgFPDict.Add(_dictIndex, pString);
+                }
+            }
+            // CATCH FileAlreadyStoredException from _imgOpenSave.OpenImage():
+            catch (FileAlreadyStoredException pException)
+            {
+                // WRITE error message to debug console:
+                Debug.WriteLine(pException.Message);
+
+                // SHOW MessageBox detailing error to the user, store result in _mBox:
+                MessageBox.Show(pException.Message + "\n\n Do not select already loaded images in multiselect!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } */
+            #endregion
+
+
+            // TRY checking if ChngImg throws a NullInstanceException:
+            try
+            {
+                // SET value of _dictCount to _dictIndex:
+                _dictCount = _dictIndex;
+
+                // CALL ChngImg():
+                ChngImg();
+            }
+            // CATCH NullInstanceException from ChngImg():
+            catch (NullInstanceException pException)
+            {
+                // WRITE exception message to debug console:
+                Debug.WriteLine(pException.Message);
+            }
+        }
+
+        #region Save
+        /// <summary>
+        /// Method which saves currently displayed image in FishyEdit
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value for classes without event data </param>
+        private void SaveBttn_Click(object sender, EventArgs e)
+        {
+            // TRY checking if SaveImage() throws an exception
+            try
+            {
+                // CALL SaveImage() on _imgOpenSave, passing ImgDisplay.Image as a parameter:
+                _imgSave.SaveImage(ImgDisplay.Image);
+            }
+            // CATCH FileNotSavedException from SaveImage method:
+            catch (FileNotSavedException pException)
+            {
+                // WRITE exception message to debug console:
+                Debug.WriteLine(pException.Message);
+            }
+        }
+        #endregion
+
 
         /// <summary>
         /// Method which displays previous image in local dictionary
@@ -419,6 +520,8 @@ namespace GUI
                 Debug.WriteLine(pException.Message);
             }
         }
+        #endregion
+
 
         #endregion
 
@@ -590,8 +693,8 @@ namespace GUI
                 // TRY checking if _filterOne() OR ChngImg() throw a NullInstanceException:
                 try
                 {
-                    // CALL _filterOne passing current index in _imgFPDict as a parameter:
-                    //_filterOne(_imgFPDict[_dictIndex]);
+                    // CALL filterOne in the ImageEditor and then pass the edited image to the change image method to update the onscreen image:
+                    
 
                     // CALL ChngImg():
                     ChngImg();
@@ -841,8 +944,11 @@ namespace GUI
                 // TRY checking if _saturation() OR ChngImg() throw a NullInstanceException:
                 try
                 {
-                    // CALL _saturation passing current index in _imgFPDict as a parameter:
-                    //_saturation(_imgFPDict[_dictIndex]);
+                    // DECLARE and ASSIGNMENT _sat is set to the value of the saturation control value.
+                    int _sat = SaturationControl.Value;
+
+                    // PASS the image and _sat to the image server then editor
+                    
 
                     // CALL ChngImg():
                     ChngImg();
@@ -864,73 +970,7 @@ namespace GUI
 
         #endregion
 
-        /// <summary>
-        /// Scale control button - for scaling the image
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Required Argument Value(s)</param>
-        private void ScaleBttn_Click(object sender, EventArgs e)
-        {
-            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
-            if (_imgFPDict.ContainsKey(_dictIndex))
-            {
-                // TRY checking if _scale() OR ChngImg() throw a NullInstanceException:
-                try
-                {
-                    // CALL _scale passing current index in _imgFPDict as a parameter:
-                    //_scale(_imgFPDict[_dictIndex]);
 
-                    // CALL ChngImg():
-                    ChngImg();
-                }
-                // CATCH NullInstanceException from ChngImg():
-                catch (NullInstanceException pException)
-                {
-                    // WRITE exception message to debug console:
-                    Debug.WriteLine(pException.Message);
-                }
-            }
-            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
-            else
-            {
-                // WRITE to debug console, with error message:
-                Debug.WriteLine("ERROR: No Image at current index, cannot scale!");
-            }
-        }
-
-        /// <summary>
-        /// Crop control Button - for cropping the image
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Required Argument Value(s)</param>
-        private void CropBttn_Click(object sender, EventArgs e)
-        {
-            // IF _imgFPDict DOES contain a key of the current _dictIndex value:
-            if (_imgFPDict.ContainsKey(_dictIndex))
-            {
-                // TRY checking if _crop() OR ChngImg() throw a NullInstanceException:
-                try
-                {
-                    // CALL _crop passing current index in _imgFPDict as a parameter:
-                    //_crop(_imgFPDict[_dictIndex]);
-
-                    // CALL ChngImg():
-                    ChngImg();
-                }
-                // CATCH NullInstanceException from ChngImg():
-                catch (NullInstanceException pException)
-                {
-                    // WRITE exception message to debug console:
-                    Debug.WriteLine(pException.Message);
-                }
-            }
-            // IF _imgFPDict DOES NOT contain a key of the current _dictIndex value:
-            else
-            {
-                // WRITE to debug console, with error message:
-                Debug.WriteLine("ERROR: No Image at current index, cannot Crop!");
-            }
-        }
 
         private void groupBoxColouring_Enter(object sender, EventArgs e)
         {

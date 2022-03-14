@@ -52,13 +52,15 @@ namespace Server.GeneralInterfaces
         /// METHOD 'ContrastImg' - for controlling contrast
         /// </summary>
         /// <param name="pImage"></param>
-        void ContrastImg(Image pImage);
-  
+        /// <param name="pSat"></param>
+        void ContrastImg(Image pImage, int pSat);
+
         /// <summary>
         /// METHOD 'SaturationImg' - for controlling saturation
         /// </summary>
         /// <param name="pImage"></param>
-        void SaturationImg(Image pImage);
+        /// <param name="pSat"></param>
+        void SaturationImg(Image pImage, int pSat);
 
         /// <summary>
         /// METHOD 'FilterOneImg' - for applying first filter

@@ -47,5 +47,13 @@ namespace Server.GeneralInterfaces
         /// </summary>
         /// <param name="pUid">the unique identifier for the image to be flipped</param>
         void VerticalFlipImage(string pUid);
+
+        /// <summary>
+        /// Contrast change image.
+        /// </summary>
+        /// <param name="pImage"></param>
+        /// <param name="pSat"></param>
+        void Contrast(Image pImage, int pSat);
+
     }
 }

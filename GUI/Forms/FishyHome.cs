@@ -256,15 +256,18 @@ namespace GUI
         /// <param name="e"> Value for classes without event data </param>
         private void LoadBttn_Click(object sender, EventArgs e)
         {
-            /*
-
+            
+            
             // SET value of _dictIndex to _dictCount, prevents dictionary ID problems:
             _dictIndex = _dictCount;
 
+            // CALL OpenImage method in _imgOpen:
+            _imgOpen.OpenImage();
+
             try
             {
-                // FOREACH String in returned IList<String> from _load:
-                foreach (String pString in _load(_imgOpen.OpenImage()))
+                // FOREACH String in returned IList<String> from _imgOpen.OpenImage():
+                foreach (String pString in _imgOpen.OpenImage())
                 {
                     // INCREMENT _dictIndex by 1:
                     _dictIndex++;
@@ -299,7 +302,7 @@ namespace GUI
                 Debug.WriteLine(pException.Message);
             }
 
-            */
+            
         }
 
         /// <summary>
@@ -310,6 +313,10 @@ namespace GUI
         private void EditBttn_Click(object sender, EventArgs e)
         {
             // TODO: GET FISHYEDIT CREATION COMMAND IN HERE
+
+            
+
+
         }
 
 

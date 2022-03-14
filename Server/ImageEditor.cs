@@ -14,6 +14,36 @@ namespace Server
     /// </summary>
     public class ImageEditor : IEditImg
     {
+
+        #region FIELDS
+
+        // DECLARE an int name it '_red1':
+        private int _red1;
+
+        // DECLARE an int name it '_green1':
+        private int _green1;
+
+        // DECLARE an int name it '_blue1':
+        private int _blue1;
+
+        // DECLARE an int name it '_red2':
+        private int _red2;
+
+        // DECLARE an int name it '_green2':
+        private int _green2;
+
+        // DECLARE an int name it '_blue2':
+        private int _blue2;
+
+        // DECLARE a Bitmap name it '_newMap':
+        private Bitmap _newMap;
+
+        // DECLARE an Image name it '_tempImage':
+        private Image _tempImage;
+
+        #endregion
+
+
         #region CONSTRUCTOR
 
         /// <summary>
@@ -124,6 +154,8 @@ namespace Server
             {
                 // CALL Scale method for image
                 // pImage.Scale()
+                
+                
             }
             else
             {
@@ -189,109 +221,92 @@ namespace Server
         /// METHOD 'ContrastImg' - for controlling contrast
         /// </summary>
         /// <param name="pImage"></param>
-        public void ContrastImg(Image pImage)
+        public void ContrastImg(Image pImage, int pSat)
         {
-            /*
-            int _threshold = sliderPosition;
-            // IF pImage is NOT NULL then call method
-            if (pImage != null)
+            // ASSIGNMENT _newMap is set to the value of pImage
+            _newMap = new Bitmap(pImage);
+
+            // FOR every pixle wide _newMap is incriment x:
+            for (int x = 0; x < _newMap.Width; x++)
             {
-                // CALL Contrast method for image
-                Bitmap _tempMap = new Bitmap(pImage);
-
-                //// coppied code do NOT FOR GET TO AMEND 
-                BitmapData sourceData = _tempMap.LockBits(new Rectangle(0, 0,
-                                _tempMap.Width, _tempMap.Height),
-                                ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-
-
-                byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
-
-
-                Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
-
-
-                _tempMap.UnlockBits(sourceData);
-
-
-                double contrastLevel = Math.Pow((100.0 + threshold) / 100.0, 2);
-
-
-                double blue = 0;
-                double green = 0;
-                double red = 0;
-
-
-                for (int k = 0; k + 4 < pixelBuffer.Length; k += 4)
+                // FOR every pixle deep _newMap is incriment y:
+                for (int y = 0; y < _newMap.Height; y++)
                 {
-                    blue = ((((pixelBuffer[k] / 255.0) - 0.5) *
-                                contrastLevel) + 0.5) * 255.0;
+                    // DECLARE Color name it '_oldColour':
+                    Color _oldColur = _newMap.GetPixel(x, y);
+
+                    // DECLARE and ASSIGN int name it '_red1', it becomes _oldColour's R value:
+                    _red1 = _oldColur.R;
+                    // DECLARE and ASSIGN int name it '_green1', it becomes _oldColour's G value:
+                    _green1 = _oldColur.G;
+                    // DECLARE and ASSIGN int name it '_blue1', it becomes _oldColour's B value:
+                    _blue1 = _oldColur.B;
+
+                    // ASSIGNMENT _red2 is set to the value of red1 multiplied by pSat:
+                    _red2 = (byte)(_red1 * pSat);
+
+                    // ASSIGNMENT _green2 is set to the value of _green1 multiplied by pSat:
+                    _green2 = (byte)(_green1 * pSat);
+
+                    // ASSIGNMENT _blue2 is set to the value of _blue1 multiplied by pSat:
+                    _blue2 = (byte)(_blue1 * pSat);
 
 
-                    green = ((((pixelBuffer[k + 1] / 255.0) - 0.5) *
-                                contrastLevel) + 0.5) * 255.0;
+                    if (_red2 <= 1)
+                    {
+                        _red2 = 1;
+                    }
+                    if (_red2 >= 255)
+                    {
+                        _red2 = 255;
+                    }
+
+                    //_red2 = (byte)_red1 * _sat;
+
+                    if (_green2 <= 1)
+                    {
+                        _green2 = 1;
+                    }
+                    if (_green2 >= 255)
+                    {
+                        _green2 = 255;
+                    }
 
 
-                    red = ((((pixelBuffer[k + 2] / 255.0) - 0.5) *
-                                contrastLevel) + 0.5) * 255.0;
+                    //_green2 = (byte)_green2 * _sat;
+
+                    if (_blue2 <= 1)
+                    {
+                        _blue2 = 1;
+                    }
+                    if (_blue2 >= 255)
+                    {
+                        _blue2 = 255;
+                    }
+
+                    // SET the pixels of _newMap to the new argb values:
+                    _newMap.SetPixel(x, y, Color.FromArgb(_red2, _green2, _blue2));
 
 
-                    if (blue > 255)
-                    { blue = 255; }
-                    else if (blue < 0)
-                    { blue = 0; }
-
-
-                    if (green > 255)
-                    { green = 255; }
-                    else if (green < 0)
-                    { green = 0; }
-
-
-                    if (red > 255)
-                    { red = 255; }
-                    else if (red < 0)
-                    { red = 0; }
-
-
-                    pixelBuffer[k] = (byte)blue;
-                    pixelBuffer[k + 1] = (byte)green;
-                    pixelBuffer[k + 2] = (byte)red;
                 }
-
-
-                Bitmap resultBitmap = new Bitmap(_tempMap.Width, _tempMap.Height);
-
-
-                BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0,
-                                            resultBitmap.Width, resultBitmap.Height),
-                                            ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-
-
-                Marshal.Copy(pixelBuffer, 0, resultData.Scan0, pixelBuffer.Length);
-                resultBitmap.UnlockBits(resultData);
-                ////END OF COPPIED CODE
-
-            }
-            else
-            {
-                // THROW NEW NullInstanceException with appropriate message
-                throw new NullInstanceException("ERROR: No Image to increase contrast of!");
             }
 
-            */
+            _tempImage = _newMap;
         }
+
 
         /// <summary>
         /// METHOD 'SaturationImg' - for controlling saturation
         /// </summary>
         /// <param name="pImage"></param>
-        public void SaturationImg(Image pImage)
+        /// <param name="pSat"></param>
+        public void SaturationImg(Image pImage, int pSat)
         {
             // IF pImage is NOT NULL then call method
             if (pImage != null)
             {
-                // CALL Saturation method for image
+                
+
             }
             else
             {
