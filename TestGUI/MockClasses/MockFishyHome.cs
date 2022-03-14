@@ -13,7 +13,7 @@ namespace TestApp.MockClasses
     /// <summary>
     /// Mock Class for 'FishyHome' due to errors with testing Windows Forms
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 13/03/22
+    /// Date: 14/03/22
     /// </summary>
     public class MockFishyHome : IMockFishyHome, IChangeImg, ICommandSender, IDisposable, IEventListener<ImageEventArgs>, IEventListener<StringListEventArgs>, IInitialiseParam<ICommand>,
         IInitialiseParam<IDictionary<int, string>>, IInitialiseParam<IDictionary<string, ICommand>>, IInitialiseParam<IOpenImage>
@@ -64,7 +64,7 @@ namespace TestApp.MockClasses
         /// <param name="pArgs"> Necessary arguments in order complete behaviour </param>
         public void LoadBttn_Click(object pSource, EventArgs pArgs)
         {
-            // SET value of _commandDict["Load"]'s FirstParam property to return value of _imgOpen.OpenImage():
+            // SET value of _commandDict["Load"]'s FirstParam property to value of return value of _imgOpen.OpenImage():
             (_commandDict["Load"] as ICommandParam<IList<string>>).FirstParam = _imgOpen.OpenImage();
 
             // INVOKE _commandDict["Load"]'s ExecuteMethod():
@@ -106,7 +106,7 @@ namespace TestApp.MockClasses
         public void ChangeImg()
         {
             // SET value of _commandDict["GetImage"]'s FirstParam property to "Example"):
-            (_commandDict["GetImage"] as ICommandParam<string, int, int>).FirstParam = "Example";
+            (_commandDict["GetImage"] as ICommandParam<string, int, int>).FirstParam = "..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png";
 
             // SET value of _commandDict["GetImage"]'s SecondParam property to '1':
             (_commandDict["GetImage"] as ICommandParam<string, int, int>).SecondParam = 1;

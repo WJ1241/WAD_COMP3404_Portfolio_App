@@ -121,12 +121,6 @@ namespace App
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
             {
-                if (_serviceLocator.GetService<Factory<IDisposable>>() == null)
-                {
-                    Console.WriteLine();
-                }
-
-
                 // ADD _formCount as a key and a new FishyHome as a value to _formDict:
                 _formDict.Add(_formCount, (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>());
 
