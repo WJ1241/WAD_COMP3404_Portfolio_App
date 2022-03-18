@@ -216,7 +216,7 @@ namespace TestApp.MockClasses
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEPARAM<IDICTIONARY<STRING, ICOMMAND>>
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IDICTIONARY<INT, STRING>>
 
         /// <summary>
         /// Initialises an object with an IDictionary<string, ICommand> object

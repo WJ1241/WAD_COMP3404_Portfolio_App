@@ -323,8 +323,8 @@ namespace GUI
                 // SET value of _dictCount to _dictIndex:
                 _dictCount = _dictIndex;
 
-                // CALL ChngImg():
-                ChngImg();
+                // CALL ChangeImg():
+                ChangeImg();
             }
             // CATCH NullInstanceException from ChngImg():
             catch (NullInstanceException pException)

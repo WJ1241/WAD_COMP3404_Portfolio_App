@@ -71,7 +71,7 @@ namespace TestApp.EndToEndTests
         private ISetupApplication  _controller;
 
         // DECLARE a Mock<IFactory<IService>>, name it '_mockServiceFactory':
-        Mock<IFactory<IService>> _mockServiceFactory;
+        private Mock<IFactory<IService>> _mockServiceFactory;
 
         // DECLARE a Mock<IOpenImage>, name it '_mockOpenImage':
         private Mock<IOpenImage> _mockOpenImage;
@@ -134,15 +134,15 @@ namespace TestApp.EndToEndTests
             // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
             bool _pass = true;
 
+            // CALL SetupApplication() on _controller:
+            _controller.SetupApplication();
+
             #endregion
 
 
             #region ACT
 
-            // CALL SetupApplication() on _controller:
-            _controller.SetupApplication();
-
-             // CALL LoadBttn_Click() on _mockFishyHome, passing this class, and a new EventArgs() as parameters:
+            // CALL LoadBttn_Click() on _mockFishyHome, passing this class, and a new EventArgs() as parameters:
             (_formDictionary[0] as IMockFishyHome).LoadBttn_Click(this, (_serviceLocator.GetService<Factory<EventArgs>>() as IFactory<EventArgs>).Create<EventArgs>());
 
             #endregion
@@ -155,6 +155,95 @@ namespace TestApp.EndToEndTests
             {
                 // VERIFY that OpenImage() has been called at least once, due to errors with passing Mock<IOpenImage> results:
                 _mockOpenImage.Verify(_mock => _mock.OpenImage(), Times.AtLeastOnce);
+            }
+            // CATCH MockException from Verify():
+            catch (MockException)
+            {
+                // SET _pass to false, so that test fails:
+                _pass = false;
+            }
+            // FINALISE try and catch block with test pass/fail:
+            finally
+            {
+                // ASSERT if test has passed or failed depending on the value of _pass:
+                Assert.IsTrue(_pass, "ERROR: _mockOpenImage.OpenImage() has not been called!");
+            }
+
+            #endregion
+        }
+
+        #endregion
+
+
+        #region CALL ISERVER LOAD TEST
+
+        /// <summary>
+        /// Checks if IServer's Load() method is called when MockFishyHome has collected its list of images successfully
+        /// </summary>
+        [TestMethod]
+        public void Call_IServer_Load()
+        {
+            #region ARRANGE
+
+            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
+            bool _pass = true;
+
+            #region IMAGE SERVER SETUP
+
+            // DECLARE & INSTANTIATE a new Mock<IServer>(), name it '_mockImageServer':
+            Mock<IServer> _mockImageServer = new Mock<IServer>();
+
+
+            _mockImageServer.Setup(_mock => _mock.Load(_mockOpenImage.Object.OpenImage()));
+
+            // SETUP _mockImageServer so that it can be initialised with a reference to an ImageMgr:
+            _mockImageServer.As<IInitialiseParam<IManageImg>>().Setup(_mock => _mock.Initialise(_serviceLocator.GetService<ImageMgr>() as IManageImg));
+
+            // SETUP _mockImageServer so that it can be initialised with a reference to an:
+            _mockImageServer.As<IInitialiseParam<IEditImg>>().Setup(_mock => _mock.Initialise(_serviceLocator.GetService<ImageEditor>() as IEditImg));
+
+            // SETUP _mockImageServer so that it can be initialised with a reference to a new Dictionary<string, EventArgs>():
+            _mockImageServer.As<IInitialiseParam<IDictionary<string, EventArgs>>>().Setup(_mock => _mock.Initialise((_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<string, EventArgs>>() as IDictionary<string, EventArgs>));
+
+            // SETUP _mockImageServer so that it can be initialised with a string and a reference to a new ImageEventArgs():
+            _mockImageServer.As<IInitialiseParam<string, EventArgs>>().Setup(_mock => _mock.Initialise("", (_serviceLocator.GetService<Factory<EventArgs>>() as IFactory<EventArgs>).Create<ImageEventArgs>()));
+
+            // SETUP _mockImageServer so that it can be initialised with a string and a reference to a new StringListEventArgs():
+            _mockImageServer.As<IInitialiseParam<string, EventArgs>>().Setup(_mock => _mock.Initialise("", (_serviceLocator.GetService<Factory<EventArgs>>() as IFactory<EventArgs>).Create<StringListEventArgs>()));
+
+            // SETUP _mockImageServer so that it can subscribe a reference to MockFishyHome.OnEvent (MockFishyHome) (ImageEventArgs):
+            _mockImageServer.As<ISubscribe<ImageEventArgs>>().Setup(_mock => _mock.Subscribe(((_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>() as IEventListener<ImageEventArgs>).OnEvent));
+
+            // SETUP _mockImageServer so that it can subscribe a reference to MockFishyHome.OnEvent (MockFishyHome) (StringListEventArgs):
+            _mockImageServer.As<ISubscribe<StringListEventArgs>>().Setup(_mock => _mock.Subscribe(((_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>() as IEventListener<StringListEventArgs>).OnEvent));
+
+
+            _mockServiceFactory.Setup(_mock => _mock.Create<ImageServer>()).Returns(_mockImageServer.Object);
+
+
+            #endregion
+
+            // CALL SetupApplication() on _controller:
+            _controller.SetupApplication();
+
+            #endregion
+
+
+            #region ACT
+
+            // CALL LoadBttn_Click() on _mockFishyHome, passing this class, and a new EventArgs() as parameters:
+            (_formDictionary[0] as IMockFishyHome).LoadBttn_Click(this, (_serviceLocator.GetService<Factory<EventArgs>>() as IFactory<EventArgs>).Create<EventArgs>());
+
+            #endregion
+
+
+            #region ASSERT
+
+            // TRY checking if _mockOpenImage.OpenImage() was called:
+            try
+            {
+                // VERIFY that OpenImage() has been called at least once, due to errors with passing Mock<IOpenImage> results:
+                _mockImageServer.Verify(_mock => _mock.Load(_mockOpenImage.Object.OpenImage()), Times.AtLeastOnce);
             }
             // CATCH MockException from Verify():
             catch (MockException)
@@ -203,6 +292,9 @@ namespace TestApp.EndToEndTests
             // DECLARE & INSTANTIATE a new Mock<IFactory<EventArgs>>, name it '_mockEventArgsFactory':
             Mock<IFactory<EventArgs>> _mockEventArgsFactory = new Mock<IFactory<EventArgs>>();
 
+            // DECLARE & INSTANTIATE an IMockFishyHome as a new MockFishyHome(), name it '_mockFishyHome':
+            IMockFishyHome _mockFishyHome = new MockFishyHome();
+
             // INSTANTIATE _mockOpenImage as a new Mock<IOpenImage>():
             _mockOpenImage = new Mock<IOpenImage>();
 
@@ -244,8 +336,8 @@ namespace TestApp.EndToEndTests
             // SETUP _mockServiceFactory to create a new ImageEditor():
             _mockServiceFactory.Setup(_mock => _mock.Create<ImageEditor>()).Returns(new ImageEditor());
 
-            // SETUP _mockDisposableFactory to create a new FishyHome() and return a new MockFishyHome() instead:
-            _mockDisposableFactory.Setup(_mock => _mock.Create<FishyHome>()).Returns(new MockFishyHome());
+            // SETUP _mockDisposableFactory to create a new FishyHome() and returns _mockFishyHome instead:
+            _mockDisposableFactory.Setup(_mock => _mock.Create<FishyHome>()).Returns(_mockFishyHome as IDisposable);
 
             // SETUP _mockEnumerableFactory to create a new Dictionary<int, IDisposable>():
             _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<int, IDisposable>>()).Returns(new Dictionary<int, IDisposable>());
