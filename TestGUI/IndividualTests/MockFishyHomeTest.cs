@@ -25,6 +25,9 @@ namespace TestGUI.IndividualTests
         // DECLARE an IMockFishyHome, name it '_mockFishyHome':
         private IMockFishyHome _mockFishyHome;
 
+        // DECLARE a Mock<IDictionary<int, string>>, name it '_mockImgFPDict':
+        private Mock<IDictionary<int, string>> _mockImgFPDict;
+
         // DECLARE a Mock<IDictionary<string, ICommand>>, name it '_mockCommandDict':
         private Mock<IDictionary<string, ICommand>> _mockCommandDict;
 
@@ -287,6 +290,9 @@ namespace TestGUI.IndividualTests
             // INSTANTIATE _mockFishyHome as a new MockFishyHome():
             _mockFishyHome = new MockFishyHome();
 
+            // INSTANTIATE _mockCommandDict as a new Mock<IDictionary<int, string>>():
+            _mockImgFPDict = new Mock<IDictionary<int, string>>();
+
             // INSTANTIATE _mockCommandDict as a new Mock<IDictionary<string, ICommand>>():
             _mockCommandDict = new Mock<IDictionary<string, ICommand>>();
 
@@ -304,6 +310,23 @@ namespace TestGUI.IndividualTests
 
             // INSTANTIATE _mockStringListEventArgs as a new Mock<StringListEventArgs>():
             _mockStringListEventArgs = new Mock<StringListEventArgs>();
+
+            // DECLARE & INSTANTIATE an IList<string> as a new List<string>(), name it '_stringList':
+            IList<string> _stringList = new List<string>();
+
+            #endregion
+
+
+            #region IMAGE FILE PATH SETUP
+
+            // SETUP _mockImgFPDict so that address '1' returns a valid image path:
+            _mockImgFPDict.Setup(_mock => _mock[1]).Returns("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png");
+
+            // ADD file path to _stringList:
+            _stringList.Add("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\OrangeFish.png");
+
+            // SETUP _mockStringListEventArgs so that it returns a reference to _stringList:
+            _mockStringListEventArgs.SetupGet(_mock => _mock.List).Returns(_stringList);
 
             #endregion
 
@@ -333,10 +356,14 @@ namespace TestGUI.IndividualTests
 
             // SETUP _mockCommandDict["Load"] so that it returns _mockLoadCmd.Object:
             _mockCommandDict.Setup(_mock => _mock["Load"]).Returns(_mockLoadCmd.Object);
+
             #endregion
 
 
             #region INITIALISATIONS
+
+            // INITIALISE _mockFishyHome with a reference to _mockImgFPDict.Object:
+            (_mockFishyHome as IInitialiseParam<IDictionary<int, string>>).Initialise(_mockImgFPDict.Object);
 
             // INITIALISE _mockFishyHome with a reference to _mockCommandDict.Object:
             (_mockFishyHome as IInitialiseParam<IDictionary<string, ICommand>>).Initialise(_mockCommandDict.Object);

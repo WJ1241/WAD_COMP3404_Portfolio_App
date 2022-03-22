@@ -11,7 +11,7 @@ namespace Server
     /// <summary>
     /// Class which acts as the 'Server' for the Application
     /// Author: William Smith, William Eardley, Declan Kerby-Collins & Marc Price
-    /// Date: 12/03/22
+    /// Date: 22/03/22
     /// </summary>
     /// <REFERENCE> Price, M (2021) 'IServer.cs'. COMP3404: Applied Software Engineering. Available at: https://worcesterbb.blackboard.com/. (Accessed: 20 November 2021). </REFERENCE>
     public class ImageServer : IServer, IACRotate, IInitialiseParam<IEditImg>, IInitialiseParam<IManageImg>, IInitialiseParam<IDictionary<string, EventArgs>>,
@@ -207,6 +207,17 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// METHOD Contrast provides access to the ContrastImage method in ImgEditor
+        /// </summary>
+        /// <param name="pImage"></param>
+        /// <param name="pSat"></param>
+        public void Contrast(Image pImage, int pSat)
+        {
+            // CALL the ContrastImg and passes pImage and pSat:
+            _imgEditor.ContrastImg(pImage, pSat);
+        }
+
         #endregion
 
 
@@ -246,24 +257,6 @@ namespace Server
         }
 
         #endregion
-
-
-        #region Colour
-        
-        /// <summary>
-        /// METHOD Contrast provides access to the ContrastImage method in ImgEditor
-        /// </summary>
-        /// <param name="pImage"></param>
-        /// <param name="pSat"></param>
-        public void Contrast(Image pImage, int pSat)
-        {
-            // CALL the ContrastImg and passes pImage and pSat:
-            _imgEditor.ContrastImg(pImage, pSat);
-        }
-        
-        
-        #endregion
-
 
 
         #region IMPLEMENTATION OF IINITIALISEPARAM<IEDITIMG>

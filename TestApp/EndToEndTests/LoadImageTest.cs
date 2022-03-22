@@ -25,7 +25,7 @@ namespace TestApp.EndToEndTests
     /// Test Class which checks if all necessary classes work together to allow the user to load an image
     /// Takes the Role of 'Program' due to creating and initialising EVERY required class
     /// Authors: William Smith, William Eardley & Declan Kerby-Collins
-    /// Date: 14/03/22
+    /// Date: 22/03/22
     /// 
     ///	        Program
     ///	- Create IFactory<IService>
@@ -79,23 +79,18 @@ namespace TestApp.EndToEndTests
         #endregion
 
 
-        #region MOCKFISHYHOME CREATION TEST
+        #region CHECK IF MOCKFISHYHOME HAS VALID IMAGE
 
         /// <summary>
         /// Checks if Controller creates a FishyHome successfully
         /// </summary>
         [TestMethod]
-        public void Create_FishyHome()
+        public void Check_If_MockFishyHome_Has_Valid_Image()
         {
             #region ARRANGE
 
             // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
             bool _pass = true;
-
-            #endregion
-
-
-            #region ACT
 
             // CALL SetupApplication() on _controller:
             _controller.SetupApplication();
@@ -103,46 +98,9 @@ namespace TestApp.EndToEndTests
             #endregion
 
 
-            #region ASSERT
-
-            // IF _formDictionary DOES NOT contain an IDisposable at index '0':
-            if (_formDictionary[0] == null)
-            {
-                // SET _pass to false:
-                _pass = false;
-            }
-
-            // ASSERT if test has passed, and give corresponding message if _pass is false:
-            Assert.IsTrue(_pass, "ERROR: Controller has not created a FishyHome object!");
-
-            #endregion
-        }
-
-        #endregion
-
-
-        #region CALL IOPENIMAGE OPENIMAGE() TEST
-
-        /// <summary>
-        /// Checks if IOpenImage's OpenImage() method is called when user clicks Load Button successfully
-        /// </summary>
-        [TestMethod]
-        public void Call_IOpenImage_OpenImage()
-        {
-            #region ARRANGE
-
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
-
-            #endregion
-
-
             #region ACT
 
-            // CALL SetupApplication() on _controller:
-            _controller.SetupApplication();
-
-             // CALL LoadBttn_Click() on _mockFishyHome, passing this class, and a new EventArgs() as parameters:
+            // CALL LoadBttn_Click() Event passing this class and a new EventArgs() as parameters:
             (_formDictionary[0] as IMockFishyHome).LoadBttn_Click(this, (_serviceLocator.GetService<Factory<EventArgs>>() as IFactory<EventArgs>).Create<EventArgs>());
 
             #endregion
@@ -150,24 +108,15 @@ namespace TestApp.EndToEndTests
 
             #region ASSERT
 
-            // TRY checking if _mockOpenImage.OpenImage() was called:
-            try
+            // IF _formDictionary.ImgDisplay DOES NOT HAVE a displayable image:
+            if ((_formDictionary[0] as IMockFishyHome).ImgDisplay == null)
             {
-                // VERIFY that OpenImage() has been called at least once, due to errors with passing Mock<IOpenImage> results:
-                _mockOpenImage.Verify(_mock => _mock.OpenImage(), Times.AtLeastOnce);
-            }
-            // CATCH MockException from Verify():
-            catch (MockException)
-            {
-                // SET _pass to false, so that test fails:
+                // SET _pass to false:
                 _pass = false;
             }
-            // FINALISE try and catch block with test pass/fail:
-            finally
-            {
-                // ASSERT if test has passed or failed depending on the value of _pass:
-                Assert.IsTrue(_pass, "ERROR: _mockOpenImage.OpenImage() has not been called!");
-            }
+
+            // ASSERT if test has passed, and give corresponding message if _pass is false:
+            Assert.IsTrue(_pass, "ERROR: MockFishyHome does not have a displayable image!");
 
             #endregion
         }
@@ -249,6 +198,9 @@ namespace TestApp.EndToEndTests
 
             // SETUP _mockEnumerableFactory to create a new Dictionary<int, IDisposable>():
             _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<int, IDisposable>>()).Returns(new Dictionary<int, IDisposable>());
+
+            // SETUP _mockEnumerableFactory to create a new Dictionary<int, string>():
+            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<int, string>>()).Returns(new Dictionary<int, string>());
 
             // SETUP _mockEnumerableFactory to create a new Dictionary<string, ICommand>():
             _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<string, ICommand>>()).Returns(new Dictionary<string, ICommand>());

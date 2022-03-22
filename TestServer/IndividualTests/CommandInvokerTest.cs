@@ -51,7 +51,7 @@ namespace TestServer.IndividualTests
                 _mockCmd.Verify(_mockCmd => _mockCmd.ExecuteMethod(), Times.Once);
             }
             // CATCH MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false, so that test fails:
                 _pass = false;

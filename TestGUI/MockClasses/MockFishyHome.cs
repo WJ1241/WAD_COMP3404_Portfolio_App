@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using GUI.Forms.Interfaces;
 using GUI.Logic.Interfaces;
 using Server.Commands;
@@ -38,6 +39,12 @@ namespace TestApp.MockClasses
         // DECLARE a bool, name it '_stringListEventCalled':
         private bool _stringListEventCalled;
 
+        // DECLARE an int, name it '_dictCount':
+        private int _dictCount;
+
+        // DECLARE an int, name it '_dictIndex':
+        private int _dictIndex;
+
         #endregion
 
 
@@ -48,7 +55,11 @@ namespace TestApp.MockClasses
         /// </summary>
         public MockFishyHome()
         {
-            // EMPTY CONSTRUCTOR
+            // INITIALISE _dictCount with value of '0':
+            _dictCount = 0;
+
+            // INITIALISE _dictIndex with value of '0':
+            _dictIndex = 0;
         }
 
         #endregion
@@ -69,6 +80,15 @@ namespace TestApp.MockClasses
 
             // INVOKE _commandDict["Load"]'s ExecuteMethod():
             _invokeCommand(_commandDict["Load"]);
+        }
+
+        /// <summary>
+        /// Property which allows read access to an Image currently displayed
+        /// </summary>
+        public Image ImgDisplay
+        {
+            // NO VARIABLES USED AS PRODUCTION CODE WILL NOT HAVE AN IMAGE VARIABLE, ONLY WINDOWS FORM PROPERTY
+            get; set;
         }
 
         /// <summary>
@@ -105,8 +125,8 @@ namespace TestApp.MockClasses
         /// </summary>
         public void ChangeImg()
         {
-            // SET value of _commandDict["GetImage"]'s FirstParam property to "Example"):
-            (_commandDict["GetImage"] as ICommandParam<string, int, int>).FirstParam = "..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png";
+            // SET value of _commandDict["GetImage"]'s FirstParam property to string value stored at _imgFPDict[_dictIndex]):
+            (_commandDict["GetImage"] as ICommandParam<string, int, int>).FirstParam = _imgFPDict[_dictIndex];
 
             // SET value of _commandDict["GetImage"]'s SecondParam property to '1':
             (_commandDict["GetImage"] as ICommandParam<string, int, int>).SecondParam = 1;
@@ -162,6 +182,9 @@ namespace TestApp.MockClasses
         {
             // SET _imgEventCalled to true:
             _imgEventCalled = true;
+
+            // SET value of ImgDisplay Property to value of pArgs.Img:
+            ImgDisplay = pArgs.Img;
         }
 
         #endregion
@@ -170,7 +193,7 @@ namespace TestApp.MockClasses
         #region IMPLEMENTATION OF IEVENTLISTENER<STRINGLISTEVENTARGS>
 
         /// <summary>
-        /// Method called when needing to update an stringList
+        /// Method called when needing to update an string List
         /// </summary>
         /// <param name="pSource"> Object calling this method </param>
         /// <param name="pArgs"> Necessary arguments in order to modify an Image </param>
@@ -178,6 +201,19 @@ namespace TestApp.MockClasses
         {
             // SET _stringListEventCalled to true:
             _stringListEventCalled = true;
+
+            // FOREACH string value in pArgs.List:
+            foreach (string pString in pArgs.List)
+            {
+                // INCREMENT _dictIndex by '1':
+                _dictIndex++;
+
+                // ADD current _dictIndex value as a key, and pString as a value to _imgFPDict:
+                _imgFPDict.Add(_dictIndex, pString);
+            }
+
+            // SET value of _dictCount to same value as _dictIndex:
+            _dictCount = _dictIndex;
 
             // CALL ChangeImg():
             ChangeImg();
@@ -206,7 +242,7 @@ namespace TestApp.MockClasses
         /// <summary>
         /// Initialises an object with an IDictionary<string, ICommand> object
         /// </summary>
-        /// <param name="pCommand"> IDictionary<string, ICommand> object </param>
+        /// <param name="pCommandDict"> IDictionary<string, ICommand> object </param>
         public void Initialise(IDictionary<string, ICommand> pCommandDict)
         {
             // INITIALISE _commandDict with reference to pCommandDict:
@@ -216,12 +252,12 @@ namespace TestApp.MockClasses
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEPARAM<IDICTIONARY<STRING, ICOMMAND>>
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IDICTIONARY<INT, STRING>>
 
         /// <summary>
-        /// Initialises an object with an IDictionary<string, ICommand> object
+        /// Initialises an object with an IDictionary<int, string> object
         /// </summary>
-        /// <param name="pCommand"> IDictionary<string, ICommand> object </param>
+        /// <param name="pStringDict"> IDictionary<int, string> object </param>
         public void Initialise(IDictionary<int, string> pStringDict)
         {
             // INITIALISE _imgFPDict with reference to pStringDict:

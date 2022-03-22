@@ -23,7 +23,7 @@ namespace Server.CustomEventArgs
         /// <summary>
         /// Property which allows read and write access to an Image
         /// </summary>
-        public Image Img
+        public virtual Image Img
         {
             get
             {

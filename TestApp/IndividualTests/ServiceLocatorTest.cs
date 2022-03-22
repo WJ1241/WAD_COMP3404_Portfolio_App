@@ -62,7 +62,7 @@ namespace TestApp.IndividualTests
                 _mockServiceFactory.Verify(_mockServiceFactory => _mockServiceFactory.Create<Factory<IServiceLocator>>(), Times.Once);
             }
             // CATCH MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false, so that test fails:
                 _pass = false;

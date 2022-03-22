@@ -16,7 +16,7 @@ namespace GUI
     /// <summary>
     /// Partial Class which creates a 'FishyEdit' for the user to edit Images with.
     /// Author: William Smith, Declan Kerby-Collins, William Eardley, & Marc Price
-    /// Date: 13/03/22
+    /// Date: 22/03/22
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>
     /// <REFERENCE> jay_t55 (2014) Make a borderless form movable? Available at: https://stackoverflow.com/questions/1592876/make-a-borderless-form-movable/24561946#24561946. (Accessed 5 November 2021). </REFERENCE>
@@ -292,13 +292,10 @@ namespace GUI
             // SET value of _dictIndex to _dictCount, prevents dictionary ID problems:
             _dictIndex = _dictCount;
 
-            // CALL OpenImage method in _imgOpen:
-            _imgOpen.OpenImage();
-
             try
             {
-                // FOREACH String in returned IList<String> from _imgOpen.OpenImage():
-                foreach (String pString in _imgOpen.OpenImage())
+                // FOREACH string in returned IList<String> from _imgOpen.OpenImage():
+                foreach (string pString in _imgOpen.OpenImage())
                 {
                     // INCREMENT _dictIndex by 1:
                     _dictIndex++;
@@ -323,8 +320,8 @@ namespace GUI
                 // SET value of _dictCount to _dictIndex:
                 _dictCount = _dictIndex;
 
-                // CALL ChngImg():
-                ChngImg();
+                // CALL ChangeImg():
+                ChangeImg();
             }
             // CATCH NullInstanceException from ChngImg():
             catch (NullInstanceException pException)

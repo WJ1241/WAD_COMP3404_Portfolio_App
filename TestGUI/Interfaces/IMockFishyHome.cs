@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace TestGUI.Interfaces
 {
@@ -23,6 +24,11 @@ namespace TestGUI.Interfaces
 
 
         #region PROPERTIES
+
+        /// <summary>
+        /// Property which allows read access to an Image currently displayed
+        /// </summary>
+        Image ImgDisplay { get; set; }
 
         /// <summary>
         /// Property which allows read access to a boolean to test if ImgChangeEvent was called

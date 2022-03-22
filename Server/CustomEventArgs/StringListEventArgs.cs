@@ -23,7 +23,7 @@ namespace Server.CustomEventArgs
         /// <summary>
         /// Property which allows read and write access to a string List
         /// </summary>
-        public IList<string> List
+        public virtual IList<string> List
         {
             get
             {
