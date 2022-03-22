@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using App.GeneralInterfaces;
 using App.Services;
 using App.Services.Factories;
@@ -38,6 +40,10 @@ namespace App
 
                 // INITIALISE _controller with reference to _serviceLocator:
                 (_controller as IInitialiseParam<IServiceLocator>).Initialise(_serviceLocator);
+
+                // INITIALISE _controller with a new IDictionary<int, IDisposable>() object:
+                (_controller as IInitialiseParam<IDictionary<int, IDisposable>>).Initialise(
+                    (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<int, IDisposable>>() as IDictionary<int, IDisposable>);
             }
             // CATCH ClassDoesNotExistException from Create():
             catch (ClassDoesNotExistException e)
@@ -52,7 +58,10 @@ namespace App
                 Console.WriteLine(e.Message);
             }
 
-            // CALL  RunApplication() on _controller:
+            // CALL SetupApplication() on _controller:
+            _controller.SetupApplication();
+
+            // CALL RunApplication() on _controller:
             _controller.RunApplication();
         }
     }

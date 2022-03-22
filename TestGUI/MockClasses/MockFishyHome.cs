@@ -5,6 +5,7 @@ using GUI.Forms.Interfaces;
 using GUI.Logic.Interfaces;
 using Server.Commands;
 using Server.CustomEventArgs;
+using Server.Exceptions;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
 using TestGUI.Interfaces;
@@ -75,6 +76,9 @@ namespace TestApp.MockClasses
         /// <param name="pArgs"> Necessary arguments in order complete behaviour </param>
         public void LoadBttn_Click(object pSource, EventArgs pArgs)
         {
+            // SET value of _dictIndex to value of _dictCount, prevents dictionary ID problems:
+            _dictIndex = _dictCount;
+
             // SET value of _commandDict["Load"]'s FirstParam property to value of return value of _imgOpen.OpenImage():
             (_commandDict["Load"] as ICommandParam<IList<string>>).FirstParam = _imgOpen.OpenImage();
 
@@ -125,17 +129,27 @@ namespace TestApp.MockClasses
         /// </summary>
         public void ChangeImg()
         {
-            // SET value of _commandDict["GetImage"]'s FirstParam property to string value stored at _imgFPDict[_dictIndex]):
-            (_commandDict["GetImage"] as ICommandParam<string, int, int>).FirstParam = _imgFPDict[_dictIndex];
+            // IF _imgFPDict DOES contain _dictIndex as a key:
+            if (_imgFPDict.ContainsKey(_dictIndex))
+            {
+                // SET value of _commandDict["GetImage"]'s FirstParam property to string value stored at _imgFPDict[_dictIndex]):
+                (_commandDict["GetImage"] as ICommandParam<string, int, int>).FirstParam = _imgFPDict[_dictIndex];
 
-            // SET value of _commandDict["GetImage"]'s SecondParam property to '1':
-            (_commandDict["GetImage"] as ICommandParam<string, int, int>).SecondParam = 1;
+                // SET value of _commandDict["GetImage"]'s SecondParam property to '1':
+                (_commandDict["GetImage"] as ICommandParam<string, int, int>).SecondParam = 1;
 
-            // SET value of _commandDict["GetImage"]'s ThirdParam property to '1':
-            (_commandDict["GetImage"] as ICommandParam<string, int, int>).ThirdParam = 1;
+                // SET value of _commandDict["GetImage"]'s ThirdParam property to '1':
+                (_commandDict["GetImage"] as ICommandParam<string, int, int>).ThirdParam = 1;
 
-            // INVOKE _commandDict["GetImage"]'s ExecuteMethod():
-            _invokeCommand(_commandDict["GetImage"]);
+                // INVOKE _commandDict["GetImage"]'s ExecuteMethod():
+                _invokeCommand(_commandDict["GetImage"]);
+            }
+            // IF _imgFPDict DOES NOT contain _dictIndex as a key:
+            else
+            {
+                // THROW a new NullReferenceException(), with corresponding message:
+                throw new NullReferenceException("ERROR: _imgFPDict does not contain _dictIndex as a key!");
+            }
         }
 
         #endregion
@@ -183,8 +197,18 @@ namespace TestApp.MockClasses
             // SET _imgEventCalled to true:
             _imgEventCalled = true;
 
-            // SET value of ImgDisplay Property to value of pArgs.Img:
-            ImgDisplay = pArgs.Img;
+            // IF pArgs.Img DOES HAVE an active instance:
+            if (pArgs.Img != null)
+            {
+                // SET value of ImgDisplay Property to value of pArgs.Img:
+                ImgDisplay = pArgs.Img;
+            }
+            // IF pArgs.Img DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: pArgs.Img does not have an active instance!");
+            }
         }
 
         #endregion

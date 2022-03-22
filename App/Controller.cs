@@ -7,7 +7,6 @@ using App.Services;
 using App.Services.Factories;
 using App.GeneralInterfaces;
 using GUI;
-using GUI.Forms.Interfaces;
 using GUI.Logic;
 using GUI.Logic.Interfaces;
 using Server;
@@ -117,6 +116,15 @@ namespace App
         public void SetupApplication()
         {
             #region FISHYHOME CREATION & INITIALISATION
+
+            // CALL Application static method SetCompatibleTextRenderingDefault(), passing a 'false' boolean value as a parameter:
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            // CALL Application static method 'SetHighDpiMode()', passing HighDpiMode.SystemAware as a parameter:
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+
+            // CALL Application static method EnableVisualStyles():
+            Application.EnableVisualStyles();
 
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
@@ -298,6 +306,9 @@ namespace App
                 // SET MethodRef Property of _commandIDisposableParam to reference to DisposableRemoval(int):
                 _commandIntParam.MethodRef = DisposableRemoval;
 
+                // SET FirstParam Property value of _commandIntParam to _formCount:
+                _commandIntParam.FirstParam = _formCount;
+
                 // SET Name Property of _commandIntParam to "RemoveMe":
                 (_commandIntParam as IName).Name = "RemoveMe";
 
@@ -330,15 +341,6 @@ namespace App
         /// </summary>
         public void RunApplication()
         {
-            // CALL Application static method 'SetHighDpiMode()', passing HighDpiMode.SystemAware as a parameter:
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
-
-            // CALL Application static method EnableVisualStyles():
-            Application.EnableVisualStyles();
-
-            // CALL Application static method SetCompatibleTextRenderingDefault(), passing a 'false' boolean value as a parameter:
-            Application.SetCompatibleTextRenderingDefault(false);
-
             // CALL Application static method 'Run()', passing _formDict[0] (FishyHome) as a parameter:
             Application.Run(_formDict[0] as Form);
         }
@@ -442,8 +444,8 @@ namespace App
             // IF pDisposable DOES NOT HAVE an active instance:
             else
             {
-                // THROW a new NullValueException(), with corresponding message:
-                throw new NullValueException("ERROR: IDisposable object cannot be disposed due to not having an active instance!");
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: IDisposable object cannot be disposed due to not having an active instance!");
             }
         }
 
@@ -456,11 +458,21 @@ namespace App
             // IF _formDict DOES contain pUID as a key:
             if (_formDict.ContainsKey(pUID))
             {
-                // DISPOSE of object addressed at pUID in _formDict:
-                _formDict[pUID].Dispose();
+                // IF _formDict[pUID] DOES HAVE an active instance:
+                if (_formDict[pUID] != null)
+                {
+                    // DISPOSE of object addressed at pUID in _formDict:
+                    _formDict[pUID].Dispose();
 
-                // REMOVE object stored at pUID in _formDict:
-                _formDict.Remove(pUID);
+                    // REMOVE object stored at pUID in _formDict:
+                    _formDict.Remove(pUID);
+                }
+                // IF _formDict[pUID] DOES NOT HAVE an active instance:
+                else
+                {
+                    // THROW a new NullInstanceException(), with corresponding message:
+                    throw new NullInstanceException("ERROR: _formDict[pUID] cannot be disposed due to not having an active instance!");
+                }
             }
             // IF _formDict DOES NOT contain pUID as a key:
             else

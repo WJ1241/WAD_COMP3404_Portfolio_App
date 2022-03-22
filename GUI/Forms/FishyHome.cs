@@ -68,24 +68,37 @@ namespace GUI
         /// </summary>
         public void ChangeImg()
         {
-            /*
-            // IF _imgFPDict contains a key of the current _dictIndex value:
+            // IF _imgFPDict DOES contain _dictIndex as a key:
             if (_imgFPDict.ContainsKey(_dictIndex))
             {
-                // IF _getImg(_imgFPDict[_dictIndex] IS NOT null:
-                if (_getImg(_imgFPDict[_dictIndex], ImgDisplay.Width, ImgDisplay.Height) != null)
+                // SET value of _commandDict["GetImage"]'s FirstParam property to string value stored at _imgFPDict[_dictIndex]):
+                (_commandDict["GetImage"] as ICommandParam<string, int, int>).FirstParam = _imgFPDict[_dictIndex];
+
+                // SET value of _commandDict["GetImage"]'s SecondParam property to value of ImgDisplay.Width:
+                (_commandDict["GetImage"] as ICommandParam<string, int, int>).SecondParam = ImgDisplay.Width;
+
+                // SET value of _commandDict["GetImage"]'s ThirdParam property to value of ImgDisplay.Height:
+                (_commandDict["GetImage"] as ICommandParam<string, int, int>).ThirdParam = ImgDisplay.Height;
+
+                // TRY checking if invoking _commandDict["GetImage"] throws an exception
+                try
                 {
-                    // SET displayed image to image stored in _imgFPDict at current _dictIndex value:
-                    ImgDisplay.Image = _getImg(_imgFPDict[_dictIndex], ImgDisplay.Width, ImgDisplay.Height);
+                    // INVOKE _commandDict["GetImage"]'s ExecuteMethod():
+                    _invokeCommand(_commandDict["GetImage"]);
                 }
-                // IF _getImg(_imgFPDict[_dictIndex] IS null:
-                else
+                // CATCH InvalidStringException from invoking _commandDict["GetImage"]:
+                catch (InvalidStringException pException)
                 {
-                    // THROW NullInstanceException, with corresponding message:
-                    throw new NullInstanceException("ERROR: No Image stored in local dictionary at current image index!");
+                    // WRITE exception message to console:
+                    Console.WriteLine(pException.Message);
                 }
             }
-            */
+            // IF _imgFPDict DOES NOT contain _dictIndex as a key:
+            else
+            {
+                // THROW a new NullReferenceException(), with corresponding message:
+                throw new NullReferenceException("ERROR: _imgFPDict does not contain _dictIndex as a key!");
+            }
         }
 
         #endregion
@@ -117,7 +130,18 @@ namespace GUI
         /// <param name="pArgs"> Necessary arguments to complete behaviour </param>
         public void OnEvent(object pSource, ImageEventArgs pArgs)
         {
-
+            // IF pArgs.Img DOES HAVE an active instance:
+            if (pArgs.Img != null)
+            {
+                // SET value of ImgDisplay.Image Property to value of pArgs.Img:
+                ImgDisplay.Image = pArgs.Img;
+            }
+            // IF pArgs.Img DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: pArgs.Img does not have an active instance!");
+            }
         }
 
         #endregion
@@ -132,7 +156,31 @@ namespace GUI
         /// <param name="pArgs"> Necessary arguments to complete behaviour </param>
         public void OnEvent(object pSource, StringListEventArgs pArgs)
         {
+            // IF pArgs.List DOES HAVE an active instance:
+            if (pArgs.List != null)
+            {
+                // FOREACH string value in pArgs.List:
+                foreach (string pString in pArgs.List)
+                {
+                    // INCREMENT _dictIndex by '1':
+                    _dictIndex++;
 
+                    // ADD current _dictIndex value as a key, and pString as a value to _imgFPDict:
+                    _imgFPDict.Add(_dictIndex, pString);
+                }
+            }
+            // IF pArgs.List DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: pArgs.List does not have an active instance!");
+            }
+
+            // SET value of _dictCount to same value as _dictIndex:
+            _dictCount = _dictIndex;
+
+            // CALL ChangeImg():
+            ChangeImg();
         }
 
         #endregion
@@ -238,116 +286,6 @@ namespace GUI
         #endregion
 
 
-        /// <summary>
-        /// Method which displays previous image in local dictionary
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Value for classes without event data </param>
-        private void NextBttn_Click(object sender, EventArgs e)
-        {
-            // TRY checking if GoToNextImg throws a NullValueException:
-            try
-            {
-                // CALL GoToNextImg():
-                GoToNextImg();
-            }
-            // CATCH NullValueException from GoToNextImg method:
-            catch (NullValueException pException)
-            {
-                // WRITE exception message to debug console:
-                Debug.WriteLine(pException.Message);
-            }
-        }
-
-        /// <summary>
-        /// Method which displays previous image in local dictionary
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Value for classes without event data </param>
-        private void PrevImgBttn_Click(object sender, EventArgs e)
-        {
-            // TRY checking if GoToPrevImg throws a NullValueException:
-            try
-            {
-                // CALL GoToPrevImg():
-                GoToPrevImg();
-            }
-            // CATCH NullValueException from GoToPrevImg method:
-            catch (NullValueException pException)
-            {
-                // WRITE exception message to debug console:
-                Debug.WriteLine(pException.Message);
-            }
-        }
-
-        /// <summary>
-        /// Method which loads a list of images, and adds them to a local dictionary
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Value for classes without event data </param>
-        private void LoadBttn_Click(object sender, EventArgs e)
-        {
-            
-            
-            // SET value of _dictIndex to _dictCount, prevents dictionary ID problems:
-            _dictIndex = _dictCount;
-
-            try
-            {
-                // FOREACH string in returned IList<String> from _imgOpen.OpenImage():
-                foreach (string pString in _imgOpen.OpenImage())
-                {
-                    // INCREMENT _dictIndex by 1:
-                    _dictIndex++;
-
-                    // ADD _dictIndex as a key, and pString as a value to _imgFPDict:
-                    _imgFPDict.Add(_dictIndex, pString);
-                }
-            }
-            // CATCH FileAlreadyStoredException from _imgOpenSave.OpenImage():
-            catch (FileAlreadyStoredException pException)
-            {
-                // WRITE error message to debug console:
-                Debug.WriteLine(pException.Message);
-
-                // SHOW MessageBox detailing error to the user, store result in _mBox:
-                MessageBox.Show(pException.Message + "\n\n Do not select already loaded images in multiselect!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            // TRY checking if ChngImg throws a NullInstanceException:
-            try
-            {
-                // SET value of _dictCount to _dictIndex:
-                _dictCount = _dictIndex;
-
-                // CALL ChangeImg():
-                ChangeImg();
-            }
-            // CATCH NullInstanceException from ChngImg():
-            catch (NullInstanceException pException)
-            {
-                // WRITE exception message to debug console:
-                Debug.WriteLine(pException.Message);
-            }
-
-            
-        }
-
-        /// <summary>
-        /// Method which opens the FishyEdit window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void EditBttn_Click(object sender, EventArgs e)
-        {
-            // TODO: GET FISHYEDIT CREATION COMMAND IN HERE
-
-            
-
-
-        }
-
-
         #region PRIVATE METHODS
 
         /// <summary>
@@ -355,10 +293,10 @@ namespace GUI
         /// </summary>
         private void GoToPrevImg()
         {
-            // IF _imgFPDict DOES contain current index minus 1 as a key:
+            // IF _imgFPDict DOES contain _dictIndex minus 1 as a key:
             if (_imgFPDict.ContainsKey(_dictIndex - 1))
             {
-                // DECREMENT _dictIndex by 1:
+                // DECREMENT _dictIndex by '1':
                 _dictIndex--;
 
                 // TRY checking if ChngImg throws a NullInstanceException:
@@ -367,11 +305,11 @@ namespace GUI
                     // CALL ChangeImg():
                     ChangeImg();
                 }
-                // CATCH NullInstanceException from ChngImg():
+                // CATCH NullInstanceException from ChangeImg():
                 catch (NullInstanceException pException)
                 {
-                    // WRITE exception message to debug console:
-                    Debug.WriteLine(pException.Message);
+                    // WRITE exception message to console:
+                    Console.WriteLine(pException.Message);
                 }
             }
             // IF _imgFPDict DOES NOT contain current index minus 1 as a key:
@@ -399,11 +337,11 @@ namespace GUI
                     // CALL ChangeImg():
                     ChangeImg();
                 }
-                // CATCH NullInstanceException from ChngImg():
+                // CATCH NullInstanceException from ChangeImg():
                 catch (NullInstanceException pException)
                 {
-                    // WRITE exception message to debug console:
-                    Debug.WriteLine(pException.Message);
+                    // WRITE exception message to console:
+                    Console.WriteLine(pException.Message);
                 }
             }
             // IF _imgFPDict DOES NOT contain current index plus 1 as a key:
@@ -411,6 +349,129 @@ namespace GUI
             {
                 // THROW new NullValueException, with corresponding message:
                 throw new NullValueException("ERROR: There is no next image to go to!");
+            }
+        }
+
+        /// <summary>
+        /// Method which displays previous image in local dictionary
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value for classes without event data </param>
+        private void NextBttn_Click(object sender, EventArgs e)
+        {
+            // TRY checking if GoToNextImg throws a NullValueException:
+            try
+            {
+                // CALL GoToNextImg():
+                GoToNextImg();
+            }
+            // CATCH NullValueException from GoToNextImg method:
+            catch (NullValueException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
+        }
+
+        /// <summary>
+        /// Method which displays previous image in local dictionary
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value for classes without event data </param>
+        private void PrevImgBttn_Click(object sender, EventArgs e)
+        {
+            // TRY checking if GoToPrevImg throws a NullValueException:
+            try
+            {
+                // CALL GoToPrevImg():
+                GoToPrevImg();
+            }
+            // CATCH NullValueException from GoToPrevImg method:
+            catch (NullValueException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
+        }
+
+        /// <summary>
+        /// Method which loads a list of images, and adds them to a local dictionary
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value for classes without event data </param>
+        private void LoadBttn_Click(object sender, EventArgs e)
+        {
+            // TRY checking if _imgOpen.OpenImage() and invoking _commandDict["Load"] throws an exception:
+            try
+            {
+                // SET value of _dictIndex to value of _dictCount, prevents dictionary ID problems:
+                _dictIndex = _dictCount;
+
+                // SET value of _commandDict["Load"]'s FirstParam property to value of return value of _imgOpen.OpenImage():
+                (_commandDict["Load"] as ICommandParam<IList<string>>).FirstParam = _imgOpen.OpenImage();
+
+                // INVOKE _commandDict["Load"]'s ExecuteMethod():
+                _invokeCommand(_commandDict["Load"]);
+            }
+            // CATCH FileAlreadyStoredException from _imgOpen.OpenImage() and from invoking _commandDict["Load"]:
+            catch (FileAlreadyStoredException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+
+                // SHOW MessageBox detailing error to the user, store result in MessageBox:
+                MessageBox.Show(pException.Message + "\n\n Do not select already loaded images in multiselect!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Method which opens the FishyEdit window
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value for classes without event data </param>
+        private void EditBttn_Click(object sender, EventArgs e)
+        {
+            // TODO: GET FISHYEDIT CREATION COMMAND IN HERE
+
+
+
+
+        }
+
+        /// <summary>
+        /// Method which closes an instance of this class and removes any other disposable objects
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value for classes without event data </param>
+        private void CloseBttn_Click(object sender, EventArgs e)
+        {
+            // TRY checking if NullInstanceException or NullValueException are thrown:
+            try
+            {
+                // IF ImgDisplay.Image DOES HAVE an active image:
+                if (ImgDisplay.Image != null)
+                {
+                    // SET FirstParam Property value of _commandDict["DisposableRemoval"] to reference to ImgDisplay.Image:
+                    (_commandDict["DisposableRemoval"] as ICommandParam<IDisposable>).FirstParam = ImgDisplay.Image;
+
+                    // INVOKE _commandDict["RemoveMe"]'s ExecuteMethod():
+                    _invokeCommand(_commandDict["DisposableRemoval"]);
+                }
+
+                // INVOKE _commandDict["RemoveMe"]'s ExecuteMethod():
+                _invokeCommand(_commandDict["RemoveMe"]);
+            }
+            // CATCH NullInstanceException from invoking _commandDict["RemoveMe"] or _commandDict["DisposableRemoval"]:
+            catch (NullInstanceException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
+            // CATCH NullInstanceException from invoking _commandDict["RemoveMe"]:
+            catch (NullValueException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
             }
         }
 
@@ -432,7 +493,7 @@ namespace GUI
         /// </summary>
         /// <param name="sender"> Form Object </param>
         /// <param name="e"> Value for classes without event data </param>
-        private void FishyEdit_MouseDown(object sender, MouseEventArgs e)
+        private void FishyHome_MouseDown(object sender, MouseEventArgs e)
         {
             // SET _mouseDown to true:
             _mouseDown = true;
@@ -447,7 +508,7 @@ namespace GUI
         /// </summary>
         /// <param name="sender"> Form Object </param>
         /// <param name="e"> Value for classes without event data </param>
-        private void FishyEdit_MouseMove(object sender, MouseEventArgs e)
+        private void FishyHome_MouseMove(object sender, MouseEventArgs e)
         {
             // Only act if mouse button is down...
             if (_mouseDown)
@@ -466,7 +527,7 @@ namespace GUI
         /// </summary>
         /// <param name="sender"> Form Object </param>
         /// <param name="e"> Value for classes without event data </param>
-        private void FishyEdit_MouseUp(object sender, MouseEventArgs e)
+        private void FishyHome_MouseUp(object sender, MouseEventArgs e)
         {
             // RESET _mouseDown to false:
             _mouseDown = false;
