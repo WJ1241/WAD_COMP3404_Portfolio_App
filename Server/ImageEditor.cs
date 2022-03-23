@@ -9,8 +9,8 @@ namespace Server
 {
     /// <summary>
     /// Class which edits Images, e.g. Rotation, H/V Flip, Scaling, Cropping, Filtering
-    /// Author: William Eardley, William Smith, Declan Kerby-Collins
-    /// Date: 11/02/22
+    /// Author: Declan Kerby-Collins, William Eardley & William Smith
+    /// Date: 23/03/22
     /// </summary>
     public class ImageEditor : IEditImg
     {
@@ -223,8 +223,11 @@ namespace Server
         /// <param name="pImage"></param>
         public void ContrastImg(Image pImage, int pSat)
         {
-            // ASSIGNMENT _newMap is set to the value of pImage
+            // ASSIGNMENT _newMap is set to the value of pImage:
             _newMap = new Bitmap(pImage);
+
+            // ASSISGNMENT pSat has its value inverted:
+            pSat = pSat *= -1;
 
             // FOR every pixle wide _newMap is incriment x:
             for (int x = 0; x < _newMap.Width; x++)
@@ -242,47 +245,214 @@ namespace Server
                     // DECLARE and ASSIGN int name it '_blue1', it becomes _oldColour's B value:
                     _blue1 = _oldColur.B;
 
-                    // ASSIGNMENT _red2 is set to the value of red1 multiplied by pSat:
-                    _red2 = (byte)(_red1 * pSat);
+                    // DECLARE calculate the gap between _red1 and _blue1 and name that gap '_rBGap':
+                    int _rBGap = _red1 - _blue1;
+                    // DECLARE calculate the gap between _red1 and _green1 and name that gap '_rGGap':
+                    int _rGGap = _red1 - _green1;
 
-                    // ASSIGNMENT _green2 is set to the value of _green1 multiplied by pSat:
-                    _green2 = (byte)(_green1 * pSat);
+                    // DECLARE calculate the gap between _green1 and _red1 and name that gap '_gRGap':
+                    int _gRGap = _green1 - _red1;
+                    // DECLARE calculate the gap between _green1 and _blue1 and name that gap '_gBGap':
+                    int _gBGap = _green1 - _blue1;
 
-                    // ASSIGNMENT _blue2 is set to the value of _blue1 multiplied by pSat:
-                    _blue2 = (byte)(_blue1 * pSat);
+                    // DECLARE calculate the gap between _blue1 and _green1 and name that gap '_bGGap':
+                    int _bGGap = _blue1 - _green1;
+                    // DECLARE calculate the gap between _blue1 and _red1 and name that gap '_bRGap':
+                    int _bRGap = _blue1 - _red1;
 
 
+
+                    // IF _red1 is greater than _blue1 & _green1:
+                    if (_red1 > _blue1 && _red1 > _green1)
+                    {
+                        // ASSIGNMENT _red2 is given the value of _red1:
+                        _red2 = _red1;
+
+                        // ASSIGNMENT _blue2 to the value of _blue1 plus  the gap between red and blue and multiply that by the pSat:
+                        _blue2 = _blue1 + (_rBGap * pSat);
+
+                        // ASSIGNMENT _green2 to the value of _green1 plus  the gap between red and green and multiply that by the pSat:
+                        _green2 = _green1 + (_rGGap * pSat);
+                    }
+                    // ELSE IF _red1 is equel to _blue1
+                    else if (_red1 == _blue1)
+                    {
+                        // ASSIGNMENT _red2 is given the value of _red1:
+                        _red2 = _red1;
+
+                        // ASSIGNMENT _blue2 is given the value of _blue1:
+                        _blue2 = _blue1;
+
+                        // ASSIGNMENT _green2 to the value of _green1 plus  the gap between red and green and multiply that by the pSat:
+                        _green2 = _green1 + (_rGGap * pSat);
+                    }
+                    // ELSE IF _red1 is equel to _green1
+                    else if (_red1 == _green1)
+                    {
+                        // ASSIGNMENT _red2 is given the value of _red1:
+                        _red2 = _red1;
+
+                        // ASSIGNMENT _green2 is given the value of _green1:
+                        _green2 = _green1;
+
+                        // ASSIGNMENT _blue2 to the value of _blue1 plus  the gap between red and blue and multiply that by the pSat:
+                        _blue2 = _blue1 + (_rBGap * pSat);
+                    }
+                    // ELSE IF _red1 is equel to _green1 and _green1
+                    else if (_red1 == _blue1 && _red1 == _green1)
+                    {
+                        // ASSIGNMENT _red2 is given the value of _red1:
+                        _red2 = _red1;
+
+                        // ASSIGNMENT _blue2 is given the value of _blue1:
+                        _blue2 = _blue1;
+
+                        // ASSIGNMENT _green2 is given the value of _green1:
+                        _green2 = _green1;
+                    }
+
+
+                    // IF _green1 is greater than _blue1 & _red1:
+                    if (_green1 > _blue1 && _green1 > _red1)
+                    {
+                        // ASSIGNMENT _green2 is given the value of _green1:
+                        _green2 = _green1;
+
+                        // ASSIGNMENT _red2 to the value of _red1 plus  the gap between red and green and multiply that by the pSat:
+                        _red2 = _red1 + (_gRGap * pSat);
+
+                        // ASSIGNMENT _blue2 to the value of _blue1 plus  the gap between green and blue and multiply that by the pSat:
+                        _blue2 = _blue1 + (_gBGap * pSat);
+                    }
+                    // ELSE IF _green1 is equel to _blue1:
+                    else if (_green1 == _blue1)
+                    {
+                        // ASSIGNMENT _red2 to the value of _red1 plus  the gap between red and green and multiply that by the pSat:
+                        _red2 = _red1 + (_gRGap * pSat);
+
+                        // ASSIGNMENT _green2 is given the value of _green1:
+                        _green2 = _green1;
+
+                        // ASSIGNMENT _blue2 is given the value of _blue1:
+                        _blue2 = _blue1;
+                    }
+                    // ELSE IF _green1 is equel to _red1:
+                    else if (_green1 == _red1)
+                    {
+                        // ASSIGNMENT _red2 is given the value of _red1:
+                        _red2 = _red1;
+
+                        // ASSIGNMENT _green2 is given the value of _green1:
+                        _green2 = _green1;
+
+                        // ASSIGNMENT _blue2 to the value of _blue1 plus  the gap between green and blue and multiply that by the pSat:
+                        _blue2 = _blue1 + (_gBGap * pSat);
+                    }
+                    // ELSE IF _green1 is equel to _red1 & _blue1:
+                    else if (_green1 == _blue1 && _green1 == _red1)
+                    {
+                        // ASSIGNMENT _red2 is given the value of _red1:
+                        _red2 = _red1;
+
+                        // ASSIGNMENT _blue2 is given the value of _blue1:
+                        _blue2 = _blue1;
+
+                        // ASSIGNMENT _green2 is given the value of _green1:
+                        _green2 = _green1;
+                    }
+
+
+
+                    // IF _blue1 is greater than _green1 & _red1:
+                    if (_blue1 > _red1 && _blue1 > _green1)
+                    {
+                        // ASSIGNMENT _blue2 is given the value of _blue1:
+                        _blue2 = _blue1;
+
+                        // ASSIGNMENT _red2 to the value of _red1 plus  the gap between red and blue and multiply that by the pSat:
+                        _red2 = _red1 + (_bRGap * pSat);
+
+                        // ASSIGNMENT _green2 to the value of _green1 plus  the gap between blue and green and multiply that by the pSat:
+                        _green2 = _green1 + (_bGGap * pSat);
+
+                    }
+                    // ELSE IF _blue1 is equel to _red1:
+                    else if (_blue1 == _red1)
+                    {
+                        // ASSIGNMENT _red2 is given the value of _red1:
+                        _red2 = _red1;
+
+                        // ASSIGNMENT _blue2 is given the value of _blue1:
+                        _blue2 = _blue1;
+
+                        // ASSIGNMENT _green2 to the value of _green1 plus  the gap between blue and green and multiply that by the pSat:
+                        _green2 = _green1 + (_bGGap * pSat);
+
+                    }
+                    // ELSE IF _blue1 is equel to _green1:
+                    else if (_blue1 == _green1)
+                    {
+                        // ASSIGNMENT _red2 to the value of _red1 plus  the gap between red and blue and multiply that by the pSat:
+                        _red2 = _red1 + (_bRGap * pSat);
+
+                        // ASSIGNMENT _green2 is given the value of _green1:
+                        _green2 = _green1;
+
+                        // ASSIGNMENT _blue2 is given the value of _blue1:
+                        _blue2 = _blue1;
+                    }
+                    // ELSE IF _blue1 is equel to _green1 & _blue1:
+                    else if (_blue1 == _red1 && _blue1 == _green1)
+                    {
+                        // ASSIGNMENT _red2 is given the value of _red1:
+                        _red2 = _red1;
+
+                        // ASSIGNMENT _blue2 is given the value of _blue1:
+                        _blue2 = _blue1;
+
+                        // ASSIGNMENT _green2 is given the value of _green1:
+                        _green2 = _green1;
+                    }
+
+
+                    #region keep between 1 and 255
+
+                    // IF _red2 less than or equel to 1 set value to 1:
                     if (_red2 <= 1)
                     {
                         _red2 = 1;
                     }
+                    // IF _red2 greater than or equel to 255 set value to 255:
                     if (_red2 >= 255)
                     {
                         _red2 = 255;
                     }
 
-                    //_red2 = (byte)_red1 * _sat;
 
+                    // IF _green2 less than or equel to 1 set value to 1:
                     if (_green2 <= 1)
                     {
                         _green2 = 1;
                     }
+                    // IF _green2 greater than or equel to 255 set value to 255:
                     if (_green2 >= 255)
                     {
                         _green2 = 255;
                     }
 
 
-                    //_green2 = (byte)_green2 * _sat;
-
+                    // IF _blue2 less than or equel to 1 set value to 1:
                     if (_blue2 <= 1)
                     {
                         _blue2 = 1;
                     }
+                    // IF _blue2 greater than or equel to 255 set value to 255:
                     if (_blue2 >= 255)
                     {
                         _blue2 = 255;
                     }
+                    #endregion
+
 
                     // SET the pixels of _newMap to the new argb values:
                     _newMap.SetPixel(x, y, Color.FromArgb(_red2, _green2, _blue2));
@@ -342,6 +512,7 @@ namespace Server
 
                 // ASSIGNMENT makes image light blue
                 _imgGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.DodgerBlue)), 0, 0, _displayedImg.Width, _displayedImg.Height);
+
 
 
             }
