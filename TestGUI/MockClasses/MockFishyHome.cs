@@ -80,7 +80,10 @@ namespace TestApp.MockClasses
             _dictIndex = _dictCount;
 
             // SET value of _commandDict["Load"]'s FirstParam property to value of return value of _imgOpen.OpenImage():
-            (_commandDict["Load"] as ICommandParam<IList<string>>).FirstParam = _imgOpen.OpenImage();
+            (_commandDict["Load"] as ICommandParam<IList<string>, EventHandler<StringListEventArgs>>).FirstParam = _imgOpen.OpenImage();
+
+            // SET value of _commandDict["Load"]'s SecondParam property to reference to OnEvent() (StringListEventArgs):
+            (_commandDict["Load"] as ICommandParam<IList<string>, EventHandler<StringListEventArgs>>).SecondParam = OnEvent;
 
             // INVOKE _commandDict["Load"]'s ExecuteMethod():
             _invokeCommand(_commandDict["Load"]);
@@ -129,27 +132,20 @@ namespace TestApp.MockClasses
         /// </summary>
         public void ChangeImg()
         {
-            // IF _imgFPDict DOES contain _dictIndex as a key:
-            if (_imgFPDict.ContainsKey(_dictIndex))
-            {
-                // SET value of _commandDict["GetImage"]'s FirstParam property to string value stored at _imgFPDict[_dictIndex]):
-                (_commandDict["GetImage"] as ICommandParam<string, int, int>).FirstParam = _imgFPDict[_dictIndex];
+            // SET value of _commandDict["GetImage"]'s FirstParam property to string value stored at _imgFPDict[_dictIndex]):
+            (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FirstParam = _imgFPDict[_dictIndex];
 
-                // SET value of _commandDict["GetImage"]'s SecondParam property to '1':
-                (_commandDict["GetImage"] as ICommandParam<string, int, int>).SecondParam = 1;
+            // SET value of _commandDict["GetImage"]'s SecondParam property to value of '1':
+            (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = 1;
 
-                // SET value of _commandDict["GetImage"]'s ThirdParam property to '1':
-                (_commandDict["GetImage"] as ICommandParam<string, int, int>).ThirdParam = 1;
+            // SET value of _commandDict["GetImage"]'s ThirdParam property to value of '1':
+            (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = 1;
 
-                // INVOKE _commandDict["GetImage"]'s ExecuteMethod():
-                _invokeCommand(_commandDict["GetImage"]);
-            }
-            // IF _imgFPDict DOES NOT contain _dictIndex as a key:
-            else
-            {
-                // THROW a new NullReferenceException(), with corresponding message:
-                throw new NullReferenceException("ERROR: _imgFPDict does not contain _dictIndex as a key!");
-            }
+            // SET value of _commandDict["GetImage"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
+            (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FourthParam = OnEvent;
+
+            // INVOKE _commandDict["GetImage"]'s ExecuteMethod():
+            _invokeCommand(_commandDict["GetImage"]);
         }
 
         #endregion

@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Server.CustomEventArgs;
 
 namespace Server.GeneralInterfaces
 {
     /// <summary>
     /// Interface that allows implementations to act as a Server to an Application
     /// Author: William Smith, William Eardley, Declan Kerby-Collins & Marc Price
-    /// Date: 26/11/21
+    /// Date: 23/03/22
     /// </summary>
     public interface IServer : IService
     {
         /// <summary>
-        /// 
-        /// the media items pointed to by 'pathfilenames' into the Server's data store.
+        /// The media items pointed to by 'pathfilenames' into the Server's data store.
 		/// The strings in the collection act as unique identifiers for images in the Server's data store.
         /// </summary>
-        /// <param name="pPathfilenames">a collection of one or more strings; each string containing path/filename for an image file to be loaded</param>
-        /// <returns>the unique identifiers of the images that have been loaded</returns>
-        void Load(IList<string> pPathfilenames);
+        /// <param name="pPathFileNames">a collection of one or more strings; each string containing path/filename for an image file to be loaded</param>
+        /// /// <param name="pStringListEvent"> Event to invoke with changed StringListEventArgs object </param>
+        void Load(IList<string> pPathFileNames, EventHandler<StringListEventArgs> pStringListEvent);
 
         /// <summary>
         /// Request a copy of the image specified by 'pUid', scaled according to the dimensions given by pFrameWidth and pFrameHeight.
@@ -26,8 +26,8 @@ namespace Server.GeneralInterfaces
         /// <param name="pUid">the unique identifier for the image requested</param>
         /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
         /// <param name="pFrameHeight">the height (in pixles) of the 'frame' it is to occupy</param>
-        /// <returns>the Image identified by pUid</returns>
-        void GetImage(string pUid, int pFrameWidth, int pFrameHeight);
+        /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
+        void GetImage(string pUid, int pFrameWidth, int pFrameHeight, EventHandler<ImageEventArgs> pImageEvent);
 
         /// <summary>
         /// Rotate the image specified by 'pUid'.
@@ -49,7 +49,7 @@ namespace Server.GeneralInterfaces
         void VerticalFlipImage(string pUid);
 
         /// <summary>
-        /// Contrast change image.
+        /// Change the contrast of a specified image
         /// </summary>
         /// <param name="pImage"></param>
         /// <param name="pSat"></param>

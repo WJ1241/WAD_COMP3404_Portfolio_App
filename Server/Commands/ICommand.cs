@@ -150,4 +150,50 @@ namespace Server.Commands
     }
 
     #endregion
+
+
+    #region ICOMMANDPARAM<T, U, V>
+
+    /// <summary>
+    /// Interface which allows implementations to contain a method with FOUR parameters
+    /// Authors: William Smith, Declan Kerby-Collins & William Eardley
+    /// Date: 23/03/22
+    /// </summary>
+    /// <typeparam name="T"> Generic 'T', can be any type </typeparam>
+    /// <typeparam name="U"> Generic 'U', can be any type </typeparam>
+    /// <typeparam name="V"> Generic 'V', can be any type </typeparam>
+    /// <typeparam name="W"> Generic 'W', can be any type </typeparam>
+    public interface ICommandParam<T, U, V, W> : ICommand
+    {
+        #region PROPERTIES
+
+        /// <summary>
+        /// Property which allows write access to the desired first parameter type
+        /// </summary>
+        T FirstParam { set; }
+
+        /// <summary>
+        /// Property which allows write access to the desired second parameter type
+        /// </summary>
+        U SecondParam { set; }
+
+        /// <summary>
+        /// Property which allows write access to the desired third parameter type
+        /// </summary>
+        V ThirdParam { set; }
+
+        /// <summary>
+        /// Property which allows write access to the desired fourth parameter type
+        /// </summary>
+        W FourthParam { set; }
+
+        /// <summary>
+        /// Property which allows write access to a reference of a method with FOUR parameters
+        /// </summary>
+        Action<T, U, V, W> MethodRef { get; set; }
+
+        #endregion
+    }
+
+    #endregion
 }

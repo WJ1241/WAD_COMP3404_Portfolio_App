@@ -34,7 +34,7 @@ namespace GUI.Logic
         /// <param name="pImage"> Image currently displayed on screen </param>
         public void SaveImage(Image pImage)
         {
-            // IF pImage IS NOT null:
+            // IF pImage DOES HAVE an active instance:
             if (pImage != null)
             {
                 // DECLARE & INSTANTIATE a new SaveFileDialog, name it 'pSFD':
@@ -67,7 +67,7 @@ namespace GUI.Logic
                     }
                 }
             }
-            // IF pImage DOES NOT save:
+            // IF pImage DOES NOT HAVE an active instance:
             else
             {
                 // THROW new FileNotSavedException, with corresponding message:

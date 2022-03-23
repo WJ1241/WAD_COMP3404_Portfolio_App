@@ -11,7 +11,7 @@ namespace Server
     /// <summary>
     /// Class which stores Dictionary of Images with File Path acting as a UID accessor
     /// Authors: William Smith, William Eardley, Declan Kerby-Collins & 'Matt'
-    /// Date: 13/03/21
+    /// Date: 23/03/21
     /// </summary>
     /// <REFERENCE> Matt (2013) How to resize an Image C#. Available at: https://stackoverflow.com/questions/1922040/how-to-resize-an-image-c-sharp. (Accessed: 30 November 2021).
     public class ImageMgr : IManageImg, IInitialiseParam<IDictionary<string, Image>>
@@ -66,8 +66,8 @@ namespace Server
             // CATCH FileAlreadyStoredException from AddToDictionary method:
             catch (FileAlreadyStoredException pException)
             {
-                // WRITE Exception message to Debug Console:
-                System.Diagnostics.Debug.WriteLine(pException.Message);
+                // WRITE Exception message to console:
+                Console.WriteLine(pException.Message);
 
                 // THROW new FileAlreadyStoredException, with corresponding message:
                 throw new FileAlreadyStoredException(pException.Message);

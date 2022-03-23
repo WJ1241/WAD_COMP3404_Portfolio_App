@@ -183,7 +183,7 @@ namespace Server.Commands
     #region COMMANDPARAM<T, U>
 
     /// <summary>
-    /// Class which contains an Action with ONE Parameter
+    /// Class which contains an Action with TWO Parameters
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
     /// Date: 10/03/22
     /// </summary>
@@ -293,10 +293,10 @@ namespace Server.Commands
     #endregion
 
 
-    #region COMMANDPARAM<T, U>
+    #region COMMANDPARAM<T, U, V>
 
     /// <summary>
-    /// Class which contains an Action with ONE Parameter
+    /// Class which contains an Action with THREE Parameters
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
     /// Date: 10/03/22
     /// </summary>
@@ -332,7 +332,7 @@ namespace Server.Commands
         /// </summary>
         public void ExecuteMethod()
         {
-            // CALL _action(), passing _firstParam and _secondParam as parameters:
+            // CALL _action(), passing _firstParam, _secondParam and _thirdParam as parameters:
             _action(_firstParam, _secondParam, _thirdParam);
         }
 
@@ -381,6 +381,151 @@ namespace Server.Commands
         /// Property which allows write access to a reference of a method with THREE parameters
         /// </summary>
         public Action<T, U, V> MethodRef
+        {
+            get
+            {
+                // RETURN value of _action:
+                return _action;
+            }
+            set
+            {
+                // SET value of _action to incoming value:
+                _action = value;
+            }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF INAME
+
+        /// <summary>
+        /// Property which allows read and write access to an implementation's name
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                // RETURN value of _name:
+                return _name;
+            }
+            set
+            {
+                // SET value of _name to incoming value:
+                _name = value;
+            }
+        }
+
+        #endregion
+    }
+
+    #endregion
+
+
+    #region COMMANDPARAM<T, U, V, W>
+
+    /// <summary>
+    /// Class which contains an Action with FOUR Parameters
+    /// Authors: William Smith, Declan Kerby-Collins & William Eardley
+    /// Date: 23/03/22
+    /// </summary>
+    /// <typeparam name="T"> Generic 'T', can be any type </typeparam>
+    /// <typeparam name="U"> Generic 'U', can be any type </typeparam>
+    /// <typeparam name="V"> Generic 'V', can be any type </typeparam>
+    /// <typeparam name="W"> Generic 'W', can be any type </typeparam>
+    public class CommandParam<T, U, V, W> : ICommandParam<T, U, V, W>, IName
+    {
+        #region FIELD VARIABLES
+
+        // DECLARE an Action, name it '_action':
+        private Action<T, U, V, W> _action;
+
+        // DECLARE a T, name it '_firstParam':
+        private T _firstParam;
+
+        // DECLARE a U, name it '_secondParam':
+        private U _secondParam;
+
+        // DECLARE a V, name it '_thirdParam':
+        private V _thirdParam;
+
+        // DECLARE a W, name it '_fourthParam':
+        private W _fourthParam;
+
+        // DECLARE a string, name it '_name':
+        private string _name;
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF ICOMMAND
+
+        /// <summary>
+        /// Executes specified method
+        /// </summary>
+        public void ExecuteMethod()
+        {
+            // CALL _action(), passing _firstParam, _secondParam, _thirdParam and _fourthParam as parameters:
+            _action(_firstParam, _secondParam, _thirdParam, _fourthParam);
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF ICOMMANDPARAM<T>
+
+        /// <summary>
+        /// Property which allows write access to the desired first parameter type
+        /// </summary>
+        public T FirstParam
+        {
+            set
+            {
+                // SET value of _firstParam to incoming value:
+                _firstParam = value;
+            }
+        }
+
+        /// <summary>
+        /// Property which allows write access to the desired second parameter type
+        /// </summary>
+        public U SecondParam
+        {
+            set
+            {
+                // SET value of _firstParam to incoming value:
+                _secondParam = value;
+            }
+        }
+
+        /// <summary>
+        /// Property which allows write access to the desired third parameter type
+        /// </summary>
+        public V ThirdParam
+        {
+            set
+            {
+                // SET value of _thirdParam to incoming value:
+                _thirdParam = value;
+            }
+        }
+
+        /// <summary>
+        /// Property which allows write access to the desired fourth parameter type
+        /// </summary>
+        public W FourthParam
+        {
+            set
+            {
+                // SET value of _fourthParam to incoming value:
+                _fourthParam = value;
+            }
+        }
+
+        /// <summary>
+        /// Property which allows write access to a reference of a method with FOUR parameters
+        /// </summary>
+        public Action<T, U, V, W> MethodRef
         {
             get
             {

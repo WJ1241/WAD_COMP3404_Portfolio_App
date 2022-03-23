@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using GUI.Forms.Interfaces;
@@ -16,7 +15,7 @@ namespace GUI
     /// <summary>
     /// Partial Class which creates a 'FishyEdit' for the user to edit Images with.
     /// Author: William Smith, Declan Kerby-Collins, William Eardley, & Marc Price
-    /// Date: 22/03/22
+    /// Date: 23/03/22
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>
     /// <REFERENCE> jay_t55 (2014) Make a borderless form movable? Available at: https://stackoverflow.com/questions/1592876/make-a-borderless-form-movable/24561946#24561946. (Accessed 5 November 2021). </REFERENCE>
@@ -71,23 +70,32 @@ namespace GUI
             // IF _imgFPDict DOES contain _dictIndex as a key:
             if (_imgFPDict.ContainsKey(_dictIndex))
             {
-                // SET value of _commandDict["GetImage"]'s FirstParam property to string value stored at _imgFPDict[_dictIndex]):
-                (_commandDict["GetImage"] as ICommandParam<string, int, int>).FirstParam = _imgFPDict[_dictIndex];
-
-                // SET value of _commandDict["GetImage"]'s SecondParam property to value of ImgDisplay.Width:
-                (_commandDict["GetImage"] as ICommandParam<string, int, int>).SecondParam = ImgDisplay.Width;
-
-                // SET value of _commandDict["GetImage"]'s ThirdParam property to value of ImgDisplay.Height:
-                (_commandDict["GetImage"] as ICommandParam<string, int, int>).ThirdParam = ImgDisplay.Height;
-
                 // TRY checking if invoking _commandDict["GetImage"] throws an exception
                 try
                 {
+                    // SET value of _commandDict["GetImage"]'s FirstParam property to string value stored at _imgFPDict[_dictIndex]):
+                    (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FirstParam = _imgFPDict[_dictIndex];
+
+                    // SET value of _commandDict["GetImage"]'s SecondParam property to value of ImgDisplay.Width:
+                    (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = ImgDisplay.Width;
+
+                     // SET value of _commandDict["GetImage"]'s ThirdParam property to value of ImgDisplay.Height:
+                    (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = ImgDisplay.Height;
+
+                    // SET value of _commandDict["GetImage"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
+                    (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FourthParam = OnEvent;
+
                     // INVOKE _commandDict["GetImage"]'s ExecuteMethod():
                     _invokeCommand(_commandDict["GetImage"]);
                 }
                 // CATCH InvalidStringException from invoking _commandDict["GetImage"]:
                 catch (InvalidStringException pException)
+                {
+                    // WRITE exception message to console:
+                    Console.WriteLine(pException.Message);
+                }
+                // CATCH InvalidStringException addressing Dictionary keys:
+                catch (NullReferenceException pException)
                 {
                     // WRITE exception message to console:
                     Console.WriteLine(pException.Message);
@@ -216,7 +224,7 @@ namespace GUI
         /// <summary>
         /// Initialises an object with an IDictionary<string, ICommand> object
         /// </summary>
-        /// <param name="pCommand"> IDictionary<string, ICommand> object </param>
+        /// <param name="pCommandDict"> IDictionary<string, ICommand> object </param>
         public void Initialise(IDictionary<string, ICommand> pCommandDict)
         {
             // IF pCommandDict DOES HAVE an active instance:
@@ -236,12 +244,12 @@ namespace GUI
         #endregion
 
 
-        #region IMPLEMENTATION OF IINITIALISEPARAM<IDICTIONARY<STRING, ICOMMAND>>
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IDICTIONARY<INT, STRING>>
 
         /// <summary>
-        /// Initialises an object with an IDictionary<string, ICommand> object
+        /// Initialises an object with an IDictionary<int, string> object
         /// </summary>
-        /// <param name="pCommand"> IDictionary<string, ICommand> object </param>
+        /// <param name="pStringDict"> IDictionary<string, ICommand> object </param>
         public void Initialise(IDictionary<int, string> pStringDict)
         {
             // IF pStringDict DOES HAVE an active instance:
@@ -286,92 +294,9 @@ namespace GUI
         #endregion
 
 
-        #region PRIVATE METHODS
+        #region BUTTON METHODS
 
-        /// <summary>
-        /// Changes currently displayed image to previous image stored in local dictionary
-        /// </summary>
-        private void GoToPrevImg()
-        {
-            // IF _imgFPDict DOES contain _dictIndex minus 1 as a key:
-            if (_imgFPDict.ContainsKey(_dictIndex - 1))
-            {
-                // DECREMENT _dictIndex by '1':
-                _dictIndex--;
-
-                // TRY checking if ChngImg throws a NullInstanceException:
-                try
-                {
-                    // CALL ChangeImg():
-                    ChangeImg();
-                }
-                // CATCH NullInstanceException from ChangeImg():
-                catch (NullInstanceException pException)
-                {
-                    // WRITE exception message to console:
-                    Console.WriteLine(pException.Message);
-                }
-            }
-            // IF _imgFPDict DOES NOT contain current index minus 1 as a key:
-            else
-            {
-                // THROW new NullValueException, with corresponding message:
-                throw new NullValueException("ERROR: There is no previous image to go back to!");
-            }
-        }
-
-        /// <summary>
-        /// Changes currently displayed image to next image stored in local dictionary
-        /// </summary>
-        private void GoToNextImg()
-        {
-            // IF _imgFPDict DOES contain current index plus 1 as a key:
-            if (_imgFPDict.ContainsKey(_dictIndex + 1))
-            {
-                // INCREMENT _dictIndex by 1:
-                _dictIndex++;
-
-                // TRY checking if ChngImg throws a NullInstanceException:
-                try
-                {
-                    // CALL ChangeImg():
-                    ChangeImg();
-                }
-                // CATCH NullInstanceException from ChangeImg():
-                catch (NullInstanceException pException)
-                {
-                    // WRITE exception message to console:
-                    Console.WriteLine(pException.Message);
-                }
-            }
-            // IF _imgFPDict DOES NOT contain current index plus 1 as a key:
-            else
-            {
-                // THROW new NullValueException, with corresponding message:
-                throw new NullValueException("ERROR: There is no next image to go to!");
-            }
-        }
-
-        /// <summary>
-        /// Method which displays previous image in local dictionary
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Value for classes without event data </param>
-        private void NextBttn_Click(object sender, EventArgs e)
-        {
-            // TRY checking if GoToNextImg throws a NullValueException:
-            try
-            {
-                // CALL GoToNextImg():
-                GoToNextImg();
-            }
-            // CATCH NullValueException from GoToNextImg method:
-            catch (NullValueException pException)
-            {
-                // WRITE exception message to console:
-                Console.WriteLine(pException.Message);
-            }
-        }
+        #region PREVIOUS IMAGE METHODS
 
         /// <summary>
         /// Method which displays previous image in local dictionary
@@ -395,6 +320,101 @@ namespace GUI
         }
 
         /// <summary>
+        /// Changes currently displayed image to previous image stored in local dictionary
+        /// </summary>
+        private void GoToPrevImg()
+        {
+            // IF _imgFPDict DOES contain _dictIndex minus 1 as a key:
+            if (_imgFPDict.ContainsKey(_dictIndex - 1))
+            {
+                // DECREMENT _dictIndex by '1':
+                _dictIndex--;
+
+                // TRY checking if ChangeImg throws a NullInstanceException:
+                try
+                {
+                    // CALL ChangeImg():
+                    ChangeImg();
+                }
+                // CATCH NullInstanceException from ChangeImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to console:
+                    Console.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain current index minus 1 as a key:
+            else
+            {
+                // THROW new NullValueException, with corresponding message:
+                throw new NullValueException("ERROR: There is no previous image to go back to!");
+            }
+        }
+
+        #endregion
+
+
+        #region NEXT IMAGE METHODS
+
+        /// <summary>
+        /// Method which displays previous image in local dictionary
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Value for classes without event data </param>
+        private void NextBttn_Click(object sender, EventArgs e)
+        {
+            // TRY checking if GoToNextImg throws a NullValueException:
+            try
+            {
+                // CALL GoToNextImg():
+                GoToNextImg();
+            }
+            // CATCH NullValueException from GoToNextImg method:
+            catch (NullValueException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
+        }
+
+        /// <summary>
+        /// Changes currently displayed image to next image stored in local dictionary
+        /// </summary>
+        private void GoToNextImg()
+        {
+            // IF _imgFPDict DOES contain current index plus 1 as a key:
+            if (_imgFPDict.ContainsKey(_dictIndex + 1))
+            {
+                // INCREMENT _dictIndex by 1:
+                _dictIndex++;
+
+                // TRY checking if ChangeImg throws a NullInstanceException:
+                try
+                {
+                    // CALL ChangeImg():
+                    ChangeImg();
+                }
+                // CATCH NullInstanceException from ChangeImg():
+                catch (NullInstanceException pException)
+                {
+                    // WRITE exception message to console:
+                    Console.WriteLine(pException.Message);
+                }
+            }
+            // IF _imgFPDict DOES NOT contain current index plus 1 as a key:
+            else
+            {
+                // THROW new NullValueException, with corresponding message:
+                throw new NullValueException("ERROR: There is no next image to go to!");
+            }
+        }
+
+        #endregion
+
+
+        #region LOAD METHODS
+
+        /// <summary>
         /// Method which loads a list of images, and adds them to a local dictionary
         /// </summary>
         /// <param name="sender"> Form Object </param>
@@ -408,7 +428,10 @@ namespace GUI
                 _dictIndex = _dictCount;
 
                 // SET value of _commandDict["Load"]'s FirstParam property to value of return value of _imgOpen.OpenImage():
-                (_commandDict["Load"] as ICommandParam<IList<string>>).FirstParam = _imgOpen.OpenImage();
+                (_commandDict["Load"] as ICommandParam<IList<string>, EventHandler<StringListEventArgs>>).FirstParam = _imgOpen.OpenImage();
+
+                // SET value of _commandDict["Load"]'s SecondParam property to reference to OnEvent() (StringListEventArgs):
+                (_commandDict["Load"] as ICommandParam<IList<string>, EventHandler<StringListEventArgs>>).SecondParam = OnEvent;
 
                 // INVOKE _commandDict["Load"]'s ExecuteMethod():
                 _invokeCommand(_commandDict["Load"]);
@@ -422,7 +445,18 @@ namespace GUI
                 // SHOW MessageBox detailing error to the user, store result in MessageBox:
                 MessageBox.Show(pException.Message + "\n\n Do not select already loaded images in multiselect!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            // CATCH InvalidStringException addressing Dictionary keys:
+            catch (NullReferenceException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
         }
+
+        #endregion
+
+
+        #region EDIT METHODS
 
         /// <summary>
         /// Method which opens the FishyEdit window
@@ -431,12 +465,43 @@ namespace GUI
         /// <param name="e"> Value for classes without event data </param>
         private void EditBttn_Click(object sender, EventArgs e)
         {
-            // TODO: GET FISHYEDIT CREATION COMMAND IN HERE
+            // IF ImgDisplay.Image DOES HAVE an active instance:
+            if (ImgDisplay.Image != null)
+            {
+                // TRY checking if invoking _commandDict["CreateEditScrn"] throws an exception:
+                try
+                {
+                    // SET FirstParam Property value of _commandDict["CreateEditScrn"] to value of _imgFPDict[_dictIndex]:
+                    (_commandDict["CreateEditScrn"] as ICommandParam<string>).FirstParam = _imgFPDict[_dictIndex];
 
-
-
-
+                    // INVOKE _commandDict["CreateEditScrn"]'s ExecuteMethod():
+                    _invokeCommand(_commandDict["CreateEditScrn"]);
+                }
+                // CATCH InvalidStringException from invoking _commandDict["CreateEditScrn"]:
+                catch (InvalidStringException pException)
+                {
+                    // WRITE exception message to console:
+                    Console.WriteLine(pException);
+                }
+                // CATCH InvalidStringException addressing Dictionary keys:
+                catch (NullReferenceException pException)
+                {
+                    // WRITE exception message to console:
+                    Console.WriteLine(pException.Message);
+                }
+            }
+            // IF ImgDisplay.Image DOES NOT HAVE an active instance:
+            else
+            {
+                // WRITE to console, with corresponding error message:
+                Console.WriteLine("ERROR: There is currently no image selected to be edited!");
+            }
         }
+
+        #endregion
+
+
+        #region CLOSE METHODS
 
         /// <summary>
         /// Method which closes an instance of this class and removes any other disposable objects
@@ -467,6 +532,12 @@ namespace GUI
                 // WRITE exception message to console:
                 Console.WriteLine(pException.Message);
             }
+            // CATCH InvalidStringException addressing Dictionary keys:
+            catch (NullReferenceException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
             // CATCH NullInstanceException from invoking _commandDict["RemoveMe"]:
             catch (NullValueException pException)
             {
@@ -474,6 +545,8 @@ namespace GUI
                 Console.WriteLine(pException.Message);
             }
         }
+
+        #endregion
 
         #endregion
 
