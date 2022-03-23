@@ -22,7 +22,7 @@ namespace TestApp.IndividualTests
     /// <summary>
     /// Test Class which checks if Controller is behaving as expected
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 13/03/22
+    /// Date: 23/03/22
     /// 
     /// Services Needed:
     /// - IServiceLocator
@@ -143,11 +143,11 @@ namespace TestApp.IndividualTests
         // DECLARE a Mock<ICommandParam<string>>, name it '_mockCreateEditScrnCmd':
         private Mock<ICommandParam<string>> _mockCreateEditScrnCmd;
 
-        // DECLARE a Mock<ICommandParam<string, int, int>>, name it '_mockGetImgCmd':
-        private Mock<ICommandParam<string, int, int>> _mockGetImgCmd;
+        // DECLARE a Mock<ICommandParam<string, int, int, EventHandler<ImageEventArgs>>>, name it '_mockGetImgCmd':
+        private Mock<ICommandParam<string, int, int, EventHandler<ImageEventArgs>>> _mockGetImgCmd;
 
-        // DECLARE a Mock<ICommandParam<string>>, name it '_mockLoadCmd':
-        private Mock<ICommandParam<IList<string>>> _mockLoadCmd;
+        // DECLARE a Mock<ICommandParam<IList<string>, EventHandler<StringListEventArgs>>>, name it '_mockLoadCmd':
+        private Mock<ICommandParam<IList<string>, EventHandler<StringListEventArgs>>> _mockLoadCmd;
 
         // DECLARE a Mock<ICommandParam<IDisposable>>, name it '_mockRemoveDisposableCmd':
         private Mock<ICommandParam<IDisposable>> _mockRemoveDisposableCmd;
@@ -396,52 +396,6 @@ namespace TestApp.IndividualTests
             {
                 // ASSERT if test has passed, and give corresponding message if _pass is false:
                 Assert.IsTrue(_pass, "ERROR: _mockImageServer.Initialise('Image', _mockImageEventArgs.Object) has not been called!");
-            }
-
-            #endregion
-        }
-
-        /// <summary>
-        /// Checks if Controller subscribes an ImageServer with a reference to an IEventListener<ImageEventArgs> successfully
-        /// </summary>
-        [TestMethod]
-        public void Subscribe_ImageServer_To_An_Image_Event()
-        {
-            #region ARRANGE
-
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
-
-            #endregion
-
-
-            #region ACT
-
-            // CALL SetupApplication() on Controller:
-            _controller.SetupApplication();
-
-            #endregion
-
-
-            #region ASSERT
-
-            // TRY checking if _mockImageServer.Subscribe(_mockFishyHome.Object.OnEvent) was called:
-            try
-            {
-                // VERIFY that Subscribe(_mockFishyHome.Object.OnEvent) has been called ONCE, makes sure that method is not called more than once:
-                _mockImageServer.As<ISubscribe<ImageEventArgs>>().Verify(_mock => _mock.Subscribe(_mockFishyHome.As<IEventListener<ImageEventArgs>>().Object.OnEvent), Times.Once);
-            }
-            // CATCH MockException from Verify():
-            catch (MockException)
-            {
-                // SET _pass to false, so that test fails:
-                _pass = false;
-            }
-            // FINALISE try and catch block with test pass/fail:
-            finally
-            {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockImageServer.Subscribe(_mockFishyHome.Object.OnEvent) has not been called!");
             }
 
             #endregion
@@ -869,6 +823,7 @@ namespace TestApp.IndividualTests
             // INSTANTIATE _mockLogicFactory as a new Mock<IFactory<ILogic>>():
             _mockLogicFactory = new Mock<IFactory<ILogic>>();
 
+
             #region IMAGE SERVER 
 
             // INSTANTIATE _mockImageServer as a new Mock<IServer>():
@@ -885,12 +840,6 @@ namespace TestApp.IndividualTests
 
             // SETUP _mockImageServer to implement IInitialiseParam<string, EventArgs>:
             _mockImageServer.As<IInitialiseParam<string, EventArgs>>();
-
-            // SETUP _mockImageServer to implement ISubscribe<ImageEventArgs>:
-            _mockImageServer.As<ISubscribe<ImageEventArgs>>();
-
-            // SETUP _mockImageServer to implement ISubscribe<StringListEventArgs>:
-            _mockImageServer.As<ISubscribe<StringListEventArgs>>();
 
             #endregion
 
@@ -930,20 +879,20 @@ namespace TestApp.IndividualTests
             // SETUP _mockCreateEditScrnCmd so that its MethodRef Property holds reference to _controller.CreateEditScrn():
             _mockCreateEditScrnCmd.SetupSet(_mock => _mock.MethodRef = (_controller as IController).CreateEditScrn).Verifiable();
 
-            // INSTANTIATE _mockGetImgCmd as a new Mock<ICommandOneParam<string, int, int>>():
-            _mockGetImgCmd = new Mock<ICommandParam<string, int, int>>();
+            // INSTANTIATE _mockGetImgCmd as a new Mock<ICommandParam<string, int, int, EventHandler<ImageEventArgs>>>():
+            _mockGetImgCmd = new Mock<ICommandParam<string, int, int, EventHandler<ImageEventArgs>>>();
 
             // SETUP _mockGetImgCmd so that its Name Property can be given a string value:
-            _mockGetImgCmd.As<IName>().SetupSet(_mock => _mock.Name = "");
+            _mockGetImgCmd.As<IName>().SetupSet(_mock => _mock.Name = "GetImage");
 
             // SETUP _mockGetImgCmd so that its MethodRef Property holds reference to _mockImageServer.Object.GetImage():
             _mockGetImgCmd.SetupSet(_mock => _mock.MethodRef = _mockImageServer.Object.GetImage);
 
-            // INSTANTIATE _mockLoadCmd as a new Mock<ICommandOneParam<IList<string>>>():
-            _mockLoadCmd = new Mock<ICommandParam<IList<string>>>();
+            // INSTANTIATE _mockLoadCmd as a new Mock<ICommandParam<IList<string>, EventHandler<StringListEventArgs>>>():
+            _mockLoadCmd = new Mock<ICommandParam<IList<string>, EventHandler<StringListEventArgs>>>();
 
             // SETUP _mockLoadCmd so that its Name Property can be given a string value:
-            _mockLoadCmd.As<IName>().SetupSet(_mock => _mock.Name = "");
+            _mockLoadCmd.As<IName>().SetupSet(_mock => _mock.Name = "Load");
 
             // SETUP _mockLoadCmd so that its MethodRef Property holds reference to _mockImageServer.Object.Load:
             _mockLoadCmd.SetupSet(_mock => _mock.MethodRef = _mockImageServer.Object.Load);
@@ -969,11 +918,11 @@ namespace TestApp.IndividualTests
             // SETUP _mockCommandFactory so that it can return _mockCreateEditScrnCmd.Object when Create<CommandParam<string>>() is called:
             _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<string>>()).Returns(_mockCreateEditScrnCmd.Object);
 
-            // SETUP _mockCommandFactory so that it can return _mockGetImgCmd.Object when Create<CommandParam<string, int, int>>() is called:
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<string, int, int>>()).Returns(_mockGetImgCmd.Object);
+            // SETUP _mockCommandFactory so that it can return _mockGetImgCmd.Object when Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>() is called:
+            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>()).Returns(_mockGetImgCmd.Object);
 
-            // SETUP _mockCommandFactory so that it can return _mockLoadCmd.Object when Create<CommandParam<IList<string>>>() is called:
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<IList<string>>>()).Returns(_mockLoadCmd.Object);
+            // SETUP _mockCommandFactory so that it can return _mockLoadCmd.Object when Create<CommandParam<IList<string>, EventHandler<StringListEventArgs>>>() is called:
+            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<IList<string>, EventHandler<StringListEventArgs>>>()).Returns(_mockLoadCmd.Object);
 
             // SETUP _mockCommandFactory so that it can return _mockRemoveDisposableCmd.Object when Create<CommandParam<IDisposable>>() is called:
             _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<IDisposable>>()).Returns(_mockRemoveDisposableCmd.Object);
@@ -1111,12 +1060,6 @@ namespace TestApp.IndividualTests
 
             // SETUP _mockImageServer so that it can be initialised with a string and a reference to _mockStringListEventArgs.Object:
             _mockImageServer.As<IInitialiseParam<string, EventArgs>>().Setup(_mock => _mock.Initialise("", _mockStringListEventArgs.Object));
-
-            // SETUP _mockImageServer so that it can subscribe a reference to _mockFishyHome.Object.OnEvent (ImageEventArgs):
-            _mockImageServer.As<ISubscribe<ImageEventArgs>>().Setup(_mock => _mock.Subscribe((_mockFishyHome.Object as IEventListener<ImageEventArgs>).OnEvent));
-
-            // SETUP _mockImageServer so that it can subscribe a reference to _mockFishyHome.Object.OnEvent (StringListEventArgs):
-            _mockImageServer.As<ISubscribe<StringListEventArgs>>().Setup(_mock => _mock.Subscribe((_mockFishyHome.Object as IEventListener<StringListEventArgs>).OnEvent));
 
             #endregion
 

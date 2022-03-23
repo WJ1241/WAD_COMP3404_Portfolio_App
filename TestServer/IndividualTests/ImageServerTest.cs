@@ -64,8 +64,8 @@ namespace TestServer.IndividualTests
 
             #region ACT
 
-            // CALL Load() on _imageServer, passing _mockList.Object as a parameter:
-            _imageServer.Load(_mockList.Object);
+            // CALL Load() on _imageServer, passing _mockList.Object and an StringListEventArgs Event as a parameter:
+            _imageServer.Load(_mockList.Object, _mockEventListener.As<IEventListener<StringListEventArgs>>().Object.OnEvent);
 
             #endregion
 
@@ -79,7 +79,7 @@ namespace TestServer.IndividualTests
                 _mockImageMgr.Verify(_mock => _mock.ReturnFilteredList(_mockList.Object), Times.Once);
             }
             // CATCH a MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false to state that test has failed:
                 _pass = false;
@@ -115,8 +115,8 @@ namespace TestServer.IndividualTests
 
             #region ACT
 
-            // CALL GetImage() on _imageServer, passing a blank string, and two integers as parameters:
-            _imageServer.GetImage("", 1, 1);
+            // CALL GetImage() on _imageServer, passing a blank string, two integers and an ImageEventArgs Event as parameters:
+            _imageServer.GetImage("", 1, 1, _mockEventListener.Object.OnEvent);
 
             #endregion
 
@@ -130,7 +130,7 @@ namespace TestServer.IndividualTests
                 _mockImageMgr.Verify(_mock => _mock.ReturnImg("", 1, 1), Times.Once);
             }
             // CATCH a MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false to state that test has failed:
                 _pass = false;
@@ -181,7 +181,7 @@ namespace TestServer.IndividualTests
                 _mockImageEditor.Verify(_mock => _mock.ImgFlipXAxis(_mockImageMgr.Object.ReturnImg("")), Times.Once);
             }
             // CATCH a MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false to state that test has failed:
                 _pass = false;
@@ -227,7 +227,7 @@ namespace TestServer.IndividualTests
                 _mockImageEditor.Verify(_mock => _mock.ImgFlipYAxis(_mockImageMgr.Object.ReturnImg("")), Times.Once);
             }
             // CATCH a MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false to state that test has failed:
                 _pass = false;
@@ -278,7 +278,7 @@ namespace TestServer.IndividualTests
                 _mockImageEditor.Verify(_mock => _mock.ImgRotateClockwise(_mockImageMgr.Object.ReturnImg("")), Times.Once);
             }
             // CATCH a MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false to state that test has failed:
                 _pass = false;
@@ -324,7 +324,7 @@ namespace TestServer.IndividualTests
                 _mockImageEditor.Verify(_mock => _mock.ImgRotateAntiClockwise(_mockImageMgr.Object.ReturnImg("")), Times.Once);
             }
             // CATCH a MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false to state that test has failed:
                 _pass = false;
@@ -389,12 +389,6 @@ namespace TestServer.IndividualTests
 
             // SETUP _mockEventListener so that it implements IEventListener<StringListEventArgs>:
             _mockEventListener.As<IEventListener<StringListEventArgs>>();
-
-            // SUBSCRIBE _imageServer with an event reference to _mockEventListener.Object.OnEvent() (ImageEventArgs):
-            (_imageServer as ISubscribe<ImageEventArgs>).Subscribe(_mockEventListener.Object.OnEvent);
-
-            // SUBSCRIBE _imageServer with an event reference to _mockEventListener.Object.OnEvent() (StringListEventArgs):
-            (_imageServer as ISubscribe<StringListEventArgs>).Subscribe(_mockEventListener.As<IEventListener<StringListEventArgs>>().Object.OnEvent);
 
             // SETUP _mockEventArgsDict so that it returns _mockImgEventArgs.Object when "Image" is addressed:
             _mockEventArgsDict.Setup(_mock => _mock["Image"]).Returns(_mockImgEventArgs.Object);

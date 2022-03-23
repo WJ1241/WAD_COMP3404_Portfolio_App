@@ -220,11 +220,11 @@ namespace TestApp.EndToEndTests
             // SETUP _mockServiceFactory to create a new CommandParam<string>():
             _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<string>>()).Returns(new CommandParam<string>());
 
-            // SETUP _mockServiceFactory to create a new CommandParam<IList<string>>():
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<IList<string>>>()).Returns(new CommandParam<IList<string>>());
+            // SETUP _mockServiceFactory to create a new CommandParam<IList<string>, EventHandler<StringListEventArgs>():
+            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<IList<string>, EventHandler<StringListEventArgs>>>()).Returns(new CommandParam<IList<string>, EventHandler<StringListEventArgs>>());
 
-            // SETUP _mockServiceFactory to create a new CommandParam<string, int, int>():
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<string, int, int>>()).Returns(new CommandParam<string, int, int>());
+            // SETUP _mockServiceFactory to create a new CommandParam<string, int, int, EventHandler<ImageEventArgs>():
+            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>()).Returns(new CommandParam<string, int, int, EventHandler<ImageEventArgs>>());
 
             // SETUP _mockServiceFactory to create a new CommandParam<IDisposable>():
             _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<IDisposable>>()).Returns(new CommandParam<IDisposable>());

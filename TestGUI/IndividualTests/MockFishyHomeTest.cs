@@ -1,12 +1,14 @@
-using GUI.Forms.Interfaces;
-using GUI.Logic.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using GUI.Forms.Interfaces;
+using GUI.Logic.Interfaces;
 using Server.Commands;
 using Server.CustomEventArgs;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
-using System.Collections.Generic;
 using TestApp.MockClasses;
 using TestGUI.Interfaces;
 
@@ -15,7 +17,7 @@ namespace TestGUI.IndividualTests
     /// <summary>
     /// Test Class which checks if MockFishyHome is behaving as expected
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 13/03/22
+    /// Date: 23/03/22
     /// </summary>
     [TestClass]
     public class MockFishyHomeTest
@@ -40,11 +42,11 @@ namespace TestGUI.IndividualTests
         // DECLARE a Mock<ICommandInvoker>, name it '_mockCommandInvoker':
         private Mock<ICommandInvoker> _mockCommandInvoker;
 
-        // DECLARE a Mock<ICommandParam<string, int, int>>, name it '_mockGetImgCmd':
-        private Mock<ICommandParam<string, int, int>> _mockGetImgCmd;
+        // DECLARE a Mock<ICommandParam<string, int, int, EventHandler<ImageEventArgs>>>, name it '_mockGetImgCmd':
+        private Mock<ICommandParam<string, int, int, EventHandler<ImageEventArgs>>> _mockGetImgCmd;
 
-        // DECLARE a Mock<ICommandParam<string>>, name it '_mockLoadCmd':
-        private Mock<ICommandParam<IList<string>>> _mockLoadCmd;
+        // DECLARE a Mock<ICommandParam<IList<string>, EventHandler<StringListEventArgs>>>, name it '_mockLoadCmd':
+        private Mock<ICommandParam<IList<string>, EventHandler<StringListEventArgs>>> _mockLoadCmd;
 
         // DECLARE a Mock<ImageEventArgs>, name it '_mockImgEventArgs':
         private Mock<ImageEventArgs> _mockImgEventArgs;
@@ -167,7 +169,7 @@ namespace TestGUI.IndividualTests
                 _mockCommandInvoker.Verify(_mock => _mock.InvokeCommand(_mockGetImgCmd.Object), Times.Once);
             }
             // CATCH MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false, so that test fails:
                 _pass = false;
@@ -213,7 +215,7 @@ namespace TestGUI.IndividualTests
                 _mockCommandInvoker.Verify(_mock => _mock.InvokeCommand(_mockLoadCmd.Object), Times.Once);
             }
             // CATCH MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false, so that test fails:
                 _pass = false;
@@ -259,7 +261,7 @@ namespace TestGUI.IndividualTests
                 _mockLoadCmd.VerifySet(_mock => _mock.FirstParam = _mockOpenImage.Object.OpenImage(), Times.Once);
             }
             // CATCH MockException from Verify():
-            catch (MockException e)
+            catch (MockException)
             {
                 // SET _pass to false, so that test fails:
                 _pass = false;
@@ -323,7 +325,10 @@ namespace TestGUI.IndividualTests
             _mockImgFPDict.Setup(_mock => _mock[1]).Returns("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png");
 
             // ADD file path to _stringList:
-            _stringList.Add("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\OrangeFish.png");
+            _stringList.Add("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png");
+
+            // SETUP _mockImgEventArgs so that it returns a new image with a specified file path:
+            _mockImgEventArgs.SetupGet(_mock => _mock.Img).Returns(Image.FromFile("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png"));
 
             // SETUP _mockStringListEventArgs so that it returns a reference to _stringList:
             _mockStringListEventArgs.SetupGet(_mock => _mock.List).Returns(_stringList);
@@ -333,20 +338,20 @@ namespace TestGUI.IndividualTests
 
             #region COMMANDS
 
-            // INSTANTIATE _mockGetImgCmd as a new Mock<ICommandOneParam<string, int, int>>():
-            _mockGetImgCmd = new Mock<ICommandParam<string, int, int>>();
+            // INSTANTIATE _mockGetImgCmd as a new Mock<ICommandParam<string, int, int, EventHandler<ImageEventArgs>>>():
+            _mockGetImgCmd = new Mock<ICommandParam<string, int, int, EventHandler<ImageEventArgs>>>();
 
             // SETUP _mockGetImgCmd so that its Name Property can be given a string value:
-            _mockGetImgCmd.As<IName>().SetupSet(_mock => _mock.Name = "");
+            _mockGetImgCmd.As<IName>().SetupSet(_mock => _mock.Name = "GetImage");
 
             // SETUP _mockGetImgCmd so that its MethodRef Property holds reference to _mockServer.Object.GetImage():
             _mockGetImgCmd.SetupSet(_mock => _mock.MethodRef = _mockServer.Object.GetImage);
 
-            // INSTANTIATE _mockLoadCmd as a new Mock<ICommandOneParam<IList<string>>>():
-            _mockLoadCmd = new Mock<ICommandParam<IList<string>>>();
+            // INSTANTIATE _mockLoadCmd as a new Mock<ICommandParam<IList<string>, EventHandler<StringListEventArgs>>>():
+            _mockLoadCmd = new Mock<ICommandParam<IList<string>, EventHandler<StringListEventArgs>>>();
 
             // SETUP _mockLoadCmd so that its Name Property can be given a string value:
-            _mockLoadCmd.As<IName>().SetupSet(_mock => _mock.Name = "");
+            _mockLoadCmd.As<IName>().SetupSet(_mock => _mock.Name = "Load");
 
             // SETUP _mockLoadCmd so that its MethodRef Property holds reference to _mockServer.Object.Load:
             _mockLoadCmd.SetupSet(_mock => _mock.MethodRef = _mockServer.Object.Load);

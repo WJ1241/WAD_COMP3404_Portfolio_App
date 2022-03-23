@@ -35,9 +35,6 @@ namespace App
         // DECLARE an IServiceLocator, name it '_serviceLocator':
         private IServiceLocator _serviceLocator;
 
-        // DECLARE an IServer, name it _server:
-        private IServer _server;
-
         // DECLARE an int, name it '_formCount':
         private int _formCount;
 
@@ -129,17 +126,21 @@ namespace App
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
             {
-                // ADD _formCount as a key and a new FishyHome as a value to _formDict:
-                _formDict.Add(_formCount, (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>());
-
-                // SET InvokeCommand property value of  _formDict[_formCount] (FishyHome) to reference to CommandInvoker.InvokeCommand:
-                (_formDict[_formCount] as ICommandSender).InvokeCommand = (_serviceLocator.GetService<CommandInvoker>() as ICommandInvoker).InvokeCommand;
+                #region IOPENIMAGE SETUP
 
                 // DECLARE & INSTANTIATE an IOpenImage as a new OpenLogic(), name it '_openImage':
                 IOpenImage _openImage = (_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<OpenLogic>() as IOpenImage;
 
                 // INITIALISE _openImage with a new List<string>():
                 (_openImage as IInitialiseParam<IList<string>>).Initialise((_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<List<string>>() as IList<string>);
+
+                #endregion
+
+                // ADD _formCount as a key and a new FishyHome() as a value to _formDict:
+                _formDict.Add(_formCount, (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyHome>());
+
+                // SET InvokeCommand property value of  _formDict[_formCount] (FishyHome) to reference to CommandInvoker.InvokeCommand:
+                (_formDict[_formCount] as ICommandSender).InvokeCommand = (_serviceLocator.GetService<CommandInvoker>() as ICommandInvoker).InvokeCommand;
 
                 // INITIALISE _formDict[_formCount] (FishyHome) with a new IOpenImage object:
                 (_formDict[_formCount] as IInitialiseParam<IOpenImage>).Initialise(_openImage);
@@ -173,30 +174,21 @@ namespace App
             {
                 #region IMAGE SERVER
 
-                // INSTANTIATE _server as a new ImageServer():
-                _server = _serviceLocator.GetService<ImageServer>() as IServer;
+                // INITIALISE ImageServer with an IManageImg object:
+                (_serviceLocator.GetService<ImageServer>() as IInitialiseParam<IManageImg>).Initialise(_serviceLocator.GetService<ImageMgr>() as IManageImg);
 
-                // INITIALISE _server with an IManageImg object:
-                (_server as IInitialiseParam<IManageImg>).Initialise(_serviceLocator.GetService<ImageMgr>() as IManageImg);
+                // INITIALISE ImageServer with an IEditImg object:
+                (_serviceLocator.GetService<ImageServer>() as IInitialiseParam<IEditImg>).Initialise(_serviceLocator.GetService<ImageEditor>() as IEditImg);
 
-                // INITIALISE _server with an IEditImg object:
-                (_server as IInitialiseParam<IEditImg>).Initialise(_serviceLocator.GetService<ImageEditor>() as IEditImg);
-
-                // INITIALISE _server with a new IDictionary<string, EventArgs> object:
-                (_server as IInitialiseParam<IDictionary<string, EventArgs>>).Initialise(
+                // INITIALISE ImageServer with a new IDictionary<string, EventArgs> object:
+                (_serviceLocator.GetService<ImageServer>() as IInitialiseParam<IDictionary<string, EventArgs>>).Initialise(
                     (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<string, EventArgs>>() as IDictionary<string, EventArgs>);
 
-                // INITIALISE _server with "Image" and a new EventArgs object:
-                (_server as IInitialiseParam<string, EventArgs>).Initialise("Image", (_serviceLocator.GetService<Factory<EventArgs>>() as IFactory<EventArgs>).Create<ImageEventArgs>());
+                // INITIALISE ImageServer with "Image" and a new EventArgs object:
+                (_serviceLocator.GetService<ImageServer>() as IInitialiseParam<string, EventArgs>).Initialise("Image", (_serviceLocator.GetService<Factory<EventArgs>>() as IFactory<EventArgs>).Create<ImageEventArgs>());
 
-                // INITIALISE _server with "StringList" and a new EventArgs object:
-                (_server as IInitialiseParam<string, EventArgs>).Initialise("StringList", (_serviceLocator.GetService<Factory<EventArgs>>() as IFactory<EventArgs>).Create<StringListEventArgs>());
-
-                // SUBSCRIBE _server with _formDict[0].OnEvent (ImageEventArgs):
-                (_server as ISubscribe<ImageEventArgs>).Subscribe((_formDict[0] as IEventListener<ImageEventArgs>).OnEvent);
-
-                // SUBSCRIBE _server with _formDict[0].OnEvent (StringListEventArgs):
-                (_server as ISubscribe<StringListEventArgs>).Subscribe((_formDict[0] as IEventListener<StringListEventArgs>).OnEvent);
+                // INITIALISE ImageServer with "StringList" and a new EventArgs object:
+                (_serviceLocator.GetService<ImageServer>() as IInitialiseParam<string, EventArgs>).Initialise("StringList", (_serviceLocator.GetService<Factory<EventArgs>>() as IFactory<EventArgs>).Create<StringListEventArgs>());
 
                 #endregion
 
@@ -249,34 +241,36 @@ namespace App
 
                 #region LOAD IMAGE COMMAND
 
-                // DECLARE & INSTANTIATE an ICommandParam<String> as a new CommandParam<IList<string>>(), name it '_commandStringListParam':
-                ICommandParam<IList<string>> _commandStringListParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<IList<string>>>() as ICommandParam<IList<string>>;
+                // DECLARE & INSTANTIATE an ICommandParam<IList<string>, EventHandler<StringListEventArgs>> as a new CommandParam<IList<string>, EventHandler<StringListEventArgs>>(), name it '_commandStringListEHSLParam':
+                ICommandParam<IList<string>, EventHandler<StringListEventArgs>> _commandStringListEHSLParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>)
+                    .Create<CommandParam<IList<string>, EventHandler<StringListEventArgs>>>() as ICommandParam<IList<string>, EventHandler<StringListEventArgs>>;
 
-                // SET MethodRef Property of _commandStringListParam to reference to _server.Load():
-                _commandStringListParam.MethodRef = _server.Load;
+                // SET MethodRef Property of _commandStringListParam to reference to IServer.Load():
+                _commandStringListEHSLParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IServer).Load;
 
                 // SET Name Property of _commandStringListParam to "Load":
-                (_commandStringListParam as IName).Name = "Load";
+                (_commandStringListEHSLParam as IName).Name = "Load";
 
-                // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringListParam:
-                (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringListParam);
+                // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringListEHSLParam:
+                (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringListEHSLParam);
 
                 #endregion
 
 
                 #region GET IMAGE COMMAND
 
-                // DECLARE & INSTANTIATE an ICommandParam<String, int, int> as a new CommandParam<String, int, int>(), name it '_commandStringIntIntParam':
-                ICommandParam<string, int, int> _commandStringIntIntParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<string, int, int>>() as ICommandParam<string, int, int>;
+                // DECLARE & INSTANTIATE an ICommandParam<string, int, int, EventHandler<ImageEventArgs> as a new CommandParam<string, int, int, EventHandler<ImageEventArgs>(), name it '_commandStringIntIntEHIParam':
+                ICommandParam<string, int, int, EventHandler<ImageEventArgs>> _commandStringIntIntEHIParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>)
+                    .Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>() as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>;
 
-                // SET MethodRef Property of _commandStringIntIntParam to reference to _server.GetImage():
-                _commandStringIntIntParam.MethodRef = _server.GetImage;
+                // SET MethodRef Property of _commandStringIntIntEHIParam to reference to IServer.GetImage():
+                _commandStringIntIntEHIParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IServer).GetImage;
 
-                // SET Name Property of _commandStringIntIntParam to "GetImage":
-                (_commandStringIntIntParam as IName).Name = "GetImage";
+                // SET Name Property of _commandStringIntIntEHIParam to "GetImage":
+                (_commandStringIntIntEHIParam as IName).Name = "GetImage";
 
-                // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringIntIntParam:
-                (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringIntIntParam);
+                // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringIntIntEHIParam:
+                (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringIntIntEHIParam);
 
                 #endregion
 
@@ -364,11 +358,18 @@ namespace App
                 // INCREMENT _formCount by '1':
                 _formCount++;
 
-                // INSTANTIATE _fishyHome as a new FishyEdit():
-                //_fishyEdit = _disposableFactory.Create<FishyEdit>() as Form;
+                // ADD _formCount as a key and a new FishyEdit() as a value to _formDict:
+                _formDict.Add(_formCount, (_serviceLocator.GetService<Factory<IDisposable>>() as IFactory<IDisposable>).Create<FishyEdit>());
 
-                // INITIALISE _fishyEdit with an IOpenImage object:
-                //(_fishyHome as IInitialiseIOpenImage).Initialise(_markerFactory.Create<OpenSaveLogic>() as IOpenImage);
+                // SET InvokeCommand property value of  _formDict[_formCount] (FishyHome) to reference to CommandInvoker.InvokeCommand:
+                (_formDict[_formCount] as ICommandSender).InvokeCommand = (_serviceLocator.GetService<CommandInvoker>() as ICommandInvoker).InvokeCommand;
+
+                // INITIALISE _formDict[_formCount] (FishyEdit) with a new SaveLogic() object:
+                (_formDict[_formCount] as IInitialiseParam<ISaveImage>).Initialise((_serviceLocator.GetService<Factory<ILogic>>() as IFactory<ILogic>).Create<SaveLogic>() as ISaveImage);
+
+                // INITIALISE _formDict[_formCount] (FishyEdit) with a new Dictionary<string, ICommand>() object:
+                (_formDict[_formCount] as IInitialiseParam<IDictionary<string, ICommand>>).Initialise(
+                    (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<string, ICommand>>() as IDictionary<string, ICommand>);
             }
             // CATCH ClassDoesNotExistException, write message to console:
             catch (ClassDoesNotExistException pException)
@@ -383,36 +384,150 @@ namespace App
                 Console.WriteLine(pException.Message);
             }
 
-            #region FISHYEDIT DELEGATES
-
-            // INITIALISE _fishyEdit with _server.GetImage as a delegate:
-            //(_fishyEdit as IInitialiseParam<GetImageDelegate>).Initialise(_server.GetImage);
+            #endregion
 
 
-            ICommandParam<int> _remove = new CommandParam<int>();
+            #region FISHYEDIT COMMANDS
+
+            #region GET IMAGE COMMAND
+
+            // DECLARE & INSTANTIATE an ICommandParam<string, int, int, EventHandler<ImageEventArgs> as a new CommandParam<string, int, int, EventHandler<ImageEventArgs>(), name it '_commandStringIntIntEHIParam':
+            ICommandParam<string, int, int, EventHandler<ImageEventArgs>> _commandStringIntIntEHIParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>)
+                .Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>() as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>;
+
+            // SET MethodRef Property of _commandStringIntIntEHIParam to reference to IServer.GetImage():
+            _commandStringIntIntEHIParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IServer).GetImage;
+
+            // SET Name Property of _commandStringIntIntEHIParam to "GetImage":
+            (_commandStringIntIntEHIParam as IName).Name = "GetImage";
+
+            // INITIALISE _formDict[_formCount] (FishyEdit) with a reference to _commandStringIntIntEHIParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringIntIntEHIParam);
+
+            #endregion
 
 
-            _remove.MethodRef = DisposableRemoval;
+            #region ROTATE CLOCKWISE 90 DEGREES COMMAND
+
+            // DECLARE & INSTANTIATE an ICommandParam<string> as a new CommandParam<string>(), name it '_commandStringParam':
+            ICommandParam<string> _commandStringParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<string>>() as ICommandParam<string>;
+
+            // SET MethodRef Property of _commandStringParam to reference to IServer.RotateImage:
+            _commandStringParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IServer).RotateImage;
+
+            // SET Name Property of _commandStringParam to "Rot90":
+            (_commandStringParam as IName).Name = "Rot90";
+
+            // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringParam);
+
+            #endregion
 
 
-            (_remove as IName).Name = "Remove";
+            #region ROTATE ANTI-CLOCKWISE 90 DEGREES COMMAND
+
+            // INSTANTIATE _commandStringParam as a new CommandParam<string>():
+            _commandStringParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<string>>() as ICommandParam<string>;
+
+            // SET MethodRef Property of _commandStringParam to reference to IACRotate.ACRotateImage:
+            _commandStringParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IACRotate).ACRotateImage;
+
+            // SET Name Property of _commandStringParam to "ACRot90":
+            (_commandStringParam as IName).Name = "ACRot90";
+
+            // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringParam);
+
+            #endregion
 
 
+            #region HORIZONTAL FLIP COMMAND
 
-            //(_fishyEdit as IInitialiseParam<ICommand>).Initialise(_remove);
+            // INSTANTIATE _commandStringParam as a new CommandParam<string>():
+            _commandStringParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<string>>() as ICommandParam<string>;
+
+            // SET MethodRef Property of _commandStringParam to reference to IServer.HorizontalFlipImage:
+            _commandStringParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IServer).HorizontalFlipImage;
+
+            // SET Name Property of _commandStringParam to "HFlip":
+            (_commandStringParam as IName).Name = "HFlip";
+
+            // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringParam);
+
+            #endregion
 
 
+            #region VERTICAL FLIP COMMAND
+
+            // INSTANTIATE _commandStringParam as a new CommandParam<string>():
+            _commandStringParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<string>>() as ICommandParam<string>;
+
+            // SET MethodRef Property of _commandStringParam to reference to IServer.VerticalFlipImage:
+            _commandStringParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IServer).VerticalFlipImage;
+
+            // SET Name Property of _commandStringParam to "VFlip":
+            (_commandStringParam as IName).Name = "VFlip";
+
+            // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringParam);
+
+            #endregion
+
+
+            #region DISPOSABLE REMOVAL COMMAND (IDISPOSABLE)
+
+            // DECLARE & INSTANTIATE an ICommandParam<IDisposable> as a new CommandParam<IDisposable>(), name it '_commandIDisposableParam':
+            ICommandParam<IDisposable> _commandIDisposableParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<IDisposable>>() as ICommandParam<IDisposable>;
+
+            // SET MethodRef Property of _commandIDisposableParam to reference to DisposableRemoval(IDisposable):
+            _commandIDisposableParam.MethodRef = DisposableRemoval;
+
+            // SET Name Property of _commandIDisposableParam to "DisposableRemoval":
+            (_commandIDisposableParam as IName).Name = "DisposableRemoval";
+
+            // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandIDisposableParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandIDisposableParam);
+
+            #endregion
+
+
+            #region DISPOSABLE REMOVAL COMMAND (INT)
+
+            // DECLARE & INSTANTIATE an ICommandParam<IDisposable> as a new CommandParam<IDisposable>(), name it '_commandIntParam':
+            ICommandParam<int> _commandIntParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<int>>() as ICommandParam<int>;
+
+            // SET MethodRef Property of _commandIDisposableParam to reference to DisposableRemoval(int):
+            _commandIntParam.MethodRef = DisposableRemoval;
+
+            // SET FirstParam Property value of _commandIntParam to _formCount:
+            _commandIntParam.FirstParam = _formCount;
+
+            // SET Name Property of _commandIntParam to "RemoveMe":
+            (_commandIntParam as IName).Name = "RemoveMe";
+
+            // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandIntParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandIntParam);
 
             #endregion
 
             #endregion
+
+
+            #region SHOWING FISHYEDIT
+
+            // INITIALISE _formDict[_formCount] (FishyEdit) with pImageFP:
+            (_formDict[_formCount] as IInitialiseParam<string>).Initialise(pImageFP);
+
+            // SHOW _formDict[_formCount] (FishyEdit) to user:
+            (_formDict[_formCount] as Control).Show();
+
+            #endregion
+
 
             ///
             // NOTE: THESE ARE FROM CREATING FISHY EDIT - AS HOME NOW CREATED THESE ARENT NEEDED (KEPT INCASE THINGS GO SOUTH)
             ///
-
-            //// INITIALISE _fishyEdit with ObjectDispose as a delegate:
-            //(_home as IInitialiseDeleteDel).Initialise(ObjectDispose);
 
             //// INITIALISE _fishyEdit with _server.RotateImage as a delegate:
             //(_home as IInitialiseRotationDel).Initialise(_server.RotateImage);
