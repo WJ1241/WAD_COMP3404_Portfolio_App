@@ -50,7 +50,7 @@ namespace Server
 
         #region IMPLEMENTATION OF IEDITIMG
 
-        #region ORIENTATION
+        #region ORIENTATION MANAGEMENT
 
         /// <summary>
         /// Rotates Image 90 degrees clockwise
@@ -134,7 +134,7 @@ namespace Server
         #endregion
 
 
-        #region SIZE
+        #region SIZE MANAGEMENT
 
         /// <summary>
         /// Crops the specified image and returns modification
@@ -193,7 +193,7 @@ namespace Server
         #endregion
 
 
-        #region COLOUR
+        #region COLOUR MANAGEMENT 
 
         /// <summary>
         /// METHOD 'BrightnessImg' - for controlling brightness
@@ -206,16 +206,8 @@ namespace Server
             // IF pImage is NOT NULL then call method
             if (pImage != null)
             {
-                // CALL Brightness method for image
-
-                //float _brt = BrightnessCntrl.Value;
-
-                //_brt = _brt / 100;
-
-                //label1.Text = "" + _brt;
-
+                // DECLARE BitMap name it '_newMap':
                 _newMap = new Bitmap(pImage);
-
                 
 
                 // FOR every pixle wide _newMap is incriment x:
@@ -227,55 +219,75 @@ namespace Server
                         // DECLARE Color name it '_oldColour':
                         Color _oldColur = _newMap.GetPixel(x, y);
 
+
+                        #region ASSIGN VAR COLORS
                         // DECLARE and ASSIGN int name it '_red1', it becomes _oldColour's R value:
                         _red1 = _oldColur.R;
+                        
                         // DECLARE and ASSIGN int name it '_green1', it becomes _oldColour's G value:
                         _green1 = _oldColur.G;
+                        
                         // DECLARE and ASSIGN int name it '_blue1', it becomes _oldColour's B value:
                         _blue1 = _oldColur.B;
-
-                        //_grey1 = (byte)(.299 * _red1 + .587 * _green1 + .144 * _blue1);
-
+                        #endregion
 
 
+                        #region SET RGB COLOURS
+
+                        // ASSIGNMENT _red2 is set to the value of _red1 * pBrt:
                         _red2 = (byte)(_red1 * pBrt);
 
+                        // ASSIGNMENT _green2 is set to the value of _green1 * pBrt:
                         _green2 = (byte)(_green1 * pBrt);
 
+                        // ASSIGNMENT _blue2 is set to the value of _blue2 * pBrt:
                         _blue2 = (byte)(_blue1 * pBrt);
 
+                        #endregion 
 
-                        #region keep between 1 and 255
+
+                        #region KEEP COLORS BETWEEN 1 & 255
+                        // IF _red2 less than or equel to 1 set value to 1:
                         if (_red2 <= 1)
                         {
+                            // ASSIGNMENT _red2 is set to the value of 1
                             _red2 = 1;
                         }
+                        // IF _red2 greater than or equel to 255 set value to 255:
                         if (_red2 >= 255)
                         {
+                            // ASSIGNMENT _red2 is set to the value of 255
                             _red2 = 255;
                         }
 
 
+                        // IF _green2 less than or equel to 1 set value to 1:
                         if (_green2 <= 1)
                         {
+                            // ASSIGNMENT _green2 is set to the value of 1
                             _green2 = 1;
                         }
+                        // IF _green2 greater than or equel to 255 set value to 255:
                         if (_green2 >= 255)
                         {
+                            // ASSIGNMENT _green2 is set to the value of 255
                             _green2 = 255;
                         }
 
 
+                        // IF _blue2 less than or equel to 1 set value to 1:
                         if (_blue2 <= 1)
                         {
+                            // ASSIGNMENT _blue2 is set to the value of 1
                             _blue2 = 1;
                         }
+                        // IF _blue2 greater than or equel to 255 set value to 255:
                         if (_blue2 >= 255)
                         {
+                            // ASSIGNMENT _blue2 is set to the value of 255
                             _blue2 = 255;
                         }
                         #endregion
-
 
 
                         // SET the pixels of _newMap to the new argb values:
@@ -304,6 +316,128 @@ namespace Server
         public Image ImgContrast(Image pImage, int pSat)
         {
             return null;
+
+            _newMap = new Bitmap(pImage);
+
+            // FOR every pixle wide _newMap is incriment x:
+            for (int x = 0; x < _newMap.Width; x++)
+            {
+                // FOR every pixle deep _newMap is incriment y:
+                for (int y = 0; y < _newMap.Height; y++)
+                {
+                    // DECLARE Color name it '_oldColour':
+                    Color _oldColur = _newMap.GetPixel(x, y);
+
+                    #region VAR ASSIGNED RGB COLOURS
+                    // DECLARE and ASSIGN int name it '_red1', it becomes _oldColour's R value:
+                    int _red1 = _oldColur.R;
+                    // DECLARE and ASSIGN int name it '_green1', it becomes _oldColour's G value:
+                    int _green1 = _oldColur.G;
+                    // DECLARE and ASSIGN int name it '_blue1', it becomes _oldColour's B value:
+                    int _blue1 = _oldColur.B;
+                    #endregion
+
+                    #region ADJUSTING GREY LEVEL OF RGB
+                    //test if brightness if over grey increase, if under grey decrease:
+
+                    // IF _red1 is more than 128:
+                    if (_red1 > 128)
+                    {
+                        // ASSIGNMENT _red2 is set to the value of _red1 plus pSat:
+                        _red2 = _red1 + pSat;
+                    }
+                    else
+                    {
+                        // ASSIGNMENT _red2 is set to the value of _red1 minus pSat:
+                        _red2 = _red1 - pSat;
+                    }
+
+
+                    // IF _green1 is less than 128:
+                    if (_green1 > 128)
+                    {
+                        // ASSIGNMENT _green2 is set to the value of _green1 plus pSat:
+                        _green2 = _green1 + pSat;
+                    }
+                    else
+                    {
+                        // ASSIGNMENT _green2 is set to the value of _green1 minus pSat:
+                        _green2 = _green1 - pSat;
+                    }
+
+
+                    // IF _blue1 is more than 128:
+                    if (_blue1 > 128)
+                    {
+                        // ASSIGNMENT _blue2 is set to the value of _blue1 plus pSat:
+                        _blue2 = _blue1 + pSat;
+                    }
+                    else
+                    {
+                        // ASSIGNMENT _blue2 is set to the value of _blue1 plus pSat:
+                        _blue2 = _blue1 - pSat;
+                    }
+                    #endregion
+
+                    #region KEEP COLORS BETWEEN 1 & 255
+
+                    // IF _red2 less than or equel to 1 set value to 1:
+                    if (_red2 <= 1)
+                    {
+                        // ASSIGNMENT _red2 is set to the value of 1
+                        _red2 = 1;
+                    }
+                    // IF _red2 greater than or equel to 255 set value to 255:
+                    if (_red2 >= 255)
+                    {
+                        // ASSIGNMENT _red2 is set to the value of 255
+                        _red2 = 255;
+                    }
+
+
+                    // IF _green2 less than or equel to 1 set value to 1:
+                    if (_green2 <= 1)
+                    {
+                        // ASSIGNMENT _green2 is set to the value of 1
+                        _green2 = 1;
+                    }
+                    // IF _green2 greater than or equel to 255 set value to 255:
+                    if (_green2 >= 255)
+                    {
+                        // ASSIGNMENT _green2 is set to the value of 255
+                        _green2 = 255;
+                    }
+
+
+                    // IF _blue2 less than or equel to 1 set value to 1:
+                    if (_blue2 <= 1)
+                    {
+                        // ASSIGNMENT _blue2 is set to the value of 1
+                        _blue2 = 1;
+                    }
+                    // IF _blue2 greater than or equel to 255 set value to 255:
+                    if (_blue2 >= 255)
+                    {
+                        // ASSIGNMENT _blue2 is set to the value of 255
+                        _blue2 = 255;
+                    }
+                    #endregion
+
+                    // SET the pixels of _newMap to the new argb values:
+                    Color _newColor = Color.FromArgb((int)_red2, (int)_green2, (int)_blue2);
+
+                    // SET the pixels of _newMap to the new argb values:
+                    _newMap.SetPixel(x, y, _newColor);
+
+
+                }
+            }
+
+            // ASSIGNMENT _tempImage is given the value of the _newMap:
+            _tempImage = _newMap;
+
+
+
         }
 
         /// <summary>
@@ -315,7 +449,7 @@ namespace Server
         {
             return null;
 
-            // IF pImage is NOT NULL then call method
+            // IF pImage is NOT NULL then call method:
             if (pImage != null)
             {
                 // ASSIGNMENT _newMap is set to the value of pImage:
@@ -324,6 +458,8 @@ namespace Server
                 // ASSISGNMENT pSat has its value inverted:
                 pSat = pSat *= -1;
 
+
+                #region GET &  SET  PIXLE COLOURS
                 // FOR every pixle wide _newMap is incriment x:
                 for (int x = 0; x < _newMap.Width; x++)
                 {
@@ -333,13 +469,17 @@ namespace Server
                         // DECLARE Color name it '_oldColour':
                         Color _oldColur = _newMap.GetPixel(x, y);
 
+
+                        #region ASSIGN VAR COLORS
                         // DECLARE and ASSIGN int name it '_red1', it becomes _oldColour's R value:
                         _red1 = _oldColur.R;
                         // DECLARE and ASSIGN int name it '_green1', it becomes _oldColour's G value:
                         _green1 = _oldColur.G;
                         // DECLARE and ASSIGN int name it '_blue1', it becomes _oldColour's B value:
                         _blue1 = _oldColur.B;
+                        #endregion
 
+                        #region FIND COLOR GAPS
                         // DECLARE calculate the gap between _red1 and _blue1 and name that gap '_rBGap':
                         int _rBGap = _red1 - _blue1;
                         // DECLARE calculate the gap between _red1 and _green1 and name that gap '_rGGap':
@@ -354,9 +494,9 @@ namespace Server
                         int _bGGap = _blue1 - _green1;
                         // DECLARE calculate the gap between _blue1 and _red1 and name that gap '_bRGap':
                         int _bRGap = _blue1 - _red1;
+                        #endregion
 
-
-
+                        #region ASSIGN RED
                         // IF _red1 is greater than _blue1 & _green1:
                         if (_red1 > _blue1 && _red1 > _green1)
                         {
@@ -405,8 +545,9 @@ namespace Server
                             // ASSIGNMENT _green2 is given the value of _green1:
                             _green2 = _green1;
                         }
+                        #endregion
 
-
+                        #region ASSIGN GREEN
                         // IF _green1 is greater than _blue1 & _red1:
                         if (_green1 > _blue1 && _green1 > _red1)
                         {
@@ -455,9 +596,9 @@ namespace Server
                             // ASSIGNMENT _green2 is given the value of _green1:
                             _green2 = _green1;
                         }
+                        #endregion
 
-
-
+                        #region ASSIGN BLUE
                         // IF _blue1 is greater than _green1 & _red1:
                         if (_blue1 > _red1 && _blue1 > _green1)
                         {
@@ -508,18 +649,20 @@ namespace Server
                             // ASSIGNMENT _green2 is given the value of _green1:
                             _green2 = _green1;
                         }
+                        #endregion
 
-
-                        #region keep between 1 and 255
+                        #region KEEP COLORS BETWEEN 1 & 255
 
                         // IF _red2 less than or equel to 1 set value to 1:
                         if (_red2 <= 1)
                         {
+                            // ASSIGNMENT _red2 is set to the value of 1
                             _red2 = 1;
                         }
                         // IF _red2 greater than or equel to 255 set value to 255:
                         if (_red2 >= 255)
                         {
+                            // ASSIGNMENT _red2 is set to the value of 255
                             _red2 = 255;
                         }
 
@@ -527,11 +670,13 @@ namespace Server
                         // IF _green2 less than or equel to 1 set value to 1:
                         if (_green2 <= 1)
                         {
+                            // ASSIGNMENT _green2 is set to the value of 1
                             _green2 = 1;
                         }
                         // IF _green2 greater than or equel to 255 set value to 255:
                         if (_green2 >= 255)
                         {
+                            // ASSIGNMENT _green2 is set to the value of 255
                             _green2 = 255;
                         }
 
@@ -539,11 +684,13 @@ namespace Server
                         // IF _blue2 less than or equel to 1 set value to 1:
                         if (_blue2 <= 1)
                         {
+                            // ASSIGNMENT _blue2 is set to the value of 1
                             _blue2 = 1;
                         }
                         // IF _blue2 greater than or equel to 255 set value to 255:
                         if (_blue2 >= 255)
                         {
+                            // ASSIGNMENT _blue2 is set to the value of 255
                             _blue2 = 255;
                         }
                         #endregion
@@ -553,7 +700,9 @@ namespace Server
                         _newMap.SetPixel(x, y, Color.FromArgb(_red2, _green2, _blue2));
                     }
                 }
+                #endregion
 
+                // ASSIGNMENT _tempImage is given the value of the _newMap:
                 _tempImage = _newMap;
             }
             else
