@@ -178,16 +178,31 @@ namespace Server
             // IF pImage is NOT NULL then call method
             if (pImage != null)
             {
-                // CALL Scale method for image
-                // pImage.Scale()
+               _newMap = new Bitmap(pImage);
 
-                return null;
+                for (int x = 0; x < _newMap.Width; x++)
+                {
+                    for (int y = 0; y < _newMap.Height; y++)
+                    {
+                        //_newMap.Width = _newMap.Width * 2;
+                       // _newMap.Height = _newMap.Height * 2;
+
+                        _newMap.SetResolution(500, 500);
+       
+                    }
+                }
+
+                // SET '_tempImage' as '_newMap' value
+                _tempImage = _newMap;
+
             }
             else
             {
                 // THROW NEW NullInstanceException with apprpriate message
                 throw new NullInstanceException("ERROR: No Image to be scaled!");
             }
+
+            return _newMap;
         }
 
         #endregion
@@ -218,7 +233,6 @@ namespace Server
                     {
                         // DECLARE Color name it '_oldColour':
                         Color _oldColur = _newMap.GetPixel(x, y);
-
 
                         #region ASSIGN VAR COLORS
                         // DECLARE and ASSIGN int name it '_red1', it becomes _oldColour's R value:
@@ -296,11 +310,8 @@ namespace Server
 
                     }
                 }
-
-                
-
-                //pictureBox1.Image = _newMap;
-
+                // ASSIGNMENT _tempImage is given the value of the _newMap:
+                _tempImage = _newMap;
             }
             else
             {
