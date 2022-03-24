@@ -202,14 +202,24 @@ namespace Server
         }
 
         /// <summary>
-        /// METHOD Contrast provides access to the ContrastImage method in ImgEditor
+        /// METHOD Saturation provides access to the ContrastImage method in ImgEditor
         /// </summary>
         /// <param name="pImage"></param>
         /// <param name="pSat"></param>
-        public void Contrast(Image pImage, int pSat)
+        public void Saturation(Image pImage, int pSat)
         {
             // CALL the ContrastImg and passes pImage and pSat:
-            _imgEditor.ContrastImg(pImage, pSat);
+            _imgEditor.SaturationImg(pImage, pSat);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pImage"></param>
+        /// <param name="pBrt"></param>
+        public void BrightnessImg(Image pImage, float pBrt)
+        {
+            _imgEditor.BrightnessImg(pImage, pBrt);
         }
 
         #endregion

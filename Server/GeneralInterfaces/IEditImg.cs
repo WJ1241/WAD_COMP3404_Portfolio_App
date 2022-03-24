@@ -46,7 +46,7 @@ namespace Server.GeneralInterfaces
         /// METHOD 'BrightnessImg' - for controlling brightness
         /// </summary>
         /// <param name="pImage"></param>
-        void BrightnessImg(Image pImage);
+        void BrightnessImg(Image pImage, float pBrt);
 
         /// <summary>
         /// METHOD 'ContrastImg' - for controlling contrast

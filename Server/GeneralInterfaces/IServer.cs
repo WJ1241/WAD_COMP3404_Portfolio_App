@@ -49,11 +49,17 @@ namespace Server.GeneralInterfaces
         void VerticalFlipImage(string pUid);
 
         /// <summary>
-        /// Change the contrast of a specified image
+        /// Change the Saturation of a specified image
         /// </summary>
         /// <param name="pImage"></param>
         /// <param name="pSat"></param>
-        void Contrast(Image pImage, int pSat);
+        void Saturation(Image pImage, int pSat);
 
+        /// <summary>
+        /// change image brightness
+        /// </summary>
+        /// <param name="pImage"></param>
+        /// <param name="pBrt"></param>
+        void BrightnessImg(Image pImage, float pBrt);
     }
 }
