@@ -5,86 +5,116 @@ namespace Server.GeneralInterfaces
     /// <summary>
     /// Interface which allows implementations to edit Images
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 02/02/22
+    /// Date: 24/03/22
     /// </summary>
     public interface IEditImg : IService
     {
         #region METHODS
 
+        #region ORIENTATION
+
         /// <summary>
         /// Rotates Image 90 degrees clockwise
         /// </summary>
-        /// <param name="pImage"> Image to be rotated clockwise </param>=
+        /// <param name="pImage"> Image to be rotated clockwise </param>
         void ImgRotateClockwise(Image pImage);
 
         /// <summary>
         /// Rotates Image 90 degrees anticlockwise
         /// </summary>
-        /// <param name="pImage"> Image to be rotated anticlockwise </param>=
+        /// <param name="pImage"> Image to be rotated anticlockwise </param>
         void ImgRotateAntiClockwise(Image pImage);
 
         /// <summary>
-        /// Flips Image on the X axis
+        /// Flips Image horizontally
         /// </summary>
-        /// <param name="pImage"> Image to be flipped on the X axis </param>=
-        void ImgFlipXAxis(Image pImage);
+        /// <param name="pImage"> Image to be flipped horizontally </param>
+        void ImgHFlip(Image pImage);
 
         /// <summary>
-        /// Flips Image on the Y axis
+        /// Flips Image vertically
         /// </summary>
-        /// <param name="pImage"> Image to be flipped on the Y axis </param>=
-        void ImgFlipYAxis(Image pImage);
+        /// <param name="pImage"> Image to be flipped vertically </param>
+        void ImgVFlip(Image pImage);
+
+        #endregion
+
+
+        #region SIZE
 
         /// <summary>
-        /// Crop the image
+        /// Crops the specified image and returns modification
         /// </summary>
-        /// <param name="pImage"></param> image to be cropped
-        /// <returns> returns the cropped image </returns>
-        Image CropImg(Image pImage);
+        /// <param name="pImage"> Image to be changed </param>
+        /// <returns> Returns newly cropped image </returns>
+        Image ImgCrop(Image pImage);
+
+        /// <summary>
+        /// Resizes an image to what user specifies
+        /// </summary>
+        /// <param name="pImage"> Image to be changed </param>
+        /// <returns> Returns newly scaled image </returns>
+        Image ImgScale(Image pImage);
+
+        #endregion
+
+
+        #region COLOUR
 
         /// <summary>
         /// METHOD 'BrightnessImg' - for controlling brightness
         /// </summary>
         /// <param name="pImage"></param>
-        void BrightnessImg(Image pImage, float pBrt);
+        Image ImgBrightness(Image pImage, float pBrt);
 
         /// <summary>
         /// METHOD 'ContrastImg' - for controlling contrast
         /// </summary>
         /// <param name="pImage"></param>
         /// <param name="pSat"></param>
-        void ContrastImg(Image pImage, int pSat);
+        Image ImgContrast(Image pImage, int pSat);
 
         /// <summary>
         /// METHOD 'SaturationImg' - for controlling saturation
         /// </summary>
         /// <param name="pImage"></param>
         /// <param name="pSat"></param>
-        void SaturationImg(Image pImage, int pSat);
+        Image ImgSaturation(Image pImage, int pSat);
+
+        #endregion
+
+
+        #region FILTERS
 
         /// <summary>
-        /// METHOD 'FilterOneImg' - for applying first filter
+        /// Applies first filter to specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        void FilterOneImg(Image pImage);
+        /// <param name="pImage"> Image to be modified </param>
+        /// <returns> Modified image </returns>
+        Image ImgFilterOne(Image pImage);
 
         /// <summary>
-        /// METHOD 'FilterTwoImg' - for applying second filter
+        /// Applies second filter to specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        void FilterTwoImg(Image pImage);
-    
-        /// <summary>
-        /// METHOD 'FilterThreeImg' - for applying third filter
-        /// </summary>
-        /// <param name="pImage"></param>
-        void FilterThreeImg(Image pImage);
+        /// <param name="pImage"> Image to be modified </param>
+        /// <returns> Modified image </returns>
+        Image ImgFilterTwo(Image pImage);
 
         /// <summary>
-        /// METHOD 'FilterFourImg' - for applying fourth filter
+        /// Applies third filter to specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        void FilterFourImg(Image pImage);
+        /// <param name="pImage"> Image to be modified </param>
+        /// <returns> Modified image </returns>
+        Image ImgFilterThree(Image pImage);
+
+        /// <summary>
+        /// Applies fourth filter to specified image
+        /// </summary>
+        /// <param name="pImage"> Image to be modified </param>
+        /// <returns> Modified image </returns>
+        Image ImgFilterFour(Image pImage);
+
+        #endregion
 
         #endregion
     }

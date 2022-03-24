@@ -128,11 +128,11 @@ namespace TestServer.IndividualTests
 
             #region ACT
 
-            // TRY checking if ImgFlipXAxis() throws an exception:
+            // TRY checking if ImgHFlip() throws an exception:
             try
             {
-                // CALL ImgFlipXAxis, passing _image as a parameter:
-                _editImg.ImgFlipXAxis(_image);
+                // CALL ImgHFlip(), passing _image as a parameter:
+                _editImg.ImgHFlip(_image);
             }
 
             #endregion
@@ -174,11 +174,11 @@ namespace TestServer.IndividualTests
 
             #region ACT
 
-            // TRY checking if ImgFlipYAxis() throws an exception:
+            // TRY checking if ImgVFlip() throws an exception:
             try
             {
-                // CALL ImgFlipYAxis, passing _image as a parameter:
-                _editImg.ImgFlipYAxis(_image);
+                // CALL ImgVFlip(), passing _image as a parameter:
+                _editImg.ImgVFlip(_image);
             }
 
             #endregion

@@ -38,7 +38,6 @@ namespace GUI
             this.ACRot90Bttn = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.GroupBoxFilters = new System.Windows.Forms.GroupBox();
-            this.RadioFilterRemove = new System.Windows.Forms.RadioButton();
             this.RadioFilter4 = new System.Windows.Forms.RadioButton();
             this.RadioFilter3 = new System.Windows.Forms.RadioButton();
             this.RadioFilter2 = new System.Windows.Forms.RadioButton();
@@ -55,6 +54,7 @@ namespace GUI
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CropBttn = new System.Windows.Forms.Button();
             this.ScaleBttn = new System.Windows.Forms.Button();
+            this.ResetBttn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ImgDisplay)).BeginInit();
             this.GroupBoxFilters.SuspendLayout();
             this.groupBoxOrientation.SuspendLayout();
@@ -83,7 +83,7 @@ namespace GUI
             // 
             this.SaveBttn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SaveBttn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SaveBttn.Location = new System.Drawing.Point(62, 98);
+            this.SaveBttn.Location = new System.Drawing.Point(62, 147);
             this.SaveBttn.Margin = new System.Windows.Forms.Padding(6);
             this.SaveBttn.Name = "SaveBttn";
             this.SaveBttn.Size = new System.Drawing.Size(183, 56);
@@ -165,7 +165,6 @@ namespace GUI
             // 
             // GroupBoxFilters
             // 
-            this.GroupBoxFilters.Controls.Add(this.RadioFilterRemove);
             this.GroupBoxFilters.Controls.Add(this.RadioFilter4);
             this.GroupBoxFilters.Controls.Add(this.RadioFilter3);
             this.GroupBoxFilters.Controls.Add(this.RadioFilter2);
@@ -180,68 +179,55 @@ namespace GUI
             this.GroupBoxFilters.TabStop = false;
             this.GroupBoxFilters.Text = "Filters";
             // 
-            // RadioFilterRemove
-            // 
-            this.RadioFilterRemove.AutoSize = true;
-            this.RadioFilterRemove.Location = new System.Drawing.Point(33, 322);
-            this.RadioFilterRemove.Margin = new System.Windows.Forms.Padding(6);
-            this.RadioFilterRemove.Name = "RadioFilterRemove";
-            this.RadioFilterRemove.Size = new System.Drawing.Size(189, 48);
-            this.RadioFilterRemove.TabIndex = 4;
-            this.RadioFilterRemove.TabStop = true;
-            this.RadioFilterRemove.Text = "No Filter";
-            this.RadioFilterRemove.UseVisualStyleBackColor = true;
-            this.RadioFilterRemove.CheckedChanged += new System.EventHandler(this.RadioFilterRemove_CheckedChanged);
-            // 
             // RadioFilter4
             // 
             this.RadioFilter4.AutoSize = true;
-            this.RadioFilter4.Location = new System.Drawing.Point(33, 256);
+            this.RadioFilter4.Location = new System.Drawing.Point(35, 293);
             this.RadioFilter4.Margin = new System.Windows.Forms.Padding(6);
             this.RadioFilter4.Name = "RadioFilter4";
-            this.RadioFilter4.Size = new System.Drawing.Size(162, 48);
+            this.RadioFilter4.Size = new System.Drawing.Size(128, 48);
             this.RadioFilter4.TabIndex = 3;
             this.RadioFilter4.TabStop = true;
-            this.RadioFilter4.Text = "Filter 4";
+            this.RadioFilter4.Text = "Grey";
             this.RadioFilter4.UseVisualStyleBackColor = true;
             this.RadioFilter4.CheckedChanged += new System.EventHandler(this.RadioFilter4_CheckedChanged);
             // 
             // RadioFilter3
             // 
             this.RadioFilter3.AutoSize = true;
-            this.RadioFilter3.Location = new System.Drawing.Point(33, 190);
+            this.RadioFilter3.Location = new System.Drawing.Point(35, 227);
             this.RadioFilter3.Margin = new System.Windows.Forms.Padding(6);
             this.RadioFilter3.Name = "RadioFilter3";
-            this.RadioFilter3.Size = new System.Drawing.Size(162, 48);
+            this.RadioFilter3.Size = new System.Drawing.Size(155, 48);
             this.RadioFilter3.TabIndex = 2;
             this.RadioFilter3.TabStop = true;
-            this.RadioFilter3.Text = "Filter 3";
+            this.RadioFilter3.Text = "Purple";
             this.RadioFilter3.UseVisualStyleBackColor = true;
             this.RadioFilter3.CheckedChanged += new System.EventHandler(this.RadioFilter3_CheckedChanged);
             // 
             // RadioFilter2
             // 
             this.RadioFilter2.AutoSize = true;
-            this.RadioFilter2.Location = new System.Drawing.Point(33, 123);
+            this.RadioFilter2.Location = new System.Drawing.Point(35, 160);
             this.RadioFilter2.Margin = new System.Windows.Forms.Padding(6);
             this.RadioFilter2.Name = "RadioFilter2";
-            this.RadioFilter2.Size = new System.Drawing.Size(162, 48);
+            this.RadioFilter2.Size = new System.Drawing.Size(114, 48);
             this.RadioFilter2.TabIndex = 1;
             this.RadioFilter2.TabStop = true;
-            this.RadioFilter2.Text = "Filter 2";
+            this.RadioFilter2.Text = "Red";
             this.RadioFilter2.UseVisualStyleBackColor = true;
             this.RadioFilter2.CheckedChanged += new System.EventHandler(this.RadioFilter2_CheckedChanged);
             // 
             // RadioFilter1
             // 
             this.RadioFilter1.AutoSize = true;
-            this.RadioFilter1.Location = new System.Drawing.Point(33, 57);
+            this.RadioFilter1.Location = new System.Drawing.Point(35, 94);
             this.RadioFilter1.Margin = new System.Windows.Forms.Padding(6);
             this.RadioFilter1.Name = "RadioFilter1";
-            this.RadioFilter1.Size = new System.Drawing.Size(162, 48);
+            this.RadioFilter1.Size = new System.Drawing.Size(121, 48);
             this.RadioFilter1.TabIndex = 0;
             this.RadioFilter1.TabStop = true;
-            this.RadioFilter1.Text = "Filter 1";
+            this.RadioFilter1.Text = "Blue";
             this.RadioFilter1.UseVisualStyleBackColor = true;
             this.RadioFilter1.CheckedChanged += new System.EventHandler(this.RadioFilter1_CheckedChanged);
             // 
@@ -263,13 +249,14 @@ namespace GUI
             // 
             // groupBoxImageCtrl
             // 
+            this.groupBoxImageCtrl.Controls.Add(this.ResetBttn);
             this.groupBoxImageCtrl.Controls.Add(this.SaveBttn);
             this.groupBoxImageCtrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
             this.groupBoxImageCtrl.Location = new System.Drawing.Point(714, 69);
             this.groupBoxImageCtrl.Margin = new System.Windows.Forms.Padding(6);
             this.groupBoxImageCtrl.Name = "groupBoxImageCtrl";
             this.groupBoxImageCtrl.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBoxImageCtrl.Size = new System.Drawing.Size(304, 204);
+            this.groupBoxImageCtrl.Size = new System.Drawing.Size(304, 248);
             this.groupBoxImageCtrl.TabIndex = 27;
             this.groupBoxImageCtrl.TabStop = false;
             this.groupBoxImageCtrl.Text = "Image Control";
@@ -390,6 +377,19 @@ namespace GUI
             this.ScaleBttn.Text = "Scale";
             this.ScaleBttn.UseVisualStyleBackColor = true;
             // 
+            // ResetBttn
+            // 
+            this.ResetBttn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ResetBttn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResetBttn.Location = new System.Drawing.Point(62, 79);
+            this.ResetBttn.Margin = new System.Windows.Forms.Padding(6);
+            this.ResetBttn.Name = "ResetBttn";
+            this.ResetBttn.Size = new System.Drawing.Size(183, 56);
+            this.ResetBttn.TabIndex = 5;
+            this.ResetBttn.Text = "Reset Image";
+            this.ResetBttn.UseVisualStyleBackColor = true;
+            this.ResetBttn.Click += new System.EventHandler(this.ResetBttn_Click);
+            // 
             // FishyEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
@@ -450,12 +450,12 @@ namespace GUI
         private System.Windows.Forms.Label lblSaturation;
         private System.Windows.Forms.Label lblBrightness;
         private System.Windows.Forms.GroupBox groupBoxColouring;
-        private System.Windows.Forms.RadioButton RadioFilterRemove;
         private System.Windows.Forms.TrackBar BrightnessControl;
         private System.Windows.Forms.TrackBar ContrastControl;
         private System.Windows.Forms.TrackBar SaturationControl;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button CropBttn;
         private System.Windows.Forms.Button ScaleBttn;
+        private System.Windows.Forms.Button ResetBttn;
     }
 }

@@ -429,8 +429,8 @@ namespace App
             // INSTANTIATE _commandStringParam as a new CommandParam<string>():
             _commandStringParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>).Create<CommandParam<string>>() as ICommandParam<string>;
 
-            // SET MethodRef Property of _commandStringParam to reference to IACRotate.ACRotateImage:
-            _commandStringParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IACRotate).ACRotateImage;
+            // SET MethodRef Property of _commandStringParam to reference to IServer.ACRotateImage:
+            _commandStringParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IServer).ACRotateImage;
 
             // SET Name Property of _commandStringParam to "ACRot90":
             (_commandStringParam as IName).Name = "ACRot90";
@@ -471,6 +471,78 @@ namespace App
 
             // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringParam:
             (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringParam);
+
+            #endregion
+
+
+            #region FILTER ONE COMMAND
+
+            // INSTANTIATE _commandStringIntIntEHIParam as a new CommandParam<string, int, int, EventHandler<ImageEventArgs>():
+            _commandStringIntIntEHIParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>)
+                .Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>() as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>;
+
+            // SET MethodRef Property of _commandStringIntIntEHIParam to reference to IApplyFilterImg.ApplyFilterOne():
+            _commandStringIntIntEHIParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IApplyFilterImg).ApplyFilterOne;
+
+            // SET Name Property of _commandStringIntIntEHIParam to "FilterOne":
+            (_commandStringIntIntEHIParam as IName).Name = "FilterOne";
+
+            // INITIALISE _formDict[_formCount] (FishyEdit) with a reference to _commandStringEHIParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringIntIntEHIParam);
+
+            #endregion
+
+
+            #region FILTER TWO COMMAND
+
+            // INSTANTIATE _commandStringIntIntEHIParam as a new CommandParam<string, int, int, EventHandler<ImageEventArgs>():
+            _commandStringIntIntEHIParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>)
+                .Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>() as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>;
+
+            // SET MethodRef Property of _commandStringIntIntEHIParam to reference to IApplyFilterImg.ApplyFilterTwo():
+            _commandStringIntIntEHIParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IApplyFilterImg).ApplyFilterTwo;
+
+            // SET Name Property of _commandStringIntIntEHIParam to "FilterTwo":
+            (_commandStringIntIntEHIParam as IName).Name = "FilterTwo";
+
+            // INITIALISE _formDict[_formCount] (FishyEdit) with a reference to _commandStringEHIParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringIntIntEHIParam);
+
+            #endregion
+
+
+            #region FILTER THREE COMMAND
+
+            // INSTANTIATE _commandStringIntIntEHIParam as a new CommandParam<string, int, int, EventHandler<ImageEventArgs>():
+            _commandStringIntIntEHIParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>)
+                .Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>() as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>;
+
+            // SET MethodRef Property of _commandStringIntIntEHIParam to reference to IApplyFilterImg.ApplyFilterThree():
+            _commandStringIntIntEHIParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IApplyFilterImg).ApplyFilterThree;
+
+            // SET Name Property of _commandStringIntIntEHIParam to "FilterThree":
+            (_commandStringIntIntEHIParam as IName).Name = "FilterThree";
+
+            // INITIALISE _formDict[_formCount] (FishyEdit) with a reference to _commandStringEHIParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringIntIntEHIParam);
+
+            #endregion
+
+
+            #region FILTER FOUR COMMAND
+
+            // INSTANTIATE _commandStringIntIntEHIParam as a new CommandParam<string, int, int, EventHandler<ImageEventArgs>():
+            _commandStringIntIntEHIParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>)
+                .Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>() as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>;
+
+            // SET MethodRef Property of _commandStringIntIntEHIParam to reference to IApplyFilterImg.ApplyFilterFour():
+            _commandStringIntIntEHIParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IApplyFilterImg).ApplyFilterFour;
+
+            // SET Name Property of _commandStringIntIntEHIParam to "FilterFour":
+            (_commandStringIntIntEHIParam as IName).Name = "FilterFour";
+
+            // INITIALISE _formDict[_formCount] (FishyEdit) with a reference to _commandStringEHIParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringIntIntEHIParam);
 
             #endregion
 
@@ -523,25 +595,6 @@ namespace App
             (_formDict[_formCount] as Control).Show();
 
             #endregion
-
-
-            ///
-            // NOTE: THESE ARE FROM CREATING FISHY EDIT - AS HOME NOW CREATED THESE ARENT NEEDED (KEPT INCASE THINGS GO SOUTH)
-            ///
-
-            //// INITIALISE _fishyEdit with _server.RotateImage as a delegate:
-            //(_home as IInitialiseRotationDel).Initialise(_server.RotateImage);
-
-            //// INITIALISE _fishyEdit with _server.ACRotateImage as a delegate:
-            //(_home as IInitialiseACRotationDel).Initialise((_server as IACRotate).ACRotateImage);
-
-            //// INITIALISE _fishyEdit with _server.HorizontalFlipImage as a delegate:
-            //(_home as IInitialiseHFlipImgDel).Initialise(_server.HorizontalFlipImage);
-
-            //// INITIALISE _fishyEdit with _server.VerticalFlipImage as a delegate:
-            //(_home as IInitialiseVFlipImgDel).Initialise(_server.VerticalFlipImage);
-
-            /////////////////////////////////////////////////////////////////////////////////////////////
         }
 
         /// <summary>

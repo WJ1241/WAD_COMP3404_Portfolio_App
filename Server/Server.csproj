@@ -50,8 +50,9 @@
     <Compile Include="Commands\IName.cs" />
     <Compile Include="CustomEventArgs\StringListEventArgs.cs" />
     <Compile Include="CustomEventArgs\ImageEventArgs.cs" />
-    <Compile Include="GeneralInterfaces\IACRotate.cs" />
     <Compile Include="GeneralInterfaces\IEventListener.cs" />
+    <Compile Include="GeneralInterfaces\IReplaceColourImg.cs" />
+    <Compile Include="GeneralInterfaces\IApplyFilterImg.cs" />
     <Compile Include="GeneralInterfaces\IService.cs" />
     <Compile Include="GeneralInterfaces\ISubscribe.cs" />
     <Compile Include="ImageMgr.cs" />

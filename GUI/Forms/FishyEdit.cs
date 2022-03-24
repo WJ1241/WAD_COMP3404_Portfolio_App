@@ -63,7 +63,7 @@ namespace GUI
             // TRY checking if invoking _commandDict["GetImage"] throws an exception
             try
             {
-                // SET value of _commandDict["GetImage"]'s FirstParam property to string value stored at _imgFPDict[_dictIndex]):
+                // SET value of _commandDict["GetImage"]'s FirstParam property to value of _crrntImgFP:
                 (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
                 // SET value of _commandDict["GetImage"]'s SecondParam property to value of ImgDisplay.Width:
@@ -468,19 +468,34 @@ namespace GUI
         /// <param name="e"> Required Argument Value(s)</param>
         private void RadioFilter1_CheckedChanged(object sender, EventArgs e)
         {
-            // TRY checking if _filterOne() OR ChangeImg() throw a NullInstanceException:
+            // TRY checking if invoking _commandDict["FilterOne"]() throw a NullInstanceException:
             try
             {
-                // CALL filterOne in the ImageEditor and then pass the edited image to the change image method to update the onscreen image:
-                    
+                // SET value of _commandDict["FilterOne"]'s FirstParam property to value of _crrntImgFP:
+                (_commandDict["FilterOne"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
-                // CALL ChangeImg():
-                ChangeImg();
+                // SET value of _commandDict["FilterOne"]'s SecondParam property to value of ImgDisplay.Width:
+                (_commandDict["FilterOne"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = ImgDisplay.Width;
+
+                // SET value of _commandDict["FilterOne"]'s ThirdParam property to value of ImgDisplay.Height:
+                (_commandDict["FilterOne"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = ImgDisplay.Height;
+
+                // SET value of _commandDict["FilterOne"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
+                (_commandDict["FilterOne"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FourthParam = OnEvent;
+
+                // INVOKE _commandDict["FilterOne"]'s ExecuteMethod():
+                _invokeCommand(_commandDict["FilterOne"]);
             }
-            // CATCH NullInstanceException from ChangeImg():
+            // CATCH InvalidStringException from invoking _commandDict["FilterOne"]():
+            catch (InvalidStringException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
+            // CATCH NullInstanceException from invoking _commandDict["FilterOne"]():
             catch (NullInstanceException pException)
             {
-                // WRITE exception message to debug console:
+                // WRITE exception message to console:
                 Console.WriteLine(pException.Message);
             }
         }
@@ -492,19 +507,34 @@ namespace GUI
         /// <param name="e"> Required Argument Value(s)</param>
         private void RadioFilter2_CheckedChanged(object sender, EventArgs e)
         {
-            // TRY checking if _filterTwo() OR ChangeImg() throw a NullInstanceException:
+            // TRY checking if invoking _commandDict["FilterTwo"]() throw a NullInstanceException:
             try
             {
-                // CALL _filterTwo passing current index in _imgFPDict as a parameter:
-                //_filterTwo(_imgFPDict[_dictIndex]);
+                // SET value of _commandDict["FilterTwo"]'s FirstParam property to value of _crrntImgFP:
+                (_commandDict["FilterTwo"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
-                // CALL ChangeImg():
-                ChangeImg();
+                // SET value of _commandDict["FilterTwo"]'s SecondParam property to value of ImgDisplay.Width:
+                (_commandDict["FilterTwo"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = ImgDisplay.Width;
+
+                // SET value of _commandDict["FilterTwo"]'s ThirdParam property to value of ImgDisplay.Height:
+                (_commandDict["FilterTwo"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = ImgDisplay.Height;
+
+                // SET value of _commandDict["FilterTwo"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
+                (_commandDict["FilterTwo"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FourthParam = OnEvent;
+
+                // INVOKE _commandDict["FilterTwo"]'s ExecuteMethod():
+                _invokeCommand(_commandDict["FilterTwo"]);
             }
-            // CATCH NullInstanceException from ChangeImg():
+            // CATCH InvalidStringException from invoking _commandDict["FilterTwo"]():
+            catch (InvalidStringException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
+            // CATCH NullInstanceException from invoking _commandDict["FilterTwo"]():
             catch (NullInstanceException pException)
             {
-                // WRITE exception message to debug console:
+                // WRITE exception message to console:
                 Console.WriteLine(pException.Message);
             }
         }
@@ -516,19 +546,34 @@ namespace GUI
         /// <param name="e"> Required Argument Value(s)</param>
         private void RadioFilter3_CheckedChanged(object sender, EventArgs e)
         {
-            // TRY checking if _filterThree() OR ChangeImg() throw a NullInstanceException:
+            // TRY checking if invoking _commandDict["FilterThree"]() throw a NullInstanceException:
             try
             {
-                // CALL _filterThree passing current index in _imgFPDict as a parameter:
-                //_filterThree(_imgFPDict[_dictIndex]);
+                // SET value of _commandDict["FilterThree"]'s FirstParam property to value of _crrntImgFP:
+                (_commandDict["FilterThree"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
-                // CALL ChangeImg():
-                ChangeImg();
+                // SET value of _commandDict["FilterThree"]'s SecondParam property to value of ImgDisplay.Width:
+                (_commandDict["FilterThree"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = ImgDisplay.Width;
+
+                // SET value of _commandDict["FilterThree"]'s ThirdParam property to value of ImgDisplay.Height:
+                (_commandDict["FilterThree"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = ImgDisplay.Height;
+
+                // SET value of _commandDict["FilterThree"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
+                (_commandDict["FilterThree"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FourthParam = OnEvent;
+
+                // INVOKE _commandDict["FilterThree"]'s ExecuteMethod():
+                _invokeCommand(_commandDict["FilterThree"]);
             }
-            // CATCH NullInstanceException from ChangeImg():
+            // CATCH InvalidStringException from invoking _commandDict["FilterThree"]():
+            catch (InvalidStringException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
+            // CATCH NullInstanceException from invoking _commandDict["FilterThree"]():
             catch (NullInstanceException pException)
             {
-                // WRITE exception message to debug console:
+                // WRITE exception message to console:
                 Console.WriteLine(pException.Message);
             }
         }
@@ -540,46 +585,38 @@ namespace GUI
         /// <param name="e"> Required Argument Value(s)</param>
         private void RadioFilter4_CheckedChanged(object sender, EventArgs e)
         {
-            // TRY checking if _filterFour() OR ChangeImg() throw a NullInstanceException:
+            // TRY checking if invoking _commandDict["FilterFour"]() throw a NullInstanceException:
             try
             {
-                // CALL _filterFour passing current index in _imgFPDict as a parameter:
-                //_filterFour(_imgFPDict[_dictIndex]);
+                // SET value of _commandDict["FilterFour"]'s FirstParam property to value of _crrntImgFP:
+                (_commandDict["FilterFour"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
-                // CALL ChangeImg():
-                ChangeImg();
+                // SET value of _commandDict["FilterFour"]'s SecondParam property to value of ImgDisplay.Width:
+                (_commandDict["FilterFour"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = ImgDisplay.Width;
+
+                // SET value of _commandDict["FilterFour"]'s ThirdParam property to value of ImgDisplay.Height:
+                (_commandDict["FilterFour"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = ImgDisplay.Height;
+
+                // SET value of _commandDict["FilterFour"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
+                (_commandDict["FilterFour"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FourthParam = OnEvent;
+
+                // INVOKE _commandDict["FilterFour"]'s ExecuteMethod():
+                _invokeCommand(_commandDict["FilterFour"]);
             }
-            // CATCH NullInstanceException from ChangeImg():
+            // CATCH InvalidStringException from invoking _commandDict["FilterFour"]():
+            catch (InvalidStringException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
+            // CATCH NullInstanceException from invoking _commandDict["FilterFour"]():
             catch (NullInstanceException pException)
             {
-                // WRITE exception message to debug console:
+                // WRITE exception message to console:
                 Console.WriteLine(pException.Message);
             }
         }
 
-        /// <summary>
-        /// Filter remove radio button - for removing filters applied
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Required Argument Value(s)</param>
-        private void RadioFilterRemove_CheckedChanged(object sender, EventArgs e)
-        {
-            // TRY checking if _filterRemove() OR ChangeImg() throw a NullInstanceException:
-            try
-            {
-                // CALL _filterRemove passing current index in _imgFPDict as a parameter:
-                //_filterRemove(_imgFPDict[_dictIndex]);
-
-                // CALL ChangeImg():
-                ChangeImg();
-            }
-            // CATCH NullInstanceException from ChangeImg():
-            catch (NullInstanceException pException)
-            {
-                // WRITE exception message to debug console:
-                Console.WriteLine(pException.Message);
-            }
-        }
         #endregion
 
 
@@ -661,6 +698,22 @@ namespace GUI
                 // WRITE exception message to debug console:
                 Console.WriteLine(pException.Message);
             }
+        }
+
+        #endregion
+
+
+        #region RESET METHODS
+
+        /// <summary>
+        /// Resets all Image changes and reverts back to original image state
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Required Argument Value(s)</param>
+        private void ResetBttn_Click(object sender, EventArgs e)
+        {
+            // CALL ChangeImg(), so it resets back to standard image:
+            ChangeImg();
         }
 
         #endregion

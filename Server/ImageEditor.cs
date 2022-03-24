@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
+﻿using System.Drawing;
 using Server.Exceptions;
 using Server.GeneralInterfaces;
 
@@ -9,37 +6,31 @@ namespace Server
 {
     /// <summary>
     /// Class which edits Images, e.g. Rotation, H/V Flip, Scaling, Cropping, Filtering
-    /// Author: Declan Kerby-Collins, William Eardley & William Smith
+    /// Author: Declan Kerby-Collins, William Smith & William Eardley
     /// Date: 23/03/22
     /// </summary>
+    /// <REFERENCE> Ricky's Tutorials (2017) C# TUTORIAL : Create an image filter and apply it to an image in 6 minutes. Available at: https://www.youtube.com/watch?v=SCSI8xEi4f4. (Accessed: 09 March 2022). </REFERENCE> 
     public class ImageEditor : IEditImg
     {
+        #region FIELD VARIABLES
 
-        #region FIELDS
+        // DECLARE TWO ints, name them '_red1' & '_red2':
+        private int _red1, _red2;
 
-        // DECLARE an int name it '_red1':
-        private int _red1;
+        // DECLARE TWO ints, name them '_green1' & '_green2':
+        private int _green1, _green2;
 
-        // DECLARE an int name it '_green1':
-        private int _green1;
+        // DECLARE TWO ints, name them '_blue1' & '_blue2':
+        private int _blue1, _blue2;
 
-        // DECLARE an int name it '_blue1':
-        private int _blue1;
-
-        // DECLARE an int name it '_red2':
-        private int _red2;
-
-        // DECLARE an int name it '_green2':
-        private int _green2;
-
-        // DECLARE an int name it '_blue2':
-        private int _blue2;
-
-        // DECLARE a Bitmap name it '_newMap':
+        // DECLARE a Bitmap, name it '_newMap':
         private Bitmap _newMap;
 
-        // DECLARE an Image name it '_tempImage':
+        // DECLARE an Image, name it '_tempImage':
         private Image _tempImage;
+
+        // DECLARE a Graphics, name it '_tempGraphics':
+        private Graphics _tempGraphics;
 
         #endregion
 
@@ -51,7 +42,7 @@ namespace Server
         /// </summary>
         public ImageEditor()
         {
-
+            // EMPTY CONSTRUCTOR
         }
 
         #endregion
@@ -59,7 +50,8 @@ namespace Server
 
         #region IMPLEMENTATION OF IEDITIMG
 
-        #region Orientation
+        #region ORIENTATION
+
         /// <summary>
         /// Rotates Image 90 degrees clockwise
         /// </summary>
@@ -101,10 +93,10 @@ namespace Server
         }
 
         /// <summary>
-        /// Flips Image on the X axis
+        /// Flips Image horizontally
         /// </summary>
-        /// <param name="pImage"> Image to be flipped on the X axis </param>
-        public void ImgFlipXAxis(Image pImage)
+        /// <param name="pImage"> Image to be flipped horizontally </param>
+        public void ImgHFlip(Image pImage)
         {
             // IF pImage DOES HAVE a valid Image instance:
             if (pImage != null)
@@ -121,10 +113,10 @@ namespace Server
         }
 
         /// <summary>
-        /// Flips Image on the Y axis
+        /// Flips Image vertically
         /// </summary>
-        /// <param name="pImage"> Image to be flipped on the Y axis </param>
-        public void ImgFlipYAxis(Image pImage)
+        /// <param name="pImage"> Image to be flipped vertically </param>
+        public void ImgVFlip(Image pImage)
         {
             // IF pImage DOES HAVE a valid Image instance:
             if (pImage != null)
@@ -142,36 +134,16 @@ namespace Server
         #endregion
 
 
-        #region Scale/Crop
-        /// <summary>
-        /// METHOD 'ScaleImg' - for scaling image
-        /// </summary>
-        /// <param name="pImage"></param>
-        public void ScaleImg(Image pImage)
-        {
-            // IF pImage is NOT NULL then call method
-            if (pImage != null)
-            {
-                // CALL Scale method for image
-                // pImage.Scale()
-                
-                
-            }
-            else
-            {
-                // THROW NEW NullInstanceException with apprpriate message
-                throw new NullInstanceException("ERROR: No Image to be scaled!");
-            }
-        }
+        #region SIZE
 
         /// <summary>
-        /// Crops image 
+        /// Crops the specified image and returns modification
         /// </summary>
-        /// <param name="pImage"></param>
-        /// <returns></returns>
-        public Image CropImg(Image pImage)
+        /// <param name="pImage"> Image to be changed </param>
+        /// <returns> Returns newly cropped image </returns>
+        public Image ImgCrop(Image pImage)
         {
-            // IF pImage DOESNT HAVE a valid Image instance:
+            // IF pImage DOES NOT HAVE a valid Image instance:
             if (pImage != null)
             {
                 //new temp bitmap name it _bitmap
@@ -195,16 +167,42 @@ namespace Server
                 throw new NullInstanceException("ERROR: No Image to be cropped!");
             }
         }
+
+        /// <summary>
+        /// Resizes an image to what user specifies
+        /// </summary>
+        /// <param name="pImage"> Image to be changed </param>
+        /// <returns> Returns newly scaled image </returns>
+        public Image ImgScale(Image pImage)
+        {
+            // IF pImage is NOT NULL then call method
+            if (pImage != null)
+            {
+                // CALL Scale method for image
+                // pImage.Scale()
+
+                return null;
+            }
+            else
+            {
+                // THROW NEW NullInstanceException with apprpriate message
+                throw new NullInstanceException("ERROR: No Image to be scaled!");
+            }
+        }
+
         #endregion
 
 
-        #region Brightness/Contrast/Saturation
+        #region COLOUR
+
         /// <summary>
         /// METHOD 'BrightnessImg' - for controlling brightness
         /// </summary>
         /// <param name="pImage"></param>
-        public void BrightnessImg(Image pImage, float pBrt)
+        public Image ImgBrightness(Image pImage, float pBrt)
         {
+            return null;
+
             // IF pImage is NOT NULL then call method
             if (pImage != null)
             {
@@ -303,19 +301,20 @@ namespace Server
         /// METHOD 'ContrastImg' - for controlling contrast
         /// </summary>
         /// <param name="pImage"></param>
-        public void ContrastImg(Image pImage, int pSat)
+        public Image ImgContrast(Image pImage, int pSat)
         {
-            
+            return null;
         }
-
 
         /// <summary>
         /// METHOD 'SaturationImg' - for controlling saturation
         /// </summary>
         /// <param name="pImage"></param>
         /// <param name="pSat"></param>
-        public void SaturationImg(Image pImage, int pSat)
+        public Image ImgSaturation(Image pImage, int pSat)
         {
+            return null;
+
             // IF pImage is NOT NULL then call method
             if (pImage != null)
             {
@@ -552,13 +551,10 @@ namespace Server
 
                         // SET the pixels of _newMap to the new argb values:
                         _newMap.SetPixel(x, y, Color.FromArgb(_red2, _green2, _blue2));
-
-
                     }
                 }
 
                 _tempImage = _newMap;
-
             }
             else
             {
@@ -566,137 +562,159 @@ namespace Server
                 throw new NullInstanceException("ERROR: No Image to increase saturation of!");
             }
          }
+
         #endregion
 
 
-        #region Filters
-        /// <REFERENCE> Ricky's Tutorials (2017) C# TUTORIAL : Create an image filter and apply it to an image in 6 minutes. Available at: https://www.youtube.com/watch?v=SCSI8xEi4f4. (Accessed: 09 March 2022). </REFERENCE> 
+        #region FILTERS
 
         /// <summary>
-        /// METHOD 'FilterOneImg' - for applying first filter
+        /// Applies first filter to specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        public void FilterOneImg(Image pImage)
+        /// <param name="pImage"> Image to be modified </param>
+        /// <returns> Modified image </returns>
+        /// <CITATION> (Ricky's Tutorials, 2017) </CITATION>
+        public Image ImgFilterOne(Image pImage)
         {
-            // IF pImage is NOT NULL then call method
+            // IF pImage DOES HAVE an active instance:
             if (pImage != null)
             {
-                // CALL Filter One method for image
+                // CALL SetupFilterGraphics(), passing pImage as a parameter:
+                SetupFilterGraphics(pImage);
 
-                // DECLAR local Bitmap name it '_displayedImg'
-                Bitmap _displayedImg = new Bitmap(pImage.Width, pImage.Height);
+                // ADD Blue layer over _tempImage:
+                _tempGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.DodgerBlue)), 0, 0, _tempImage.Width, _tempImage.Height);
 
-                // DECLAR local Bitmap name it '_imgGraphics'
-                Graphics _imgGraphics = Graphics.FromImage(_displayedImg);
-
-                // ASSIGNMENT sets the _imgGraphics drawImage to the pImage
-                _imgGraphics.DrawImage(pImage, 0, 0);
-
-                // ASSIGNMENT makes image light blue
-                _imgGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.DodgerBlue)), 0, 0, _displayedImg.Width, _displayedImg.Height);
-
-
-
+                // RETURN instance of _tempImage:
+                return _tempImage;
             }
+            // IF pImage DOES NOT HAVE an active instance:
             else
             {
-                // THROW NEW NullInstanceException with appropriate message
-                throw new NullInstanceException("ERROR: No Image to apply filter to!");
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: No Image to apply blue filter to!");
             }
         }
 
         /// <summary>
-        /// METHOD 'FilterTwoImg' - for applying second filter
+        /// Applies second filter to specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        public void FilterTwoImg(Image pImage)
+        /// <param name="pImage"> Image to be modified </param>
+        /// <returns> Modified image </returns>
+        /// <CITATION> (Ricky's Tutorials, 2017) </CITATION>
+        public Image ImgFilterTwo(Image pImage)
         {
-            // IF pImage is NOT NULL then call method
+            // IF pImage DOES HAVE an active instance:
             if (pImage != null)
             {
-                // CALL Filter Two method for image
+                // CALL SetupFilterGraphics(), passing pImage as a parameter:
+                SetupFilterGraphics(pImage);
 
-                // DECLAR local Bitmap name it '_displayedImg'
-                Bitmap _displayedImg = new Bitmap(pImage.Width, pImage.Height);
+                // ADD Red layer over _tempImage:
+                _tempGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.Red)), 0, 0, _tempImage.Width, _tempImage.Height);
 
-                // DECLAR local Bitmap name it '_imgGraphics'
-                Graphics _imgGraphics = Graphics.FromImage(_displayedImg);
-
-                // ASSIGNMENT sets the _imgGraphics drawImage to the pImage
-                _imgGraphics.DrawImage(pImage, 0, 0);
-
-                // ASSIGNMENT makes image Red
-                _imgGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.Red)), 0, 0, _displayedImg.Width, _displayedImg.Height);
+                // RETURN instance of _tempImage:
+                return _tempImage;
             }
+            // IF pImage DOES NOT HAVE an active instance:
             else
             {
-                // THROW NEW NullInstanceException with appropriate message
-                throw new NullInstanceException("ERROR: No Image to apply filter to!");
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: No Image to apply red filter to!");
             }
         }
 
         /// <summary>
-        /// METHOD 'FilterThreeImg' - for applying third filter
+        /// Applies third filter to specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        public void FilterThreeImg(Image pImage)
+        /// <param name="pImage"> Image to be modified </param>
+        /// <returns> Modified image </returns>
+        /// <CITATION> (Ricky's Tutorials, 2017) </CITATION>
+        public Image ImgFilterThree(Image pImage)
         {
-            // IF pImage is NOT NULL then call method
+            // IF pImage DOES HAVE an active instance:
             if (pImage != null)
             {
-                // CALL Filter Three method for image
+                // CALL SetupFilterGraphics(), passing pImage as a parameter:
+                SetupFilterGraphics(pImage);
 
-                // DECLAR local Bitmap name it '_displayedImg'
-                Bitmap _displayedImg = new Bitmap(pImage.Width, pImage.Height);
+                // ADD Purple layer over _tempImage:
+                _tempGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.MediumPurple)), 0, 0, _tempImage.Width, _tempImage.Height);
 
-                // DECLAR local Bitmap name it '_imgGraphics'
-                Graphics _imgGraphics = Graphics.FromImage(_displayedImg);
-
-                // ASSIGNMENT sets the _imgGraphics drawImage to the pImage
-                _imgGraphics.DrawImage(pImage, 0, 0);
-
-                // ASSIGNMENT makes image light MediumPurple
-                _imgGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.MediumPurple)), 0, 0, _displayedImg.Width, _displayedImg.Height);
+                // RETURN instance of _tempImage:
+                return _tempImage;
             }
+            // IF pImage DOES NOT HAVE an active instance:
             else
             {
-                // THROW NEW NullInstanceException with appropriate message
-                throw new NullInstanceException("ERROR: No Image to apply filter to!");
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: No Image to apply purple filter to!");
             }
          }
 
         /// <summary>
-        /// METHOD 'FilterFourImg' - for applying fourth filter
+        /// Applies fourth filter to specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        public void FilterFourImg(Image pImage)
+        /// <param name="pImage"> Image to be modified </param>
+        /// <returns> Modified image </returns>
+        /// <CITATION> (Ricky's Tutorials, 2017) </CITATION>
+        public Image ImgFilterFour(Image pImage)
         {
-            // IF pImage is NOT NULL then call method
+            // IF pImage DOES HAVE an active instance:
             if (pImage != null)
             {
-                // CALL Filter Four method for image
+                // CALL SetupFilterGraphics(), passing pImage as a parameter:
+                SetupFilterGraphics(pImage);
 
-                // DECLAR local Bitmap name it '_displayedImg'
-                Bitmap _displayedImg = new Bitmap(pImage.Width, pImage.Height);
+                // ADD Grey layer over _tempImage:
+                _tempGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.LightGray)), 0, 0, _tempImage.Width, _tempImage.Height);
 
-                // DECLAR local Bitmap name it '_imgGraphics'
-                Graphics _imgGraphics = Graphics.FromImage(_displayedImg);
-
-                // ASSIGNMENT sets the _imgGraphics drawImage to the pImage
-                _imgGraphics.DrawImage(pImage, 0, 0);
-
-                // ASSIGNMENT makes image light LightGray
-                _imgGraphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.LightGray)), 0, 0, _displayedImg.Width, _displayedImg.Height);
+                // RETURN instance of _tempImage:
+                return _tempImage;
             }
+            // IF pImage DOES NOT HAVE an active instance:
             else
             {
-                // THROW NEW NullInstanceException with appropriate message
-                throw new NullInstanceException("ERROR: No Image to apply filter to!");
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: No Image to apply grey filter to!");
             }
         }
+
         #endregion
 
-       
+
+        #endregion
+
+
+        #region PRIVATE METHODS
+
+        /// <summary>
+        /// Setups Image graphics for filter change
+        /// </summary>
+        /// <param name="pImage"> Image to be modified </param>
+        private void SetupFilterGraphics(Image pImage)
+        {
+            // IF _tempImage DOES HAVE an active instance:
+            if (_tempImage != null)
+            {
+                // DISPOSE of _tempImage, freeing resources:
+                _tempImage.Dispose();
+            }
+
+            // IF _tempGraphics DOES HAVE an active instance:
+            if (_tempGraphics != null)
+            {
+                // DISPOSE of _tempGraphics, freeing resources:
+                _tempGraphics.Dispose();
+            }
+
+            // INSTANTIATE _tempImage as a new Bitmap(), passing pImage dimensions as parameters:
+            _tempImage = new Bitmap(pImage);
+
+            // INITIALISE _tempGraphics with return value of Graphics.FromImage(), passing _tempImage as a parameter:
+            _tempGraphics = Graphics.FromImage(_tempImage);
+        }
+
         #endregion
     }
 }

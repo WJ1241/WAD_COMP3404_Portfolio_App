@@ -10,12 +10,12 @@ namespace Server
 {
     /// <summary>
     /// Class which acts as the 'Server' for the Application
-    /// Author: William Smith, William Eardley, Declan Kerby-Collins & Marc Price
-    /// Date: 23/03/22
+    /// Author: William Smith, Declan Kerby-Collins, William Eardley & Marc Price
+    /// Date: 24/03/22
     /// </summary>
     /// <REFERENCE> Price, M (2021) 'IServer.cs'. COMP3404: Applied Software Engineering. Available at: https://worcesterbb.blackboard.com/. (Accessed: 20 November 2021). </REFERENCE>
-    public class ImageServer : IServer, IACRotate, IInitialiseParam<IEditImg>, IInitialiseParam<IManageImg>, IInitialiseParam<IDictionary<string, EventArgs>>,
-        IInitialiseParam<string, EventArgs>
+    public class ImageServer : IServer, IInitialiseParam<IEditImg>, IInitialiseParam<IManageImg>, IInitialiseParam<IDictionary<string, EventArgs>>,
+        IInitialiseParam<string, EventArgs>, IApplyFilterImg, IReplaceColourImg//, IReplaceSizeImg
     {
         #region FIELD VARIABLES
 
@@ -137,16 +137,49 @@ namespace Server
         }
 
         /// <summary>
+        /// Rotate the image anticlockwise specified by 'pUid'.
+        /// The client will need to request a copy of the Image to update its view-copy of the image accordingly.
+        /// </summary>
+        /// <param name="pUid">the unique identifier for the image to be rotated</param>
+        public void ACRotateImage(string pUid)
+        {
+            // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgRotateAntiClockwise:
+            try
+            {
+                // CALL ImgRotateAntiClockwise(), passing ReturnImg() as a parameter:
+                _imgEditor.ImgRotateAntiClockwise(_imgManager.ReturnImg(pUid));
+            }
+            // CATCH InvalidStringException from ReturnImg:
+            catch (InvalidStringException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW new InvalidStringException, with corresponding message:
+                throw new InvalidStringException(pException.Message);
+            }
+            // CATCH NullInstanceException from _imgEditor.ImgRotateAntiClockwise:
+            catch (NullInstanceException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW new NullInstanceException, with corresponding message:
+                throw new NullInstanceException(pException.Message);
+            }
+        }
+
+        /// <summary>
         /// Flip the image specified by 'pUid' horizontally.
         /// </summary>
         /// <param name="pUid">the unique identifier for the image to be flipped</param>
         public void HorizontalFlipImage(string pUid)
         {
-            // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgFlipXAxis:
+            // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgHFlip():
             try
             {
-                // CALL ImgFlipXAxis(), passing ReturnImg() as a parameter:
-                _imgEditor.ImgFlipXAxis(_imgManager.ReturnImg(pUid));
+                // CALL ImgHFlip(), passing ReturnImg() as a parameter:
+                _imgEditor.ImgHFlip(_imgManager.ReturnImg(pUid));
             }
             // CATCH InvalidStringException from ReturnImg:
             catch (InvalidStringException pException)
@@ -174,13 +207,12 @@ namespace Server
         /// <param name="pUid">the unique identifier for the image to be flipped</param>
         public void VerticalFlipImage(string pUid)
         {
-            // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgFlipYAxis:
+            // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgVFlip():
             try
             {
-                // CALL ImgFlipYAxis(), passing ReturnImg() as a parameter:
-                _imgEditor.ImgFlipYAxis(_imgManager.ReturnImg(pUid));
+                // CALL ImgVFlip(), passing ReturnImg() as a parameter:
+                _imgEditor.ImgVFlip(_imgManager.ReturnImg(pUid));
             }
-
             // CATCH InvalidStringException from ReturnImg:
             catch (InvalidStringException pException)
             {
@@ -191,65 +223,6 @@ namespace Server
                 throw new InvalidStringException(pException.Message);
             }
             // CATCH NullInstanceException from _imgEditor.ImgFlipYAxis:
-            catch (NullInstanceException pException)
-            {
-                // WRITE error message to console:
-                Console.WriteLine(pException.Message);
-
-                // THROW new NullInstanceException, with corresponding message:
-                throw new NullInstanceException(pException.Message);
-            }
-        }
-
-        /// <summary>
-        /// METHOD Saturation provides access to the ContrastImage method in ImgEditor
-        /// </summary>
-        /// <param name="pImage"></param>
-        /// <param name="pSat"></param>
-        public void Saturation(Image pImage, int pSat)
-        {
-            // CALL the ContrastImg and passes pImage and pSat:
-            _imgEditor.SaturationImg(pImage, pSat);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pImage"></param>
-        /// <param name="pBrt"></param>
-        public void BrightnessImg(Image pImage, float pBrt)
-        {
-            _imgEditor.BrightnessImg(pImage, pBrt);
-        }
-
-        #endregion
-
-
-        #region IMPLEMENTATION OF IACROTATE
-
-        /// <summary>
-        /// Rotate the image anticlockwise specified by 'pUid'.
-        /// The client will need to request a copy of the Image to update its view-copy of the image accordingly.
-        /// </summary>
-        /// <param name="pUid">the unique identifier for the image to be rotated</param>
-        public void ACRotateImage(string pUid)
-        {
-            // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgRotateAntiClockwise:
-            try
-            {
-                // CALL ImgRotateAntiClockwise(), passing ReturnImg() as a parameter:
-                _imgEditor.ImgRotateAntiClockwise(_imgManager.ReturnImg(pUid));
-            }
-            // CATCH InvalidStringException from ReturnImg:
-            catch (InvalidStringException pException)
-            {
-                // WRITE error message to console:
-                Console.WriteLine(pException.Message);
-
-                // THROW new InvalidStringException, with corresponding message:
-                throw new InvalidStringException(pException.Message);
-            }
-            // CATCH NullInstanceException from _imgEditor.ImgRotateAntiClockwise:
             catch (NullInstanceException pException)
             {
                 // WRITE error message to console:
@@ -370,21 +343,61 @@ namespace Server
         #endregion
 
 
-        #region Crop
+        #region IMPLEMENTATION OF IREPLACECOLOURIMG
 
         /// <summary>
-        /// Crop the image specified by 'pUid' vertically.
+        /// Change the Brightness of a specified image
         /// </summary>
-        /// <param name="pUid">the unique identifier for the image to be flipped</param>
-        public void CropImage(string pUid)
+        /// <param name="pUID"> Unique ID of Image </param>
+        /// <param name="pBrt"> Brightness multiplier </param>
+        public void ReplaceBrightnessImg(string pUID, float pBrt)
         {
-            // TRY checking if InvalidStringException and NullInstanceException are thrown:
+
+        }
+
+        /// <summary>
+        /// Change the Contrast of a specified image
+        /// </summary>
+        /// <param name="pUID"> Unique ID of Image </param>
+        /// <param name="pCon"> Contrast multiplier </param>
+        public void ReplaceContrastImg(string pUID, float pCon)
+        {
+
+        }
+
+        /// <summary>
+        /// Change the Saturation of a specified image
+        /// </summary>
+        /// <param name="pUID"> Unique ID of Image </param>
+        /// <param name="pSat"> Saturation multiplier </param>
+        public void ReplaceSaturationImg(string pUID, int pSat)
+        {
+
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IAPPLYFILTERIMG
+
+        /// <summary>
+        /// Applies first specified filter to given image
+        /// </summary>
+        /// <param name="pUID"> Unique ID for Image </param>
+        /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pFrameHeight">the height (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
+        public void ApplyFilterOne(string pUID, int pFrameWidth, int pFrameHeight, EventHandler<ImageEventArgs> pImageEvent)
+        {
+            // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgFilterOne():
             try
             {
-                // CALL CropImg(), passing ReturnImg() as a parameter:
-                _imgEditor.CropImg(_imgManager.ReturnImg(pUid));
-            }
+                // SET value of Img property to return value of _imgEditor.ImgFilterOne(), passing result of _imgManager.ReturnImg() as a parameter:
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgFilterOne(_imgManager.ReturnImg(pUID, pFrameWidth, pFrameHeight));
 
+                // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
+                pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
+            }
             // CATCH InvalidStringException from ReturnImg:
             catch (InvalidStringException pException)
             {
@@ -394,7 +407,7 @@ namespace Server
                 // THROW new InvalidStringException, with corresponding message:
                 throw new InvalidStringException(pException.Message);
             }
-            // CATCH NullInstanceException from _imgEditor.ImgFlipYAxis:
+            // CATCH NullInstanceException from _imgEditor.ImgFilterOne:
             catch (NullInstanceException pException)
             {
                 // WRITE error message to console:
@@ -404,7 +417,128 @@ namespace Server
                 throw new NullInstanceException(pException.Message);
             }
         }
-        
+
+        /// <summary>
+        /// Applies second specified filter to given image
+        /// </summary>
+        /// <param name="pUID"> Unique ID for Image </param>
+        /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pFrameHeight">the height (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
+        public void ApplyFilterTwo(string pUID, int pFrameWidth, int pFrameHeight, EventHandler<ImageEventArgs> pImageEvent)
+        {
+            // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgFilterTwo():
+            try
+            {
+                // SET value of Img property to return value of _imgEditor.ImgFilterTwo(), passing result of _imgManager.ReturnImg() as a parameter:
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgFilterTwo(_imgManager.ReturnImg(pUID, pFrameWidth, pFrameHeight));
+
+                // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
+                pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
+            }
+            // CATCH InvalidStringException from ReturnImg:
+            catch (InvalidStringException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW new InvalidStringException, with corresponding message:
+                throw new InvalidStringException(pException.Message);
+            }
+            // CATCH NullInstanceException from _imgEditor.ImgFilterTwo:
+            catch (NullInstanceException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW new NullInstanceException, with corresponding message:
+                throw new NullInstanceException(pException.Message);
+            }
+        }
+
+        /// <summary>
+        /// Applies third specified filter to given image
+        /// </summary>
+        /// <param name="pUID"> Unique ID for Image </param>
+        /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pFrameHeight">the height (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
+        public void ApplyFilterThree(string pUID, int pFrameWidth, int pFrameHeight, EventHandler<ImageEventArgs> pImageEvent)
+        {
+            // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgFilterThree():
+            try
+            {
+                // SET value of Img property to return value of _imgEditor.ImgFilterThree(), passing result of _imgManager.ReturnImg() as a parameter:
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgFilterThree(_imgManager.ReturnImg(pUID, pFrameWidth, pFrameHeight));
+
+                // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
+                pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
+            }
+            // CATCH InvalidStringException from ReturnImg:
+            catch (InvalidStringException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW new InvalidStringException, with corresponding message:
+                throw new InvalidStringException(pException.Message);
+            }
+            // CATCH NullInstanceException from _imgEditor.ImgFilterThree:
+            catch (NullInstanceException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW new NullInstanceException, with corresponding message:
+                throw new NullInstanceException(pException.Message);
+            }
+        }
+
+        /// <summary>
+        /// Applies fourth specified filter to given image
+        /// </summary>
+        /// <param name="pUID"> Unique ID for Image </param>
+        /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pFrameHeight">the height (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
+        public void ApplyFilterFour(string pUID, int pFrameWidth, int pFrameHeight, EventHandler<ImageEventArgs> pImageEvent)
+        {
+            // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgFilterFour():
+            try
+            {
+                // SET value of Img property to return value of _imgEditor.ImgFilterFour(), passing result of _imgManager.ReturnImg() as a parameter:
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgFilterFour(_imgManager.ReturnImg(pUID, pFrameWidth, pFrameHeight));
+
+                // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
+                pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
+            }
+            // CATCH InvalidStringException from ReturnImg:
+            catch (InvalidStringException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW new InvalidStringException, with corresponding message:
+                throw new InvalidStringException(pException.Message);
+            }
+            // CATCH NullInstanceException from _imgEditor.ImgFilterFour:
+            catch (NullInstanceException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW new NullInstanceException, with corresponding message:
+                throw new NullInstanceException(pException.Message);
+            }
+        }
+
+        #endregion
+
+
+        #region IMPLEMENTATION OF IREPLACESIZEIMG
+
+
+
         #endregion
     }
 }

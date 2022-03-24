@@ -177,8 +177,8 @@ namespace TestServer.IndividualTests
             // TRY checking if Verify() throws a MockException:
             try
             {
-                // VERIFY that _mockImageEditor.ImgFlipXAxis() has been called ONCE, makes sure that method is not called twice or more:
-                _mockImageEditor.Verify(_mock => _mock.ImgFlipXAxis(_mockImageMgr.Object.ReturnImg("")), Times.Once);
+                // VERIFY that _mockImageEditor.ImgHFlip() has been called ONCE, makes sure that method is not called twice or more:
+                _mockImageEditor.Verify(_mock => _mock.ImgHFlip(_mockImageMgr.Object.ReturnImg("")), Times.Once);
             }
             // CATCH a MockException from Verify():
             catch (MockException)
@@ -223,8 +223,8 @@ namespace TestServer.IndividualTests
             // TRY checking if Verify() throws a MockException:
             try
             {
-                // VERIFY that _mockImageEditor.ImgFlipYAxis has been called ONCE, makes sure that method is not called twice or more:
-                _mockImageEditor.Verify(_mock => _mock.ImgFlipYAxis(_mockImageMgr.Object.ReturnImg("")), Times.Once);
+                // VERIFY that _mockImageEditor.ImgVFlip has been called ONCE, makes sure that method is not called twice or more:
+                _mockImageEditor.Verify(_mock => _mock.ImgVFlip(_mockImageMgr.Object.ReturnImg("")), Times.Once);
             }
             // CATCH a MockException from Verify():
             catch (MockException)
@@ -310,7 +310,7 @@ namespace TestServer.IndividualTests
             #region ACT
 
             // CALL ACRotateImage() on _imageServer, passing a blank string as a parameter:
-            (_imageServer as IACRotate).ACRotateImage("");
+            _imageServer.ACRotateImage("");
 
             #endregion
 
