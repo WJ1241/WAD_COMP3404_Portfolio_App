@@ -104,8 +104,8 @@ namespace GUI
             // IF _imgFPDict DOES NOT contain _dictIndex as a key:
             else
             {
-                // THROW a new NullReferenceException(), with corresponding message:
-                throw new NullReferenceException("ERROR: _imgFPDict does not contain _dictIndex as a key!");
+                // THROW a new NullValueException(), with corresponding message:
+                throw new NullValueException("ERROR: _imgFPDict does not contain _dictIndex as a key!");
             }
         }
 
@@ -187,8 +187,18 @@ namespace GUI
             // SET value of _dictCount to same value as _dictIndex:
             _dictCount = _dictIndex;
 
-            // CALL ChangeImg():
-            ChangeImg();
+            // TRY checking if ChangeImg() throws a NullReferenceException:
+            try
+            {
+                // CALL ChangeImg():
+                 ChangeImg();
+            }
+            // CATCH NullValueException from ChangeImg method:
+            catch (NullValueException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
         }
 
         #endregion
@@ -336,8 +346,8 @@ namespace GUI
                     // CALL ChangeImg():
                     ChangeImg();
                 }
-                // CATCH NullInstanceException from ChangeImg():
-                catch (NullInstanceException pException)
+                // CATCH NullValueException from ChangeImg():
+                catch (NullValueException pException)
                 {
                     // WRITE exception message to console:
                     Console.WriteLine(pException.Message);
@@ -394,8 +404,8 @@ namespace GUI
                     // CALL ChangeImg():
                     ChangeImg();
                 }
-                // CATCH NullInstanceException from ChangeImg():
-                catch (NullInstanceException pException)
+                // CATCH NullValueException from ChangeImg():
+                catch (NullValueException pException)
                 {
                     // WRITE exception message to console:
                     Console.WriteLine(pException.Message);

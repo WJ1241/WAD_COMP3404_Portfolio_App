@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Numerics;
 using System.Windows.Forms;
 using GUI.Forms.Interfaces;
 using GUI.Logic.Interfaces;
@@ -15,7 +16,7 @@ namespace GUI
     /// <summary>
     /// Partial Class which creates a 'FishyEdit' for the user to edit Images with.
     /// Author: William Smith, William Eardley, Declan Kerby-Collins & Marc Price
-    /// Date: 23/02/22
+    /// Date: 24/02/22
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>
     /// <REFERENCE> jay_t55 (2014) Make a borderless form movable? Available at: https://stackoverflow.com/questions/1592876/make-a-borderless-form-movable/24561946#24561946. (Accessed 5 November 2021). </REFERENCE>
@@ -35,6 +36,9 @@ namespace GUI
 
         // DECLARE a string, name it '_crrntImgFP':
         private string _crrntImgFP;
+
+        // DECLARE an Vector2, name it '_originalSize':
+        private Vector2 _originalSize;
 
         #endregion
 
@@ -66,11 +70,24 @@ namespace GUI
                 // SET value of _commandDict["GetImage"]'s FirstParam property to value of _crrntImgFP:
                 (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
-                // SET value of _commandDict["GetImage"]'s SecondParam property to value of ImgDisplay.Width:
-                (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = ImgDisplay.Width;
+                // IF ImgDisplay.Image DOES HAVE an active instance:
+                if (ImgDisplay.Image != null)
+                {
+                    // SET value of _commandDict["GetImage"]'s SecondParam property to value of ImgDisplay.Width:
+                    (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
 
-                // SET value of _commandDict["GetImage"]'s ThirdParam property to value of ImgDisplay.Height:
-                (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = ImgDisplay.Height;
+                    // SET value of _commandDict["GetImage"]'s ThirdParam property to value of ImgDisplay.Height:
+                    (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
+                }
+                // IF ImgDisplay.Image DOES NOT HAVE an active instance:
+                else
+                {
+                    // SET value of _commandDict["GetImage"]'s SecondParam property to value of '0':
+                    (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = 0;
+
+                    // SET value of _commandDict["GetImage"]'s ThirdParam property to value of '0':
+                    (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = 0;
+                }
 
                 // SET value of _commandDict["GetImage"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
                 (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FourthParam = OnEvent;
@@ -124,6 +141,13 @@ namespace GUI
             // IF pArgs.Img DOES HAVE an active instance:
             if (pArgs.Img != null)
             {
+                // IF ImgDisplay.Image DOES NOT HAVE an active instance:
+                if (ImgDisplay.Image == null)
+                {
+                    // INSTANTIATE _originalSize as a new Vector2(), passing pArgs.Img's dimensions as parameters:
+                    _originalSize = new Vector2(pArgs.Img.Width, pArgs.Img.Height);
+                }
+
                 // SET value of ImgDisplay.Image Property to value of pArgs.Img:
                 ImgDisplay.Image = pArgs.Img;
             }
@@ -383,27 +407,14 @@ namespace GUI
         #region RESIZE METHODS
 
         /// <summary>
-        /// Scale control button - for scaling the image
+        /// Changes the size of the image displayed, depending on the current scale value
         /// </summary>
         /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Required Argument Value(s)</param>
-        private void ScaleBttn_Click(object sender, EventArgs e)
+        /// <param name="e"> Value for classes without event data </param>
+        private void ScaleNumBox_ValueChanged(object sender, EventArgs e)
         {
-            // TRY checking if _scale() OR ChangeImg() throw a NullInstanceException:
-            try
-            {
-                // CALL _scale passing current index in _imgFPDict as a parameter:
-                //_scale(_imgFPDict[_dictIndex]);
-
-                // CALL ChangeImg():
-                ChangeImg();
-            }
-            // CATCH NullInstanceException from ChangeImg():
-            catch (NullInstanceException pException)
-            {
-                // WRITE exception message to debug console:
-                Console.WriteLine(pException.Message);
-            }
+            // CALL ChangeImg():
+            ChangeImg();
         }
 
         /// <summary>
@@ -418,9 +429,6 @@ namespace GUI
             {
                 // CALL _crop passing current index in _imgFPDict as a parameter:
                 //_crop(_imgFPDict[_dictIndex]);
-
-                // CALL ChangeImg():
-                ChangeImg();
             }
             // CATCH NullInstanceException from ChangeImg():
             catch (NullInstanceException pException)
@@ -644,6 +652,12 @@ namespace GUI
                 // WRITE exception message to debug console:
                 Console.WriteLine(pException.Message);
             }
+            // CATCH NullReferenceException from ChangeImg method:
+            catch (NullReferenceException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
         }
 
         /// <summary>
@@ -703,7 +717,7 @@ namespace GUI
         #endregion
 
 
-        #region RESET METHODS
+        #region NON IMAGE METHODS
 
         /// <summary>
         /// Resets all Image changes and reverts back to original image state
@@ -716,10 +730,20 @@ namespace GUI
             ChangeImg();
         }
 
-        #endregion
-
-
-        #region CLOSE METHODS
+        /// <summary>
+        /// Displays a MessageBox to show the user how to use the app
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Required Argument Value(s)</param>
+        private void HelpBttn_Click(object sender, EventArgs e)
+        {
+            // Display Information screen to user:
+            MessageBox.Show("When changing any colour related properties\n" +
+                "such as Brightness, Contrast, Saturation and Filters,\n" +
+                "as well as resizing the image,\n\n" +
+                "Apply AFTER rotation/flip to prevent having to redo image changes!" 
+                ,"Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
         /// <summary>
         /// Method which closes an instance of this class and removes any other disposable objects
@@ -823,6 +847,7 @@ namespace GUI
             // RESET _mouseDown to false:
             _mouseDown = false;
         }
+
 
         #endregion
     }

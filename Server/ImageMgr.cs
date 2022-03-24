@@ -118,8 +118,23 @@ namespace Server
                     _tempImage.Dispose();
                 }
 
-                // INITIALISE _tempImage, give value of _imgDict[pFileName] with new Size:
-                _tempImage = new Bitmap(_imgDict[pFileName], new Size(pFrameWidth, pFrameHeight));
+                // IF pFrameWidth AND pFrameHeight HAVE been specified:
+                if (pFrameWidth > 0 && pFrameHeight > 0)
+                {
+                    // INITIALISE _tempImage, give value of _imgDict[pFileName] with new Size() passing pFrameWidth and pFrameHeight as parameters:
+                    _tempImage = new Bitmap(_imgDict[pFileName], new Size(pFrameWidth, pFrameHeight));
+                }
+                // IF pFrameWidth AND pFrameHeight HAVE NOT been specified:
+                else
+                {
+                    // INSTANTIATE _tempImage as a new Bitmap(), passing _imgDict[pFileName] as a parameter:
+                    _tempImage = new Bitmap(_imgDict[pFileName]);
+
+                    // WRITE to console, explaining that image will be sized to original resolution:
+                    Console.WriteLine("pFrameWidth and pFrameHeight not specified yet, creating at original size!");
+                }
+
+                
 
                 // RETURN _tempImage:
                 return _tempImage;

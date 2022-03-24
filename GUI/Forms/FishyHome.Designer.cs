@@ -44,6 +44,7 @@ namespace GUI
             // 
             // LoadBttn
             // 
+            this.LoadBttn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LoadBttn.Location = new System.Drawing.Point(458, 351);
             this.LoadBttn.Margin = new System.Windows.Forms.Padding(4);
             this.LoadBttn.Name = "LoadBttn";
@@ -65,6 +66,7 @@ namespace GUI
             // 
             // NextBttn
             // 
+            this.NextBttn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.NextBttn.Location = new System.Drawing.Point(158, 351);
             this.NextBttn.Margin = new System.Windows.Forms.Padding(4);
             this.NextBttn.Name = "NextBttn";
@@ -76,6 +78,7 @@ namespace GUI
             // 
             // BackBttn
             // 
+            this.BackBttn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.BackBttn.Location = new System.Drawing.Point(20, 351);
             this.BackBttn.Margin = new System.Windows.Forms.Padding(4);
             this.BackBttn.Name = "BackBttn";
@@ -87,7 +90,7 @@ namespace GUI
             // 
             // EditBttn
             // 
-            this.EditBttn.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.EditBttn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.EditBttn.Location = new System.Drawing.Point(321, 351);
             this.EditBttn.Margin = new System.Windows.Forms.Padding(4);
             this.EditBttn.Name = "EditBttn";

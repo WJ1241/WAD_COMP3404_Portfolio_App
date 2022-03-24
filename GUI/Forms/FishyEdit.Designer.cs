@@ -29,6 +29,7 @@ namespace GUI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FishyEdit));
             this.CloseBttn = new System.Windows.Forms.Button();
             this.SaveBttn = new System.Windows.Forms.Button();
             this.VFlipBttn = new System.Windows.Forms.Button();
@@ -44,6 +45,7 @@ namespace GUI
             this.RadioFilter1 = new System.Windows.Forms.RadioButton();
             this.groupBoxOrientation = new System.Windows.Forms.GroupBox();
             this.groupBoxImageCtrl = new System.Windows.Forms.GroupBox();
+            this.ResetBttn = new System.Windows.Forms.Button();
             this.lblContrast = new System.Windows.Forms.Label();
             this.lblSaturation = new System.Windows.Forms.Label();
             this.lblBrightness = new System.Windows.Forms.Label();
@@ -52,9 +54,11 @@ namespace GUI
             this.ContrastControl = new System.Windows.Forms.TrackBar();
             this.BrightnessControl = new System.Windows.Forms.TrackBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.LblScale = new System.Windows.Forms.Label();
+            this.ScaleNumBox = new System.Windows.Forms.NumericUpDown();
             this.CropBttn = new System.Windows.Forms.Button();
-            this.ScaleBttn = new System.Windows.Forms.Button();
-            this.ResetBttn = new System.Windows.Forms.Button();
+            this.HelpBttn = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ImgDisplay)).BeginInit();
             this.GroupBoxFilters.SuspendLayout();
             this.groupBoxOrientation.SuspendLayout();
@@ -64,6 +68,7 @@ namespace GUI
             ((System.ComponentModel.ISupportInitialize)(this.ContrastControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BrightnessControl)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ScaleNumBox)).BeginInit();
             this.SuspendLayout();
             // 
             // CloseBttn
@@ -139,6 +144,7 @@ namespace GUI
             this.ImgDisplay.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ImgDisplay.Name = "ImgDisplay";
             this.ImgDisplay.Size = new System.Drawing.Size(499, 369);
+            this.ImgDisplay.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.ImgDisplay.TabIndex = 9;
             this.ImgDisplay.TabStop = false;
             // 
@@ -261,11 +267,24 @@ namespace GUI
             this.groupBoxImageCtrl.TabStop = false;
             this.groupBoxImageCtrl.Text = "Image Control";
             // 
+            // ResetBttn
+            // 
+            this.ResetBttn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ResetBttn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ResetBttn.Location = new System.Drawing.Point(62, 79);
+            this.ResetBttn.Margin = new System.Windows.Forms.Padding(6);
+            this.ResetBttn.Name = "ResetBttn";
+            this.ResetBttn.Size = new System.Drawing.Size(183, 56);
+            this.ResetBttn.TabIndex = 5;
+            this.ResetBttn.Text = "Reset Image";
+            this.ResetBttn.UseVisualStyleBackColor = true;
+            this.ResetBttn.Click += new System.EventHandler(this.ResetBttn_Click);
+            // 
             // lblContrast
             // 
             this.lblContrast.AutoSize = true;
             this.lblContrast.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblContrast.Location = new System.Drawing.Point(77, 183);
+            this.lblContrast.Location = new System.Drawing.Point(94, 189);
             this.lblContrast.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblContrast.Name = "lblContrast";
             this.lblContrast.Size = new System.Drawing.Size(122, 32);
@@ -276,7 +295,7 @@ namespace GUI
             // 
             this.lblSaturation.AutoSize = true;
             this.lblSaturation.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblSaturation.Location = new System.Drawing.Point(81, 312);
+            this.lblSaturation.Location = new System.Drawing.Point(85, 318);
             this.lblSaturation.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblSaturation.Name = "lblSaturation";
             this.lblSaturation.Size = new System.Drawing.Size(146, 32);
@@ -287,7 +306,7 @@ namespace GUI
             // 
             this.lblBrightness.AutoSize = true;
             this.lblBrightness.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.lblBrightness.Location = new System.Drawing.Point(77, 57);
+            this.lblBrightness.Location = new System.Drawing.Point(85, 58);
             this.lblBrightness.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblBrightness.Name = "lblBrightness";
             this.lblBrightness.Size = new System.Drawing.Size(150, 32);
@@ -307,26 +326,26 @@ namespace GUI
             this.groupBoxColouring.Margin = new System.Windows.Forms.Padding(6);
             this.groupBoxColouring.Name = "groupBoxColouring";
             this.groupBoxColouring.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBoxColouring.Size = new System.Drawing.Size(304, 413);
+            this.groupBoxColouring.Size = new System.Drawing.Size(304, 418);
             this.groupBoxColouring.TabIndex = 25;
             this.groupBoxColouring.TabStop = false;
             this.groupBoxColouring.Text = "Colouring";
             // 
             // SaturationControl
             // 
-            this.SaturationControl.Location = new System.Drawing.Point(73, 354);
+            this.SaturationControl.Location = new System.Drawing.Point(77, 354);
             this.SaturationControl.Margin = new System.Windows.Forms.Padding(4);
             this.SaturationControl.Name = "SaturationControl";
-            this.SaturationControl.Size = new System.Drawing.Size(143, 80);
+            this.SaturationControl.Size = new System.Drawing.Size(150, 80);
             this.SaturationControl.TabIndex = 28;
             this.SaturationControl.Scroll += new System.EventHandler(this.SaturationControl_ValueChanged);
             // 
             // ContrastControl
             // 
-            this.ContrastControl.Location = new System.Drawing.Point(73, 225);
+            this.ContrastControl.Location = new System.Drawing.Point(77, 225);
             this.ContrastControl.Margin = new System.Windows.Forms.Padding(4);
             this.ContrastControl.Name = "ContrastControl";
-            this.ContrastControl.Size = new System.Drawing.Size(143, 80);
+            this.ContrastControl.Size = new System.Drawing.Size(154, 80);
             this.ContrastControl.TabIndex = 28;
             this.ContrastControl.Scroll += new System.EventHandler(this.ContrastControl_ValueChanged);
             // 
@@ -335,14 +354,15 @@ namespace GUI
             this.BrightnessControl.Location = new System.Drawing.Point(77, 94);
             this.BrightnessControl.Margin = new System.Windows.Forms.Padding(4);
             this.BrightnessControl.Name = "BrightnessControl";
-            this.BrightnessControl.Size = new System.Drawing.Size(143, 80);
+            this.BrightnessControl.Size = new System.Drawing.Size(150, 80);
             this.BrightnessControl.TabIndex = 28;
             this.BrightnessControl.Scroll += new System.EventHandler(this.BrightnessControl_ValueChanged);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.LblScale);
+            this.groupBox1.Controls.Add(this.ScaleNumBox);
             this.groupBox1.Controls.Add(this.CropBttn);
-            this.groupBox1.Controls.Add(this.ScaleBttn);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
             this.groupBox1.Location = new System.Drawing.Point(404, 751);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(6);
@@ -353,11 +373,54 @@ namespace GUI
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Size";
             // 
+            // LblScale
+            // 
+            this.LblScale.AutoSize = true;
+            this.LblScale.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.LblScale.Location = new System.Drawing.Point(34, 49);
+            this.LblScale.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.LblScale.Name = "LblScale";
+            this.LblScale.Size = new System.Drawing.Size(87, 32);
+            this.LblScale.TabIndex = 29;
+            this.LblScale.Text = "Scale";
+            // 
+            // ScaleNumBox
+            // 
+            this.ScaleNumBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.ScaleNumBox.DecimalPlaces = 1;
+            this.ScaleNumBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 17.14286F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ScaleNumBox.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.ScaleNumBox.Location = new System.Drawing.Point(40, 84);
+            this.ScaleNumBox.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.ScaleNumBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.ScaleNumBox.Name = "ScaleNumBox";
+            this.ScaleNumBox.Size = new System.Drawing.Size(183, 53);
+            this.ScaleNumBox.TabIndex = 29;
+            this.ScaleNumBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ScaleNumBox.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ScaleNumBox.ValueChanged += new System.EventHandler(this.ScaleNumBox_ValueChanged);
+            // 
             // CropBttn
             // 
             this.CropBttn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CropBttn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CropBttn.Location = new System.Drawing.Point(234, 55);
+            this.CropBttn.Location = new System.Drawing.Point(235, 81);
             this.CropBttn.Margin = new System.Windows.Forms.Padding(6);
             this.CropBttn.Name = "CropBttn";
             this.CropBttn.Size = new System.Drawing.Size(183, 56);
@@ -365,30 +428,27 @@ namespace GUI
             this.CropBttn.Text = "Crop";
             this.CropBttn.UseVisualStyleBackColor = true;
             // 
-            // ScaleBttn
+            // HelpBttn
             // 
-            this.ScaleBttn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ScaleBttn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ScaleBttn.Location = new System.Drawing.Point(39, 55);
-            this.ScaleBttn.Margin = new System.Windows.Forms.Padding(6);
-            this.ScaleBttn.Name = "ScaleBttn";
-            this.ScaleBttn.Size = new System.Drawing.Size(183, 56);
-            this.ScaleBttn.TabIndex = 16;
-            this.ScaleBttn.Text = "Scale";
-            this.ScaleBttn.UseVisualStyleBackColor = true;
+            this.HelpBttn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.HelpBttn.Image = ((System.Drawing.Image)(resources.GetObject("HelpBttn.Image")));
+            this.HelpBttn.Location = new System.Drawing.Point(1113, 94);
+            this.HelpBttn.Name = "HelpBttn";
+            this.HelpBttn.Size = new System.Drawing.Size(80, 71);
+            this.HelpBttn.TabIndex = 28;
+            this.HelpBttn.UseVisualStyleBackColor = true;
+            this.HelpBttn.Click += new System.EventHandler(this.HelpBttn_Click);
             // 
-            // ResetBttn
+            // label1
             // 
-            this.ResetBttn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ResetBttn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ResetBttn.Location = new System.Drawing.Point(62, 79);
-            this.ResetBttn.Margin = new System.Windows.Forms.Padding(6);
-            this.ResetBttn.Name = "ResetBttn";
-            this.ResetBttn.Size = new System.Drawing.Size(183, 56);
-            this.ResetBttn.TabIndex = 5;
-            this.ResetBttn.Text = "Reset Image";
-            this.ResetBttn.UseVisualStyleBackColor = true;
-            this.ResetBttn.Click += new System.EventHandler(this.ResetBttn_Click);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.85714F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(120, 22);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(476, 44);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Image displayed is to scale";
             // 
             // FishyEdit
             // 
@@ -397,6 +457,8 @@ namespace GUI
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1206, 922);
             this.ControlBox = false;
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.HelpBttn);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBoxImageCtrl);
             this.Controls.Add(this.groupBoxOrientation);
@@ -425,6 +487,8 @@ namespace GUI
             ((System.ComponentModel.ISupportInitialize)(this.ContrastControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BrightnessControl)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ScaleNumBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -455,7 +519,10 @@ namespace GUI
         private System.Windows.Forms.TrackBar SaturationControl;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button CropBttn;
-        private System.Windows.Forms.Button ScaleBttn;
         private System.Windows.Forms.Button ResetBttn;
+        private System.Windows.Forms.Button HelpBttn;
+        private System.Windows.Forms.Label LblScale;
+        private System.Windows.Forms.NumericUpDown ScaleNumBox;
+        private System.Windows.Forms.Label label1;
     }
 }
