@@ -37,8 +37,6 @@ namespace GUI
             this.ImgDisplay = new System.Windows.Forms.PictureBox();
             this.ACRot90Bttn = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.ScaleBttn = new System.Windows.Forms.Button();
-            this.CropBttn = new System.Windows.Forms.Button();
             this.GroupBoxFilters = new System.Windows.Forms.GroupBox();
             this.RadioFilterRemove = new System.Windows.Forms.RadioButton();
             this.RadioFilter4 = new System.Windows.Forms.RadioButton();
@@ -54,6 +52,9 @@ namespace GUI
             this.SaturationControl = new System.Windows.Forms.TrackBar();
             this.ContrastControl = new System.Windows.Forms.TrackBar();
             this.BrightnessControl = new System.Windows.Forms.TrackBar();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.CropBttn = new System.Windows.Forms.Button();
+            this.ScaleBttn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ImgDisplay)).BeginInit();
             this.GroupBoxFilters.SuspendLayout();
             this.groupBoxOrientation.SuspendLayout();
@@ -62,13 +63,14 @@ namespace GUI
             ((System.ComponentModel.ISupportInitialize)(this.SaturationControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ContrastControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BrightnessControl)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // CloseBttn
             // 
             this.CloseBttn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CloseBttn.Font = new System.Drawing.Font("Calibri", 20F);
-            this.CloseBttn.Location = new System.Drawing.Point(1160, 15);
+            this.CloseBttn.Location = new System.Drawing.Point(1127, 15);
             this.CloseBttn.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.CloseBttn.Name = "CloseBttn";
             this.CloseBttn.Size = new System.Drawing.Size(66, 70);
@@ -161,32 +163,6 @@ namespace GUI
             this.textBox1.Size = new System.Drawing.Size(0, 29);
             this.textBox1.TabIndex = 11;
             // 
-            // ScaleBttn
-            // 
-            this.ScaleBttn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ScaleBttn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ScaleBttn.Location = new System.Drawing.Point(40, 190);
-            this.ScaleBttn.Margin = new System.Windows.Forms.Padding(6);
-            this.ScaleBttn.Name = "ScaleBttn";
-            this.ScaleBttn.Size = new System.Drawing.Size(183, 56);
-            this.ScaleBttn.TabIndex = 16;
-            this.ScaleBttn.Text = "Scale";
-            this.ScaleBttn.UseVisualStyleBackColor = true;
-            this.ScaleBttn.Click += new System.EventHandler(this.ScaleBttn_Click);
-            // 
-            // CropBttn
-            // 
-            this.CropBttn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CropBttn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CropBttn.Location = new System.Drawing.Point(235, 190);
-            this.CropBttn.Margin = new System.Windows.Forms.Padding(6);
-            this.CropBttn.Name = "CropBttn";
-            this.CropBttn.Size = new System.Drawing.Size(183, 56);
-            this.CropBttn.TabIndex = 17;
-            this.CropBttn.Text = "Crop";
-            this.CropBttn.UseVisualStyleBackColor = true;
-            this.CropBttn.Click += new System.EventHandler(this.CropBttn_Click);
-            // 
             // GroupBoxFilters
             // 
             this.GroupBoxFilters.Controls.Add(this.RadioFilterRemove);
@@ -195,7 +171,7 @@ namespace GUI
             this.GroupBoxFilters.Controls.Add(this.RadioFilter2);
             this.GroupBoxFilters.Controls.Add(this.RadioFilter1);
             this.GroupBoxFilters.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.GroupBoxFilters.Location = new System.Drawing.Point(985, 482);
+            this.GroupBoxFilters.Location = new System.Drawing.Point(874, 482);
             this.GroupBoxFilters.Margin = new System.Windows.Forms.Padding(6);
             this.GroupBoxFilters.Name = "GroupBoxFilters";
             this.GroupBoxFilters.Padding = new System.Windows.Forms.Padding(6);
@@ -274,15 +250,13 @@ namespace GUI
             this.groupBoxOrientation.Controls.Add(this.HFlipBttn);
             this.groupBoxOrientation.Controls.Add(this.VFlipBttn);
             this.groupBoxOrientation.Controls.Add(this.Rot90Bttn);
-            this.groupBoxOrientation.Controls.Add(this.CropBttn);
             this.groupBoxOrientation.Controls.Add(this.ACRot90Bttn);
-            this.groupBoxOrientation.Controls.Add(this.ScaleBttn);
             this.groupBoxOrientation.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.groupBoxOrientation.Location = new System.Drawing.Point(457, 482);
+            this.groupBoxOrientation.Location = new System.Drawing.Point(404, 482);
             this.groupBoxOrientation.Margin = new System.Windows.Forms.Padding(6);
             this.groupBoxOrientation.Name = "groupBoxOrientation";
             this.groupBoxOrientation.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBoxOrientation.Size = new System.Drawing.Size(458, 266);
+            this.groupBoxOrientation.Size = new System.Drawing.Size(458, 215);
             this.groupBoxOrientation.TabIndex = 26;
             this.groupBoxOrientation.TabStop = false;
             this.groupBoxOrientation.Text = "Orientation";
@@ -291,7 +265,7 @@ namespace GUI
             // 
             this.groupBoxImageCtrl.Controls.Add(this.SaveBttn);
             this.groupBoxImageCtrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.groupBoxImageCtrl.Location = new System.Drawing.Point(791, 69);
+            this.groupBoxImageCtrl.Location = new System.Drawing.Point(714, 69);
             this.groupBoxImageCtrl.Margin = new System.Windows.Forms.Padding(6);
             this.groupBoxImageCtrl.Name = "groupBoxImageCtrl";
             this.groupBoxImageCtrl.Padding = new System.Windows.Forms.Padding(6);
@@ -378,13 +352,52 @@ namespace GUI
             this.BrightnessControl.TabIndex = 28;
             this.BrightnessControl.Scroll += new System.EventHandler(this.BrightnessControl_ValueChanged);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.CropBttn);
+            this.groupBox1.Controls.Add(this.ScaleBttn);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.groupBox1.Location = new System.Drawing.Point(404, 751);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox1.Size = new System.Drawing.Size(458, 149);
+            this.groupBox1.TabIndex = 27;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Size";
+            // 
+            // CropBttn
+            // 
+            this.CropBttn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CropBttn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CropBttn.Location = new System.Drawing.Point(234, 55);
+            this.CropBttn.Margin = new System.Windows.Forms.Padding(6);
+            this.CropBttn.Name = "CropBttn";
+            this.CropBttn.Size = new System.Drawing.Size(183, 56);
+            this.CropBttn.TabIndex = 17;
+            this.CropBttn.Text = "Crop";
+            this.CropBttn.UseVisualStyleBackColor = true;
+            // 
+            // ScaleBttn
+            // 
+            this.ScaleBttn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ScaleBttn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.857143F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ScaleBttn.Location = new System.Drawing.Point(39, 55);
+            this.ScaleBttn.Margin = new System.Windows.Forms.Padding(6);
+            this.ScaleBttn.Name = "ScaleBttn";
+            this.ScaleBttn.Size = new System.Drawing.Size(183, 56);
+            this.ScaleBttn.TabIndex = 16;
+            this.ScaleBttn.Text = "Scale";
+            this.ScaleBttn.UseVisualStyleBackColor = true;
+            // 
             // FishyEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(1247, 922);
+            this.ClientSize = new System.Drawing.Size(1206, 922);
             this.ControlBox = false;
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBoxImageCtrl);
             this.Controls.Add(this.groupBoxOrientation);
             this.Controls.Add(this.groupBoxColouring);
@@ -411,6 +424,7 @@ namespace GUI
             ((System.ComponentModel.ISupportInitialize)(this.SaturationControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ContrastControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BrightnessControl)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -425,8 +439,6 @@ namespace GUI
         private System.Windows.Forms.PictureBox ImgDisplay;
         private System.Windows.Forms.Button ACRot90Bttn;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button ScaleBttn;
-        private System.Windows.Forms.Button CropBttn;
         private System.Windows.Forms.GroupBox GroupBoxFilters;
         private System.Windows.Forms.RadioButton RadioFilter4;
         private System.Windows.Forms.RadioButton RadioFilter3;
@@ -442,5 +454,8 @@ namespace GUI
         private System.Windows.Forms.TrackBar BrightnessControl;
         private System.Windows.Forms.TrackBar ContrastControl;
         private System.Windows.Forms.TrackBar SaturationControl;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button CropBttn;
+        private System.Windows.Forms.Button ScaleBttn;
     }
 }
