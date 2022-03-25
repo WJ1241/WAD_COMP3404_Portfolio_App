@@ -16,25 +16,31 @@ namespace Server.GeneralInterfaces
         /// Change the Brightness of a specified image
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
+        /// <param name="pImgWidth">the width (in pixels) of the desired image</param>
+        /// <param name="pImgHeight">the height (in pixels) of the desired image</param>
         /// <param name="pBrt"> Brightness multiplier </param>
         /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
-        void ReplaceBrightnessImg(string pUID, int pBrt, EventHandler<ImageEventArgs> pImageEvent);
+        void ReplaceBrightnessImg(string pUID, int pImgWidth, int pImgHeight, int pBrt, EventHandler<ImageEventArgs> pImageEvent);
 
         /// <summary>
         /// Change the Contrast of a specified image
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
+        /// <param name="pImgWidth">the width (in pixels) of the desired image</param>
+        /// <param name="pImgHeight">the height (in pixels) of the desired image</param>
         /// <param name="pCon"> Contrast multiplier </param>
         /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
-        void ReplaceContrastImg(string pUID, int pCon, EventHandler<ImageEventArgs> pImageEvent);
+        void ReplaceContrastImg(string pUID, int pImgWidth, int pImgHeight, int pCon, EventHandler<ImageEventArgs> pImageEvent);
 
         /// <summary>
         /// Change the Saturation of a specified image
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
+        /// <param name="pImgWidth">the width (in pixels) of the desired image</param>
+        /// <param name="pImgHeight">the height (in pixels) of the desired image</param>
         /// <param name="pSat"> Saturation multiplier </param>
         /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
-        void ReplaceSaturationImg(string pUID, int pSat, EventHandler<ImageEventArgs> pImageEvent);
+        void ReplaceSaturationImg(string pUID, int pImgWidth, int pImgHeight, int pSat, EventHandler<ImageEventArgs> pImageEvent);
 
         #endregion
     }

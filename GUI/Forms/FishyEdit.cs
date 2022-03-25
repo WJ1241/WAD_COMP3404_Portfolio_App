@@ -15,8 +15,8 @@ namespace GUI
 {
     /// <summary>
     /// Partial Class which creates a 'FishyEdit' for the user to edit Images with.
-    /// Author: William Smith, William Eardley, Declan Kerby-Collins & Marc Price
-    /// Date: 24/02/22
+    /// Author: William Smith, Declan Kerby-Collins, William Eardley & Marc Price
+    /// Date: 25/03/22
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>
     /// <REFERENCE> jay_t55 (2014) Make a borderless form movable? Available at: https://stackoverflow.com/questions/1592876/make-a-borderless-form-movable/24561946#24561946. (Accessed 5 November 2021). </REFERENCE>
@@ -493,19 +493,19 @@ namespace GUI
                 }
 
                 // SET value of _commandDict["Brightness"]'s FirstParam property to value of _crrntImgFP:
-                (_commandDict["Brightness"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
+                (_commandDict["Brightness"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
                 // SET value of _commandDict["Brightness"]'s SecondParam property to value of original image width multiplied by value in ScaleNumBox:
-                //(_commandDict["Brightness"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
+                (_commandDict["Brightness"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
 
                 // SET value of _commandDict["Brightness"]'s ThirdParam property to value of original image height multiplied by value in ScaleNumBox:
-                //(_commandDict["Brightness"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
+                (_commandDict["Brightness"] as ICommandParam<string, int, int, int,  EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
 
-                // SET value of _commandDict["Brightness"]'s SecondParam property to value of BrightnessControl.Value:
-                (_commandDict["Brightness"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).SecondParam = BrightnessControl.Value;
+                // SET value of _commandDict["Brightness"]'s FourthParam property to value of BrightnessControl.Value:
+                (_commandDict["Brightness"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).FourthParam = BrightnessControl.Value;
 
-                // SET value of _commandDict["Brightness"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
-                (_commandDict["Brightness"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).ThirdParam = OnEvent;
+                // SET value of _commandDict["Brightness"]'s FifthParam property to reference to OnEvent() (ImageEventArgs):
+                (_commandDict["Brightness"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).FifthParam = OnEvent;
 
                 // INVOKE _commandDict["Brightness"]'s ExecuteMethod():
                 _invokeCommand(_commandDict["Brightness"]);
@@ -555,19 +555,19 @@ namespace GUI
                 }
 
                 // SET value of _commandDict["Contrast"]'s FirstParam property to value of _crrntImgFP:
-                (_commandDict["Contrast"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
+                (_commandDict["Contrast"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
                 // SET value of _commandDict["Contrast"]'s SecondParam property to value of original image width multiplied by value in ScaleNumBox:
-                //(_commandDict["Contrast"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
+                (_commandDict["Contrast"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
 
                 // SET value of _commandDict["Contrast"]'s ThirdParam property to value of original image height multiplied by value in ScaleNumBox:
-                //(_commandDict["Contrast"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
+                (_commandDict["Contrast"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
 
-                // SET value of _commandDict["Contrast"]'s SecondParam property to value of ContrastControl.Value:
-                (_commandDict["Contrast"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).SecondParam = ContrastControl.Value;
+                // SET value of _commandDict["Contrast"]'s FourthParam property to value of ContrastControl.Value:
+                (_commandDict["Contrast"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).FourthParam = ContrastControl.Value;
 
-                // SET value of _commandDict["Contrast"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
-                (_commandDict["Contrast"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).ThirdParam = OnEvent;
+                // SET value of _commandDict["Contrast"]'s FifthParam property to reference to OnEvent() (ImageEventArgs):
+                (_commandDict["Contrast"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).FifthParam = OnEvent;
 
                 // INVOKE _commandDict["Contrast"]'s ExecuteMethod():
                 _invokeCommand(_commandDict["Contrast"]);
@@ -604,19 +604,19 @@ namespace GUI
                 }
 
                 // SET value of _commandDict["Saturation"]'s FirstParam property to value of _crrntImgFP:
-                (_commandDict["Saturation"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
+                (_commandDict["Saturation"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
                 // SET value of _commandDict["Saturation"]'s SecondParam property to value of original image width multiplied by value in ScaleNumBox:
-                //(_commandDict["Saturation"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
+                (_commandDict["Saturation"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
 
                 // SET value of _commandDict["Saturation"]'s ThirdParam property to value of original image height multiplied by value in ScaleNumBox:
-                //(_commandDict["Saturation"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
+                (_commandDict["Saturation"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
 
-                // SET value of _commandDict["Saturation"]'s SecondParam property to value of SaturationControl.Value:
-                (_commandDict["Saturation"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).SecondParam = SaturationControl.Value;
+                // SET value of _commandDict["Saturation"]'s FourthParam property to value of SaturationControl.Value:
+                (_commandDict["Saturation"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).FourthParam = SaturationControl.Value;
 
-                // SET value of _commandDict["Saturation"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
-                (_commandDict["Saturation"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).ThirdParam = OnEvent;
+                // SET value of _commandDict["Saturation"]'s FifthParam property to reference to OnEvent() (ImageEventArgs):
+                (_commandDict["Saturation"] as ICommandParam<string, int, int, int, EventHandler<ImageEventArgs>>).FifthParam = OnEvent;
 
                 // INVOKE _commandDict["Saturation"]'s ExecuteMethod():
                 _invokeCommand(_commandDict["Saturation"]);
@@ -793,9 +793,6 @@ namespace GUI
         #endregion
 
 
-        
-
-
         #region NON IMAGE METHODS
 
         /// <summary>
@@ -955,23 +952,10 @@ namespace GUI
             _crpPen = new Pen(Color.White);
 
         }
-        
 
-        private void Confirm_Click(object sender, EventArgs e)
+        private void ConfirmBttn_Click(object sender, EventArgs e)
         {
-            // pass the picture box dimensions to imgEditor
 
-            // pass picture box client rectangle
-
-            // pass _rectW, _rectH, _crpX & _crpY
-
-            Cursor = Cursors.Default;
-
-            ImgDisplay.MouseEnter -= new EventHandler(pictureBox1_MouseEnter);
-            ImgDisplay.MouseMove -= new MouseEventHandler(pictureBox1_MouseMove);
-            ImgDisplay.MouseDown -= new MouseEventHandler(pictureBox1_MouseDown);
-
-            //ImgDisplay.Image = _crpImg;
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)

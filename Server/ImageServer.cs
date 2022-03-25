@@ -77,16 +77,16 @@ namespace Server
         /// Request a copy of the image specified by 'pUid', scaled according to the dimensions given by pFrameWidth and pFrameHeight.
         /// </summary>
         /// <param name="pUid">the unique identifier for the image requested</param>
-        /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
-        /// <param name="pFrameHeight">the height (in pixles) of the 'frame' it is to occupy</param>
+        /// <param name="pImgWidth">the width (in pixels) of the desired image</param>
+        /// <param name="pImgHeight">the height (in pixels) of the desired image</param>
         /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
-        public void GetImage(string pUid, int pFrameWidth, int pFrameHeight, EventHandler<ImageEventArgs> pImageEvent)
+        public void GetImage(string pUid, int pImgWidth, int pImgHeight, EventHandler<ImageEventArgs> pImageEvent)
         {
             // TRY checking if _imgManager.ReturnImg throws an exception:
             try
             {
                 // SET value of Img property to return value of _imgManager.ReturnImg():
-                (_argDict["Image"] as ImageEventArgs).Img = _imgManager.ReturnImg(pUid, pFrameWidth, pFrameHeight);
+                (_argDict["Image"] as ImageEventArgs).Img = _imgManager.ReturnImg(pUid, pImgWidth, pImgHeight);
 
                 // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
                 pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
@@ -348,15 +348,17 @@ namespace Server
         /// Change the Brightness of a specified image
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
+        /// <param name="pImgWidth">the width (in pixels) of the desired image</param>
+        /// <param name="pImgHeight">the height (in pixels) of the desired image</param>
         /// <param name="pBrt"> Brightness multiplier </param>
         /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
-        public void ReplaceBrightnessImg(string pUID, int pBrt, EventHandler<ImageEventArgs> pImageEvent)
+        public void ReplaceBrightnessImg(string pUID, int pImgWidth, int pImgHeight, int pBrt, EventHandler<ImageEventArgs> pImageEvent)
         {
-            // TRY checking if _imgManager.ReturnImg throws an exception:
+            // TRY checking if _imgManager.ReturnImg or _imgEditor.ImgBrightness throws an exception:
             try
             {
-                // SET value of Img property to return value of _imgEditor.ImgBrightness() passing (_imgManager.ReturnImg() passing pUID) and pBrt as a parameter:
-                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgBrightness(_imgManager.ReturnImg(pUID), pBrt);
+                // SET value of Img property to return value of _imgEditor.ImgBrightness() passing _imgManager.ReturnImg() and pBrt as parameters:
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgBrightness(_imgManager.ReturnImg(pUID, pImgWidth, pImgHeight), pBrt);
 
                 // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
                 pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
@@ -385,15 +387,17 @@ namespace Server
         /// Change the Contrast of a specified image
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
+        /// <param name="pImgWidth">the width (in pixels) of the desired image</param>
+        /// <param name="pImgHeight">the height (in pixels) of the desired image</param>
         /// <param name="pCon"> Contrast multiplier </param>
         /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
-        public void ReplaceContrastImg(string pUID, int pCon, EventHandler<ImageEventArgs> pImageEvent)
+        public void ReplaceContrastImg(string pUID, int pImgWidth, int pImgHeight, int pCon, EventHandler<ImageEventArgs> pImageEvent)
         {
-            // TRY checking if _imgManager.ReturnImg throws an exception:
+            // TRY checking if _imgManager.ReturnImg or _imgEditor.ImgContrast throws an exception:
             try
             {
-                // SET value of Img property to return value of _imgEditor.ImgContrast() passing (_imgManager.ReturnImg() passing pUID) and pCon as a parameter:
-                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgContrast(_imgManager.ReturnImg(pUID), pCon);
+                // SET value of Img property to return value of _imgEditor.ImgContrast() passing _imgManager.ReturnImg() and pCon as a parameters:
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgContrast(_imgManager.ReturnImg(pUID, pImgWidth, pImgHeight), pCon);
 
                 // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
                 pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
@@ -422,15 +426,17 @@ namespace Server
         /// Change the Saturation of a specified image
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
+        /// <param name="pImgWidth">the width (in pixels) of the desired image</param>
+        /// <param name="pImgHeight">the height (in pixels) of the desired image</param>
         /// <param name="pSat"> Saturation multiplier </param>
         /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
-        public void ReplaceSaturationImg(string pUID, int pSat, EventHandler<ImageEventArgs> pImageEvent)
+        public void ReplaceSaturationImg(string pUID, int pImgWidth, int pImgHeight, int pSat, EventHandler<ImageEventArgs> pImageEvent)
         {
-            // TRY checking if _imgManager.ReturnImg throws an exception:
+            // TRY checking if _imgManager.ReturnImg  or _imgEditor.ImgSaturation throws an exception:
             try
             {
-                // SET value of Img property to return value of _imgEditor.ImgBrightness() passing (_imgManager.ReturnImg() passing pUID) and pBrt as a parameter:
-                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgSaturation(_imgManager.ReturnImg(pUID), pSat);
+                // SET value of Img property to return value of _imgEditor.ImgSaturation() passing _imgManager.ReturnImg() and pSat as parameters:
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgSaturation(_imgManager.ReturnImg(pUID, pImgWidth, pImgHeight), pSat);
 
                 // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
                 pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
@@ -444,7 +450,7 @@ namespace Server
                 // THROW a new InvalidStringException(), with corresponding message:
                 throw new InvalidStringException(pException.Message);
             }
-            // CATCH NullInstanceException from _imgEditor.ImgBrightness:
+            // CATCH NullInstanceException from _imgEditor.ImgSaturation:
             catch (NullInstanceException pException)
             {
                 // WRITE error message to console:

@@ -28,10 +28,10 @@ namespace Server.GeneralInterfaces
         /// Request a copy of the image specified by 'pUid', scaled according to the dimensions given by pFrameWidth and pFrameHeight.
         /// </summary>
         /// <param name="pUid">the unique identifier for the image requested</param>
-        /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
-        /// <param name="pFrameHeight">the height (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImgWidth">the width (in pixels) of the desired image</param>
+        /// <param name="pImgHeight">the height (in pixels) of the desired image</param>
         /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
-        void GetImage(string pUid, int pFrameWidth, int pFrameHeight, EventHandler<ImageEventArgs> pImageEvent);
+        void GetImage(string pUid, int pImgWidth, int pImgHeight, EventHandler<ImageEventArgs> pImageEvent);
 
         #endregion
 
