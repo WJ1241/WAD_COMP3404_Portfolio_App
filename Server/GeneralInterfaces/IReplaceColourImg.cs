@@ -1,11 +1,12 @@
-﻿using System.Drawing;
+﻿using Server.CustomEventArgs;
+using System;
 
 namespace Server.GeneralInterfaces
 {
     /// <summary>
     /// Interface which allows implementations to replace a specified image with a different coloured version
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 24/03/22
+    /// Date: 25/03/22
     /// </summary>
     public interface IReplaceColourImg
     {
@@ -16,21 +17,24 @@ namespace Server.GeneralInterfaces
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
         /// <param name="pBrt"> Brightness multiplier </param>
-        void ReplaceBrightnessImg(string pUID, float pBrt);
+        /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
+        void ReplaceBrightnessImg(string pUID, int pBrt, EventHandler<ImageEventArgs> pImageEvent);
 
         /// <summary>
         /// Change the Contrast of a specified image
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
         /// <param name="pCon"> Contrast multiplier </param>
-        void ReplaceContrastImg(string pUID, float pCon);
+        /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
+        void ReplaceContrastImg(string pUID, int pCon, EventHandler<ImageEventArgs> pImageEvent);
 
         /// <summary>
         /// Change the Saturation of a specified image
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
         /// <param name="pSat"> Saturation multiplier </param>
-        void ReplaceSaturationImg(string pUID, int pSat);
+        /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
+        void ReplaceSaturationImg(string pUID, int pSat, EventHandler<ImageEventArgs> pImageEvent);
 
         #endregion
     }

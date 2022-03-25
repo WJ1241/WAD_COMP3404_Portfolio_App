@@ -4,14 +4,13 @@ using Server.CustomEventArgs;
 using Server.Exceptions;
 using Server.InitialisingInterfaces;
 using Server.GeneralInterfaces;
-using System.Drawing;
 
 namespace Server
 {
     /// <summary>
     /// Class which acts as the 'Server' for the Application
     /// Author: William Smith, Declan Kerby-Collins, William Eardley & Marc Price
-    /// Date: 24/03/22
+    /// Date: 25/03/22
     /// </summary>
     /// <REFERENCE> Price, M (2021) 'IServer.cs'. COMP3404: Applied Software Engineering. Available at: https://worcesterbb.blackboard.com/. (Accessed: 20 November 2021). </REFERENCE>
     public class ImageServer : IServer, IInitialiseParam<IEditImg>, IInitialiseParam<IManageImg>, IInitialiseParam<IDictionary<string, EventArgs>>,
@@ -61,7 +60,7 @@ namespace Server
                 (_argDict["StringList"] as StringListEventArgs).List = _imgManager.ReturnFilteredList(pPathFileNames);
 
                 // INVOKE pStringListEvent() Event, passing this class and _argDict["StringList"] as parameters:
-                pStringListEvent.Invoke(this, _argDict["StringList"] as StringListEventArgs);
+                pStringListEvent?.Invoke(this, _argDict["StringList"] as StringListEventArgs);
             }
             // CATCH FileAlreadyStoredException from ReturnFilteredList:
             catch (FileAlreadyStoredException pException)
@@ -350,9 +349,36 @@ namespace Server
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
         /// <param name="pBrt"> Brightness multiplier </param>
-        public void ReplaceBrightnessImg(string pUID, float pBrt)
+        /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
+        public void ReplaceBrightnessImg(string pUID, int pBrt, EventHandler<ImageEventArgs> pImageEvent)
         {
+            // TRY checking if _imgManager.ReturnImg throws an exception:
+            try
+            {
+                // SET value of Img property to return value of _imgEditor.ImgBrightness() passing (_imgManager.ReturnImg() passing pUID) and pBrt as a parameter:
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgBrightness(_imgManager.ReturnImg(pUID), pBrt);
 
+                // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
+                pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
+            }
+            // CATCH InvalidStringException from ReturnImg():
+            catch (InvalidStringException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW a new InvalidStringException(), with corresponding message:
+                throw new InvalidStringException(pException.Message);
+            }
+            // CATCH NullInstanceException from _imgEditor.ImgBrightness:
+            catch (NullInstanceException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW new NullInstanceException, with corresponding message:
+                throw new NullInstanceException(pException.Message);
+            }
         }
 
         /// <summary>
@@ -360,9 +386,36 @@ namespace Server
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
         /// <param name="pCon"> Contrast multiplier </param>
-        public void ReplaceContrastImg(string pUID, float pCon)
+        /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
+        public void ReplaceContrastImg(string pUID, int pCon, EventHandler<ImageEventArgs> pImageEvent)
         {
+            // TRY checking if _imgManager.ReturnImg throws an exception:
+            try
+            {
+                // SET value of Img property to return value of _imgEditor.ImgContrast() passing (_imgManager.ReturnImg() passing pUID) and pCon as a parameter:
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgContrast(_imgManager.ReturnImg(pUID), pCon);
 
+                // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
+                pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
+            }
+            // CATCH InvalidStringException from ReturnImg():
+            catch (InvalidStringException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW a new InvalidStringException(), with corresponding message:
+                throw new InvalidStringException(pException.Message);
+            }
+            // CATCH NullInstanceException from _imgEditor.ImgContrast:
+            catch (NullInstanceException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW new NullInstanceException, with corresponding message:
+                throw new NullInstanceException(pException.Message);
+            }
         }
 
         /// <summary>
@@ -370,9 +423,36 @@ namespace Server
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
         /// <param name="pSat"> Saturation multiplier </param>
-        public void ReplaceSaturationImg(string pUID, int pSat)
+        /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
+        public void ReplaceSaturationImg(string pUID, int pSat, EventHandler<ImageEventArgs> pImageEvent)
         {
+            // TRY checking if _imgManager.ReturnImg throws an exception:
+            try
+            {
+                // SET value of Img property to return value of _imgEditor.ImgBrightness() passing (_imgManager.ReturnImg() passing pUID) and pBrt as a parameter:
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgSaturation(_imgManager.ReturnImg(pUID), pSat);
 
+                // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
+                pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
+            }
+            // CATCH InvalidStringException from ReturnImg():
+            catch (InvalidStringException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW a new InvalidStringException(), with corresponding message:
+                throw new InvalidStringException(pException.Message);
+            }
+            // CATCH NullInstanceException from _imgEditor.ImgBrightness:
+            catch (NullInstanceException pException)
+            {
+                // WRITE error message to console:
+                Console.WriteLine(pException.Message);
+
+                // THROW new NullInstanceException, with corresponding message:
+                throw new NullInstanceException(pException.Message);
+            }
         }
 
         #endregion

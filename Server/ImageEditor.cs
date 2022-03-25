@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using Server.Exceptions;
 using Server.GeneralInterfaces;
+using Server.InitialisingInterfaces;
 using ImageProcessor;
 
 namespace Server
@@ -8,10 +9,10 @@ namespace Server
     /// <summary>
     /// Class which edits Images, e.g. Rotation, H/V Flip, Scaling, Cropping, Filtering
     /// Author: Declan Kerby-Collins, William Smith & William Eardley
-    /// Date: 23/03/22
+    /// Date: 25/03/22
     /// </summary>
     /// <REFERENCE> Ricky's Tutorials (2017) C# TUTORIAL : Create an image filter and apply it to an image in 6 minutes. Available at: https://www.youtube.com/watch?v=SCSI8xEi4f4. (Accessed: 09 March 2022). </REFERENCE> 
-    public class ImageEditor : IEditImg
+    public class ImageEditor : IEditImg, IInitialiseParam<ImageFactory>
     {
         #region FIELD VARIABLES
 
@@ -23,6 +24,9 @@ namespace Server
 
         // DECLARE TWO ints, name them '_blue1' & '_blue2':
         private int _blue1, _blue2;
+
+        // DECLARE an ImageFactory, name it '_imgFactory':
+        private ImageFactory _imgFactory;
 
         // DECLARE a Bitmap, name it '_newMap':
         private Bitmap _newMap;
@@ -212,12 +216,32 @@ namespace Server
         #region COLOUR MANAGEMENT 
 
         /// <summary>
-        /// METHOD 'BrightnessImg' - for controlling brightness
+        /// Changes the brightness of a specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        public Image ImgBrightness(Image pImage, float pBrt)
+        /// <param name="pImage"> Image to be changed </param>
+        /// <param name="pBrt"> Brightness value </param>
+        public Image ImgBrightness(Image pImage, int pBrt)
         {
-            return null;
+            // IF pImage DOES HAVE an active instance:
+            if (pImage != null)
+            {
+                // CALL SetupImageFactory(), passing pImage as a parameter:
+                SetupImageFactory(pImage);
+
+                // SET brightness with_imgFactory using pBrt value:
+                _imgFactory.Brightness(pBrt);
+
+                // RETURN instance of _tempImage:
+                return _imgFactory.Image;
+            }
+            // IF pImage DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: No Image to apply brightness change to!");
+            }
+
+
 
             // IF pImage is NOT NULL then call method
             if (pImage != null)
@@ -317,28 +341,40 @@ namespace Server
             else
             {
                 // THROW NEW NullInstanceException with appropriate message
-                throw new NullInstanceException("ERROR: No Image to increase brightness of!");
+                throw new NullInstanceException("ERROR: No Image to apply brightness change to!");
             }
         }
 
         /// <summary>
-        /// METHOD 'ContrastImg' - for controlling contrast
+        /// Changes the contrast of a specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        public Image ImgContrast(Image pImage, int pSat)
+        /// <param name="pImage"> Image to be changed </param>
+        /// <param name="pCon"> Contrast value </param>
+        public Image ImgContrast(Image pImage, int pCon)
         {
-            ImageFactory imgFac = new ImageFactory();
+            // IF pImage DOES HAVE an active instance:
+            if (pImage != null)
+            {
+                // CALL SetupImageFactory(), passing pImage as a parameter:
+                SetupImageFactory(pImage);
 
-            imgFac.Load(pImage);
+                // SET contrast with_imgFactory using pCon value:
+                _imgFactory.Contrast(pCon);
 
-            imgFac.Contrast(50);
+                // RETURN instance of _tempImage:
+                return _imgFactory.Image;
+            }
+            // IF pImage DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: No Image to apply contrast change to!");
+            }
 
 
 
 
 
-
-            return null;
 
             _newMap = new Bitmap(pImage);
 
@@ -366,39 +402,39 @@ namespace Server
                     // IF _red1 is more than 128:
                     if (_red1 > 128)
                     {
-                        // ASSIGNMENT _red2 is set to the value of _red1 plus pSat:
-                        _red2 = _red1 + pSat;
+                        // ASSIGNMENT _red2 is set to the value of _red1 plus pCon:
+                        _red2 = _red1 + pCon;
                     }
                     else
                     {
-                        // ASSIGNMENT _red2 is set to the value of _red1 minus pSat:
-                        _red2 = _red1 - pSat;
+                        // ASSIGNMENT _red2 is set to the value of _red1 minus pCon:
+                        _red2 = _red1 - pCon;
                     }
 
 
                     // IF _green1 is less than 128:
                     if (_green1 > 128)
                     {
-                        // ASSIGNMENT _green2 is set to the value of _green1 plus pSat:
-                        _green2 = _green1 + pSat;
+                        // ASSIGNMENT _green2 is set to the value of _green1 plus pCon:
+                        _green2 = _green1 + pCon;
                     }
                     else
                     {
-                        // ASSIGNMENT _green2 is set to the value of _green1 minus pSat:
-                        _green2 = _green1 - pSat;
+                        // ASSIGNMENT _green2 is set to the value of _green1 minus pCon:
+                        _green2 = _green1 - pCon;
                     }
 
 
                     // IF _blue1 is more than 128:
                     if (_blue1 > 128)
                     {
-                        // ASSIGNMENT _blue2 is set to the value of _blue1 plus pSat:
-                        _blue2 = _blue1 + pSat;
+                        // ASSIGNMENT _blue2 is set to the value of _blue1 plus pCon:
+                        _blue2 = _blue1 + pCon;
                     }
                     else
                     {
-                        // ASSIGNMENT _blue2 is set to the value of _blue1 plus pSat:
-                        _blue2 = _blue1 - pSat;
+                        // ASSIGNMENT _blue2 is set to the value of _blue1 plus pCon:
+                        _blue2 = _blue1 - pCon;
                     }
                     #endregion
 
@@ -461,12 +497,33 @@ namespace Server
         }
 
         /// <summary>
-        /// METHOD 'SaturationImg' - for controlling saturation
+        /// Changes the saturation of a specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        /// <param name="pSat"></param>
+        /// <param name="pImage"> Image to be changed </param>
+        /// <param name="pSat"> Saturation value </param>
         public Image ImgSaturation(Image pImage, int pSat)
         {
+            // IF pImage DOES HAVE an active instance:
+            if (pImage != null)
+            {
+                // CALL SetupImageFactory(), passing pImage as a parameter:
+                SetupImageFactory(pImage);
+
+                // SET contrast with_imgFactory using pSat value:
+                _imgFactory.Saturation(pSat);
+
+                // RETURN instance of _tempImage:
+                return _imgFactory.Image;
+            }
+            // IF pImage DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: No Image to apply saturation change to!");
+            }
+
+
+
             return null;
 
             // IF pImage is NOT NULL then call method:
@@ -867,7 +924,49 @@ namespace Server
         #endregion
 
 
+        #region IMPLEMENTATION OF IINITIALISEPARAM<IMAGEFACTORY>
+
+        /// <summary>
+        /// Initialises an object with an ImageFactory object
+        /// </summary>
+        /// <param name="pImgFactory"> ImageFactory object </param>
+        public void Initialise(ImageFactory pImgFactory)
+        {
+            // IF pImgFactory DOES HAVE an active instance:
+            if (pImgFactory != null)
+            {
+                // INITIALISE _imgFactory with reference to pImgFactory:
+                _imgFactory = pImgFactory;
+            }
+            // IF pImgFactory DOES NOT HAVE an active instance:
+            else
+            {
+                // THROW a new NullInstanceException(), with corresponding message:
+                throw new NullInstanceException("ERROR: pImgFactory does not have an active instance!");
+            }
+        }
+
+        #endregion
+
+
         #region PRIVATE METHODS
+
+        /// <summary>
+        /// Sets up Image graphics for filter change
+        /// </summary>
+        /// <param name="pImage"> Image to be modified </param>
+        private void SetupFilterGraphics(Image pImage)
+        {
+            // IF _tempGraphics DOES HAVE an active instance:
+            if (_tempGraphics != null)
+            {
+                // DISPOSE of _tempGraphics, freeing resources:
+                _tempGraphics.Dispose();
+            }
+
+            // INITIALISE _tempGraphics with return value of Graphics.FromImage(), passing _tempImage as a parameter:
+            _tempGraphics = Graphics.FromImage(_tempImage);
+        }
 
         /// <summary>
         /// Sets up temporary image
@@ -886,25 +985,23 @@ namespace Server
             _tempImage = new Bitmap(pImage);
         }
 
-
         /// <summary>
-        /// Sets up Image graphics for filter change
+        /// Sets up ImageFactory API object
         /// </summary>
         /// <param name="pImage"> Image to be modified </param>
-        private void SetupFilterGraphics(Image pImage)
+        private void SetupImageFactory(Image pImage)
         {
-            // IF _tempGraphics DOES HAVE an active instance:
-            if (_tempGraphics != null)
+            // IF _imgFactory.Image DOES HAVE an active instance:
+            if (_imgFactory.Image != null)
             {
-                // DISPOSE of _tempGraphics, freeing resources:
-                _tempGraphics.Dispose();
-
-                // INITIALISE _tempGraphics with return value of Graphics.FromImage(), passing _tempImage as a parameter:
-                _tempGraphics = Graphics.FromImage(_tempImage);
+                // DISPOSE of _imgFactory.Image:
+                _imgFactory.Image.Dispose();
             }
 
-            #endregion
+            // LOAD pImage to be edited in _imgFactory:
+            _imgFactory.Load(pImage);
         }
-    }
 
+        #endregion
+    }   
 }

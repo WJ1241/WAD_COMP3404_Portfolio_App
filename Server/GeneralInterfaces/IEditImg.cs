@@ -5,7 +5,7 @@ namespace Server.GeneralInterfaces
     /// <summary>
     /// Interface which allows implementations to edit Images
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 24/03/22
+    /// Date: 25/03/22
     /// </summary>
     public interface IEditImg : IService
     {
@@ -62,23 +62,24 @@ namespace Server.GeneralInterfaces
         #region COLOUR
 
         /// <summary>
-        /// METHOD 'BrightnessImg' - for controlling brightness
+        /// Changes the brightness of a specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        Image ImgBrightness(Image pImage, float pBrt);
+        /// <param name="pImage"> Image to be changed </param>
+        /// <param name="pBrt"> Brightness value </param>
+        Image ImgBrightness(Image pImage, int pBrt);
 
         /// <summary>
-        /// METHOD 'ContrastImg' - for controlling contrast
+        /// Changes the contrast of a specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        /// <param name="pSat"></param>
-        Image ImgContrast(Image pImage, int pSat);
+        /// <param name="pImage"> Image to be changed </param>
+        /// <param name="pCon"> Contrast value </param>
+        Image ImgContrast(Image pImage, int pCon);
 
         /// <summary>
-        /// METHOD 'SaturationImg' - for controlling saturation
+        /// Changes the saturation of a specified image
         /// </summary>
-        /// <param name="pImage"></param>
-        /// <param name="pSat"></param>
+        /// <param name="pImage"> Image to be changed </param>
+        /// <param name="pSat"> Saturation value </param>
         Image ImgSaturation(Image pImage, int pSat);
 
         #endregion

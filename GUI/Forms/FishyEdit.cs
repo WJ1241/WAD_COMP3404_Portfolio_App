@@ -73,10 +73,10 @@ namespace GUI
                 // IF ImgDisplay.Image DOES HAVE an active instance:
                 if (ImgDisplay.Image != null)
                 {
-                    // SET value of _commandDict["GetImage"]'s SecondParam property to value of ImgDisplay.Width:
+                    // SET value of _commandDict["GetImage"]'s SecondParam property to value of original image width multiplied by value in ScaleNumBox:
                     (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
 
-                    // SET value of _commandDict["GetImage"]'s ThirdParam property to value of ImgDisplay.Height:
+                    // SET value of _commandDict["GetImage"]'s ThirdParam property to value of original image height multiplied by value in ScaleNumBox:
                     (_commandDict["GetImage"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
                 }
                 // IF ImgDisplay.Image DOES NOT HAVE an active instance:
@@ -467,6 +467,171 @@ namespace GUI
         #endregion
 
 
+        #region COLOUR CHANGE METHODS
+
+        /// <summary>
+        /// Brightness control button - for controlling brightness
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Required Argument Value(s)</param>
+        private void BrightnessControl_ValueChanged(object sender, EventArgs e)
+        {
+            // TRY checking if _brightness() OR ChangeImg() throw a NullInstanceException:
+            try
+            {
+                // IF BrightnessControl.Value is MORE than '0':
+                if (BrightnessControl.Value > 0)
+                {
+                    // SET BrightnessVal label to display positive Brightness value:
+                    BrightnessVal.Text = "+" + BrightnessControl.Value.ToString() + "%";
+                }
+                // IF BrightnessControl.Value is EQUAL to or LESS than '0':
+                else
+                {
+                    // SET BrightnessVal label to display Brightness value:
+                    BrightnessVal.Text = BrightnessControl.Value.ToString() + "%";
+                }
+
+                // SET value of _commandDict["Brightness"]'s FirstParam property to value of _crrntImgFP:
+                (_commandDict["Brightness"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
+
+                // SET value of _commandDict["Brightness"]'s SecondParam property to value of original image width multiplied by value in ScaleNumBox:
+                //(_commandDict["Brightness"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
+
+                // SET value of _commandDict["Brightness"]'s ThirdParam property to value of original image height multiplied by value in ScaleNumBox:
+                //(_commandDict["Brightness"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
+
+                // SET value of _commandDict["Brightness"]'s SecondParam property to value of BrightnessControl.Value:
+                (_commandDict["Brightness"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).SecondParam = BrightnessControl.Value;
+
+                // SET value of _commandDict["Brightness"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
+                (_commandDict["Brightness"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).ThirdParam = OnEvent;
+
+                // INVOKE _commandDict["Brightness"]'s ExecuteMethod():
+                _invokeCommand(_commandDict["Brightness"]);
+                
+            }
+            // CATCH InvalidStringException from invoking _commandDict["Brightness"]():
+            catch (InvalidStringException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
+            // CATCH NullInstanceException from ChangeImg():
+            catch (NullInstanceException pException)
+            {
+                // WRITE exception message to debug console:
+                Console.WriteLine(pException.Message);
+            }
+            // CATCH NullReferenceException from accessing dictionaries:
+            catch (NullReferenceException pException)
+            {
+                // WRITE exception message to console:
+                Console.WriteLine(pException.Message);
+            }
+        }
+
+        /// <summary>
+        /// Contrast control button - for controlling contrast
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Required Argument Value(s)</param>
+        private void ContrastControl_ValueChanged(object sender, EventArgs e)
+        {
+            // TRY checking if _contrast() OR ChangeImg() throw a NullInstanceException:
+            try
+            {
+                // IF ContrastControl.Value is MORE than '0':
+                if (ContrastControl.Value > 0)
+                {
+                    // SET ContrastVal label to display positive Contrast value:
+                    ContrastVal.Text = "+" + ContrastControl.Value.ToString() + "%";
+                }
+                // IF ContrastControl.Value is EQUAL to or LESS than '0':
+                else
+                {
+                    // SET ContrastVal label to display Contrast value:
+                    ContrastVal.Text = ContrastControl.Value.ToString() + "%";
+                }
+
+                // SET value of _commandDict["Contrast"]'s FirstParam property to value of _crrntImgFP:
+                (_commandDict["Contrast"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
+
+                // SET value of _commandDict["Contrast"]'s SecondParam property to value of original image width multiplied by value in ScaleNumBox:
+                //(_commandDict["Contrast"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
+
+                // SET value of _commandDict["Contrast"]'s ThirdParam property to value of original image height multiplied by value in ScaleNumBox:
+                //(_commandDict["Contrast"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
+
+                // SET value of _commandDict["Contrast"]'s SecondParam property to value of ContrastControl.Value:
+                (_commandDict["Contrast"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).SecondParam = ContrastControl.Value;
+
+                // SET value of _commandDict["Contrast"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
+                (_commandDict["Contrast"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).ThirdParam = OnEvent;
+
+                // INVOKE _commandDict["Contrast"]'s ExecuteMethod():
+                _invokeCommand(_commandDict["Contrast"]);
+            }
+            // CATCH NullInstanceException from ChangeImg():
+            catch (NullInstanceException pException)
+            {
+                // WRITE exception message to debug console:
+                Console.WriteLine(pException.Message);
+            }
+        }
+
+        /// <summary>
+        /// Saturation control button - for controlling saturation
+        /// </summary>
+        /// <param name="sender"> Form Object </param>
+        /// <param name="e"> Required Argument Value(s)</param>
+        private void SaturationControl_ValueChanged(object sender, EventArgs e)
+        {
+            // TRY checking if _saturation() OR ChangeImg() throw a NullInstanceException:
+            try
+            {
+                // IF SaturationControl.Value is MORE than '0':
+                if (SaturationControl.Value > 0)
+                {
+                    // SET SaturationVal label to display positive Saturation value:
+                    SaturationVal.Text = "+" + SaturationControl.Value.ToString() + "%";
+                }
+                // IF SaturationControl.Value is EQUAL to or LESS than '0':
+                else
+                {
+                    // SET SaturationVal label to display Saturation value:
+                    SaturationVal.Text = SaturationControl.Value.ToString() + "%";
+                }
+
+                // SET value of _commandDict["Saturation"]'s FirstParam property to value of _crrntImgFP:
+                (_commandDict["Saturation"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
+
+                // SET value of _commandDict["Saturation"]'s SecondParam property to value of original image width multiplied by value in ScaleNumBox:
+                //(_commandDict["Saturation"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
+
+                // SET value of _commandDict["Saturation"]'s ThirdParam property to value of original image height multiplied by value in ScaleNumBox:
+                //(_commandDict["Saturation"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
+
+                // SET value of _commandDict["Saturation"]'s SecondParam property to value of SaturationControl.Value:
+                (_commandDict["Saturation"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).SecondParam = SaturationControl.Value;
+
+                // SET value of _commandDict["Saturation"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
+                (_commandDict["Saturation"] as ICommandParam<string, int, EventHandler<ImageEventArgs>>).ThirdParam = OnEvent;
+
+                // INVOKE _commandDict["Saturation"]'s ExecuteMethod():
+                _invokeCommand(_commandDict["Saturation"]);
+            }
+            // CATCH NullInstanceException from ChangeImg():
+            catch (NullInstanceException pException)
+            {
+                // WRITE exception message to debug console:
+                Console.WriteLine(pException.Message);
+            }
+        }
+
+        #endregion
+
+
         #region FILTER METHODS
 
         /// <summary>
@@ -482,11 +647,11 @@ namespace GUI
                 // SET value of _commandDict["FilterOne"]'s FirstParam property to value of _crrntImgFP:
                 (_commandDict["FilterOne"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
-                // SET value of _commandDict["FilterOne"]'s SecondParam property to value of ImgDisplay.Width:
-                (_commandDict["FilterOne"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = ImgDisplay.Width;
+                // SET value of _commandDict["FilterOne"]'s SecondParam property to value of original image width multiplied by value in ScaleNumBox:
+                (_commandDict["FilterOne"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
 
-                // SET value of _commandDict["FilterOne"]'s ThirdParam property to value of ImgDisplay.Height:
-                (_commandDict["FilterOne"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = ImgDisplay.Height;
+                // SET value of _commandDict["FilterOne"]'s ThirdParam property to value of original image height multiplied by value in ScaleNumBox:
+                (_commandDict["FilterOne"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
 
                 // SET value of _commandDict["FilterOne"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
                 (_commandDict["FilterOne"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FourthParam = OnEvent;
@@ -521,11 +686,11 @@ namespace GUI
                 // SET value of _commandDict["FilterTwo"]'s FirstParam property to value of _crrntImgFP:
                 (_commandDict["FilterTwo"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
-                // SET value of _commandDict["FilterTwo"]'s SecondParam property to value of ImgDisplay.Width:
-                (_commandDict["FilterTwo"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = ImgDisplay.Width;
+                // SET value of _commandDict["FilterTwo"]'s SecondParam property to value of original image width multiplied by value in ScaleNumBox:
+                (_commandDict["FilterTwo"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
 
-                // SET value of _commandDict["FilterTwo"]'s ThirdParam property to value of ImgDisplay.Height:
-                (_commandDict["FilterTwo"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = ImgDisplay.Height;
+                // SET value of _commandDict["FilterTwo"]'s ThirdParam property to value of original image height multiplied by value in ScaleNumBox:
+                (_commandDict["FilterTwo"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
 
                 // SET value of _commandDict["FilterTwo"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
                 (_commandDict["FilterTwo"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FourthParam = OnEvent;
@@ -560,11 +725,11 @@ namespace GUI
                 // SET value of _commandDict["FilterThree"]'s FirstParam property to value of _crrntImgFP:
                 (_commandDict["FilterThree"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
-                // SET value of _commandDict["FilterThree"]'s SecondParam property to value of ImgDisplay.Width:
-                (_commandDict["FilterThree"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = ImgDisplay.Width;
+                // SET value of _commandDict["FilterThree"]'s SecondParam property to value of original image width multiplied by value in ScaleNumBox:
+                (_commandDict["FilterThree"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
 
-                // SET value of _commandDict["FilterThree"]'s ThirdParam property to value of ImgDisplay.Height:
-                (_commandDict["FilterThree"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = ImgDisplay.Height;
+                // SET value of _commandDict["FilterThree"]'s ThirdParam property to value of original image height multiplied by value in ScaleNumBox:
+                (_commandDict["FilterThree"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
 
                 // SET value of _commandDict["FilterThree"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
                 (_commandDict["FilterThree"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FourthParam = OnEvent;
@@ -599,11 +764,11 @@ namespace GUI
                 // SET value of _commandDict["FilterFour"]'s FirstParam property to value of _crrntImgFP:
                 (_commandDict["FilterFour"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FirstParam = _crrntImgFP;
 
-                // SET value of _commandDict["FilterFour"]'s SecondParam property to value of ImgDisplay.Width:
-                (_commandDict["FilterFour"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = ImgDisplay.Width;
+                // SET value of _commandDict["FilterFour"]'s SecondParam property to value of original image width multiplied by value in ScaleNumBox:
+                (_commandDict["FilterFour"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).SecondParam = (int)((int)_originalSize.X * ScaleNumBox.Value);
 
-                // SET value of _commandDict["FilterFour"]'s ThirdParam property to value of ImgDisplay.Height:
-                (_commandDict["FilterFour"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = ImgDisplay.Height;
+                // SET value of _commandDict["FilterFour"]'s ThirdParam property to value of original image height multiplied by value in ScaleNumBox:
+                (_commandDict["FilterFour"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).ThirdParam = (int)((int)_originalSize.Y * ScaleNumBox.Value);
 
                 // SET value of _commandDict["FilterFour"]'s FourthParam property to reference to OnEvent() (ImageEventArgs):
                 (_commandDict["FilterFour"] as ICommandParam<string, int, int, EventHandler<ImageEventArgs>>).FourthParam = OnEvent;
@@ -628,93 +793,7 @@ namespace GUI
         #endregion
 
 
-        #region COLOUR CHANGE METHODS
-
-        /// <summary>
-        /// Brightness control button - for controlling brightness
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Required Argument Value(s)</param>
-        private void BrightnessControl_ValueChanged(object sender, EventArgs e)
-        {
-            // TRY checking if _brightness() OR ChangeImg() throw a NullInstanceException:
-            try
-            {
-                // CALL _brightness passing current index in _imgFPDict as a parameter:
-                //_brightness(_imgFPDict[_dictIndex]);
-
-                // CALL ChangeImg():
-                ChangeImg();
-            }
-            // CATCH NullInstanceException from ChangeImg():
-            catch (NullInstanceException pException)
-            {
-                // WRITE exception message to debug console:
-                Console.WriteLine(pException.Message);
-            }
-            // CATCH NullReferenceException from ChangeImg method:
-            catch (NullReferenceException pException)
-            {
-                // WRITE exception message to console:
-                Console.WriteLine(pException.Message);
-            }
-        }
-
-        /// <summary>
-        /// Contrast control button - for controlling contrast
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Required Argument Value(s)</param>
-        private void ContrastControl_ValueChanged(object sender, EventArgs e)
-        {
-            // TRY checking if _contrast() OR ChangeImg() throw a NullInstanceException:
-            try
-            {
-                // CALL _contrast passing current index in _imgFPDict as a parameter:
-                //_contrast(_imgFPDict[_dictIndex]);
-
-                // ASK MARC HOW TO GET VALUE OF THE TRACKBAR SO CAN PASS TO LOGIC AND THEN ACTUALLY ADJUST CONMTRAST
-
-
-                // CALL ChangeImg():
-                ChangeImg();
-            }
-            // CATCH NullInstanceException from ChangeImg():
-            catch (NullInstanceException pException)
-            {
-                // WRITE exception message to debug console:
-                Console.WriteLine(pException.Message);
-            }
-        }
-
-        /// <summary>
-        /// Saturation control button - for controlling saturation
-        /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Required Argument Value(s)</param>
-        private void SaturationControl_ValueChanged(object sender, EventArgs e)
-        {
-            // TRY checking if _saturation() OR ChangeImg() throw a NullInstanceException:
-            try
-            {
-                // DECLARE and ASSIGNMENT _sat is set to the value of the saturation control value.
-                int _sat = SaturationControl.Value;
-
-                // PASS the image and _sat to the image server then editor
-                    
-
-                // CALL ChangeImg():
-                ChangeImg();
-            }
-            // CATCH NullInstanceException from ChangeImg():
-            catch (NullInstanceException pException)
-            {
-                // WRITE exception message to debug console:
-                Console.WriteLine(pException.Message);
-            }
-        }
-
-        #endregion
+        
 
 
         #region NON IMAGE METHODS
@@ -850,5 +929,10 @@ namespace GUI
 
 
         #endregion
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

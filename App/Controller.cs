@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using ImageProcessor;
 using App.Services;
 using App.Services.Factories;
 using App.GeneralInterfaces;
@@ -16,13 +17,12 @@ using Server.InitialisingInterfaces;
 using Server.Commands;
 using Server.CustomEventArgs;
 
-
 namespace App
 {
     /// <summary>
     /// Main Class of the application, stores reference to all objects required
     /// Author: William Smith, Declan Kerby-Collins & William Eardley
-    /// Date: 12/03/22
+    /// Date: 25/03/22
     /// </summary>
     public class Controller : IController, ISetupApplication, IInitialiseParam<IDictionary<int, IDisposable>>, IInitialiseParam<IServiceLocator>
     {
@@ -198,6 +198,15 @@ namespace App
                 // INITIALISE returned ImageMgr with a new Dictionary<string, Image>():
                 (_serviceLocator.GetService<ImageMgr>() as IInitialiseParam<IDictionary<string, Image>>).Initialise(
                     (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<string, Image>>() as IDictionary<string, Image>);
+
+                #endregion
+
+
+                #region IMAGE EDITOR
+
+                // INITIALISE returned ImageEditor with a new ImageFactory():
+                // CANNOT USE FACTORY AS IMAGEPROCESSOR.IMAGEFACTORY API CLASS DOES NOT HAVE PARAMETERLESS CONSTRUCTOR:
+                (_serviceLocator.GetService<ImageEditor>() as IInitialiseParam<ImageFactory>).Initialise(new ImageFactory(false));
 
                 #endregion
             }
@@ -471,6 +480,60 @@ namespace App
 
             // INITIALISE _formDict[_formCount] (FishyHome) with a reference to _commandStringParam:
             (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringParam);
+
+            #endregion
+
+
+            #region BRIGHTNESS COMMAND
+
+            // DECLARE & INSTANTIATE an ICommandParam<string, int, EventHandler<ImageEventArgs> as a new CommandParam<string, int, EventHandler<ImageEventArgs>(), name it '_commandStringIntEHIParam':
+            ICommandParam<string, int, EventHandler<ImageEventArgs>> _commandStringIntEHIParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>)
+                .Create<CommandParam<string, int, EventHandler<ImageEventArgs>>>() as ICommandParam<string, int, EventHandler<ImageEventArgs>>;
+
+            // SET MethodRef Property of _commandStringIntEHIParam to reference to IServer.GetImage():
+            _commandStringIntEHIParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IReplaceColourImg).ReplaceBrightnessImg;
+
+            // SET Name Property of _commandStringIntEHIParam to "Brightness":
+            (_commandStringIntEHIParam as IName).Name = "Brightness";
+
+            // INITIALISE _formDict[_formCount] (FishyEdit) with a reference to _commandStringIntEHIParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringIntEHIParam);
+
+            #endregion
+
+
+            #region CONTRAST COMMAND
+
+            // INSTANTIATE _commandStringIntEHIParam as a new CommandParam<string, int, EventHandler<ImageEventArgs>():
+            _commandStringIntEHIParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>)
+                .Create<CommandParam<string, int, EventHandler<ImageEventArgs>>>() as ICommandParam<string, int, EventHandler<ImageEventArgs>>;
+
+            // SET MethodRef Property of _commandStringIntEHIParam to reference to IServer.GetImage():
+            _commandStringIntEHIParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IReplaceColourImg).ReplaceContrastImg;
+
+            // SET Name Property of _commandStringIntEHIParam to "Contrast":
+            (_commandStringIntEHIParam as IName).Name = "Contrast";
+
+            // INITIALISE _formDict[_formCount] (FishyEdit) with a reference to _commandStringIntEHIParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringIntEHIParam);
+
+            #endregion
+
+
+            #region SATURATION COMMAND
+
+            // INSTANTIATE _commandStringIntEHIParam as a new CommandParam<string, int, EventHandler<ImageEventArgs>():
+            _commandStringIntEHIParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>)
+                .Create<CommandParam<string, int, EventHandler<ImageEventArgs>>>() as ICommandParam<string, int, EventHandler<ImageEventArgs>>;
+
+            // SET MethodRef Property of _commandStringIntEHIParam to reference to IServer.GetImage():
+            _commandStringIntEHIParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IReplaceColourImg).ReplaceSaturationImg;
+
+            // SET Name Property of _commandStringIntEHIParam to "Saturation":
+            (_commandStringIntEHIParam as IName).Name = "Saturation";
+
+            // INITIALISE _formDict[_formCount] (FishyEdit) with a reference to _commandStringIntEHIParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandStringIntEHIParam);
 
             #endregion
 
