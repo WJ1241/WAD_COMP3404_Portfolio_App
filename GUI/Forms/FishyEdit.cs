@@ -930,9 +930,92 @@ namespace GUI
 
         #endregion
 
-        private void label2_Click(object sender, EventArgs e)
+
+        // DECLARE Pen name it '_crpPen':
+        public Pen _crpPen;
+
+        //DECLARE int's for the crop x&y and the x&y of the rectangle drawn:
+        private int _crpX, _crpY, _rectW, _rectH;
+
+
+        private void CropBttn_Click_1(object sender, EventArgs e)
         {
+            // size of picturebox this will be needed so that the croped img knows where to be placed 
+            int _w = ImgDisplay.Width;
+            int _H = ImgDisplay.Height;
+
+            ImgDisplay.MouseDown += new MouseEventHandler(pictureBox1_MouseDown);
+
+            ImgDisplay.MouseMove += new MouseEventHandler(pictureBox1_MouseMove);
+
+            ImgDisplay.MouseEnter += new EventHandler(pictureBox1_MouseEnter);
+
+            Controls.Add(ImgDisplay);
+
+            _crpPen = new Pen(Color.White);
 
         }
+        
+
+        private void Confirm_Click(object sender, EventArgs e)
+        {
+            // pass the picture box dimensions to imgEditor
+
+            // pass picture box client rectangle
+
+            // pass _rectW, _rectH, _crpX & _crpY
+
+            Cursor = Cursors.Default;
+
+            ImgDisplay.MouseEnter -= new EventHandler(pictureBox1_MouseEnter);
+            ImgDisplay.MouseMove -= new MouseEventHandler(pictureBox1_MouseMove);
+            ImgDisplay.MouseDown -= new MouseEventHandler(pictureBox1_MouseDown);
+
+            //ImgDisplay.Image = _crpImg;
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            if (e.Button == MouseButtons.Left)
+            {
+                Cursor = Cursors.Cross;
+
+                _crpPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+
+                //Set initial x,y 
+                _crpX = e.X;
+                _crpY = e.Y;
+            }
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            if (e.Button == MouseButtons.Left)
+            {
+                ImgDisplay.Refresh();
+                //set width and height for crop rect
+                _rectW = e.X - _crpX;
+
+                _rectH = e.Y - _crpY;
+
+
+                Graphics _graphics = ImgDisplay.CreateGraphics();
+
+                _graphics.DrawRectangle(_crpPen, _crpX, _crpY, _rectW, _rectH);
+                _graphics.Dispose();
+            }
+
+
+        }
+        private void pictureBox1_MouseEnter(object sender, EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            Cursor = Cursors.Cross;
+
+        }
+
     }
 }
