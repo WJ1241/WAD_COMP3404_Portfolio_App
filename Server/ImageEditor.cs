@@ -151,20 +151,8 @@ namespace Server
             // IF pImage DOES NOT HAVE a valid Image instance:
             if (pImage != null)
             {
-                //new temp bitmap name it _bitmap
-                Bitmap _bitmap = new Bitmap(pImage.Width, pImage.Height);
 
-                //new temp rectangle name it _rect
-                Rectangle _retc = new Rectangle();
-
-                //using Graphics from image take set the value of _bitmap to the size of the rectangle set by the user
-                using (Graphics _graphics = Graphics.FromImage(_bitmap))
-                {
-                    _graphics.DrawImage(pImage, -_retc.X, -_retc.Y);
-
-                    //return the edited _bitmap 
-                    return _bitmap;
-                }
+                return null;
             }
             else
             {

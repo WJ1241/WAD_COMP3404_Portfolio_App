@@ -886,14 +886,19 @@ namespace GUI
         /// <param name="e"> Value for classes without event data </param>
         private void FishyEdit_MouseDown(object sender, MouseEventArgs e)
         {
-            // SET _mouseDown to true:
-            _mouseDown = true;
+            if(_crop == false)
+            {
+                // SET _mouseDown to true:
+                _mouseDown = true;
+            }
+
+
 
             // STORE current location to _lastLocation:
             _lastLocation = e.Location;
         }
 
-
+        bool _crop = false;
         /// <summary>
         /// Mouse move event handler
         /// </summary>
@@ -941,11 +946,11 @@ namespace GUI
             int _w = ImgDisplay.Width;
             int _H = ImgDisplay.Height;
 
+            _crop = true;
+
             ImgDisplay.MouseDown += new MouseEventHandler(pictureBox1_MouseDown);
 
             ImgDisplay.MouseMove += new MouseEventHandler(pictureBox1_MouseMove);
-
-            ImgDisplay.MouseEnter += new EventHandler(pictureBox1_MouseEnter);
 
             Controls.Add(ImgDisplay);
 
@@ -953,10 +958,7 @@ namespace GUI
 
         }
 
-        private void ConfirmBttn_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -994,12 +996,36 @@ namespace GUI
 
 
         }
-        private void pictureBox1_MouseEnter(object sender, EventArgs e)
+        private void ConfirmBttn_Click(object sender, EventArgs e)
         {
-            base.OnMouseEnter(e);
-            Cursor = Cursors.Cross;
+
+            Bitmap _bitmap = new Bitmap(ImgDisplay.Width, ImgDisplay.Height);
+
+            ImgDisplay.DrawToBitmap(_bitmap, ImgDisplay.ClientRectangle);
+
+            Bitmap _crpImg = new Bitmap(_rectW, _rectH);
+
+            for (int x = 0; x < _rectW; x++)
+            {
+                for (int y = 0; y < _rectH; y++)
+                {
+                    Color _pxlColor = _bitmap.GetPixel(_crpX + x, _crpY + y);
+
+                    _crpImg.SetPixel(x, y, _pxlColor);
+                }
+            }
+
+
+            Cursor = Cursors.Default;
+            ImgDisplay.MouseMove -= new MouseEventHandler(pictureBox1_MouseMove);
+            ImgDisplay.MouseDown -= new MouseEventHandler(pictureBox1_MouseDown);
+
+            ImgDisplay.Image = _crpImg;
+
+            _crop = false;
 
         }
+
 
     }
 }
