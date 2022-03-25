@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using Server.Exceptions;
 using Server.GeneralInterfaces;
+using ImageProcessor;
 
 namespace Server
 {
@@ -178,17 +179,17 @@ namespace Server
             // IF pImage is NOT NULL then call method
             if (pImage != null)
             {
-               _newMap = new Bitmap(pImage);
+                _newMap = new Bitmap(pImage);
 
                 for (int x = 0; x < _newMap.Width; x++)
                 {
                     for (int y = 0; y < _newMap.Height; y++)
                     {
                         //_newMap.Width = _newMap.Width * 2;
-                       // _newMap.Height = _newMap.Height * 2;
+                        // _newMap.Height = _newMap.Height * 2;
 
                         _newMap.SetResolution(500, 500);
-       
+
                     }
                 }
 
@@ -223,7 +224,7 @@ namespace Server
             {
                 // DECLARE BitMap name it '_newMap':
                 _newMap = new Bitmap(pImage);
-                
+
 
                 // FOR every pixle wide _newMap is incriment x:
                 for (int x = 0; x < _newMap.Width; x++)
@@ -237,10 +238,10 @@ namespace Server
                         #region ASSIGN VAR COLORS
                         // DECLARE and ASSIGN int name it '_red1', it becomes _oldColour's R value:
                         _red1 = _oldColur.R;
-                        
+
                         // DECLARE and ASSIGN int name it '_green1', it becomes _oldColour's G value:
                         _green1 = _oldColur.G;
-                        
+
                         // DECLARE and ASSIGN int name it '_blue1', it becomes _oldColour's B value:
                         _blue1 = _oldColur.B;
                         #endregion
@@ -326,6 +327,17 @@ namespace Server
         /// <param name="pImage"></param>
         public Image ImgContrast(Image pImage, int pSat)
         {
+            ImageFactory imgFac = new ImageFactory();
+
+            imgFac.Load(pImage);
+
+            imgFac.Contrast(50);
+
+
+
+
+
+
             return null;
 
             _newMap = new Bitmap(pImage);
@@ -445,10 +457,7 @@ namespace Server
             }
 
             // ASSIGNMENT _tempImage is given the value of the _newMap:
-            _tempImage = _newMap;
-
-
-
+            //_tempImage = _newMap;
         }
 
         /// <summary>
@@ -721,7 +730,7 @@ namespace Server
                 // THROW NEW NullInstanceException with appropriate message
                 throw new NullInstanceException("ERROR: No Image to increase saturation of!");
             }
-         }
+        }
 
         #endregion
 
@@ -739,6 +748,9 @@ namespace Server
             // IF pImage DOES HAVE an active instance:
             if (pImage != null)
             {
+                // CALL SetupImage(), passing pImage as a parameter:
+                SetupImage(pImage);
+
                 // CALL SetupFilterGraphics(), passing pImage as a parameter:
                 SetupFilterGraphics(pImage);
 
@@ -767,6 +779,9 @@ namespace Server
             // IF pImage DOES HAVE an active instance:
             if (pImage != null)
             {
+                // CALL SetupImage(), passing pImage as a parameter:
+                SetupImage(pImage);
+
                 // CALL SetupFilterGraphics(), passing pImage as a parameter:
                 SetupFilterGraphics(pImage);
 
@@ -795,6 +810,9 @@ namespace Server
             // IF pImage DOES HAVE an active instance:
             if (pImage != null)
             {
+                // CALL SetupImage(), passing pImage as a parameter:
+                SetupImage(pImage);
+
                 // CALL SetupFilterGraphics(), passing pImage as a parameter:
                 SetupFilterGraphics(pImage);
 
@@ -810,7 +828,7 @@ namespace Server
                 // THROW a new NullInstanceException(), with corresponding message:
                 throw new NullInstanceException("ERROR: No Image to apply purple filter to!");
             }
-         }
+        }
 
         /// <summary>
         /// Applies fourth filter to specified image
@@ -823,6 +841,9 @@ namespace Server
             // IF pImage DOES HAVE an active instance:
             if (pImage != null)
             {
+                // CALL SetupImage(), passing pImage as a parameter:
+                SetupImage(pImage);
+
                 // CALL SetupFilterGraphics(), passing pImage as a parameter:
                 SetupFilterGraphics(pImage);
 
@@ -849,10 +870,10 @@ namespace Server
         #region PRIVATE METHODS
 
         /// <summary>
-        /// Setups Image graphics for filter change
+        /// Sets up temporary image
         /// </summary>
         /// <param name="pImage"> Image to be modified </param>
-        private void SetupFilterGraphics(Image pImage)
+        private void SetupImage(Image pImage)
         {
             // IF _tempImage DOES HAVE an active instance:
             if (_tempImage != null)
@@ -861,20 +882,29 @@ namespace Server
                 _tempImage.Dispose();
             }
 
+            // INSTANTIATE _tempImage as a new Bitmap(), passing pImage dimensions as parameters:
+            _tempImage = new Bitmap(pImage);
+        }
+
+
+        /// <summary>
+        /// Sets up Image graphics for filter change
+        /// </summary>
+        /// <param name="pImage"> Image to be modified </param>
+        private void SetupFilterGraphics(Image pImage)
+        {
             // IF _tempGraphics DOES HAVE an active instance:
             if (_tempGraphics != null)
             {
                 // DISPOSE of _tempGraphics, freeing resources:
                 _tempGraphics.Dispose();
+
+                // INITIALISE _tempGraphics with return value of Graphics.FromImage(), passing _tempImage as a parameter:
+                _tempGraphics = Graphics.FromImage(_tempImage);
             }
 
-            // INSTANTIATE _tempImage as a new Bitmap(), passing pImage dimensions as parameters:
-            _tempImage = new Bitmap(pImage);
-
-            // INITIALISE _tempGraphics with return value of Graphics.FromImage(), passing _tempImage as a parameter:
-            _tempGraphics = Graphics.FromImage(_tempImage);
+            #endregion
         }
-
-        #endregion
     }
+
 }
