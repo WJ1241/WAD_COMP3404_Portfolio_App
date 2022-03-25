@@ -49,13 +49,6 @@ namespace Server.GeneralInterfaces
         /// <returns> Returns newly cropped image </returns>
         Image ImgCrop(Image pImage);
 
-        /// <summary>
-        /// Resizes an image to what user specifies
-        /// </summary>
-        /// <param name="pImage"> Image to be changed </param>
-        /// <returns> Returns newly scaled image </returns>
-        Image ImgScale(Image pImage);
-
         #endregion
 
 
