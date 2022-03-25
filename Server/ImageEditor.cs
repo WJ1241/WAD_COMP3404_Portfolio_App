@@ -3,6 +3,7 @@ using Server.Exceptions;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
 using ImageProcessor;
+using System;
 
 namespace Server
 {
@@ -144,15 +145,43 @@ namespace Server
         /// <summary>
         /// Crops the specified image and returns modification
         /// </summary>
-        /// <param name="pImage"> Image to be changed </param>
+        /// <param name="pFrame"> Frame for cropped image </param>
+        /// <param name="pCropBox"> User cropped rectangle </param>
         /// <returns> Returns newly cropped image </returns>
-        public Image ImgCrop(Image pImage)
+        public Image ImgCrop(Bitmap pFrame, Rectangle pCropBox)
         {
-            // IF pImage DOES NOT HAVE a valid Image instance:
-            if (pImage != null)
+            // IF pFrame DOES NOT HAVE a valid instance:
+            if (pFrame != null)
             {
 
-                return null;
+                Bitmap cropImg = new Bitmap(pCropBox.Width, pCropBox.Height);
+
+
+                for (int x = 0; x < pCropBox.Width; x++)
+                {
+                    // TRY checking if pFrame.GetPixel() throws an ArgumentOutOfRangeException:
+                    try
+                    {
+
+                        for (int y = 0; y < pCropBox.Height; y++)
+                        {
+
+                            Color _pxlColor = pFrame.GetPixel(pCropBox.X + x, pCropBox.Y + y);
+
+
+                            cropImg.SetPixel(x, y, _pxlColor);
+                        }
+                    }
+                    // CATCH ArgumentOutOfRangeException from GetPixel():
+                    catch (ArgumentOutOfRangeException e)
+                    {
+                        // WRITE error message to console:
+                        Console.WriteLine(e.Message);
+                    }
+                }
+
+                // RETURN instance of cropImg:
+                return cropImg;
             }
             else
             {

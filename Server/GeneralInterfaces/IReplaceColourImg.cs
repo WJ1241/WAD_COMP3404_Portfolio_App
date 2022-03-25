@@ -13,7 +13,7 @@ namespace Server.GeneralInterfaces
         #region METHODS
 
         /// <summary>
-        /// Change the Brightness of a specified image
+        /// Replaces an image with a new brightness change
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
         /// <param name="pImgWidth">the width (in pixels) of the desired image</param>
@@ -23,7 +23,7 @@ namespace Server.GeneralInterfaces
         void ReplaceBrightnessImg(string pUID, int pImgWidth, int pImgHeight, int pBrt, EventHandler<ImageEventArgs> pImageEvent);
 
         /// <summary>
-        /// Change the Contrast of a specified image
+        /// Replaces an image with a new contrast change
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
         /// <param name="pImgWidth">the width (in pixels) of the desired image</param>
@@ -33,7 +33,7 @@ namespace Server.GeneralInterfaces
         void ReplaceContrastImg(string pUID, int pImgWidth, int pImgHeight, int pCon, EventHandler<ImageEventArgs> pImageEvent);
 
         /// <summary>
-        /// Change the Saturation of a specified image
+        /// Replaces an image with a new saturation change
         /// </summary>
         /// <param name="pUID"> Unique ID of Image </param>
         /// <param name="pImgWidth">the width (in pixels) of the desired image</param>

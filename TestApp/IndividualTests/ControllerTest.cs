@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ImageProcessor;
 using Moq;
 using App;
 using App.GeneralInterfaces;
@@ -16,6 +17,7 @@ using Server.Commands;
 using Server.CustomEventArgs;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
+
 
 namespace TestApp.IndividualTests
 {
@@ -447,6 +449,57 @@ namespace TestApp.IndividualTests
             {
                 // ASSERT if test has passed, and give corresponding message if _pass is false:
                 Assert.IsTrue(_pass, "ERROR: _mockImageMgr.Initialise(_mockImageDict.Object) has not been called!");
+            }
+
+            #endregion
+        }
+
+        #endregion
+
+
+        #region INITIALISE IMAGE EDITOR TESTS
+
+        /// <summary>
+        /// Checks if Controller initialises an ImageEditor with a reference to a ImageFactory object successfully
+        /// </summary>
+        [TestMethod]
+        public void Initialise_ImageEditor_With_ImageFactory()
+        {
+            #region ARRANGE
+
+            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
+            bool _pass = true;
+
+            #endregion
+
+
+            #region ACT
+
+            // CALL SetupApplication() on Controller:
+            _controller.SetupApplication();
+
+            #endregion
+
+
+            #region ASSERT
+
+            // TRY checking if _mockImageEditor.Initialise(It.IsAny<ImageFactory>()) was called:
+            try
+            {
+                // VERIFY that Initialise(It.IsAny<ImageFactory>()) has been called ONCE, makes sure that method is not called more than once:
+                _mockImageEditor.As<IInitialiseParam<ImageFactory>>().Verify(_mock => _mock.Initialise(It.IsAny<ImageFactory>()), Times.Once);
+            }
+            // CATCH MockException from Verify():
+            catch (MockException)
+            {
+                // SET _pass to false, so that test fails:
+                _pass = false;
+            }
+            // FINALISE try and catch block with test pass/fail:
+            finally
+            {
+                // ASSERT if test has passed, and give corresponding message if _pass is false:
+                Assert.IsTrue(_pass, "ERROR: _mockImageEditor.Initialise(It.IsAny<ImageFactory>()) has not been called!");
             }
 
             #endregion
@@ -1046,6 +1099,9 @@ namespace TestApp.IndividualTests
             // SETUP _mockImageMgr to implement IInitialiseParam<IDictionary<string, Image>>:
             _mockImageMgr.As<IInitialiseParam<IDictionary<string, Image>>>();
 
+            // SETUP _mockImageMgr to implement IInitialiseParam<ImageFactory>:
+            _mockImageEditor.As<IInitialiseParam<ImageFactory>>();
+
             // SETUP _mockImageServer so that it can be initialised with a reference to _mockImageMgr.Object:
             _mockImageServer.As<IInitialiseParam<IManageImg>>().Setup(_mock => _mock.Initialise(_mockImageMgr.Object));
 
@@ -1068,6 +1124,15 @@ namespace TestApp.IndividualTests
 
             // SETUP _mockImageMgr so that it can be initialised with an IDictionary<String, Image>():
             _mockImageMgr.As<IInitialiseParam<IDictionary<string, Image>>>().Setup(_mock => _mock.Initialise(_mockImageDict.Object));
+
+            #endregion
+
+
+            #region MOCK IMAGE EDITOR
+
+            // SETUP _mockImageMgr so that it can be initialised with a new ImageFactory object:
+            // USING IMAGE PROCESSOR API, DOES NOT HAVE PARAMETERLESS CONSTRUCTOR THEREFORE IT NEEDS ACTUAL OBJECT RATHER THAN MOCK
+            _mockImageEditor.As<IInitialiseParam<ImageFactory>>().Setup(_mock => _mock.Initialise(new ImageFactory(false)));
 
             #endregion
 

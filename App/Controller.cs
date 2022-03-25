@@ -484,6 +484,24 @@ namespace App
             #endregion
 
 
+            #region CROP COMMAND
+
+            // DECLARE & INSTANTIATE an ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs> as a new CommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>(), name it '_commandBitmapRectParamEHI':
+            ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>> _commandBitmapRectEHIParam = (_serviceLocator.GetService<Factory<ICommand>>() as IFactory<ICommand>)
+                .Create<CommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>>() as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>;
+
+            // SET MethodRef Property of _commandBitmapRectEHIParam to reference to IReplaceColourImg.ReplaceCropImg():
+            _commandBitmapRectEHIParam.MethodRef = (_serviceLocator.GetService<ImageServer>() as IReplaceCropImg).ReplaceCropImg;
+
+            // SET Name Property of _commandBitmapRectEHIParam to "Crop":
+            (_commandBitmapRectEHIParam as IName).Name = "Crop";
+
+            // INITIALISE _formDict[_formCount] (FishyEdit) with a reference to _commandBitmapRectEHIParam:
+            (_formDict[_formCount] as IInitialiseParam<ICommand>).Initialise(_commandBitmapRectEHIParam);
+
+            #endregion
+
+
             #region BRIGHTNESS COMMAND
 
             // DECLARE & INSTANTIATE an ICommandParam<string, int, int, int, EventHandler<ImageEventArgs> as a new CommandParam<string, int, int, int EventHandler<ImageEventArgs>(), name it '_commandStringIntEHIParam':

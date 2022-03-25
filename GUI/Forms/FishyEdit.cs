@@ -34,11 +34,17 @@ namespace GUI
         // DECLARE an Action<ICommand>, name it '_invokeCommand':
         private Action<ICommand> _invokeCommand;
 
-        // DECLARE a string, name it '_crrntImgFP':
-        private string _crrntImgFP;
+        // DECLARE a Pen, name it '_cropPen':
+        private Pen _cropPen;
+
+        //DECLARE int's for the crop X&Y and the W&H of the rectangle drawn:
+        private int _cropX, _cropY, _cropW, _cropH;
 
         // DECLARE an Vector2, name it '_originalSize':
         private Vector2 _originalSize;
+
+        // DECLARE a string, name it '_crrntImgFP':
+        private string _crrntImgFP;
 
         #endregion
 
@@ -933,13 +939,6 @@ namespace GUI
         #endregion
 
 
-        // DECLARE Pen name it '_crpPen':
-        public Pen _crpPen;
-
-        //DECLARE int's for the crop x&y and the x&y of the rectangle drawn:
-        private int _crpX, _crpY, _rectW, _rectH;
-
-
         private void CropBttn_Click_1(object sender, EventArgs e)
         {
             // size of picturebox this will be needed so that the croped img knows where to be placed 
@@ -954,7 +953,7 @@ namespace GUI
 
             Controls.Add(ImgDisplay);
 
-            _crpPen = new Pen(Color.White);
+            _cropPen = new Pen(Color.White);
 
         }
 
@@ -968,11 +967,11 @@ namespace GUI
             {
                 Cursor = Cursors.Cross;
 
-                _crpPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+                _cropPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
 
                 //Set initial x,y 
-                _crpX = e.X;
-                _crpY = e.Y;
+                _cropX = e.X;
+                _cropY = e.Y;
             }
         }
 
@@ -983,14 +982,14 @@ namespace GUI
             {
                 ImgDisplay.Refresh();
                 //set width and height for crop rect
-                _rectW = e.X - _crpX;
+                _cropW = e.X - _cropX;
 
-                _rectH = e.Y - _crpY;
+                _cropH = e.Y - _cropY;
 
 
                 Graphics _graphics = ImgDisplay.CreateGraphics();
 
-                _graphics.DrawRectangle(_crpPen, _crpX, _crpY, _rectW, _rectH);
+                _graphics.DrawRectangle(_cropPen, _cropX, _cropY, _cropW, _cropH);
                 _graphics.Dispose();
             }
 
@@ -998,32 +997,41 @@ namespace GUI
         }
         private void ConfirmBttn_Click(object sender, EventArgs e)
         {
-
-            Bitmap _bitmap = new Bitmap(ImgDisplay.Width, ImgDisplay.Height);
-
-            ImgDisplay.DrawToBitmap(_bitmap, ImgDisplay.ClientRectangle);
-
-            Bitmap _crpImg = new Bitmap(_rectW, _rectH);
-
-            for (int x = 0; x < _rectW; x++)
+            // TRY checking if _saturation() OR ChangeImg() throw a NullInstanceException:
+            try
             {
-                for (int y = 0; y < _rectH; y++)
-                {
-                    Color _pxlColor = _bitmap.GetPixel(_crpX + x, _crpY + y);
+                // DECLARE & INSTANTIATE a new Bitmap() passing ImgDisplay dimensions as parameters, name it '_imgDisplayBM':
+                Bitmap _imgDisplayBM = new Bitmap(ImgDisplay.Width, ImgDisplay.Height);
 
-                    _crpImg.SetPixel(x, y, _pxlColor);
-                }
+                // CALL DrawToBitmap() on ImgDisplay, passing _imgDisplayBM and ImgDisplay.ClientRectangle as parameters:
+                ImgDisplay.DrawToBitmap(_imgDisplayBM, ImgDisplay.ClientRectangle);
+
+                // SET value of _commandDict["Crop"]'s FirstParam property to instance of _imgDisplayBM:
+                (_commandDict["Crop"] as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>).FirstParam = _imgDisplayBM;
+
+                // SET value of _commandDict["Crop"]'s SecondParam property to a new Rectangle made from collected _crop variables:
+                (_commandDict["Crop"] as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>).SecondParam = new Rectangle(_cropX, _cropY, _cropW, _cropH);
+
+                // SET value of _commandDict["Crop"]'s ThirdParam property to reference to OnEvent() (ImageEventArgs):
+                (_commandDict["Crop"] as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>).ThirdParam = OnEvent;
+
+                // INVOKE _commandDict["Crop"]'s ExecuteMethod():
+                _invokeCommand(_commandDict["Crop"]);
             }
-
+            // CATCH NullInstanceException from ChangeImg():
+            catch (NullInstanceException pException)
+            {
+                // WRITE exception message to debug console:
+                Console.WriteLine(pException.Message);
+            }
 
             Cursor = Cursors.Default;
             ImgDisplay.MouseMove -= new MouseEventHandler(pictureBox1_MouseMove);
             ImgDisplay.MouseDown -= new MouseEventHandler(pictureBox1_MouseDown);
 
-            ImgDisplay.Image = _crpImg;
+            //ImgDisplay.Image = _crpImg;
 
             _crop = false;
-
         }
 
 

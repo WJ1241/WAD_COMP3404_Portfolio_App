@@ -45,9 +45,10 @@ namespace Server.GeneralInterfaces
         /// <summary>
         /// Crops the specified image and returns modification
         /// </summary>
-        /// <param name="pImage"> Image to be changed </param>
+        /// <param name="pFrame"> Frame for cropped image </param>
+        /// <param name="pCropBox"> User cropped rectangle </param>
         /// <returns> Returns newly cropped image </returns>
-        Image ImgCrop(Image pImage);
+        Image ImgCrop(Bitmap pFrame, Rectangle pCropBox);
 
         #endregion
 

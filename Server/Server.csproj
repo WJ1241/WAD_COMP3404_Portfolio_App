@@ -59,6 +59,7 @@
     <Compile Include="GeneralInterfaces\IEventListener.cs" />
     <Compile Include="GeneralInterfaces\IReplaceColourImg.cs" />
     <Compile Include="GeneralInterfaces\IApplyFilterImg.cs" />
+    <Compile Include="GeneralInterfaces\IReplaceCropImg.cs" />
     <Compile Include="GeneralInterfaces\IService.cs" />
     <Compile Include="GeneralInterfaces\ISubscribe.cs" />
     <Compile Include="ImageMgr.cs" />
