@@ -153,22 +153,22 @@ namespace Server
             // IF pFrame DOES NOT HAVE a valid instance:
             if (pFrame != null)
             {
-
+                // DECLARE AND INSTANTIATE cropImg passing it pCropBox Width and Height:
                 Bitmap cropImg = new Bitmap(pCropBox.Width, pCropBox.Height);
 
-
+                // FOR for loop itterates through the x of the drawn rectangle:
                 for (int x = 0; x < pCropBox.Width; x++)
                 {
                     // TRY checking if pFrame.GetPixel() throws an ArgumentOutOfRangeException:
                     try
                     {
-
+                        // FOR for loop itterates through the y of the drawn rectangle: 
                         for (int y = 0; y < pCropBox.Height; y++)
                         {
-
+                            // DECLARE AND INSTANTIATE _pxlColor and set it to the pFrame GetPixle passing in the pCropBox.X plus x and the pCropBox.Y plus y:
                             Color _pxlColor = pFrame.GetPixel(pCropBox.X + x, pCropBox.Y + y);
 
-
+                            // CALL cropImg's SetPixle passing in x, y & _pxlColor:
                             cropImg.SetPixel(x, y, _pxlColor);
                         }
                     }
