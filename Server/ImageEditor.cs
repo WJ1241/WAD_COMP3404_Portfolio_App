@@ -153,35 +153,45 @@ namespace Server
             // IF pFrame DOES NOT HAVE a valid instance:
             if (pFrame != null)
             {
-                // DECLARE AND INSTANTIATE cropImg passing it pCropBox Width and Height:
-                Bitmap cropImg = new Bitmap(pCropBox.Width, pCropBox.Height);
-
-                // FOR for loop itterates through the x of the drawn rectangle:
-                for (int x = 0; x < pCropBox.Width; x++)
+                // TRY checking if instantiation of Bitmap() throws an ArgumentException
+                try
                 {
-                    // TRY checking if pFrame.GetPixel() throws an ArgumentOutOfRangeException:
-                    try
-                    {
-                        // FOR for loop itterates through the y of the drawn rectangle: 
-                        for (int y = 0; y < pCropBox.Height; y++)
-                        {
-                            // DECLARE AND INSTANTIATE _pxlColor and set it to the pFrame GetPixle passing in the pCropBox.X plus x and the pCropBox.Y plus y:
-                            Color _pxlColor = pFrame.GetPixel(pCropBox.X + x, pCropBox.Y + y);
+                    // DECLARE AND INSTANTIATE cropImg passing it pCropBox Width and Height:
+                    Bitmap cropImg = new Bitmap(pCropBox.Width, pCropBox.Height);
 
-                            // CALL cropImg's SetPixle passing in x, y & _pxlColor:
-                            cropImg.SetPixel(x, y, _pxlColor);
+                    // FOR loop iterates through the x of the drawn rectangle:
+                    for (int x = 0; x < pCropBox.Width; x++)
+                    {
+                        // TRY checking if pFrame.GetPixel() throws an ArgumentOutOfRangeException:
+                        try
+                        {
+                            // FOR loop iterates through the y of the drawn rectangle: 
+                            for (int y = 0; y < pCropBox.Height; y++)
+                            {
+                                // DECLARE AND INSTANTIATE _pxlColor and set it to the pFrame GetPixle passing in the pCropBox.X plus x and the pCropBox.Y plus y:
+                                Color _pxlColor = pFrame.GetPixel(pCropBox.X + x, pCropBox.Y + y);
+
+                                // CALL cropImg's SetPixle passing in x, y & _pxlColor:
+                                cropImg.SetPixel(x, y, _pxlColor);
+                            }
+                        }
+                        // CATCH ArgumentOutOfRangeException from GetPixel():
+                        catch (ArgumentOutOfRangeException e)
+                        {
+                            // WRITE error message to console:
+                            Console.WriteLine(e.Message);
                         }
                     }
-                    // CATCH ArgumentOutOfRangeException from GetPixel():
-                    catch (ArgumentOutOfRangeException e)
-                    {
-                        // WRITE error message to console:
-                        Console.WriteLine(e.Message);
-                    }
-                }
 
-                // RETURN instance of cropImg:
-                return cropImg;
+                    // RETURN instance of cropImg:
+                    return cropImg;
+                }
+                // CATCH ArgumentException from Bitmap instantiation:
+                catch (ArgumentException)
+                {
+                    // THROW a new ArgumentException(), explaining how to correct from error:
+                    throw new ArgumentException("ERROR: You cannot crop with an axis value of '0', click 'Reset Image' to try again!");
+                }
             }
             else
             {

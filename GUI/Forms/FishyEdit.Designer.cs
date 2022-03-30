@@ -486,7 +486,7 @@ namespace GUI
             this.CropBttn.TabIndex = 17;
             this.CropBttn.Text = "Crop";
             this.CropBttn.UseVisualStyleBackColor = true;
-            this.CropBttn.Click += new System.EventHandler(this.CropBttn_Click_1);
+            this.CropBttn.Click += new System.EventHandler(this.CropBttn_Click);
             // 
             // HelpBttn
             // 

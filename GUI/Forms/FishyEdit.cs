@@ -16,7 +16,7 @@ namespace GUI
     /// <summary>
     /// Partial Class which creates a 'FishyEdit' for the user to edit Images with.
     /// Author: William Smith, Declan Kerby-Collins, William Eardley & Marc Price
-    /// Date: 25/03/22
+    /// Date: 30/03/22
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>
     /// <REFERENCE> jay_t55 (2014) Make a borderless form movable? Available at: https://stackoverflow.com/questions/1592876/make-a-borderless-form-movable/24561946#24561946. (Accessed 5 November 2021). </REFERENCE>
@@ -37,14 +37,18 @@ namespace GUI
         // DECLARE a Pen, name it '_cropPen':
         private Pen _cropPen;
 
-        //DECLARE int's for the crop X&Y and the W&H of the rectangle drawn:
-        private int _cropX, _cropY, _cropW, _cropH;
-
+        // DECLARE a bool, name it '_cropState':
+        private bool _cropState;
+        
         // DECLARE an Vector2, name it '_originalSize':
         private Vector2 _originalSize;
-
+        
         // DECLARE a string, name it '_crrntImgFP':
         private string _crrntImgFP;
+
+        //DECLARE int's for the crop X&Y and the W&H of the rectangle drawn:
+        private int _cropX, _cropY, _cropW, _cropH;
+        
 
         #endregion
 
@@ -58,6 +62,9 @@ namespace GUI
         {
             // CALL InitializeComponent():
             InitializeComponent();
+
+            // SET _cropState to false:
+            _cropState = false;
         }
 
         #endregion
@@ -423,18 +430,126 @@ namespace GUI
             ChangeImg();
         }
 
+        #region CROP
+
         /// <summary>
-        /// Crop control Button - for cropping the image
+        /// MEHTOD CropBttn_Click_1, initiates a crop state for mouse
         /// </summary>
-        /// <param name="sender"> Form Object </param>
-        /// <param name="e"> Required Argument Value(s)</param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CropBttn_Click(object sender, EventArgs e)
         {
-            // TRY checking if _crop() OR ChangeImg() throw a NullInstanceException:
+            // ASSIGNMENT _cropState is set to true, this flag is used to disable the ability to move the window with the mopuse while cropping:
+            _cropState = true;
+
+            // SUBSCRIBE a mouse event handler for when user has left clicked with mouse:
+            ImgDisplay.MouseDown += new MouseEventHandler(ImgDisplay_MouseDown);
+
+            // SUBSCRIBE a mouse event handler for when mouse is moved:
+            ImgDisplay.MouseMove += new MouseEventHandler(ImgDisplay_MouseMove);
+
+            // ADD ImgDisplay to the Controls:
+            Controls.Add(ImgDisplay);
+
+            // INSTANTIATE _cropPen as new Pen:
+            _cropPen = new Pen(Color.White);
+        }
+
+        /// <summary>
+        /// METHOD ImgDisplay_MouseDown, runs when left mouse button is down after crop has been pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImgDisplay_MouseDown(object sender, MouseEventArgs e)
+        {
+            // KEYWORD subscribes the control to the event args:
+            base.OnMouseDown(e);
+
+            // IF event args button is left mouse button:
+            if (e.Button == MouseButtons.Left)
+            {
+                // ASSIGNMENT sets the mouse pointer to a cross when in crop state and creating the crop rectangle:
+                Cursor = Cursors.Cross;
+
+                // ASSIGNMENT _cropPen has its dashstyle property set to dot:
+                _cropPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+
+                /// Store initial values for top left corner of rectangle
+
+                // ASSIGNMENT _cropX is set to the event args X value 
+                _cropX = e.X;
+
+                // ASSIGNMENT _cropY is set to the event args Y value 
+                _cropY = e.Y;
+            }
+        }
+
+        /// <summary>
+        /// METHOD ImgDisplay_MouseMove, draws the dotted rectangle on the imgDisplay in FishyEdit for the user to see.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImgDisplay_MouseMove(object sender, MouseEventArgs e)
+        {
+            // KEYWORD subscribes the control to the event args:
+            base.OnMouseMove(e);
+            // IF event args button is left mouse button:
+            if (e.Button == MouseButtons.Left)
+            {
+                // CALL ImgDisplay's refresh method:
+                ImgDisplay.Refresh();
+
+                //set width and height for crop rect
+                // ASSIGNMENT _cropW is given the value of e.X value minus the _cropX value:
+                _cropW = e.X - _cropX;
+
+                // ASSIGNMENT _cropH is given the value of e.Y value minus the _cropY value:
+                _cropH = e.Y - _cropY;
+
+                // ASSIGNMENT tempory variable _graphics is set to the ImgDisplay's CreateGraphics method:
+                Graphics _graphics = ImgDisplay.CreateGraphics();
+
+                // CALL _graphics is passed the _cropPen, _cropX, _cropY, _cropW & _cropH values:
+                _graphics.DrawRectangle(_cropPen, _cropX, _cropY, _cropW, _cropH);
+
+                // CALL _graphics Dispose method:
+                _graphics.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// METHOD ConfirmBttn_Click, confirms the cropped rectangle the user has spesified and updates the view acordingly.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ConfirmBttn_Click(object sender, EventArgs e)
+        {
+            // TRY checking if _saturation() OR ChangeImg() throw a NullInstanceException:
             try
             {
-                // CALL _crop passing current index in _imgFPDict as a parameter:
-                //_crop(_imgFPDict[_dictIndex]);
+                // DECLARE & INSTANTIATE a new Bitmap() passing ImgDisplay dimensions as parameters, name it '_imgDisplayBM':
+                Bitmap _imgDisplayBM = new Bitmap(ImgDisplay.Width, ImgDisplay.Height);
+
+                // CALL DrawToBitmap() on ImgDisplay, passing _imgDisplayBM and ImgDisplay.ClientRectangle as parameters:
+                ImgDisplay.DrawToBitmap(_imgDisplayBM, ImgDisplay.ClientRectangle);
+
+                // SET value of _commandDict["Crop"]'s FirstParam property to instance of _imgDisplayBM:
+                (_commandDict["Crop"] as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>).FirstParam = _imgDisplayBM;
+
+                // SET value of _commandDict["Crop"]'s SecondParam property to a new Rectangle made from collected _crop variables:
+                (_commandDict["Crop"] as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>).SecondParam = new Rectangle(_cropX, _cropY, _cropW, _cropH);
+
+                // SET value of _commandDict["Crop"]'s ThirdParam property to reference to OnEvent() (ImageEventArgs):
+                (_commandDict["Crop"] as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>).ThirdParam = OnEvent;
+
+                // INVOKE _commandDict["Crop"]'s ExecuteMethod():
+                _invokeCommand(_commandDict["Crop"]);
+            }
+            // CATCH ArgumentException from invoking "Crop" command:
+            catch (ArgumentException pException)
+            {
+                // WRITE exception message to debug console:
+                Console.WriteLine(pException.Message);
             }
             // CATCH NullInstanceException from ChangeImg():
             catch (NullInstanceException pException)
@@ -442,7 +557,21 @@ namespace GUI
                 // WRITE exception message to debug console:
                 Console.WriteLine(pException.Message);
             }
+
+            // ASSIGNMENT Cursor is set back to default icon:
+            Cursor = Cursors.Default;
+
+            // UNSUBSCRIBE the mouse move event handler:
+            ImgDisplay.MouseMove -= new MouseEventHandler(ImgDisplay_MouseMove);
+
+            // UNSUBSCRIBE the mouse down event handler:
+            ImgDisplay.MouseDown -= new MouseEventHandler(ImgDisplay_MouseDown);
+
+            // ASSIGNMENT _cropState is set back to false re-enabling the ability to move the form with mouse: 
+            _cropState = false;
         }
+
+        #endregion
 
         #endregion
 
@@ -892,19 +1021,17 @@ namespace GUI
         /// <param name="e"> Value for classes without event data </param>
         private void FishyEdit_MouseDown(object sender, MouseEventArgs e)
         {
-            if(_crop == false)
+            // IF _cropState is currently false:
+            if(_cropState == false)
             {
                 // SET _mouseDown to true:
                 _mouseDown = true;
             }
 
-
-
             // STORE current location to _lastLocation:
             _lastLocation = e.Location;
         }
 
-        bool _crop = false;
         /// <summary>
         /// Mouse move event handler
         /// </summary>
@@ -935,143 +1062,6 @@ namespace GUI
             _mouseDown = false;
         }
 
-
         #endregion
-
-        /// <summary>
-        /// MEHTOD CropBttn_Click_1, initiates a crop state for mouse
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CropBttn_Click_1(object sender, EventArgs e)
-        {
-            // ASSIGNMENT _crop is set to true, this flag is used to disable the ability to move the window with the mopuse while cropping:
-            _crop = true;
-
-            // SUBSCRIBE a mouse event handler:
-            ImgDisplay.MouseDown += new MouseEventHandler(pictureBox1_MouseDown);
-
-            // SUBSCRIBE a mouse event handler:
-            ImgDisplay.MouseMove += new MouseEventHandler(pictureBox1_MouseMove);
-
-            // ADD ImgDisplay to the Controls:
-            Controls.Add(ImgDisplay);
-
-            // INSTANTIATE _cropPen as new Pen:
-            _cropPen = new Pen(Color.White);
-
-        }
-
-
-        /// <summary>
-        /// METHOD pictureBox1_MouseDown, runs when left mouse button is down after crop has been pressed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            // KEYWORD subscribes the control to the event args:
-            base.OnMouseDown(e);
-
-            // IF event args button is left mouse button:
-            if (e.Button == MouseButtons.Left)
-            {
-                // ASSIGNMENT sets the mouse pointer to a cross when in crop state and creating the crop rectangle:
-                Cursor = Cursors.Cross;
-
-                // ASSIGNMENT _cropPen has its dashstyle property set to dot:
-                _cropPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-
-                //Set initial x,y
-                // ASSIGNMENT _cropX is set to the event args X value 
-                _cropX = e.X;
-                // ASSIGNMENT _cropY is set to the event args Y value 
-                _cropY = e.Y;
-            }
-        }
-
-        /// <summary>
-        /// METHOD pictureBox1_MouseMove, draws the dotted rectangle on the imgDisplay in FishyEdit for the user to see.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
-        {
-            // KEYWORD subscribes the control to the event args:
-            base.OnMouseMove(e);
-            // IF event args button is left mouse button:
-            if (e.Button == MouseButtons.Left)
-            {
-                // CALL ImgDisplay's refresh method:
-                ImgDisplay.Refresh();
-
-                //set width and height for crop rect
-                // ASSIGNMENT _cropW is given the value of e.X value minus the _cropX value:
-                _cropW = e.X - _cropX;
-
-                // ASSIGNMENT _cropH is given the value of e.Y value minus the _cropY value:
-                _cropH = e.Y - _cropY;
-
-                // ASSIGNMENT tempory variable _graphics is set to the ImgDisplay's CreateGraphics method:
-                Graphics _graphics = ImgDisplay.CreateGraphics();
-
-                // CALL _graphics is passed the _cropPen, _cropX, _cropY, _cropW & _cropH values:
-                _graphics.DrawRectangle(_cropPen, _cropX, _cropY, _cropW, _cropH);
-
-                // CALL _graphics Dispose method:
-                _graphics.Dispose();
-            }
-
-
-        }
-
-        /// <summary>
-        /// METHOD ConfirmBttn_Click, confirms the cropped rectangle the user has spesified and updates the view acordingly.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ConfirmBttn_Click(object sender, EventArgs e)
-        {
-            // TRY checking if _saturation() OR ChangeImg() throw a NullInstanceException:
-            try
-            {
-                // DECLARE & INSTANTIATE a new Bitmap() passing ImgDisplay dimensions as parameters, name it '_imgDisplayBM':
-                Bitmap _imgDisplayBM = new Bitmap(ImgDisplay.Width, ImgDisplay.Height);
-
-                // CALL DrawToBitmap() on ImgDisplay, passing _imgDisplayBM and ImgDisplay.ClientRectangle as parameters:
-                ImgDisplay.DrawToBitmap(_imgDisplayBM, ImgDisplay.ClientRectangle);
-
-                // SET value of _commandDict["Crop"]'s FirstParam property to instance of _imgDisplayBM:
-                (_commandDict["Crop"] as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>).FirstParam = _imgDisplayBM;
-
-                // SET value of _commandDict["Crop"]'s SecondParam property to a new Rectangle made from collected _crop variables:
-                (_commandDict["Crop"] as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>).SecondParam = new Rectangle(_cropX, _cropY, _cropW, _cropH);
-
-                // SET value of _commandDict["Crop"]'s ThirdParam property to reference to OnEvent() (ImageEventArgs):
-                (_commandDict["Crop"] as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>).ThirdParam = OnEvent;
-
-                // INVOKE _commandDict["Crop"]'s ExecuteMethod():
-                _invokeCommand(_commandDict["Crop"]);
-            }
-            // CATCH NullInstanceException from ChangeImg():
-            catch (NullInstanceException pException)
-            {
-                // WRITE exception message to debug console:
-                Console.WriteLine(pException.Message);
-            }
-
-            // ASSIGNMENT Cursor is set back to default icon:
-            Cursor = Cursors.Default;
-
-            // UNSUBSCRIBE the mouse move event handler:
-            ImgDisplay.MouseMove -= new MouseEventHandler(pictureBox1_MouseMove);
-            // UNSUBSCRIBE the mouse down event handler:
-            ImgDisplay.MouseDown -= new MouseEventHandler(pictureBox1_MouseDown);
-
-            // ASSIGNMENT _crop is set back to false re-enabling the ability to move the form with mouse: 
-            _crop = false;
-        }
-
-
     }
 }
