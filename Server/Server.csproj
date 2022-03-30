@@ -53,7 +53,7 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandInvoker.cs" />
     <Compile Include="Commands\ICommandSender.cs" />
-    <Compile Include="Commands\IName.cs" />
+    <Compile Include="GeneralInterfaces\IName.cs" />
     <Compile Include="CustomEventArgs\StringListEventArgs.cs" />
     <Compile Include="CustomEventArgs\ImageEventArgs.cs" />
     <Compile Include="GeneralInterfaces\IEventListener.cs" />
@@ -61,9 +61,7 @@
     <Compile Include="GeneralInterfaces\IApplyFilterImg.cs" />
     <Compile Include="GeneralInterfaces\IReplaceCropImg.cs" />
     <Compile Include="GeneralInterfaces\IService.cs" />
-    <Compile Include="GeneralInterfaces\ISubscribe.cs" />
     <Compile Include="ImageMgr.cs" />
-    <Compile Include="Commands\Delegates.cs" />
     <Compile Include="Exceptions\ClassDoesNotExistException.cs" />
     <Compile Include="Exceptions\FileAlreadyStoredException.cs" />
     <Compile Include="Exceptions\FileNotSavedException.cs" />

@@ -17,20 +17,8 @@ namespace Server
     {
         #region FIELD VARIABLES
 
-        // DECLARE TWO ints, name them '_red1' & '_red2':
-        private int _red1, _red2;
-
-        // DECLARE TWO ints, name them '_green1' & '_green2':
-        private int _green1, _green2;
-
-        // DECLARE TWO ints, name them '_blue1' & '_blue2':
-        private int _blue1, _blue2;
-
         // DECLARE an ImageFactory, name it '_imgFactory':
         private ImageFactory _imgFactory;
-
-        // DECLARE a Bitmap, name it '_newMap':
-        private Bitmap _newMap;
 
         // DECLARE an Image, name it '_tempImage':
         private Image _tempImage;

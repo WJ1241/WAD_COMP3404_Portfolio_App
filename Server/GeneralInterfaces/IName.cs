@@ -1,6 +1,6 @@
 ﻿
 
-namespace Server.Commands
+namespace Server.GeneralInterfaces
 {
     /// <summary>
     /// Interface which allows implementations to have a string identifier
