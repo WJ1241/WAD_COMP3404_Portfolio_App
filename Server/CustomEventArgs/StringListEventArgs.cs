@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Server.CustomEventArgs
 {
     /// <summary>
-    /// Class which contains arguments related to an event involving an Image
+    /// Class which contains arguments related to an event involving an string List
     /// Authors: William Smith, William Eardley & Declan Kerby-Collins
     /// Date: 11/03/22
     /// </summary>

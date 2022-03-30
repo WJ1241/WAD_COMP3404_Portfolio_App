@@ -349,16 +349,16 @@ namespace Server
         /// Applies first specified filter to given image
         /// </summary>
         /// <param name="pUID"> Unique ID for Image </param>
-        /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
-        /// <param name="pFrameHeight">the height (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImgWidth">the width (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImgHeight">the height (in pixels) of the 'frame' it is to occupy</param>
         /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
-        public void ApplyFilterOne(string pUID, int pFrameWidth, int pFrameHeight, EventHandler<ImageEventArgs> pImageEvent)
+        public void ApplyFilterOne(string pUID, int pImgWidth, int pImgHeight, EventHandler<ImageEventArgs> pImageEvent)
         {
             // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgFilterOne():
             try
             {
                 // SET value of Img property to return value of _imgEditor.ImgFilterOne(), passing result of _imgManager.ReturnImg() as a parameter:
-                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgFilterOne(_imgManager.ReturnImg(pUID, pFrameWidth, pFrameHeight));
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgFilterOne(_imgManager.ReturnImg(pUID, pImgWidth, pImgHeight));
 
                 // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
                 pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
@@ -387,16 +387,16 @@ namespace Server
         /// Applies second specified filter to given image
         /// </summary>
         /// <param name="pUID"> Unique ID for Image </param>
-        /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
-        /// <param name="pFrameHeight">the height (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImgWidth">the width (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImgHeight">the height (in pixels) of the 'frame' it is to occupy</param>
         /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
-        public void ApplyFilterTwo(string pUID, int pFrameWidth, int pFrameHeight, EventHandler<ImageEventArgs> pImageEvent)
+        public void ApplyFilterTwo(string pUID, int pImgWidth, int pImgHeight, EventHandler<ImageEventArgs> pImageEvent)
         {
             // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgFilterTwo():
             try
             {
                 // SET value of Img property to return value of _imgEditor.ImgFilterTwo(), passing result of _imgManager.ReturnImg() as a parameter:
-                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgFilterTwo(_imgManager.ReturnImg(pUID, pFrameWidth, pFrameHeight));
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgFilterTwo(_imgManager.ReturnImg(pUID, pImgWidth, pImgHeight));
 
                 // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
                 pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
@@ -425,16 +425,16 @@ namespace Server
         /// Applies third specified filter to given image
         /// </summary>
         /// <param name="pUID"> Unique ID for Image </param>
-        /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
-        /// <param name="pFrameHeight">the height (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImgWidth">the width (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImgHeight">the height (in pixels) of the 'frame' it is to occupy</param>
         /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
-        public void ApplyFilterThree(string pUID, int pFrameWidth, int pFrameHeight, EventHandler<ImageEventArgs> pImageEvent)
+        public void ApplyFilterThree(string pUID, int pImgWidth, int pImgHeight, EventHandler<ImageEventArgs> pImageEvent)
         {
             // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgFilterThree():
             try
             {
                 // SET value of Img property to return value of _imgEditor.ImgFilterThree(), passing result of _imgManager.ReturnImg() as a parameter:
-                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgFilterThree(_imgManager.ReturnImg(pUID, pFrameWidth, pFrameHeight));
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgFilterThree(_imgManager.ReturnImg(pUID, pImgWidth, pImgHeight));
 
                 // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
                 pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
@@ -463,16 +463,16 @@ namespace Server
         /// Applies fourth specified filter to given image
         /// </summary>
         /// <param name="pUID"> Unique ID for Image </param>
-        /// <param name="pFrameWidth">the width (in pixels) of the 'frame' it is to occupy</param>
-        /// <param name="pFrameHeight">the height (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImgWidth">the width (in pixels) of the 'frame' it is to occupy</param>
+        /// <param name="pImgHeight">the height (in pixels) of the 'frame' it is to occupy</param>
         /// <param name="pImageEvent"> Event to invoke with changed ImageEventArgs object </param>
-        public void ApplyFilterFour(string pUID, int pFrameWidth, int pFrameHeight, EventHandler<ImageEventArgs> pImageEvent)
+        public void ApplyFilterFour(string pUID, int pImgWidth, int pImgHeight, EventHandler<ImageEventArgs> pImageEvent)
         {
             // TRY checking for InvalidStringException and NullInstanceException from _imgEditor.ImgFilterFour():
             try
             {
                 // SET value of Img property to return value of _imgEditor.ImgFilterFour(), passing result of _imgManager.ReturnImg() as a parameter:
-                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgFilterFour(_imgManager.ReturnImg(pUID, pFrameWidth, pFrameHeight));
+                (_argDict["Image"] as ImageEventArgs).Img = _imgEditor.ImgFilterFour(_imgManager.ReturnImg(pUID, pImgWidth, pImgHeight));
 
                 // INVOKE pImageEvent(), passing this class and _argDict["Image"] as parameters:
                 pImageEvent.Invoke(this, _argDict["Image"] as ImageEventArgs);
