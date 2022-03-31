@@ -13,6 +13,7 @@ namespace Server
     /// Date: 25/03/22
     /// </summary>
     /// <REFERENCE> Ricky's Tutorials (2017) C# TUTORIAL : Create an image filter and apply it to an image in 6 minutes. Available at: https://www.youtube.com/watch?v=SCSI8xEi4f4. (Accessed: 09 March 2022). </REFERENCE> 
+    /// <REFERENCE> Sunday Notice (2019) Crop an Image: Code in C# Programming | How to make a Crop tool in a Photo Editor. Available at: https://www.youtube.com/watch?v=7IR6J8Kw8cE&t=176s. (Accessed: 31 March 2022). </REFERENCE>
     public class ImageEditor : IEditImg, IInitialiseParam<ImageFactory>
     {
         #region FIELD VARIABLES
@@ -130,12 +131,15 @@ namespace Server
 
         #region SIZE MANAGEMENT
 
+
+
         /// <summary>
         /// Crops the specified image and returns modification
         /// </summary>
         /// <param name="pFrame"> Frame for cropped image </param>
         /// <param name="pCropBox"> User cropped rectangle </param>
         /// <returns> Returns newly cropped image </returns>
+        /// <CITATION> (Sunday Notice, 2019) </CITATION>
         public Image ImgCrop(Bitmap pFrame, Rectangle pCropBox)
         {
             // IF pFrame DOES NOT HAVE a valid instance:

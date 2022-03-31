@@ -20,6 +20,7 @@ namespace GUI
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>
     /// <REFERENCE> jay_t55 (2014) Make a borderless form movable? Available at: https://stackoverflow.com/questions/1592876/make-a-borderless-form-movable/24561946#24561946. (Accessed 5 November 2021). </REFERENCE>
+    /// <REFERENCE> Sunday Notice (2019) Crop an Image: Code in C# Programming | How to make a Crop tool in a Photo Editor. Available at: https://www.youtube.com/watch?v=7IR6J8Kw8cE&t=176s. (Accessed: 31 March 2022). </REFERENCE>
     public partial class FishyEdit : Form, IChangeImg, ICommandSender, IEventListener<ImageEventArgs>, IInitialiseParam<IDictionary<string, ICommand>>, IInitialiseParam<ICommand>,
         IInitialiseParam<ISaveImage>, IInitialiseParam<string>
     {
@@ -432,10 +433,11 @@ namespace GUI
         #region CROP
 
         /// <summary>
-        /// MEHTOD CropBttn_Click_1, initiates a crop state for mouse
+        /// METHOD CropBttn_Click_1, initiates a crop state for mouse
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <CITATION> (Sunday Notice, 2019) </CITATION>
         private void CropBttn_Click(object sender, EventArgs e)
         {
             // ASSIGNMENT _cropState is set to true, this flag is used to disable the ability to move the window with the mopuse while cropping:
@@ -459,6 +461,7 @@ namespace GUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <CITATION> (Sunday Notice, 2019) </CITATION>
         private void ImgDisplay_MouseDown(object sender, MouseEventArgs e)
         {
             // KEYWORD subscribes the control to the event args:
@@ -488,6 +491,7 @@ namespace GUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <CITATION> (Sunday Notice, 2019) </CITATION>
         private void ImgDisplay_MouseMove(object sender, MouseEventArgs e)
         {
             // KEYWORD subscribes the control to the event args:
@@ -521,6 +525,7 @@ namespace GUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// <CITATION> (Sunday Notice, 2019) </CITATION>
         private void ConfirmBttn_Click(object sender, EventArgs e)
         {
             // TRY checking if _saturation() OR ChangeImg() throw a NullInstanceException:
