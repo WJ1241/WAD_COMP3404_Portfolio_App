@@ -1,6 +1,6 @@
 ﻿using Server.GeneralInterfaces;
 
-namespace App.Services
+namespace App.Services.Factories.Interfaces
 {
     /// <summary>
     /// Interface which allows implementations to create a Factory of any chosen type

@@ -4,7 +4,7 @@ namespace GUI.Logic.Interfaces
 {
     /// <summary>
     /// Interface which allows implementations to Open Files on a client's device
-    /// Author: William Smith, Declan Kerby-Collins & William Eardley
+    /// Authors: William Smith, Declan Kerby-Collins & William Eardley
     /// Date: 02/02/22
     /// </summary>
     public interface IOpenImage : ILogic

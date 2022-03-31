@@ -50,9 +50,9 @@
   <ItemGroup>
     <Compile Include="Commands\CommandInvoker.cs" />
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\ICommandInvoker.cs" />
-    <Compile Include="Commands\ICommandSender.cs" />
+    <Compile Include="Commands\Interfaces\ICommand.cs" />
+    <Compile Include="Commands\Interfaces\ICommandInvoker.cs" />
+    <Compile Include="Commands\Interfaces\ICommandSender.cs" />
     <Compile Include="GeneralInterfaces\IName.cs" />
     <Compile Include="CustomEventArgs\StringListEventArgs.cs" />
     <Compile Include="CustomEventArgs\ImageEventArgs.cs" />

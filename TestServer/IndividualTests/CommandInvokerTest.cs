@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Server.Commands;
+using Server.Commands.Interfaces;
 
 namespace TestServer.IndividualTests
 {

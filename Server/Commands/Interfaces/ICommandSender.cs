@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Server.Commands
+namespace Server.Commands.Interfaces
 {
     /// <summary>
     /// Interface which allows implementations send commands to another class

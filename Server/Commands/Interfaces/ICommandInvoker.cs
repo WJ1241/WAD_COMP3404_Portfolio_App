@@ -1,6 +1,6 @@
 ﻿using Server.GeneralInterfaces;
 
-namespace Server.Commands
+namespace Server.Commands.Interfaces
 {
     /// <summary>
     /// Interface which allows implementations to schedule commands

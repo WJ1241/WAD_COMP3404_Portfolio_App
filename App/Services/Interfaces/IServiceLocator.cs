@@ -1,6 +1,6 @@
 ﻿using Server.GeneralInterfaces;
 
-namespace App.Services
+namespace App.Services.Interfaces
 {
     /// <summary>
     /// Interface which allows implementations to return Services to a 

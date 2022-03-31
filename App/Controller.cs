@@ -4,18 +4,20 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using ImageProcessor;
-using App.Services;
-using App.Services.Factories;
 using App.GeneralInterfaces;
+using App.Services.Factories;
+using App.Services.Factories.Interfaces;
+using App.Services.Interfaces;
 using GUI;
 using GUI.Logic;
 using GUI.Logic.Interfaces;
 using Server;
+using Server.Commands;
+using Server.Commands.Interfaces;
+using Server.CustomEventArgs;
 using Server.Exceptions;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
-using Server.Commands;
-using Server.CustomEventArgs;
 
 namespace App
 {
@@ -711,7 +713,7 @@ namespace App
                 if (_formDict[pUID] != null)
                 {
                     // DISPOSE of object addressed at pUID in _formDict:
-                    _formDict[pUID].Dispose();
+                    DisposableRemoval(_formDict[pUID]);
 
                     // REMOVE object stored at pUID in _formDict:
                     _formDict.Remove(pUID);

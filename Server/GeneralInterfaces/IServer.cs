@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using Server.CustomEventArgs;
 
 namespace Server.GeneralInterfaces

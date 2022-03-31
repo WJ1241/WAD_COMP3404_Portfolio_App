@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Windows.Forms;
 using GUI.Forms.Interfaces;
 using GUI.Logic.Interfaces;
-using Server.Commands;
+using Server.Commands.Interfaces;
 using Server.CustomEventArgs;
 using Server.Exceptions;
 using Server.GeneralInterfaces;
@@ -37,11 +37,11 @@ namespace GUI
         // DECLARE a Pen, name it '_cropPen':
         private Pen _cropPen;
 
-        // DECLARE a bool, name it '_cropState':
-        private bool _cropState;
-        
         // DECLARE an Vector2, name it '_originalSize':
         private Vector2 _originalSize;
+
+        // DECLARE a bool, name it '_cropState':
+        private bool _cropState;
         
         // DECLARE a string, name it '_crrntImgFP':
         private string _crrntImgFP;
@@ -49,7 +49,6 @@ namespace GUI
         //DECLARE int's for the crop X&Y and the W&H of the rectangle drawn:
         private int _cropX, _cropY, _cropW, _cropH;
         
-
         #endregion
 
 

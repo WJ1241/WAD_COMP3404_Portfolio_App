@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using GUI.Forms.Interfaces;
 using GUI.Logic.Interfaces;
-using Server.Commands;
+using Server.Commands.Interfaces;
 using Server.CustomEventArgs;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;

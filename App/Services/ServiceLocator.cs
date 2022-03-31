@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using App.Services.Factories.Interfaces;
+using App.Services.Interfaces;
 using Server.Exceptions;
 using Server.InitialisingInterfaces;
 using Server.GeneralInterfaces;
@@ -11,7 +13,7 @@ namespace App.Services
     /// Authors: William Smith, Declan Kerby-Collins & William Eardley
     /// Date: 02/02/22
     /// </summary>
-    public class ServiceLocator : IService, IInitialiseParam<IFactory<IService>>, IServiceLocator
+    public class ServiceLocator : IServiceLocator, IInitialiseParam<IFactory<IService>>, IService
     {
         #region FIELD VARIABLES
 

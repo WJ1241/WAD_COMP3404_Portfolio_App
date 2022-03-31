@@ -7,17 +7,21 @@ using App;
 using App.GeneralInterfaces;
 using App.Services;
 using App.Services.Factories;
+using App.Services.Factories.Interfaces;
+using App.Services.Interfaces;
 using GUI;
 using GUI.Logic;
 using GUI.Logic.Interfaces;
 using Server;
 using Server.Commands;
+using Server.Commands.Interfaces;
 using Server.CustomEventArgs;
 using Server.GeneralInterfaces;
 using Server.InitialisingInterfaces;
 using TestGUI.Interfaces;
 using TestApp.MockClasses;
 using System.Drawing;
+
 
 namespace TestApp.EndToEndTests
 {
