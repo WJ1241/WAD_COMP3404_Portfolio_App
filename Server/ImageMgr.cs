@@ -13,7 +13,7 @@ namespace Server
     /// Authors: William Smith, William Eardley, Declan Kerby-Collins & 'Matt'
     /// Date: 23/03/21
     /// </summary>
-    /// <REFERENCE> Matt (2013) How to resize an Image C#. Available at: https://stackoverflow.com/questions/1922040/how-to-resize-an-image-c-sharp. (Accessed: 30 November 2021).
+    /// <REFERENCE> Matt (2013) How to resize an Image C#. Available at: https://stackoverflow.com/questions/1922040/how-to-resize-an-image-c-sharp. (Accessed: 30 November 2021). <REFERENCE>
     public class ImageMgr : IManageImg, IInitialiseParam<IDictionary<string, Image>>
     {
         #region FIELD VARIABLES
