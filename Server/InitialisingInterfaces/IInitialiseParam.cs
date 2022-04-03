@@ -11,7 +11,7 @@ namespace Server.InitialisingInterfaces
     /// <summary>
     /// Interface which allows implementations to be initialised with ONE value/object of any type
     /// Authors: William Smith, Declan Kerby-Collins, William Eardley
-    /// Date: 02/02/2022
+    /// Date: 02/02/22
     /// </summary>
     /// <typeparam name="T"> Generic 'T', can be any type </typeparam>
     public interface IInitialiseParam<T>
@@ -35,7 +35,7 @@ namespace Server.InitialisingInterfaces
     /// <summary>
     /// Interface which allows implementations to be initialised with TWO values/objects of any type
     /// Authors: William Smith, Declan Kerby-Collins, William Eardley
-    /// Date: 02/02/2022
+    /// Date: 02/02/22
     /// </summary>
     /// <typeparam name="T"> Generic 'T', can be any type </typeparam>
     /// <typeparam name="U"> Generic 'U', can be any type </typeparam>
@@ -62,7 +62,7 @@ namespace Server.InitialisingInterfaces
     /// <summary>
     /// Interface which allows implementations to be initialised with THREE values/objects of any type
     /// Authors: William Smith, Declan Kerby-Collins, William Eardley
-    /// Date: 02/02/2022
+    /// Date: 02/02/22
     /// </summary>
     /// <typeparam name="T"> Generic 'T', can be any type </typeparam>
     /// <typeparam name="U"> Generic 'U', can be any type </typeparam>

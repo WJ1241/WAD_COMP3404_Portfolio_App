@@ -15,7 +15,7 @@ namespace GUI
 {
     /// <summary>
     /// Partial Class which creates a 'FishyEdit' for the user to edit Images with.
-    /// Author: William Smith, Declan Kerby-Collins, William Eardley & Marc Price
+    /// Author: Declan Kerby-Collins, William Eardley, William Smith & Marc Price
     /// Date: 30/03/22
     /// </summary>
     /// <REFERENCE> Price, M. (2007) 'Moveable Form Code Snippet'. Available at: https://worcesterbb.blackboard.com/. (Accessed: 5 November 2021). </REFERENCE>

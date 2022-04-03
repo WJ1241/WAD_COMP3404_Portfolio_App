@@ -5,7 +5,7 @@ namespace Server.GeneralInterfaces
 {
     /// <summary>
     /// Interface which allows implementations to replace a specified image with a different coloured version
-    /// Authors: William Smith, Declan Kerby-Collins & William Eardley
+    /// Authors: William Smith, William Eardley & Declan Kerby-Collins
     /// Date: 25/03/22
     /// </summary>
     public interface IReplaceColourImg

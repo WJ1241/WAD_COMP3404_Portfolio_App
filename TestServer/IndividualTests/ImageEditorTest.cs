@@ -8,7 +8,7 @@ namespace TestServer.IndividualTests
 {
     /// <summary>
     /// Test Class for methods within the 'ImgEditor' class
-    /// Author: William Smith, William Eardley & Declan Kerby-Collins
+    /// Author: William Eardley, William Smith & Declan Kerby-Collins
     /// Date: 14/03/22
     /// </summary>
     [TestClass]
