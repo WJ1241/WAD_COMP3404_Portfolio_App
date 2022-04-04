@@ -141,109 +141,109 @@ namespace TestApp.EndToEndTests
             // INSTANTIATE _mockServiceFactory as a new Mock<IFactory<IService>>():
             _mockServiceFactory = new Mock<IFactory<IService>>();
 
-            // DECLARE & INSTANTIATE a new Mock<IFactory<IDisposable>>, name it '_mockDisposableFactory':
-            Mock<IFactory<IDisposable>> _mockDisposableFactory = new Mock<IFactory<IDisposable>>();
+            // DECLARE & INSTANTIATE a new Mock<IFactory<IDisposable>>, name it 'mockDisposableFactory':
+            Mock<IFactory<IDisposable>> mockDisposableFactory = new Mock<IFactory<IDisposable>>();
 
-            // DECLARE & INSTANTIATE a new Mock<IFactory<IEnumerable>>, name it '_mockEnumerableFactory':
-            Mock<IFactory<IEnumerable>> _mockEnumerableFactory = new Mock<IFactory<IEnumerable>>();
+            // DECLARE & INSTANTIATE a new Mock<IFactory<IEnumerable>>, name it 'mockEnumerableFactory':
+            Mock<IFactory<IEnumerable>> mockEnumerableFactory = new Mock<IFactory<IEnumerable>>();
 
-            // DECLARE & INSTANTIATE a new Mock<IFactory<ILogic>>, name it '_mockLogicFactory':
-            Mock<IFactory<ILogic>> _mockLogicFactory = new Mock<IFactory<ILogic>>();
+            // DECLARE & INSTANTIATE a new Mock<IFactory<ILogic>>, name it 'mockLogicFactory':
+            Mock<IFactory<ILogic>> mockLogicFactory = new Mock<IFactory<ILogic>>();
 
-            // DECLARE & INSTANTIATE a new Mock<IFactory<IEnumerable>>, name it '_mockEnumerableFactory':
-            Mock<IFactory<ICommand>> _mockCommandFactory = new Mock<IFactory<ICommand>>();
+            // DECLARE & INSTANTIATE a new Mock<IFactory<ICommand>>, name it 'mockCommandFactory':
+            Mock<IFactory<ICommand>> mockCommandFactory = new Mock<IFactory<ICommand>>();
 
-            // DECLARE & INSTANTIATE a new Mock<IFactory<EventArgs>>, name it '_mockEventArgsFactory':
-            Mock<IFactory<EventArgs>> _mockEventArgsFactory = new Mock<IFactory<EventArgs>>();
+            // DECLARE & INSTANTIATE a new Mock<IFactory<EventArgs>>, name it 'mockEventArgsFactory':
+            Mock<IFactory<EventArgs>> mockEventArgsFactory = new Mock<IFactory<EventArgs>>();
 
             // INSTANTIATE _mockOpenImage as a new Mock<IOpenImage>():
             _mockOpenImage = new Mock<IOpenImage>();
 
             // SETUP _mockOpenImage so that it can initialised with a new IList<string> object:
-            _mockOpenImage.As<IInitialiseParam<IList<string>>>().Setup(_mock => _mock.Initialise(_mockEnumerableFactory.Object.Create<List<string>>() as IList<string>));
+            _mockOpenImage.As<IInitialiseParam<IList<string>>>().Setup(mock => mock.Initialise(mockEnumerableFactory.Object.Create<List<string>>() as IList<string>));
 
             #endregion
 
 
             #region FACTORY SETUP
 
-            // SETUP _mockServiceFactory to create a new Factory<IDisposable>() and return _mockDisposableFactory.Object instead:
-            _mockServiceFactory.Setup(_mock => _mock.Create<Factory<IDisposable>>()).Returns(_mockDisposableFactory.Object);
+            // SETUP _mockServiceFactory to create a new Factory<IDisposable>() and return mockDisposableFactory.Object instead:
+            _mockServiceFactory.Setup(mock => mock.Create<Factory<IDisposable>>()).Returns(mockDisposableFactory.Object);
 
-            // SETUP _mockServiceFactory to create a new Factory<IEnumerable>() and return _mockEnumerableFactory.Object instead:
-            _mockServiceFactory.Setup(_mock => _mock.Create<Factory<IEnumerable>>()).Returns(_mockEnumerableFactory.Object);
+            // SETUP _mockServiceFactory to create a new Factory<IEnumerable>() and return mockEnumerableFactory.Object instead:
+            _mockServiceFactory.Setup(mock => mock.Create<Factory<IEnumerable>>()).Returns(mockEnumerableFactory.Object);
 
-            // SETUP _mockServiceFactory to create a new Factory<IEnumerable>() and return _mockEnumerableFactory.Object instead:
-            _mockServiceFactory.Setup(_mock => _mock.Create<Factory<ILogic>>()).Returns(_mockLogicFactory.Object);
+            // SETUP _mockServiceFactory to create a new Factory<IEnumerable>() and return mockEnumerableFactory.Object instead:
+            _mockServiceFactory.Setup(mock => mock.Create<Factory<ILogic>>()).Returns(mockLogicFactory.Object);
 
-            // SETUP _mockServiceFactory to create a new Factory<ICommand>() and return _mockCommandFactory.Object instead:
-            _mockServiceFactory.Setup(_mock => _mock.Create<Factory<ICommand>>()).Returns(_mockCommandFactory.Object);
+            // SETUP _mockServiceFactory to create a new Factory<ICommand>() and return mockCommandFactory.Object instead:
+            _mockServiceFactory.Setup(mock => mock.Create<Factory<ICommand>>()).Returns(mockCommandFactory.Object);
 
-            // SETUP _mockServiceFactory to create a new Factory<EventArgs>() and return _mockEventArgsFactory.Object instead:
-            _mockServiceFactory.Setup(_mock => _mock.Create<Factory<EventArgs>>()).Returns(_mockEventArgsFactory.Object);
+            // SETUP _mockServiceFactory to create a new Factory<EventArgs>() and return mockEventArgsFactory.Object instead:
+            _mockServiceFactory.Setup(mock => mock.Create<Factory<EventArgs>>()).Returns(mockEventArgsFactory.Object);
 
             // SETUP _mockServiceFactory to create a new CommandInvoker():
-            _mockServiceFactory.Setup(_mock => _mock.Create<CommandInvoker>()).Returns(new CommandInvoker());
+            _mockServiceFactory.Setup(mock => mock.Create<CommandInvoker>()).Returns(new CommandInvoker());
 
             // SETUP _mockServiceFactory to create a new ServiceLocator():
-            _mockServiceFactory.Setup(_mock => _mock.Create<ServiceLocator>()).Returns(new ServiceLocator());
+            _mockServiceFactory.Setup(mock => mock.Create<ServiceLocator>()).Returns(new ServiceLocator());
 
             // SETUP _mockServiceFactory to create a new ServiceLocator():
-            _mockServiceFactory.Setup(_mock => _mock.Create<ImageServer>()).Returns(new ImageServer());
+            _mockServiceFactory.Setup(mock => mock.Create<ImageServer>()).Returns(new ImageServer());
 
             // SETUP _mockServiceFactory to create a new ImageMgr():
-            _mockServiceFactory.Setup(_mock => _mock.Create<ImageMgr>()).Returns(new ImageMgr());
+            _mockServiceFactory.Setup(mock => mock.Create<ImageMgr>()).Returns(new ImageMgr());
 
             // SETUP _mockServiceFactory to create a new ImageEditor():
-            _mockServiceFactory.Setup(_mock => _mock.Create<ImageEditor>()).Returns(new ImageEditor());
+            _mockServiceFactory.Setup(mock => mock.Create<ImageEditor>()).Returns(new ImageEditor());
 
-            // SETUP _mockDisposableFactory to create a new FishyHome() and return a new MockFishyHome() instead:
-            _mockDisposableFactory.Setup(_mock => _mock.Create<FishyHome>()).Returns(new MockFishyHome());
+            // SETUP mockDisposableFactory to create a new FishyHome() and return a new MockFishyHome() instead:
+            mockDisposableFactory.Setup(mock => mock.Create<FishyHome>()).Returns(new MockFishyHome());
 
-            // SETUP _mockEnumerableFactory to create a new Dictionary<int, IDisposable>():
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<int, IDisposable>>()).Returns(new Dictionary<int, IDisposable>());
+            // SETUP mockEnumerableFactory to create a new Dictionary<int, IDisposable>():
+            mockEnumerableFactory.Setup(mock => mock.Create<Dictionary<int, IDisposable>>()).Returns(new Dictionary<int, IDisposable>());
 
-            // SETUP _mockEnumerableFactory to create a new Dictionary<int, string>():
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<int, string>>()).Returns(new Dictionary<int, string>());
+            // SETUP mockEnumerableFactory to create a new Dictionary<int, string>():
+            mockEnumerableFactory.Setup(mock => mock.Create<Dictionary<int, string>>()).Returns(new Dictionary<int, string>());
 
-            // SETUP _mockEnumerableFactory to create a new Dictionary<string, ICommand>():
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<string, ICommand>>()).Returns(new Dictionary<string, ICommand>());
+            // SETUP mockEnumerableFactory to create a new Dictionary<string, ICommand>():
+            mockEnumerableFactory.Setup(mock => mock.Create<Dictionary<string, ICommand>>()).Returns(new Dictionary<string, ICommand>());
 
-            // SETUP _mockEnumerableFactory to create a new Dictionary<string, EventArgs>():
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<string, EventArgs>>()).Returns(new Dictionary<string, EventArgs>());
+            // SETUP mockEnumerableFactory to create a new Dictionary<string, EventArgs>():
+            mockEnumerableFactory.Setup(mock => mock.Create<Dictionary<string, EventArgs>>()).Returns(new Dictionary<string, EventArgs>());
 
-            // SETUP _mockEnumerableFactory to create a new Dictionary<string, Image>():
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<string, Image>>()).Returns(new Dictionary<string, Image>());
+            // SETUP mockEnumerableFactory to create a new Dictionary<string, Image>():
+            mockEnumerableFactory.Setup(mock => mock.Create<Dictionary<string, Image>>()).Returns(new Dictionary<string, Image>());
 
-            // SETUP _mockEnumerableFactory to create a new List<string>():
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<List<string>>()).Returns(new List<string>());
+            // SETUP mockEnumerableFactory to create a new List<string>():
+            mockEnumerableFactory.Setup(mock => mock.Create<List<string>>()).Returns(new List<string>());
 
             // SETUP _mockServiceFactory to create a new OpenLogic() and return _mockOpenImage.Object instead:
-            _mockLogicFactory.Setup(_mock => _mock.Create<OpenLogic>()).Returns(_mockOpenImage.Object);
+            mockLogicFactory.Setup(mock => mock.Create<OpenLogic>()).Returns(_mockOpenImage.Object);
 
             // SETUP _mockServiceFactory to create a new CommandParam<string>():
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<string>>()).Returns(new CommandParam<string>());
+            mockCommandFactory.Setup(mock => mock.Create<CommandParam<string>>()).Returns(new CommandParam<string>());
 
             // SETUP _mockServiceFactory to create a new CommandParam<IList<string>, EventHandler<StringListEventArgs>():
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<IList<string>, EventHandler<StringListEventArgs>>>()).Returns(new CommandParam<IList<string>, EventHandler<StringListEventArgs>>());
+            mockCommandFactory.Setup(mock => mock.Create<CommandParam<IList<string>, EventHandler<StringListEventArgs>>>()).Returns(new CommandParam<IList<string>, EventHandler<StringListEventArgs>>());
 
             // SETUP _mockServiceFactory to create a new CommandParam<string, int, int, EventHandler<ImageEventArgs>():
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>()).Returns(new CommandParam<string, int, int, EventHandler<ImageEventArgs>>());
+            mockCommandFactory.Setup(mock => mock.Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>()).Returns(new CommandParam<string, int, int, EventHandler<ImageEventArgs>>());
 
             // SETUP _mockServiceFactory to create a new CommandParam<IDisposable>():
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<IDisposable>>()).Returns(new CommandParam<IDisposable>());
+            mockCommandFactory.Setup(mock => mock.Create<CommandParam<IDisposable>>()).Returns(new CommandParam<IDisposable>());
 
             // SETUP _mockServiceFactory to create a new CommandParam<int>():
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<int>>()).Returns(new CommandParam<int>());
+            mockCommandFactory.Setup(mock => mock.Create<CommandParam<int>>()).Returns(new CommandParam<int>());
 
-            // SETUP _mockEventArgsFactory to create a new EventArgs():
-            _mockEventArgsFactory.Setup(_mock => _mock.Create<EventArgs>()).Returns(new EventArgs());
+            // SETUP mockEventArgsFactory to create a new EventArgs():
+            mockEventArgsFactory.Setup(mock => mock.Create<EventArgs>()).Returns(new EventArgs());
 
-            // SETUP _mockEventArgsFactory to create a new ImageEventArgs():
-            _mockEventArgsFactory.Setup(_mock => _mock.Create<ImageEventArgs>()).Returns(new ImageEventArgs());
+            // SETUP mockEventArgsFactory to create a new ImageEventArgs():
+            mockEventArgsFactory.Setup(mock => mock.Create<ImageEventArgs>()).Returns(new ImageEventArgs());
 
-            // SETUP _mockEventArgsFactory to create a new StringEventArgs():
-            _mockEventArgsFactory.Setup(_mock => _mock.Create<StringListEventArgs>()).Returns(new StringListEventArgs());
+            // SETUP mockEventArgsFactory to create a new StringEventArgs():
+            mockEventArgsFactory.Setup(mock => mock.Create<StringListEventArgs>()).Returns(new StringListEventArgs());
 
             #endregion
 
@@ -262,13 +262,13 @@ namespace TestApp.EndToEndTests
             #region OPEN IMAGE
 
             // DECLARE & INSTANTIATE an IList<string> as a new List<string>():
-            IList<string> _tempList = _mockEnumerableFactory.Object.Create<List<string>>() as IList<string>;
+            IList<string> _tempList = mockEnumerableFactory.Object.Create<List<string>>() as IList<string>;
 
             // ADD a file path to _tempList:
             _tempList.Add("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png");
 
             // SETUP _mockOpenImage so that OpenImage() returns a reference to _tempList:
-            _mockOpenImage.Setup(_mock => _mock.OpenImage()).Returns(_tempList);
+            _mockOpenImage.Setup(mock => mock.OpenImage()).Returns(_tempList);
 
             #endregion
 
@@ -290,7 +290,7 @@ namespace TestApp.EndToEndTests
             (_serviceLocator as IInitialiseParam<IFactory<IService>>).Initialise(_mockServiceFactory.Object);
 
             // INSTANTIATE _formDictionary as a new Dictionary<int, IDisposable>():
-            _formDictionary = _mockEnumerableFactory.Object.Create<Dictionary<int, IDisposable>>() as IDictionary<int, IDisposable>;
+            _formDictionary = mockEnumerableFactory.Object.Create<Dictionary<int, IDisposable>>() as IDictionary<int, IDisposable>;
 
             // INITIALISE _controller with reference to _serviceLocator:
             (_controller as IInitialiseParam<IServiceLocator>).Initialise(_serviceLocator);

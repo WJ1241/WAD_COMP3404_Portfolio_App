@@ -160,11 +160,11 @@ namespace Server
                             // FOR loop iterates through the y of the drawn rectangle: 
                             for (int y = 0; y < pCropBox.Height; y++)
                             {
-                                // DECLARE AND INSTANTIATE _pxlColor and set it to the pFrame GetPixle passing in the pCropBox.X plus x and the pCropBox.Y plus y:
-                                Color _pxlColor = pFrame.GetPixel(pCropBox.X + x, pCropBox.Y + y);
+                                // DECLARE AND INSTANTIATE pxlColor and set it to the pFrame GetPixle passing in the pCropBox.X plus x and the pCropBox.Y plus y:
+                                Color pxlColor = pFrame.GetPixel(pCropBox.X + x, pCropBox.Y + y);
 
-                                // CALL cropImg's SetPixle passing in x, y & _pxlColor:
-                                cropImg.SetPixel(x, y, _pxlColor);
+                                // CALL cropImg's SetPixle passing in x, y & pxlColor:
+                                cropImg.SetPixel(x, y, pxlColor);
                             }
                         }
                         // CATCH ArgumentOutOfRangeException from GetPixel():

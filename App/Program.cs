@@ -25,27 +25,27 @@ namespace App
         [STAThread]
         static void Main()
         {
-            // DECLARE & INSTANTIATE an ISetupApplication as a new Controller(), name it '_controller':
-            ISetupApplication _controller = new Controller();
+            // DECLARE & INSTANTIATE an ISetupApplication as a new Controller(), name it 'controller':
+            ISetupApplication controller = new Controller();
 
             // DECLARE & INSTANTIATE an IFactory<IService> as a new Factory<IService>():
-            IFactory<IService> _serviceFactory = new Factory<IService>();
+            IFactory<IService> serviceFactory = new Factory<IService>();
 
             // TRY checking if ClassDoesNotExistException OR NullInstanceException are thrown:
             try
             {
-                // DECLARE & INSTANTIATE an IServiceLocator as a new ServiceLocator(), name it '_serviceLocator':
-                IServiceLocator _serviceLocator = _serviceFactory.Create<ServiceLocator>() as IServiceLocator;
+                // DECLARE & INSTANTIATE an IServiceLocator as a new ServiceLocator(), name it 'serviceLocator':
+                IServiceLocator serviceLocator = serviceFactory.Create<ServiceLocator>() as IServiceLocator;
 
-                // INITIALISE _serviceLocator with reference to _serviceFactory:
-                (_serviceLocator as IInitialiseParam<IFactory<IService>>).Initialise(_serviceFactory);
+                // INITIALISE serviceLocator with reference to serviceFactory:
+                (serviceLocator as IInitialiseParam<IFactory<IService>>).Initialise(serviceFactory);
 
-                // INITIALISE _controller with reference to _serviceLocator:
-                (_controller as IInitialiseParam<IServiceLocator>).Initialise(_serviceLocator);
+                // INITIALISE controller with reference to serviceLocator:
+                (controller as IInitialiseParam<IServiceLocator>).Initialise(serviceLocator);
 
-                // INITIALISE _controller with a new IDictionary<int, IDisposable>() object:
-                (_controller as IInitialiseParam<IDictionary<int, IDisposable>>).Initialise(
-                    (_serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<int, IDisposable>>() as IDictionary<int, IDisposable>);
+                // INITIALISE controller with a new IDictionary<int, IDisposable>() object:
+                (controller as IInitialiseParam<IDictionary<int, IDisposable>>).Initialise(
+                    (serviceLocator.GetService<Factory<IEnumerable>>() as IFactory<IEnumerable>).Create<Dictionary<int, IDisposable>>() as IDictionary<int, IDisposable>);
             }
             // CATCH ClassDoesNotExistException from Create():
             catch (ClassDoesNotExistException e)
@@ -60,11 +60,11 @@ namespace App
                 Console.WriteLine(e.Message);
             }
 
-            // CALL SetupApplication() on _controller:
-            _controller.SetupApplication();
+            // CALL SetupApplication() on controller:
+            controller.SetupApplication();
 
-            // CALL RunApplication() on _controller:
-            _controller.RunApplication();
+            // CALL RunApplication() on controller:
+            controller.RunApplication();
         }
     }
 }

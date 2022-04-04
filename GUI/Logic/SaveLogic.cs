@@ -55,14 +55,14 @@ namespace GUI.Logic
                         // IF FileName IS NOT empty:
                         if (pSFD.FileName != "")
                         {
-                            // DECLARE & ASSIGN a FileStream, name it '_fs', and give result value of pSFD.OpenFile():
-                            FileStream _fs = (FileStream)pSFD.OpenFile();
+                            // DECLARE & ASSIGN a FileStream, name it 'fs', and give result value of pSFD.OpenFile():
+                            FileStream fs = (FileStream)pSFD.OpenFile();
 
                             // SAVE pImage to the User's device at chosen directory:
-                            pImage.Save(_fs, System.Drawing.Imaging.ImageFormat.Png);
+                            pImage.Save(fs, System.Drawing.Imaging.ImageFormat.Png);
 
                             // CLOSE FileStream:
-                            _fs.Close();
+                            fs.Close();
                         }
                     }
                 }

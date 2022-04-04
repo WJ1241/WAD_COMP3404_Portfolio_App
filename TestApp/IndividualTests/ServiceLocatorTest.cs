@@ -38,19 +38,19 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE an IService, name it '_tempService':
-            IService _tempService;
+            // DECLARE an IService, name it 'tempService':
+            IService tempService;
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
 
             #region ACT
 
-            // CALL _serviceLocator.GetService() and store return value in _tempService:
-            _tempService = _serviceLocator.GetService<Factory<IServiceLocator>>();
+            // CALL _serviceLocator.GetService() and store return value in tempService:
+            tempService = _serviceLocator.GetService<Factory<IServiceLocator>>();
 
             #endregion
 
@@ -66,13 +66,13 @@ namespace TestApp.IndividualTests
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockServiceFactory.Create<Factory<IServiceLocator>>() has not been called!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockServiceFactory.Create<Factory<IServiceLocator>>() has not been called!");
             }
 
             #endregion
@@ -91,40 +91,40 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE an IService, name it '_tempService':
-            IService _tempService;
+            // DECLARE an IService, name it 'tempService':
+            IService tempService;
 
             #endregion
 
 
             #region ACT
 
-            // CALL _serviceLocator.GetService() and store return value in _tempService:
-            _tempService = _serviceLocator.GetService<Factory<IServiceLocator>>();
+            // CALL _serviceLocator.GetService() and store return value in tempService:
+            tempService = _serviceLocator.GetService<Factory<IServiceLocator>>();
 
             #endregion
 
 
             #region ASSERT
 
-            // IF _tempService DOES NOT HAVE an active instance AND DOES NOT implement IService:
-            if (_tempService == null || !(_tempService is IService))
+            // IF tempService DOES NOT HAVE an active instance AND DOES NOT implement IService:
+            if (tempService == null || !(tempService is IService))
             {
-                // IF _tempService DOES NOT HAVE an active instance:
-                if (_tempService == null)
+                // IF tempService DOES NOT HAVE an active instance:
+                if (tempService == null)
                 {
-                    // ASSERT a fail due to _tempService being a null instance:
+                    // ASSERT a fail due to tempService being a null instance:
                     Assert.Fail("ERROR: ServiceLocator has not returned an active instance of the specified service!");
                 }
-                // IF _tempService DOES NOT implement IService:
-                else if (!(_tempService is IService))
+                // IF tempService DOES NOT implement IService:
+                else if (!(tempService is IService))
                 {
-                    // ASSERT a fail due to _tempService being a null instance:
+                    // ASSERT a fail due to tempService being a null instance:
                     Assert.Fail("ERROR: ServiceLocator has returned an object that does not implement IService!");
                 }
             }
-            // IF _tempService DOES HAVE an active instance AND DOES implement IService:
-            else if (_tempService != null && _tempService is IService)
+            // IF tempService DOES HAVE an active instance AND DOES implement IService:
+            else if (tempService != null && tempService is IService)
             {
                 // WRITE to console that _serviceLocator has returned an active instance of IService:
                 System.Console.WriteLine("ServiceLocator has successfully returned an active instance that implements IService!");
@@ -148,7 +148,7 @@ namespace TestApp.IndividualTests
             _mockServiceFactory = new Mock<IFactory<IService>>();
 
             // SETUP _mockServiceFactory.Create(), so that it can return a new ServiceLocator():
-            _mockServiceFactory.Setup(_mock => _mock.Create<ServiceLocator>()).Returns(new ServiceLocator());
+            _mockServiceFactory.Setup(mock => mock.Create<ServiceLocator>()).Returns(new ServiceLocator());
 
             // SETUP _mockServiceFactory.Create(), so that it can return a new Factory<IServiceLocator>>():
             // USED FOR TESTING WHETHER GETSERIVCE() RETURNS AN ACTIVE INSTANCE

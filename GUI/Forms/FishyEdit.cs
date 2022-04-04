@@ -509,14 +509,14 @@ namespace GUI
                 // ASSIGNMENT _cropH is given the value of e.Y value minus the _cropY value:
                 _cropH = e.Y - _cropY;
 
-                // ASSIGNMENT tempory variable _graphics is set to the ImgDisplay's CreateGraphics method:
-                Graphics _graphics = ImgDisplay.CreateGraphics();
+                // ASSIGNMENT tempory variable graphics is set to the ImgDisplay's CreateGraphics method:
+                Graphics graphics = ImgDisplay.CreateGraphics();
 
-                // CALL _graphics is passed the _cropPen, _cropX, _cropY, _cropW & _cropH values:
-                _graphics.DrawRectangle(_cropPen, _cropX, _cropY, _cropW, _cropH);
+                // CALL graphics is passed the _cropPen, _cropX, _cropY, _cropW & _cropH values:
+                graphics.DrawRectangle(_cropPen, _cropX, _cropY, _cropW, _cropH);
 
-                // CALL _graphics Dispose method:
-                _graphics.Dispose();
+                // CALL graphics Dispose method:
+                graphics.Dispose();
             }
         }
 
@@ -531,14 +531,14 @@ namespace GUI
             // TRY checking if _saturation() OR ChangeImg() throw a NullInstanceException:
             try
             {
-                // DECLARE & INSTANTIATE a new Bitmap() passing ImgDisplay dimensions as parameters, name it '_imgDisplayBM':
-                Bitmap _imgDisplayBM = new Bitmap(ImgDisplay.Width, ImgDisplay.Height);
+                // DECLARE & INSTANTIATE a new Bitmap() passing ImgDisplay dimensions as parameters, name it 'imgDisplayBM':
+                Bitmap imgDisplayBM = new Bitmap(ImgDisplay.Width, ImgDisplay.Height);
 
-                // CALL DrawToBitmap() on ImgDisplay, passing _imgDisplayBM and ImgDisplay.ClientRectangle as parameters:
-                ImgDisplay.DrawToBitmap(_imgDisplayBM, ImgDisplay.ClientRectangle);
+                // CALL DrawToBitmap() on ImgDisplay, passing imgDisplayBM and ImgDisplay.ClientRectangle as parameters:
+                ImgDisplay.DrawToBitmap(imgDisplayBM, ImgDisplay.ClientRectangle);
 
-                // SET value of _commandDict["Crop"]'s FirstParam property to instance of _imgDisplayBM:
-                (_commandDict["Crop"] as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>).FirstParam = _imgDisplayBM;
+                // SET value of _commandDict["Crop"]'s FirstParam property to instance of imgDisplayBM:
+                (_commandDict["Crop"] as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>).FirstParam = imgDisplayBM;
 
                 // SET value of _commandDict["Crop"]'s SecondParam property to a new Rectangle made from collected _crop variables:
                 (_commandDict["Crop"] as ICommandParam<Bitmap, Rectangle, EventHandler<ImageEventArgs>>).SecondParam = new Rectangle(_cropX, _cropY, _cropW, _cropH);

@@ -178,8 +178,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -198,19 +198,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that _mockServiceLocator.GetService<Factory<IDisposable>>() has been called ONCE, makes sure that method is not called more than once:
-                _mockServiceLocator.Verify(_mock => _mock.GetService<Factory<IDisposable>>(), Times.Once);
+                _mockServiceLocator.Verify(mock => mock.GetService<Factory<IDisposable>>(), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockServiceLocator.GetService<Factory<IDisposable>>() has not been called!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockServiceLocator.GetService<Factory<IDisposable>>() has not been called!");
             }
 
             #endregion
@@ -229,8 +229,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -249,19 +249,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that _mockImageServer.Initialise(_mockImageMgr.Object) has been called ONCE, makes sure that method is not called more than once:
-                _mockImageServer.As<IInitialiseParam<IManageImg>>().Verify(_mock => _mock.Initialise(_mockImageMgr.Object), Times.Once);
+                _mockImageServer.As<IInitialiseParam<IManageImg>>().Verify(mock => mock.Initialise(_mockImageMgr.Object), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockImageServer.Initialise(_mockImageMgr.Object) has not been called!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockImageServer.Initialise(_mockImageMgr.Object) has not been called!");
             }
 
             #endregion
@@ -275,8 +275,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -295,19 +295,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that Initialise(_mockImageEditor.Object) has been called ONCE, makes sure that method is not called more than once:
-                _mockImageServer.As<IInitialiseParam<IEditImg>>().Verify(_mock => _mock.Initialise(_mockImageEditor.Object), Times.Once);
+                _mockImageServer.As<IInitialiseParam<IEditImg>>().Verify(mock => mock.Initialise(_mockImageEditor.Object), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockImageServer.Initialise(_mockImageEditor.Object) has not been called!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockImageServer.Initialise(_mockImageEditor.Object) has not been called!");
             }
 
             #endregion
@@ -321,8 +321,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -341,19 +341,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that Initialise(_mockEventArgsDict.Object) has been called ONCE, makes sure that method is not called more than once:
-                _mockImageServer.As<IInitialiseParam<IDictionary<string, EventArgs>>>().Verify(_mock => _mock.Initialise(_mockEventArgsDict.Object), Times.Once);
+                _mockImageServer.As<IInitialiseParam<IDictionary<string, EventArgs>>>().Verify(mock => mock.Initialise(_mockEventArgsDict.Object), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockImageServer.Initialise(_mockImageEventArgs.Object) has not been called!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockImageServer.Initialise(_mockImageEventArgs.Object) has not been called!");
             }
 
             #endregion
@@ -367,8 +367,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -387,19 +387,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that Initialise(_mockImageEventArgs.Object) has been called ONCE, makes sure that method is not called more than once:
-                _mockImageServer.As<IInitialiseParam<string, EventArgs>>().Verify(_mock => _mock.Initialise("Image", _mockImageEventArgs.Object), Times.Once);
+                _mockImageServer.As<IInitialiseParam<string, EventArgs>>().Verify(mock => mock.Initialise("Image", _mockImageEventArgs.Object), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockImageServer.Initialise('Image', _mockImageEventArgs.Object) has not been called!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockImageServer.Initialise('Image', _mockImageEventArgs.Object) has not been called!");
             }
 
             #endregion
@@ -418,8 +418,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -438,19 +438,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that Initialise(_mockImageDict.Object) has been called ONCE, makes sure that method is not called more than once:
-                _mockImageMgr.As<IInitialiseParam<IDictionary<string, Image>>>().Verify(_mock => _mock.Initialise(_mockImageDict.Object), Times.Once);
+                _mockImageMgr.As<IInitialiseParam<IDictionary<string, Image>>>().Verify(mock => mock.Initialise(_mockImageDict.Object), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockImageMgr.Initialise(_mockImageDict.Object) has not been called!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockImageMgr.Initialise(_mockImageDict.Object) has not been called!");
             }
 
             #endregion
@@ -469,8 +469,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -489,19 +489,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that Initialise(It.IsAny<ImageFactory>()) has been called ONCE, makes sure that method is not called more than once:
-                _mockImageEditor.As<IInitialiseParam<ImageFactory>>().Verify(_mock => _mock.Initialise(It.IsAny<ImageFactory>()), Times.Once);
+                _mockImageEditor.As<IInitialiseParam<ImageFactory>>().Verify(mock => mock.Initialise(It.IsAny<ImageFactory>()), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockImageEditor.Initialise(It.IsAny<ImageFactory>()) has not been called!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockImageEditor.Initialise(It.IsAny<ImageFactory>()) has not been called!");
             }
 
             #endregion
@@ -520,8 +520,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -540,19 +540,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that Initialise(_mockOpenImage.Object) has been called ONCE, makes sure that method is not called more than once:
-                _mockFishyHome.As<IInitialiseParam<IOpenImage>>().Verify(_mock => _mock.Initialise(_mockOpenImage.Object), Times.Once);
+                _mockFishyHome.As<IInitialiseParam<IOpenImage>>().Verify(mock => mock.Initialise(_mockOpenImage.Object), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockFishyHome.Initialise(_mockOpenImage.Object) has not been called!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockFishyHome.Initialise(_mockOpenImage.Object) has not been called!");
             }
 
             #endregion
@@ -566,8 +566,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -586,19 +586,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that Initialise(_mockStringDict.Object) has been called ONCE, makes sure that method is not called more than once:
-                _mockFishyHome.As<IInitialiseParam<IDictionary<int, string>>>().Verify(_mock => _mock.Initialise(_mockStringDict.Object), Times.Once);
+                _mockFishyHome.As<IInitialiseParam<IDictionary<int, string>>>().Verify(mock => mock.Initialise(_mockStringDict.Object), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockFishyHome.Initialise(_mockStringDict.Object) has not been called!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockFishyHome.Initialise(_mockStringDict.Object) has not been called!");
             }
 
             #endregion
@@ -612,8 +612,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -632,19 +632,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that Initialise(_mockStringDict.Object) has been called ONCE, makes sure that method is not called more than once:
-                _mockFishyHome.As<IInitialiseParam<ICommand>>().Verify(_mock => _mock.Initialise(_mockGetImgCmd.Object), Times.Once);
+                _mockFishyHome.As<IInitialiseParam<ICommand>>().Verify(mock => mock.Initialise(_mockGetImgCmd.Object), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockFishyHome.Initialise(_mockGetImgCmd.Object) has not been called!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockFishyHome.Initialise(_mockGetImgCmd.Object) has not been called!");
             }
 
             #endregion
@@ -658,8 +658,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -678,19 +678,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that InvokeCommand.Set has been set ONCE, makes sure that method is not set more than once:
-                _mockFishyHome.As<ICommandSender>().VerifySet(_mock => _mock.InvokeCommand = _mockCommandInvoker.Object.InvokeCommand, Times.Once);
+                _mockFishyHome.As<ICommandSender>().VerifySet(mock => mock.InvokeCommand = _mockCommandInvoker.Object.InvokeCommand, Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockFishyHome.InvokeCommand has not been set!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockFishyHome.InvokeCommand has not been set!");
             }
 
             #endregion
@@ -709,8 +709,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -729,19 +729,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that Initialise(_mockStringList.Object) has been called ONCE, makes sure that method is not called more than once:
-                _mockOpenImage.As<IInitialiseParam<IList<string>>>().Verify(_mock => _mock.Initialise(_mockStringList.Object), Times.Once);
+                _mockOpenImage.As<IInitialiseParam<IList<string>>>().Verify(mock => mock.Initialise(_mockStringList.Object), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockOpenImage.Initialise(_mockStringList.Object) has not been called!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockOpenImage.Initialise(_mockStringList.Object) has not been called!");
             }
 
             #endregion
@@ -760,8 +760,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -780,19 +780,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that MethodRef.Set has been set ONCE, makes sure that method is not set more than once:
-                _mockGetImgCmd.VerifySet(_mock => _mock.MethodRef = _mockImageServer.Object.GetImage, Times.Once);
+                _mockGetImgCmd.VerifySet(mock => mock.MethodRef = _mockImageServer.Object.GetImage, Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockGetImgCmd.MethodRef has not been set!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockGetImgCmd.MethodRef has not been set!");
             }
 
             #endregion
@@ -806,8 +806,8 @@ namespace TestApp.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -826,19 +826,19 @@ namespace TestApp.IndividualTests
             try
             {
                 // VERIFY that MethodRef.Set has been set ONCE, makes sure that method is not set more than once:
-                _mockGetImgCmd.As<IName>().VerifySet(_mock => _mock.Name = "GetImage", Times.Once);
+                _mockGetImgCmd.As<IName>().VerifySet(mock => mock.Name = "GetImage", Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed, and give corresponding message if _pass is false:
-                Assert.IsTrue(_pass, "ERROR: _mockGetImgCmd.Name has not been set!");
+                // ASSERT if test has passed, and give corresponding message if pass is false:
+                Assert.IsTrue(pass, "ERROR: _mockGetImgCmd.Name has not been set!");
             }
 
             #endregion
@@ -929,61 +929,61 @@ namespace TestApp.IndividualTests
             _mockCreateEditScrnCmd = new Mock<ICommandParam<string>>();
 
             // SETUP _mockCreateEditScrnCmd so that its Name Property can be given a string value:
-            _mockCreateEditScrnCmd.As<IName>().SetupSet(_mock => _mock.Name = "");
+            _mockCreateEditScrnCmd.As<IName>().SetupSet(mock => mock.Name = "");
 
             // SETUP _mockCreateEditScrnCmd so that its MethodRef Property holds reference to _controller.CreateEditScrn():
-            _mockCreateEditScrnCmd.SetupSet(_mock => _mock.MethodRef = (_controller as IController).CreateEditScrn).Verifiable();
+            _mockCreateEditScrnCmd.SetupSet(mock => mock.MethodRef = (_controller as IController).CreateEditScrn).Verifiable();
 
             // INSTANTIATE _mockGetImgCmd as a new Mock<ICommandParam<string, int, int, EventHandler<ImageEventArgs>>>():
             _mockGetImgCmd = new Mock<ICommandParam<string, int, int, EventHandler<ImageEventArgs>>>();
 
             // SETUP _mockGetImgCmd so that its Name Property can be given a string value:
-            _mockGetImgCmd.As<IName>().SetupSet(_mock => _mock.Name = "GetImage");
+            _mockGetImgCmd.As<IName>().SetupSet(mock => mock.Name = "GetImage");
 
             // SETUP _mockGetImgCmd so that its MethodRef Property holds reference to _mockImageServer.Object.GetImage():
-            _mockGetImgCmd.SetupSet(_mock => _mock.MethodRef = _mockImageServer.Object.GetImage);
+            _mockGetImgCmd.SetupSet(mock => mock.MethodRef = _mockImageServer.Object.GetImage);
 
             // INSTANTIATE _mockLoadCmd as a new Mock<ICommandParam<IList<string>, EventHandler<StringListEventArgs>>>():
             _mockLoadCmd = new Mock<ICommandParam<IList<string>, EventHandler<StringListEventArgs>>>();
 
             // SETUP _mockLoadCmd so that its Name Property can be given a string value:
-            _mockLoadCmd.As<IName>().SetupSet(_mock => _mock.Name = "Load");
+            _mockLoadCmd.As<IName>().SetupSet(mock => mock.Name = "Load");
 
             // SETUP _mockLoadCmd so that its MethodRef Property holds reference to _mockImageServer.Object.Load:
-            _mockLoadCmd.SetupSet(_mock => _mock.MethodRef = _mockImageServer.Object.Load);
+            _mockLoadCmd.SetupSet(mock => mock.MethodRef = _mockImageServer.Object.Load);
 
             // INSTANTIATE _mockRemoveDisposableCmd as a new Mock<ICommandParam<IDisposable>>():
             _mockRemoveDisposableCmd = new Mock<ICommandParam<IDisposable>>();
 
             // SETUP _mockRemoveDisposableCmd so that its Name Property can be given a string value:
-            _mockRemoveDisposableCmd.As<IName>().SetupSet(_mock => _mock.Name = "");
+            _mockRemoveDisposableCmd.As<IName>().SetupSet(mock => mock.Name = "");
 
             // SETUP _mockRemoveDisposableCmd so that its MethodRef Property holds reference to _controller.DisposableRemoval(IDisposable):
-            _mockRemoveDisposableCmd.SetupSet(_mock => _mock.MethodRef = (_controller as IController).DisposableRemoval);
+            _mockRemoveDisposableCmd.SetupSet(mock => mock.MethodRef = (_controller as IController).DisposableRemoval);
 
             // INSTANTIATE _mockRemoveDisposableIntCmd as a new Mock<ICommandParam<int>>():
             _mockRemoveDisposableIntCmd = new Mock<ICommandParam<int>>();
 
             // SETUP _mockRemoveDisposableIntCmd so that its Name Property can be given a string value:
-            _mockRemoveDisposableIntCmd.As<IName>().SetupSet(_mock => _mock.Name = "");
+            _mockRemoveDisposableIntCmd.As<IName>().SetupSet(mock => mock.Name = "");
 
             // SETUP _mockRemoveDisposableIntCmd so that its MethodRef Property holds reference to _controller.DisposableRemoval(int):
-            _mockRemoveDisposableIntCmd.SetupSet(_mock => _mock.MethodRef = (_controller as IController).DisposableRemoval);
+            _mockRemoveDisposableIntCmd.SetupSet(mock => mock.MethodRef = (_controller as IController).DisposableRemoval);
 
             // SETUP _mockCommandFactory so that it can return _mockCreateEditScrnCmd.Object when Create<CommandParam<string>>() is called:
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<string>>()).Returns(_mockCreateEditScrnCmd.Object);
+            _mockCommandFactory.Setup(mock => mock.Create<CommandParam<string>>()).Returns(_mockCreateEditScrnCmd.Object);
 
             // SETUP _mockCommandFactory so that it can return _mockGetImgCmd.Object when Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>() is called:
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>()).Returns(_mockGetImgCmd.Object);
+            _mockCommandFactory.Setup(mock => mock.Create<CommandParam<string, int, int, EventHandler<ImageEventArgs>>>()).Returns(_mockGetImgCmd.Object);
 
             // SETUP _mockCommandFactory so that it can return _mockLoadCmd.Object when Create<CommandParam<IList<string>, EventHandler<StringListEventArgs>>>() is called:
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<IList<string>, EventHandler<StringListEventArgs>>>()).Returns(_mockLoadCmd.Object);
+            _mockCommandFactory.Setup(mock => mock.Create<CommandParam<IList<string>, EventHandler<StringListEventArgs>>>()).Returns(_mockLoadCmd.Object);
 
             // SETUP _mockCommandFactory so that it can return _mockRemoveDisposableCmd.Object when Create<CommandParam<IDisposable>>() is called:
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<IDisposable>>()).Returns(_mockRemoveDisposableCmd.Object);
+            _mockCommandFactory.Setup(mock => mock.Create<CommandParam<IDisposable>>()).Returns(_mockRemoveDisposableCmd.Object);
 
             // SETUP _mockCommandFactory so that it can return _mockRemoveDisposableIntCmd.Object when Create<CommandParam<int>>() is called:
-            _mockCommandFactory.Setup(_mock => _mock.Create<CommandParam<int>>()).Returns(_mockRemoveDisposableIntCmd.Object);
+            _mockCommandFactory.Setup(mock => mock.Create<CommandParam<int>>()).Returns(_mockRemoveDisposableIntCmd.Object);
 
             #endregion
 
@@ -994,7 +994,7 @@ namespace TestApp.IndividualTests
             _mockOpenImage = new Mock<IOpenImage>();
 
             // SETUP _mockOpenImage so that it can be initialised with a reference to _mockStringList.Object:
-            _mockOpenImage.As<IInitialiseParam<IList<string>>>().Setup(_mock => _mock.Initialise(_mockStringList.Object));
+            _mockOpenImage.As<IInitialiseParam<IList<string>>>().Setup(mock => mock.Initialise(_mockStringList.Object));
 
             #endregion
 
@@ -1011,19 +1011,19 @@ namespace TestApp.IndividualTests
             _mockFishyHome.As<IEventListener<StringListEventArgs>>();
 
             // SETUP _mockFishyHome so that its InvokeCommand Property holds reference to _mockCommandInvoker.Object.InvokeCommand():
-            _mockFishyHome.As<ICommandSender>().SetupSet(_mock => _mock.InvokeCommand = _mockCommandInvoker.Object.InvokeCommand);
+            _mockFishyHome.As<ICommandSender>().SetupSet(mock => mock.InvokeCommand = _mockCommandInvoker.Object.InvokeCommand);
 
             // SETUP _mockFishyHome so that it can be initialised with a reference to _mockOpenImage.Object:
-            _mockFishyHome.As<IInitialiseParam<IOpenImage>>().Setup(_mock => _mock.Initialise(_mockOpenImage.Object));
+            _mockFishyHome.As<IInitialiseParam<IOpenImage>>().Setup(mock => mock.Initialise(_mockOpenImage.Object));
 
             // SETUP _mockFishyHome so that it can be initialised with a reference to _mockStringDict.Object:
-            _mockFishyHome.As<IInitialiseParam<IDictionary<int, string>>>().Setup(_mock => _mock.Initialise(_mockStringDict.Object));
+            _mockFishyHome.As<IInitialiseParam<IDictionary<int, string>>>().Setup(mock => mock.Initialise(_mockStringDict.Object));
 
             // SETUP _mockFishyHome so that it can be initialised with a reference to _mockCommandDict.Object:
-            _mockFishyHome.As<IInitialiseParam<IDictionary<string, ICommand>>>().Setup(_mock => _mock.Initialise(_mockCommandDict.Object));
+            _mockFishyHome.As<IInitialiseParam<IDictionary<string, ICommand>>>().Setup(mock => mock.Initialise(_mockCommandDict.Object));
 
             // SETUP _mockFishyHome so that it can be initialised with a reference to _mockCreateEditScrnCmd.Object:
-            _mockFishyHome.As<IInitialiseParam<ICommand>>().Setup(_mock => _mock.Initialise(_mockCreateEditScrnCmd.Object));
+            _mockFishyHome.As<IInitialiseParam<ICommand>>().Setup(mock => mock.Initialise(_mockCreateEditScrnCmd.Object));
 
             #endregion
 
@@ -1037,10 +1037,10 @@ namespace TestApp.IndividualTests
             _mockStringListEventArgs = new Mock<StringListEventArgs>();
 
             // SETUP _mockEventArgsFactory so that it can return _mockImageEventArgs.Object when Create<ImageEventArgs>() is called:
-            _mockEventArgsFactory.Setup(_mock => _mock.Create<ImageEventArgs>()).Returns(_mockImageEventArgs.Object);
+            _mockEventArgsFactory.Setup(mock => mock.Create<ImageEventArgs>()).Returns(_mockImageEventArgs.Object);
 
             // SETUP _mockEventArgsFactory so that it can return _mockStringListEventArgs.Object when Create<StringListEventArgs>() is called:
-            _mockEventArgsFactory.Setup(_mock => _mock.Create<StringListEventArgs>()).Returns(_mockStringListEventArgs.Object);
+            _mockEventArgsFactory.Setup(mock => mock.Create<StringListEventArgs>()).Returns(_mockStringListEventArgs.Object);
 
             #endregion
 
@@ -1048,7 +1048,7 @@ namespace TestApp.IndividualTests
             #region MOCK DISPOSABLE FACTORY
 
             // SETUP _mockDisposableFactory so that it can return _mockFishyHome.Object when Create<FishyHome>() is called:
-            _mockDisposableFactory.Setup(_mock => _mock.Create<FishyHome>()).Returns(_mockFishyHome.Object);
+            _mockDisposableFactory.Setup(mock => mock.Create<FishyHome>()).Returns(_mockFishyHome.Object);
 
             #endregion
 
@@ -1059,28 +1059,28 @@ namespace TestApp.IndividualTests
             _mockDisposableDict = new Mock<IDictionary<int, IDisposable>>();
 
             // SETUP _mockDisposableDict so that it adds _mockFishyHome.Object at index 0:
-            _mockDisposableDict.Setup(_mock => _mock[0]).Returns(_mockFishyHome.Object);
+            _mockDisposableDict.Setup(mock => mock[0]).Returns(_mockFishyHome.Object);
 
             // INSTANTIATE _mockImageDict as a new Mock<IDictionary<string, Image>>(): 
             _mockImageDict = new Mock<IDictionary<string, Image>>();
 
             // SETUP _mockEnumerableFactory so that it can return _mockDisposableDict.Object when Create<Dictionary<int, IDisposable>>() is called:
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<int, IDisposable>>()).Returns(_mockDisposableDict.Object);
+            _mockEnumerableFactory.Setup(mock => mock.Create<Dictionary<int, IDisposable>>()).Returns(_mockDisposableDict.Object);
 
             // SETUP _mockEnumerableFactory so that it can return _mockEventArgsDict.Object when Create<Dictionary<string, EventArgs>>() is called:
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<string, EventArgs>>()).Returns(_mockEventArgsDict.Object);
+            _mockEnumerableFactory.Setup(mock => mock.Create<Dictionary<string, EventArgs>>()).Returns(_mockEventArgsDict.Object);
 
             // SETUP _mockEnumerableFactory so that it can return _mockStringDict.Object when Create<Dictionary<int, string>>() is called:
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<int, string>>()).Returns(_mockStringDict.Object);
+            _mockEnumerableFactory.Setup(mock => mock.Create<Dictionary<int, string>>()).Returns(_mockStringDict.Object);
 
             // SETUP _mockEnumerableFactory so that it can return _mockCommandDict when Create<Dictionary<string, ICommand>>() is called:
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<string, ICommand>>()).Returns(_mockCommandDict.Object);
+            _mockEnumerableFactory.Setup(mock => mock.Create<Dictionary<string, ICommand>>()).Returns(_mockCommandDict.Object);
 
             // SETUP _mockEnumerableFactory so that it can return _mockImageDict.Object when Create<Dictionary<String, Image>>() is called:
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<Dictionary<string, Image>>()).Returns(_mockImageDict.Object);
+            _mockEnumerableFactory.Setup(mock => mock.Create<Dictionary<string, Image>>()).Returns(_mockImageDict.Object);
 
             // SETUP _mockEnumerableFactory so that it can return _mockStringList.Object when Create<List<string>>() is called:
-            _mockEnumerableFactory.Setup(_mock => _mock.Create<List<string>>()).Returns(_mockStringList.Object);
+            _mockEnumerableFactory.Setup(mock => mock.Create<List<string>>()).Returns(_mockStringList.Object);
 
             #endregion
 
@@ -1088,7 +1088,7 @@ namespace TestApp.IndividualTests
             #region MOCK LOGIC FACTORY
 
             // SETUP _mockLogicFactory so that it can return _mockOpenImage.Object when Create<OpenLogic>() is called:
-            _mockLogicFactory.Setup(_mock => _mock.Create<OpenLogic>()).Returns(_mockOpenImage.Object);
+            _mockLogicFactory.Setup(mock => mock.Create<OpenLogic>()).Returns(_mockOpenImage.Object);
 
             #endregion
 
@@ -1105,19 +1105,19 @@ namespace TestApp.IndividualTests
             _mockImageEditor.As<IInitialiseParam<ImageFactory>>();
 
             // SETUP _mockImageServer so that it can be initialised with a reference to _mockImageMgr.Object:
-            _mockImageServer.As<IInitialiseParam<IManageImg>>().Setup(_mock => _mock.Initialise(_mockImageMgr.Object));
+            _mockImageServer.As<IInitialiseParam<IManageImg>>().Setup(mock => mock.Initialise(_mockImageMgr.Object));
 
             // SETUP _mockImageServer so that it can be initialised with a reference to _mockImageEditor.Object:
-            _mockImageServer.As<IInitialiseParam<IEditImg>>().Setup(_mock => _mock.Initialise(_mockImageEditor.Object));
+            _mockImageServer.As<IInitialiseParam<IEditImg>>().Setup(mock => mock.Initialise(_mockImageEditor.Object));
 
             // SETUP _mockImageServer so that it can be initialised with a reference to _mockEventArgsDict.Object:
-            _mockImageServer.As<IInitialiseParam<IDictionary<string, EventArgs>>>().Setup(_mock => _mock.Initialise(_mockEventArgsDict.Object));
+            _mockImageServer.As<IInitialiseParam<IDictionary<string, EventArgs>>>().Setup(mock => mock.Initialise(_mockEventArgsDict.Object));
 
             // SETUP _mockImageServer so that it can be initialised with a string and a reference to _mockImageEventArgs.Object:
-            _mockImageServer.As<IInitialiseParam<string, EventArgs>>().Setup(_mock => _mock.Initialise("", _mockImageEventArgs.Object));
+            _mockImageServer.As<IInitialiseParam<string, EventArgs>>().Setup(mock => mock.Initialise("", _mockImageEventArgs.Object));
 
             // SETUP _mockImageServer so that it can be initialised with a string and a reference to _mockStringListEventArgs.Object:
-            _mockImageServer.As<IInitialiseParam<string, EventArgs>>().Setup(_mock => _mock.Initialise("", _mockStringListEventArgs.Object));
+            _mockImageServer.As<IInitialiseParam<string, EventArgs>>().Setup(mock => mock.Initialise("", _mockStringListEventArgs.Object));
 
             #endregion
 
@@ -1125,7 +1125,7 @@ namespace TestApp.IndividualTests
             #region MOCK IMAGE MANAGER
 
             // SETUP _mockImageMgr so that it can be initialised with an IDictionary<String, Image>():
-            _mockImageMgr.As<IInitialiseParam<IDictionary<string, Image>>>().Setup(_mock => _mock.Initialise(_mockImageDict.Object));
+            _mockImageMgr.As<IInitialiseParam<IDictionary<string, Image>>>().Setup(mock => mock.Initialise(_mockImageDict.Object));
 
             #endregion
 
@@ -1134,7 +1134,7 @@ namespace TestApp.IndividualTests
 
             // SETUP _mockImageMgr so that it can be initialised with a new ImageFactory object:
             // USING IMAGE PROCESSOR API, DOES NOT HAVE PARAMETERLESS CONSTRUCTOR THEREFORE IT NEEDS ACTUAL OBJECT RATHER THAN MOCK
-            _mockImageEditor.As<IInitialiseParam<ImageFactory>>().Setup(_mock => _mock.Initialise(new ImageFactory(false)));
+            _mockImageEditor.As<IInitialiseParam<ImageFactory>>().Setup(mock => mock.Initialise(new ImageFactory(false)));
 
             #endregion
 
@@ -1142,31 +1142,31 @@ namespace TestApp.IndividualTests
             #region MOCK SERVICE LOCATOR
 
             // SETUP _mockServiceLocator to return _mockCommandFactory.Object when GetService<Factory<ICommand>>() is called:
-            _mockServiceLocator.Setup(_mock => _mock.GetService<Factory<ICommand>>()).Returns(_mockCommandFactory.Object);
+            _mockServiceLocator.Setup(mock => mock.GetService<Factory<ICommand>>()).Returns(_mockCommandFactory.Object);
 
             // SETUP _mockServiceLocator to return _mockEventArgsFactory.Object when GetService<Factory<EventArgs>>() is called:
-            _mockServiceLocator.Setup(_mock => _mock.GetService<Factory<EventArgs>>()).Returns(_mockEventArgsFactory.Object);
+            _mockServiceLocator.Setup(mock => mock.GetService<Factory<EventArgs>>()).Returns(_mockEventArgsFactory.Object);
 
             // SETUP _mockServiceLocator to return _mockDisposableFactory.Object when GetService<Factory<IDisposable>>() is called:
-            _mockServiceLocator.Setup(_mock => _mock.GetService<Factory<IDisposable>>()).Returns(_mockDisposableFactory.Object);
+            _mockServiceLocator.Setup(mock => mock.GetService<Factory<IDisposable>>()).Returns(_mockDisposableFactory.Object);
 
             // SETUP _mockServiceLocator to return _mockEnumerableFactory.Object when GetService<Factory<IEnumerable>>() is called:
-            _mockServiceLocator.Setup(_mock => _mock.GetService<Factory<IEnumerable>>()).Returns(_mockEnumerableFactory.Object);
+            _mockServiceLocator.Setup(mock => mock.GetService<Factory<IEnumerable>>()).Returns(_mockEnumerableFactory.Object);
 
             // SETUP _mockServiceLocator to return _mockLogicFactory.Object when GetService<Factory<ILogic>>() is called:
-            _mockServiceLocator.Setup(_mock => _mock.GetService<Factory<ILogic>>()).Returns(_mockLogicFactory.Object);
+            _mockServiceLocator.Setup(mock => mock.GetService<Factory<ILogic>>()).Returns(_mockLogicFactory.Object);
 
             // SETUP _mockServiceLocator to return _mockImageServer.Object when GetService<ImageServer>() is called:
-            _mockServiceLocator.Setup(_mock => _mock.GetService<ImageServer>()).Returns(_mockImageServer.Object);
+            _mockServiceLocator.Setup(mock => mock.GetService<ImageServer>()).Returns(_mockImageServer.Object);
 
             // SETUP _mockServiceLocator to return _mockImageMgr.Object when GetService<ImageMgr>() is called:
-            _mockServiceLocator.Setup(_mock => _mock.GetService<ImageMgr>()).Returns(_mockImageMgr.Object);
+            _mockServiceLocator.Setup(mock => mock.GetService<ImageMgr>()).Returns(_mockImageMgr.Object);
 
             // SETUP _mockServiceLocator to return _mockImageEditor.Object when GetService<ImageEditor>() is called:
-            _mockServiceLocator.Setup(_mock => _mock.GetService<ImageEditor>()).Returns(_mockImageEditor.Object);
+            _mockServiceLocator.Setup(mock => mock.GetService<ImageEditor>()).Returns(_mockImageEditor.Object);
 
             // SETUP _mockServiceLocator to return _mockCommandInvoker.Object when GetService<CommandInvoker>() is called:
-            _mockServiceLocator.Setup(_mock => _mock.GetService<CommandInvoker>()).Returns(_mockCommandInvoker.Object);
+            _mockServiceLocator.Setup(mock => mock.GetService<CommandInvoker>()).Returns(_mockCommandInvoker.Object);
 
             #endregion
 

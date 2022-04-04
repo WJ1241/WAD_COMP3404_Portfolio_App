@@ -67,8 +67,8 @@ namespace TestGUI.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -86,12 +86,12 @@ namespace TestGUI.IndividualTests
             // IF _mockFishyHome.ImgChangeEventCalled is false:
             if (!_mockFishyHome.ImgChangeEventCalled)
             {
-                // ASSIGNMENT _pass becomes false:
-                _pass = false;
+                // ASSIGNMENT pass becomes false:
+                pass = false;
             }
 
             // ASSERT if test has passed, display error message
-            Assert.IsTrue(_pass, "ERROR: Image Event Handler Not Called!");
+            Assert.IsTrue(pass, "ERROR: Image Event Handler Not Called!");
 
             #endregion
         }
@@ -104,8 +104,8 @@ namespace TestGUI.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -123,12 +123,12 @@ namespace TestGUI.IndividualTests
             // IF _mockFishyHome.StringListEventCalled is false:
             if (!_mockFishyHome.StringListEventCalled)
             {
-                // ASSIGNMENT _pass becomes false:
-                _pass = false;
+                // ASSIGNMENT pass becomes false:
+                pass = false;
             }
 
             // ASSERT if test has passed, display error message
-            Assert.IsTrue(_pass, "ERROR: String List Event Handler Not Called!");
+            Assert.IsTrue(pass, "ERROR: String List Event Handler Not Called!");
 
             #endregion
         }
@@ -146,8 +146,8 @@ namespace TestGUI.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -171,14 +171,14 @@ namespace TestGUI.IndividualTests
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed or failed depending on the value of _pass:
-                Assert.IsTrue(_pass, "ERROR: MockFishyHome has not called InvokeCommand(_mockGetImgCmd.Object) on _mockCommandInvoker!");
+                // ASSERT if test has passed or failed depending on the value of pass:
+                Assert.IsTrue(pass, "ERROR: MockFishyHome has not called InvokeCommand(_mockGetImgCmd.Object) on _mockCommandInvoker!");
             }
 
             #endregion
@@ -192,8 +192,8 @@ namespace TestGUI.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -217,14 +217,14 @@ namespace TestGUI.IndividualTests
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed or failed depending on the value of _pass:
-                Assert.IsTrue(_pass, "ERROR: MockFishyHome has not called InvokeCommand(_mockLoadCmd.Object) on _mockCommandInvoker!");
+                // ASSERT if test has passed or failed depending on the value of pass:
+                Assert.IsTrue(pass, "ERROR: MockFishyHome has not called InvokeCommand(_mockLoadCmd.Object) on _mockCommandInvoker!");
             }
 
             #endregion
@@ -238,8 +238,8 @@ namespace TestGUI.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if not changed:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if not changed:
+            bool pass = true;
 
             #endregion
 
@@ -263,14 +263,14 @@ namespace TestGUI.IndividualTests
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed or failed depending on the value of _pass:
-                Assert.IsTrue(_pass, "ERROR: _mockLoadCmd.FirstParam has not been set!");
+                // ASSERT if test has passed or failed depending on the value of pass:
+                Assert.IsTrue(pass, "ERROR: _mockLoadCmd.FirstParam has not been set!");
             }
 
             #endregion
@@ -322,16 +322,16 @@ namespace TestGUI.IndividualTests
             #region IMAGE FILE PATH SETUP
 
             // SETUP _mockImgFPDict so that address '1' returns a valid image path:
-            _mockImgFPDict.Setup(_mock => _mock[1]).Returns("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png");
+            _mockImgFPDict.Setup(mock => mock[1]).Returns("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png");
 
             // ADD file path to _stringList:
             _stringList.Add("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png");
 
             // SETUP _mockImgEventArgs so that it returns a new image with a specified file path:
-            _mockImgEventArgs.SetupGet(_mock => _mock.Img).Returns(Image.FromFile("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png"));
+            _mockImgEventArgs.SetupGet(mock => mock.Img).Returns(Image.FromFile("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png"));
 
             // SETUP _mockStringListEventArgs so that it returns a reference to _stringList:
-            _mockStringListEventArgs.SetupGet(_mock => _mock.List).Returns(_stringList);
+            _mockStringListEventArgs.SetupGet(mock => mock.List).Returns(_stringList);
 
             #endregion
 
@@ -342,25 +342,25 @@ namespace TestGUI.IndividualTests
             _mockGetImgCmd = new Mock<ICommandParam<string, int, int, EventHandler<ImageEventArgs>>>();
 
             // SETUP _mockGetImgCmd so that its Name Property can be given a string value:
-            _mockGetImgCmd.As<IName>().SetupSet(_mock => _mock.Name = "GetImage");
+            _mockGetImgCmd.As<IName>().SetupSet(mock => mock.Name = "GetImage");
 
             // SETUP _mockGetImgCmd so that its MethodRef Property holds reference to _mockServer.Object.GetImage():
-            _mockGetImgCmd.SetupSet(_mock => _mock.MethodRef = _mockServer.Object.GetImage);
+            _mockGetImgCmd.SetupSet(mock => mock.MethodRef = _mockServer.Object.GetImage);
 
             // INSTANTIATE _mockLoadCmd as a new Mock<ICommandParam<IList<string>, EventHandler<StringListEventArgs>>>():
             _mockLoadCmd = new Mock<ICommandParam<IList<string>, EventHandler<StringListEventArgs>>>();
 
             // SETUP _mockLoadCmd so that its Name Property can be given a string value:
-            _mockLoadCmd.As<IName>().SetupSet(_mock => _mock.Name = "Load");
+            _mockLoadCmd.As<IName>().SetupSet(mock => mock.Name = "Load");
 
             // SETUP _mockLoadCmd so that its MethodRef Property holds reference to _mockServer.Object.Load:
-            _mockLoadCmd.SetupSet(_mock => _mock.MethodRef = _mockServer.Object.Load);
+            _mockLoadCmd.SetupSet(mock => mock.MethodRef = _mockServer.Object.Load);
 
             // SETUP _mockCommandDict["GetImage"] so that it returns _mockGetImgCmd.Object:
-            _mockCommandDict.Setup(_mock => _mock["GetImage"]).Returns(_mockGetImgCmd.Object);
+            _mockCommandDict.Setup(mock => mock["GetImage"]).Returns(_mockGetImgCmd.Object);
 
             // SETUP _mockCommandDict["Load"] so that it returns _mockLoadCmd.Object:
-            _mockCommandDict.Setup(_mock => _mock["Load"]).Returns(_mockLoadCmd.Object);
+            _mockCommandDict.Setup(mock => mock["Load"]).Returns(_mockLoadCmd.Object);
 
             #endregion
 
