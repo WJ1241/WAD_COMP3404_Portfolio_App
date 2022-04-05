@@ -166,7 +166,7 @@ namespace TestGUI.IndividualTests
             try
             {
                 // VERIFY that InvokeCommand(_mockGetImgCmd) was called ONCE, to ensure the same behaviour isn't performed twice or more:
-                _mockCommandInvoker.Verify(_mock => _mock.InvokeCommand(_mockGetImgCmd.Object), Times.Once);
+                _mockCommandInvoker.Verify(mock => mock.InvokeCommand(_mockGetImgCmd.Object), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
@@ -212,7 +212,7 @@ namespace TestGUI.IndividualTests
             try
             {
                 // VERIFY that InvokeCommand(_mockGetImgCmd) was called ONCE, to ensure the same behaviour isn't performed twice or more:
-                _mockCommandInvoker.Verify(_mock => _mock.InvokeCommand(_mockLoadCmd.Object), Times.Once);
+                _mockCommandInvoker.Verify(mock => mock.InvokeCommand(_mockLoadCmd.Object), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
@@ -258,7 +258,7 @@ namespace TestGUI.IndividualTests
             try
             {
                 // VERIFY that FirstParam.Set has been set ONCE, makes sure that method is not set more than once:
-                _mockLoadCmd.VerifySet(_mock => _mock.FirstParam = _mockOpenImage.Object.OpenImage(), Times.Once);
+                _mockLoadCmd.VerifySet(mock => mock.FirstParam = _mockOpenImage.Object.OpenImage(), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
@@ -313,8 +313,8 @@ namespace TestGUI.IndividualTests
             // INSTANTIATE _mockStringListEventArgs as a new Mock<StringListEventArgs>():
             _mockStringListEventArgs = new Mock<StringListEventArgs>();
 
-            // DECLARE & INSTANTIATE an IList<string> as a new List<string>(), name it '_stringList':
-            IList<string> _stringList = new List<string>();
+            // DECLARE & INSTANTIATE an IList<string> as a new List<string>(), name it 'stringList':
+            IList<string> stringList = new List<string>();
 
             #endregion
 
@@ -325,13 +325,13 @@ namespace TestGUI.IndividualTests
             _mockImgFPDict.Setup(mock => mock[1]).Returns("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png");
 
             // ADD file path to _stringList:
-            _stringList.Add("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png");
+            stringList.Add("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png");
 
             // SETUP _mockImgEventArgs so that it returns a new image with a specified file path:
             _mockImgEventArgs.SetupGet(mock => mock.Img).Returns(Image.FromFile("..\\..\\..\\..\\Server\\Displayables\\FishAssets\\JavaFish.png"));
 
-            // SETUP _mockStringListEventArgs so that it returns a reference to _stringList:
-            _mockStringListEventArgs.SetupGet(mock => mock.List).Returns(_stringList);
+            // SETUP _mockStringListEventArgs so that it returns a reference to stringList:
+            _mockStringListEventArgs.SetupGet(mock => mock.List).Returns(stringList);
 
             #endregion
 

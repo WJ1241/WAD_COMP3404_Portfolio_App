@@ -11,7 +11,7 @@ namespace Server
     /// <summary>
     /// Class which stores Dictionary of Images with File Path acting as a UID accessor
     /// Authors: William Smith, William Eardley, Declan Kerby-Collins & 'Matt'
-    /// Date: 23/03/21
+    /// Date: 23/03/22
     /// </summary>
     /// <REFERENCE> Matt (2013) How to resize an Image C#. Available at: https://stackoverflow.com/questions/1922040/how-to-resize-an-image-c-sharp. (Accessed: 30 November 2021). <REFERENCE>
     public class ImageMgr : IManageImg, IInitialiseParam<IDictionary<string, Image>>
@@ -50,8 +50,8 @@ namespace Server
         /// <returns> Filtered IList<string> object </returns>
         public IList<string> ReturnFilteredList(IList<string> pList)
         {
-            // DECLARE & INSTANTIATE temporary IList<string>, name it '_tempList', holds new file paths that HAVE NOT been stored:
-            IList<string> _tempList = new List<string>();
+            // DECLARE & INSTANTIATE temporary IList<string>, name it 'tempList', holds new file paths that HAVE NOT been stored:
+            IList<string> tempList = new List<string>();
 
             // TRY Checking AddToDictionary() to see if any FileAlreadyStoredExceptions are thrown:
             try
@@ -60,7 +60,7 @@ namespace Server
                 foreach (string pString in pList)
                 {
                     // ADD result from AddToDictionary to temporary list:
-                    _tempList.Add(AddToDictionary(pString));
+                    tempList.Add(AddToDictionary(pString));
                 }
             }
             // CATCH FileAlreadyStoredException from AddToDictionary method:
@@ -73,8 +73,8 @@ namespace Server
                 throw new FileAlreadyStoredException(pException.Message);
             }
 
-            // RETURN _tempList back to caller:
-            return _tempList;
+            // RETURN tempList back to caller:
+            return tempList;
         }
 
         /// <summary>

@@ -54,18 +54,18 @@ namespace TestServer.IndividualTests
             #region ARRANGE
 
             // DECLARE & INSTANTIATE a new Mock<IList<string>>(), name it '_mockList':
-            Mock<IList<string>> _mockList = new Mock<IList<string>>();
+            Mock<IList<string>> mockList = new Mock<IList<string>>();
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if no exception is thrown:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if no exception is thrown:
+            bool pass = true;
 
             #endregion
 
 
             #region ACT
 
-            // CALL Load() on _imageServer, passing _mockList.Object and an StringListEventArgs Event as a parameter:
-            _imageServer.Load(_mockList.Object, _mockEventListener.As<IEventListener<StringListEventArgs>>().Object.OnEvent);
+            // CALL Load() on _imageServer, passing mockList.Object and an StringListEventArgs Event as a parameter:
+            _imageServer.Load(mockList.Object, _mockEventListener.As<IEventListener<StringListEventArgs>>().Object.OnEvent);
 
             #endregion
 
@@ -76,19 +76,19 @@ namespace TestServer.IndividualTests
             try
             {
                 // VERIFY that _mockImageMgr.ReturnFilteredList() has been called ONCE, makes sure that method is not called twice or more:
-                _mockImageMgr.Verify(_mock => _mock.ReturnFilteredList(_mockList.Object), Times.Once);
+                _mockImageMgr.Verify(mock => mock.ReturnFilteredList(mockList.Object), Times.Once);
             }
             // CATCH a MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false to state that test has failed:
-                _pass = false;
+                // SET pass to false to state that test has failed:
+                pass = false;
             }
             // CALL 'Finally' regardless of PASS or FAIL:
             finally
             {
                 // ASSERT that test has passed or failed, with corresponding message if failed:
-                Assert.IsTrue(_pass, "ERROR: _imageServer did not call _mockImageManager.ReturnFilteredList()!");
+                Assert.IsTrue(pass, "ERROR: _imageServer did not call _mockImageManager.ReturnFilteredList()!");
             }
 
             #endregion
@@ -107,8 +107,8 @@ namespace TestServer.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if no exception is thrown:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if no exception is thrown:
+            bool pass = true;
 
             #endregion
 
@@ -127,19 +127,19 @@ namespace TestServer.IndividualTests
             try
             {
                 // VERIFY that _mockImageMgr.ReturnImg() has been called ONCE, makes sure that method is not called twice or more:
-                _mockImageMgr.Verify(_mock => _mock.ReturnImg("", 1, 1), Times.Once);
+                _mockImageMgr.Verify(mock => mock.ReturnImg("", 1, 1), Times.Once);
             }
             // CATCH a MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false to state that test has failed:
-                _pass = false;
+                // SET pass to false to state that test has failed:
+                pass = false;
             }
             // CALL 'Finally' regardless of PASS or FAIL:
             finally
             {
                 // ASSERT that test has passed or failed, with corresponding message if failed:
-                Assert.IsTrue(_pass, "ERROR: _imageServer did not call _mockImageManager.ReturnImg()!");
+                Assert.IsTrue(pass, "ERROR: _imageServer did not call _mockImageManager.ReturnImg()!");
             }
 
             #endregion
@@ -158,8 +158,8 @@ namespace TestServer.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if no exception is thrown:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if no exception is thrown:
+            bool pass = true;
 
             #endregion
 
@@ -178,19 +178,19 @@ namespace TestServer.IndividualTests
             try
             {
                 // VERIFY that _mockImageEditor.ImgHFlip() has been called ONCE, makes sure that method is not called twice or more:
-                _mockImageEditor.Verify(_mock => _mock.ImgHFlip(_mockImageMgr.Object.ReturnImg("")), Times.Once);
+                _mockImageEditor.Verify(mock => mock.ImgHFlip(_mockImageMgr.Object.ReturnImg("")), Times.Once);
             }
             // CATCH a MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false to state that test has failed:
-                _pass = false;
+                // SET pass to false to state that test has failed:
+                pass = false;
             }
             // CALL 'Finally' regardless of PASS or FAIL:
             finally
             {
                 // ASSERT that test has passed or failed, with corresponding message if failed:
-                Assert.IsTrue(_pass, "ERROR: _imageServer did not call _mockImageEditor.ImgFlipXAxis(), which also did not call _mockImageMgr.ReturnImg()!");
+                Assert.IsTrue(pass, "ERROR: _imageServer did not call _mockImageEditor.ImgFlipXAxis(), which also did not call _mockImageMgr.ReturnImg()!");
             }
 
             #endregion
@@ -204,8 +204,8 @@ namespace TestServer.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if no exception is thrown:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if no exception is thrown:
+            bool pass = true;
 
             #endregion
 
@@ -224,19 +224,19 @@ namespace TestServer.IndividualTests
             try
             {
                 // VERIFY that _mockImageEditor.ImgVFlip has been called ONCE, makes sure that method is not called twice or more:
-                _mockImageEditor.Verify(_mock => _mock.ImgVFlip(_mockImageMgr.Object.ReturnImg("")), Times.Once);
+                _mockImageEditor.Verify(mock => mock.ImgVFlip(_mockImageMgr.Object.ReturnImg("")), Times.Once);
             }
             // CATCH a MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false to state that test has failed:
-                _pass = false;
+                // SET pass to false to state that test has failed:
+                pass = false;
             }
             // CALL 'Finally' regardless of PASS or FAIL:
             finally
             {
                 // ASSERT that test has passed or failed, with corresponding message if failed:
-                Assert.IsTrue(_pass, "ERROR: _imageServer did not call _mockImageEditor.ImgFlipYAxis(), which also did not call _mockImageMgr.ReturnImg()!");
+                Assert.IsTrue(pass, "ERROR: _imageServer did not call _mockImageEditor.ImgFlipYAxis(), which also did not call _mockImageMgr.ReturnImg()!");
             }
 
             #endregion
@@ -255,8 +255,8 @@ namespace TestServer.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if no exception is thrown:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if no exception is thrown:
+            bool pass = true;
 
             #endregion
 
@@ -275,19 +275,19 @@ namespace TestServer.IndividualTests
             try
             {
                 // VERIFY that _mockImageEditor.ImgRotateClockwise() has been called ONCE, makes sure that method is not called twice or more:
-                _mockImageEditor.Verify(_mock => _mock.ImgRotateClockwise(_mockImageMgr.Object.ReturnImg("")), Times.Once);
+                _mockImageEditor.Verify(mock => mock.ImgRotateClockwise(_mockImageMgr.Object.ReturnImg("")), Times.Once);
             }
             // CATCH a MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false to state that test has failed:
-                _pass = false;
+                // SET pass to false to state that test has failed:
+                pass = false;
             }
             // CALL 'Finally' regardless of PASS or FAIL:
             finally
             {
                 // ASSERT that test has passed or failed, with corresponding message if failed:
-                Assert.IsTrue(_pass, "ERROR: _imageServer did not call _mockImageEditor.ImgRotateClockwise(), which also did not call _mockImageMgr.ReturnImg()!");
+                Assert.IsTrue(pass, "ERROR: _imageServer did not call _mockImageEditor.ImgRotateClockwise(), which also did not call _mockImageMgr.ReturnImg()!");
             }
 
             #endregion
@@ -301,8 +301,8 @@ namespace TestServer.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if no exception is thrown:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if no exception is thrown:
+            bool pass = true;
 
             #endregion
 
@@ -320,20 +320,20 @@ namespace TestServer.IndividualTests
             // TRY checking if Verify() throws a MockException:
             try
             {
-                // VERIFY that _mockImageEditor.ImgRotateAntiClockwise() has been called ONCE, makes sure that method is not called twice or more:
-                _mockImageEditor.Verify(_mock => _mock.ImgRotateAntiClockwise(_mockImageMgr.Object.ReturnImg("")), Times.Once);
+                // VERIFY that mockImageEditor.ImgRotateAntiClockwise() has been called ONCE, makes sure that method is not called twice or more:
+                _mockImageEditor.Verify(mock => mock.ImgRotateAntiClockwise(_mockImageMgr.Object.ReturnImg("")), Times.Once);
             }
             // CATCH a MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false to state that test has failed:
-                _pass = false;
+                // SET pass to false to state that test has failed:
+                pass = false;
             }
             // CALL 'Finally' regardless of PASS or FAIL:
             finally
             {
                 // ASSERT that test has passed or failed, with corresponding message if failed:
-                Assert.IsTrue(_pass, "ERROR: _imageServer did not call _mockImageEditor.ImgRotateAntiClockwise(), which also did not call _mockImageMgr.ReturnImg()!");
+                Assert.IsTrue(pass, "ERROR: _imageServer did not call _mockImageEditor.ImgRotateAntiClockwise(), which also did not call _mockImageMgr.ReturnImg()!");
             }
 
             #endregion
@@ -391,10 +391,10 @@ namespace TestServer.IndividualTests
             _mockEventListener.As<IEventListener<StringListEventArgs>>();
 
             // SETUP _mockEventArgsDict so that it returns _mockImgEventArgs.Object when "Image" is addressed:
-            _mockEventArgsDict.Setup(_mock => _mock["Image"]).Returns(_mockImgEventArgs.Object);
+            _mockEventArgsDict.Setup(mock => mock["Image"]).Returns(_mockImgEventArgs.Object);
 
             // SETUP _mockEventArgsDict so that it returns _mockStringListEventArgs.Object when "StringList" is addressed:
-            _mockEventArgsDict.Setup(_mock => _mock["StringList"]).Returns(_mockStringListEventArgs.Object);
+            _mockEventArgsDict.Setup(mock => mock["StringList"]).Returns(_mockStringListEventArgs.Object);
 
             #endregion
         }

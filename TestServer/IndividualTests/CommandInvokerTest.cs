@@ -23,22 +23,22 @@ namespace TestServer.IndividualTests
         {
             #region ARRANGE
 
-            // DECLARE & INSTANTIATE an ICommandInvoker as a new CommandInvoker(), name it '_cmdInvoker':
-            ICommandInvoker _cmdInvoker = new CommandInvoker();
+            // DECLARE & INSTANTIATE an ICommandInvoker as a new CommandInvoker(), name it 'cmdInvoker':
+            ICommandInvoker cmdInvoker = new CommandInvoker();
 
-            // DECLARE & INSTANTIATE a new Mock<ICommand>, name it '_mockCmd':
-            Mock<ICommand> _mockCmd = new Mock<ICommand>();
+            // DECLARE & INSTANTIATE a new Mock<ICommand>, name it 'mockCmd':
+            Mock<ICommand> mockCmd = new Mock<ICommand>();
 
-            // DECLARE & INITIALISE a bool, name it '_pass', set to true so test passes if no exception is thrown:
-            bool _pass = true;
+            // DECLARE & INITIALISE a bool, name it 'pass', set to true so test passes if no exception is thrown:
+            bool pass = true;
 
             #endregion
 
 
             #region ACT
 
-            // CALL InvokeCommand() on _cmdInvoker, passing _mockCmd as a parameter:
-            _cmdInvoker.InvokeCommand(_mockCmd.Object);
+            // CALL InvokeCommand() on cmdInvoker, passing mockCmd as a parameter:
+            cmdInvoker.InvokeCommand(mockCmd.Object);
 
             #endregion
 
@@ -48,20 +48,20 @@ namespace TestServer.IndividualTests
             // TRY checking if _mockCmd.ExecuteMethod() has been called:
             try
             {
-                // VERIFY that _mockCmd.ExecuteMethod() was called ONCE, to ensure the same behaviour isn't performed twice or more:
-                _mockCmd.Verify(_mockCmd => _mockCmd.ExecuteMethod(), Times.Once);
+                // VERIFY that mockCmd.ExecuteMethod() was called ONCE, to ensure the same behaviour isn't performed twice or more:
+                mockCmd.Verify(mockCmd => mockCmd.ExecuteMethod(), Times.Once);
             }
             // CATCH MockException from Verify():
             catch (MockException)
             {
-                // SET _pass to false, so that test fails:
-                _pass = false;
+                // SET pass to false, so that test fails:
+                pass = false;
             }
             // FINALISE try and catch block with test pass/fail:
             finally
             {
-                // ASSERT if test has passed or failed depending on the value of _pass:
-                Assert.IsTrue(_pass, "ERROR: CommandInvoker has not called ExecuteMethod() on _mockCmd!");
+                // ASSERT if test has passed or failed depending on the value of pass:
+                Assert.IsTrue(pass, "ERROR: CommandInvoker has not called ExecuteMethod() on _mockCmd!");
             }
 
             #endregion
